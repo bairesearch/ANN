@@ -21,9 +21,9 @@
 /*******************************************************************************
  *
  * File Name: ANNdisplay.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c9a 06-February-2014
+ * Project Version: 3d1a 13-April-2014
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -43,8 +43,8 @@ void generateExperienceWith2DbooleanMap(bool * booleanMap, int imageWidth, int i
 #endif
 
 
-bool trainAndOutputNeuralNetworkWithFileNames(NeuronContainer * firstInputNeuronInNetwork, NeuronContainer * firstOutputNeuronInNetwork, int numberOfInputNeurons, int numberOfOutputNeurons, Experience * firstExperienceInList, bool addSprites, bool allowRaytrace, string * XMLNNSceneFileName, char * charstarvectorGraphicsLDRNNSceneFileName, char * charstarvectorGraphicsLDRNNSceneFileNameWithSprites, char * charstarvectorGraphicsTALNNSceneFileName, char * charstarraytracedImagePPMNNSceneFileName, char * charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs);	//OLD wrapper function: this does not support full set of ANN features (SVG, opengl output etc)
-	void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool display, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileNameWithoutSprites, string outputLDRFileNameWithSprites, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height);
+bool trainAndOutputNeuralNetworkWithFileNames(Neuron * firstInputNeuronInNetwork, Neuron * firstOutputNeuronInNetwork, int numberOfInputNeurons, int numberOfOutputNeurons, Experience * firstExperienceInList, bool addSprites, bool allowRaytrace, string * XMLNNSceneFileName, char * charstarvectorGraphicsLDRNNSceneFileName, char * charstarvectorGraphicsLDRNNSceneFileNameWithSprites, char * charstarvectorGraphicsTALNNSceneFileName, char * charstarraytracedImagePPMNNSceneFileName, char * charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs);	//OLD wrapper function: this does not support full set of ANN features (SVG, opengl output etc)
+	void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron * firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool display, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileNameWithoutSprites, string outputLDRFileNameWithSprites, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height);
 
 void writeExperienceListToFile(char * fileName, Experience * firstExperienceInList);
 

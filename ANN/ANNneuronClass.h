@@ -21,9 +21,9 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c9a 06-February-2014
+ * Project Version: 3d1a 13-April-2014
  * Comments:
  *
  *******************************************************************************/
@@ -36,6 +36,9 @@
 
 #ifndef HEADER_ANN_NEURON_CLASS
 #define HEADER_ANN_NEURON_CLASS
+
+#include <vector>
+using namespace std;
 
 
 #define ANN_ADVANCED
@@ -51,6 +54,7 @@
 #define DEFAULT_FIRST_INPUT_NEURON_ID 1
 #define DEFAULT_FIRST_OUTPUT_NEURON_ID 2
 
+class NeuronConnection;
 
 class Neuron
 {
@@ -76,75 +80,24 @@ public:
 	long xPosRel;	//not currently used
 	long yPosRel;
 	long zPosRel;
-};
 
+	Neuron * nextNeuron;		//OLD: nextNeuronContainer
 
-class NeuronConnection
-{
-public:
-
-	NeuronConnection(void);
-	~NeuronConnection(void);
-
-	double weight;
-	double storedWeight;
-};
-
-
-
-class NeuronConnectionContainer
-{
-public:
-
-	NeuronConnectionContainer(void);
-	NeuronConnectionContainer(Neuron * initialNeuron);
-	NeuronConnectionContainer(Neuron * initialNeuron, NeuronConnection * initialConnection);
-	~NeuronConnectionContainer(void);
-
-	long neuronID;		//temporary variable required for neural net creation from xml files
-	Neuron * neuron;
-	NeuronConnection * neuronConnection;
-	NeuronConnectionContainer * nextNeuronConnectionContainer;
-};
-
-
-class NeuronContainer
-{
-public:
-
-	NeuronContainer(void);
-	NeuronContainer(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
-	~NeuronContainer(void);
-
-	Neuron * neuron;
-
-			//neuron relationships
-
-		//whole layer relationships
-	NeuronContainer * nextNeuronContainer;		//next neuron on same layer
-	//NeuronContainer * previousNeuronContainer;	REDUNDANT
 	bool hasFrontLayer;
 	bool hasBackLayer;
-	NeuronContainer * firstNeuronInFrontLayer;
-	NeuronContainer * firstNeuronInBackLayer;
+	Neuron * firstNeuronInFrontLayer;
+	Neuron * firstNeuronInBackLayer;
 
-		//partial layer relationships [NB all neurons on layer a do not have to be connected to all neurons on layer b]
-	//long numFrontNeuronConnections;	REDUNDANT
-	//long numBackNeuronConnections;	REDUNDANT
-	NeuronConnectionContainer * firstFrontNeuronConnectionContainer;
-	NeuronConnectionContainer * firstBackNeuronConnectionContainer;
-	NeuronConnectionContainer * currentFrontNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
-	NeuronConnectionContainer * currentBackNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
+	vector<NeuronConnection*> frontNeuronConnectionList;
+	vector<NeuronConnection*> backNeuronConnectionList;
 
 #ifdef ANN_ADVANCED
 
 	bool isSubnet;	 	//alternative to being a subnet is being a distinct neuron
 
 	//variables only used by subnets (abstract neurons)
-	//long numNeuronsInBackLayerOfSubnet;	REDUNDANT
-	//long numNeuronsInFrontLayerOfSubnet;	REDUNDANT
-	NeuronContainer * firstNeuronContainerInBackLayerOfSubnet;	//this variable only used if this object is a subnet, not a neuron - the properties of the neurons in this list are direct copies of those in firstNeuronInFrontLayer
-	NeuronContainer * firstNeuronContainerInFrontLayerOfSubnet;
+	Neuron * firstNeuronInBackLayerOfSubnet;	//OLDname: firstNeuronContainerInBackLayerOfSubnet //this variable only used if this object is a subnet, not a neuron - the properties of the neurons in this list are direct copies of those in firstNeuronInFrontLayer
+	Neuron * firstNeuronInFrontLayerOfSubnet;	//OLDname: firstNeuronContainerInFrontLayerOfSubnet
 
 	bool isInputSubnet;		//input subnets are a special case - they do not require linking of their input neurons with a back layer (firstBackNeuronConnectionContainer)
 		//input subnets are used when a network is created with a selection of predefined subnets to cator for the preprocessing of different kinds of input information (Eg visual/audio etc)
@@ -152,9 +105,6 @@ public:
 
 #endif
 };
-
-
-
 
 
 void fillInNeuronIDProperties(Neuron * neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);

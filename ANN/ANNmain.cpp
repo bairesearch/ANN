@@ -21,9 +21,9 @@
 /*******************************************************************************
  *
  * File Name: ANNmain.c
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c9a 06-February-2014
+ * Project Version: 3d1a 13-April-2014
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -64,8 +64,8 @@ using namespace std;
 #endif
 
 
-NeuronContainer * firstInputNeuronInNetwork;
-NeuronContainer * firstOutputNeuronInNetwork;
+Neuron * firstInputNeuronInNetwork;
+Neuron * firstOutputNeuronInNetwork;
 
 long numberOfInputNeurons;
 long numberOfOutputNeurons;
@@ -435,7 +435,7 @@ int main(int argc,char **argv)
 	if(useInputXMLFile)
 	{//create a network and load input dataset file
 		//Neural Network initialisations
-		firstInputNeuronInNetwork = new NeuronContainer();
+		firstInputNeuronInNetwork = new Neuron();
 
 		long numberOfInputNeuronsLoaded;
 		long numberOfOutputNeuronsLoaded;
@@ -480,7 +480,7 @@ int main(int argc,char **argv)
 		bool result = true;
 
 		//Neural Network initialisations
-		firstInputNeuronInNetwork = new NeuronContainer();
+		firstInputNeuronInNetwork = new Neuron();
 
 		if(useSubnets)
 		{
@@ -539,9 +539,10 @@ int main(int argc,char **argv)
 		{
 			cout << "vector graphics file name with sprites = " << outputLDRFileNameWithSprites << endl;
 		}
-
+		
+		//cout << "q1" << endl;
 		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, useOutputLDRFileWithSprites, useOutputPPMFileRaytraced, displayInOpenGLAndOutputScreenshot, useOutputLDRFileWithoutSprites, useOutputPPMFile, useOutputSVGFile, outputLDRFileNameWithoutSprites, outputLDRFileNameWithSprites, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
-
+		//cout << "q2" << endl;
 	}
 
 	if(useOutputXMLFile)
@@ -564,7 +565,7 @@ bool loadNetworkFromXML()
 	bool result = true;
 
 	//Neural Network initialisations
-	firstInputNeuronInNetwork = new NeuronContainer();
+	firstInputNeuronInNetwork = new Neuron();
 
 	long numberOfInputNeuronsLoaded;
 	long numberOfOutputNeuronsLoaded;
@@ -587,7 +588,7 @@ bool createNetwork()
 	bool result = true;
 
 	//Neural Network initialisations
-	firstInputNeuronInNetwork = new NeuronContainer();
+	firstInputNeuronInNetwork = new Neuron();
 
 	#ifdef ANN_DEBUG
 	cout << "************************************************************************************" << endl;

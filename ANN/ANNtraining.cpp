@@ -21,9 +21,9 @@
 /*******************************************************************************
  *
  * File Name: ANNtraining.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c9a 06-February-2014
+ * Project Version: 3d1a 13-April-2014
  * Comments:
  *
  *******************************************************************************/
@@ -61,7 +61,7 @@ using namespace std;
 
 
 
-double calculateExperienceErrorForHypotheticalDecision(NeuronContainer * firstInputNeuronInNetwork, NeuronContainer * firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * experience)
+double calculateExperienceErrorForHypotheticalDecision(Neuron * firstInputNeuronInNetwork, Neuron * firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * experience)
 {
 	double experienceBackPropagationPassError;
 
@@ -94,7 +94,7 @@ double calculateExperienceErrorForHypotheticalDecision(NeuronContainer * firstIn
 
 
 //DO NOT USE THIS; must use trainNeuralNetwork/trainNeuralNetworkSimple instead!
-void feedNeuralNetworkWithASetOfExperiences(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, Experience * firstExperienceInList)
+void feedNeuralNetworkWithASetOfExperiences(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, Experience * firstExperienceInList)
 {
 	Experience * currentExperience = firstExperienceInList;
 
@@ -110,7 +110,7 @@ void feedNeuralNetworkWithASetOfExperiences(NeuronContainer * firstInputNeuron, 
 }
 
 
-void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, Experience * firstExperienceInDataSet, long numberOfExperiences)
+void trainNeuralNetworkSimple(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, Experience * firstExperienceInDataSet, long numberOfExperiences)
 {
 	cout << "\n*****************************************************" << endl;
 	cout << "Number of Input Neurons = " << numberOfInputNeurons << endl;
@@ -228,7 +228,7 @@ void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContaine
 
 
 
-void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, Experience * firstExperienceInDataSet, long numberOfExperiences, int maxEpochs)
+void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, Experience * firstExperienceInDataSet, long numberOfExperiences, int maxEpochs)
 {
 	/*
 	network structure
@@ -638,57 +638,55 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 /************************************************************ Store/Record Neural Network weights and biases Routines ******************************************************/
 
 
-void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
+void storeNeuralNetworkBiasAndWeights(Neuron * neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)" << endl;
+	cout << "\nvoid storeNeuralNetworkBiasAndWeights(Neuron * neuronBeingAccessed)" << endl;
 	#endif
 
-	NeuronContainer * currentNeuronReference = neuronBeingAccessed;
+	Neuron * currentNeuronReference = neuronBeingAccessed;
 
-	while(currentNeuronReference -> nextNeuronContainer != NULL)
+	while(currentNeuronReference->nextNeuron != NULL)
 	{
 		#ifdef ANN_DEBUG
 		cout << "\nA neuron has been selected for recording Bias And front neuron connection Weights" << endl;
-		cout << "NeuronContainer ID = " << currentNeuronReference->neuron->id << endl;
-		cout << "NeuronContainer ID Order = " << currentNeuronReference->neuron->orderID << endl;
-		cout << "NeuronContainer ID Layer = " << currentNeuronReference->neuron->layerID << endl;
-		cout << "NeuronContainer ID Subnet = " << currentNeuronReference->neuron->subnetID << endl;
+		cout << "currentNeuronReference ID = " << currentNeuronReference->id << endl;
+		cout << "currentNeuronReference ID Order = " << currentNeuronReference->orderID << endl;
+		cout << "currentNeuronReference ID Layer = " << currentNeuronReference->layerID << endl;
+		cout << "currentNeuronReference ID Subnet = " << currentNeuronReference->subnetID << endl;
 		#endif
 
 		if(neuronBeingAccessed->hasBackLayer)	//input layer does not have biases [CHECK ANNTHIS; NB in ANN, an input layer to a subnet may have a bias, however regardless of this, storeNeuralNetworkBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
-			currentNeuronReference->neuron->storedBias = currentNeuronReference->neuron->bias;
+			currentNeuronReference->storedBias = currentNeuronReference->bias;
 
 			#ifdef ANN_DEBUG
-			cout << "NeuronContainer Bias = " << currentNeuronReference->neuron->bias << endl;			//NB first/input layer biases are irrelevant
+			cout << "Neuron Bias = " << currentNeuronReference->bias << endl;			//NB first/input layer biases are irrelevant
 			#endif
 		}
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, storeNeuralNetworkBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
-			NeuronConnectionContainer * currentNeuronReferenceInFrontLayer = currentNeuronReference->firstFrontNeuronConnectionContainer;
-
-			while(currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer != NULL)
+			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuronReference->frontNeuronConnectionList.begin(); connectionIter != currentNeuronReference->frontNeuronConnectionList.end(); connectionIter++)
 			{
-				currentNeuronReferenceInFrontLayer->neuronConnection->storedWeight = currentNeuronReferenceInFrontLayer->neuronConnection->weight;
+				NeuronConnection * currentNeuronConnection = *connectionIter;
+
+				currentNeuronConnection->storedWeight = currentNeuronConnection->weight;
 
 				#ifdef ANN_DEBUG
-				cout << "Front NeuronContainer Connection Weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;
+				cout << "Front Neuron Connection Weight = " << currentNeuronConnection->weight << endl;
 				#endif
-
-				currentNeuronReferenceInFrontLayer = currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer;
 			}
 
 		#ifdef ANN_ADVANCED
 			if(currentNeuronReference->isSubnet)
 			{
-				storeNeuralNetworkBiasAndWeights(currentNeuronReference->firstNeuronContainerInBackLayerOfSubnet);
+				storeNeuralNetworkBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 		#endif
 		}
 
-		currentNeuronReference = currentNeuronReference -> nextNeuronContainer;
+		currentNeuronReference = currentNeuronReference->nextNeuron;
 	}
 
 	//recursion [NB there will be unnecessay redundancy here, as the same neuron will be accessed more than once]
@@ -707,59 +705,57 @@ void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 /************************************************************ Restore Neural Network with previously recorded weights and biases Routines ******************************************************/
 
 
-void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingAccessed)
+void restoreNeuralNetworkWithStoredBiasAndWeights(Neuron * neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingAccessed)" << endl;
+	cout << "\nvoid restoreNeuralNetworkWithStoredBiasAndWeights(Neuron * neuronBeingAccessed)" << endl;
 	#endif
 
-	NeuronContainer * currentNeuronReference = neuronBeingAccessed;
+	Neuron * currentNeuronReference = neuronBeingAccessed;
 
-	while(currentNeuronReference -> nextNeuronContainer != NULL)
+	while(currentNeuronReference->nextNeuron != NULL)
 	{
 		#ifdef ANN_DEBUG
 		cout << "\nA neuron has been selected for Reseting with previously stored Bias And front neuron connection Weights" << endl;
-		cout << "NeuronContainer ID = " << currentNeuronReference->neuron->id << endl;
-		cout << "NeuronContainer ID Order = " << currentNeuronReference->neuron->orderID << endl;
-		cout << "NeuronContainer ID Layer = " << currentNeuronReference->neuron->layerID << endl;
-		cout << "NeuronContainer ID Subnet = " << currentNeuronReference->neuron->subnetID << endl;
+		cout << "currentNeuronReference ID = " << currentNeuronReference->id << endl;
+		cout << "currentNeuronReference ID Order = " << currentNeuronReference->orderID << endl;
+		cout << "currentNeuronReference ID Layer = " << currentNeuronReference->layerID << endl;
+		cout << "currentNeuronReference ID Subnet = " << currentNeuronReference->subnetID << endl;
 		#endif
 
 		if(neuronBeingAccessed->hasBackLayer)	//input layer does not have biases[CHECK ANNTHIS; NB in ANN, an input layer to a subnet may have a bias, however regardless of this, restoreNeuralNetworkWithStoredBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
-			currentNeuronReference->neuron->bias = currentNeuronReference->neuron->storedBias;
+			currentNeuronReference->bias = currentNeuronReference->storedBias;
 
 			#ifdef ANN_DEBUG
-			cout << "NeuronContainer Bias = " << currentNeuronReference->neuron->bias << endl;				//NB first/input layer biases are irrelevant
+			cout << "Neuron Bias = " << currentNeuronReference->bias << endl;				//NB first/input layer biases are irrelevant
 			#endif
 		}
 
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, restoreNeuralNetworkWithStoredBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
-			NeuronConnectionContainer * currentNeuronReferenceInFrontLayer = currentNeuronReference->firstFrontNeuronConnectionContainer;
 
-			while(currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer != NULL)
+			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuronReference->frontNeuronConnectionList.begin(); connectionIter != currentNeuronReference->frontNeuronConnectionList.end(); connectionIter++)
 			{
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = currentNeuronReferenceInFrontLayer->neuronConnection->storedWeight;
+				NeuronConnection * currentNeuronConnection = *connectionIter;
+
+				currentNeuronConnection->weight = currentNeuronConnection->storedWeight;
 
 				#ifdef ANN_DEBUG
-				cout << "Front NeuronContainer Connection Weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;
+				cout << "Front Neuron Connection Weight = " << currentNeuronConnection->weight << endl;
 				#endif
-
-				currentNeuronReferenceInFrontLayer = currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer;
-
 			}
 
 		#ifdef ANN_ADVANCED
 			if(currentNeuronReference->isSubnet)
 			{
-				restoreNeuralNetworkWithStoredBiasAndWeights(currentNeuronReference->firstNeuronContainerInBackLayerOfSubnet);
+				restoreNeuralNetworkWithStoredBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 		#endif
 		}
 
-		currentNeuronReference = currentNeuronReference -> nextNeuronContainer;
+		currentNeuronReference = currentNeuronReference->nextNeuron;
 	}
 
 
@@ -779,76 +775,76 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingA
 
 /************************************************************ Reset Neural Network with random biases and weights Routines ******************************************************/
 
-void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAccessed)
+void resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAccessed)" << endl;
+	cout << "\nvoid resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)" << endl;
 	#endif
 
-	NeuronContainer * currentNeuronReference = neuronBeingAccessed;
+	Neuron * currentNeuronReference = neuronBeingAccessed;
 
-	while(currentNeuronReference -> nextNeuronContainer != NULL)
+	while(currentNeuronReference->nextNeuron != NULL)
 	{
 		#ifdef ANN_DEBUG
 		cout << "\nA neuron has been selected for Reseting with Random Bias And front neuron connection Weights" << endl;
-		cout << "NeuronContainer ID = " << currentNeuronReference->neuron->id << endl;
-		cout << "NeuronContainer ID Order = " << currentNeuronReference->neuron->orderID << endl;
-		cout << "NeuronContainer ID Layer = " << currentNeuronReference->neuron->layerID << endl;
-		cout << "NeuronContainer ID Subnet = " << currentNeuronReference->neuron->subnetID << endl;
+		cout << "currentNeuronReference ID = " << currentNeuronReference->id << endl;
+		cout << "currentNeuronReference ID Order = " << currentNeuronReference->orderID << endl;
+		cout << "currentNeuronReference ID Layer = " << currentNeuronReference->layerID << endl;
+		cout << "currentNeuronReference ID Subnet = " << currentNeuronReference->subnetID << endl;
 		#endif
 
 		if(neuronBeingAccessed->hasBackLayer)	//input layer does not have biases [CHECK ANNTHIS; NB in ANN, an input layer to a subnet may have a bias, however regardless of this, resetNeuralNetworkWithRandomBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
 			#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
-			currentNeuronReference->neuron->bias = (double(rand() * 1.0F)/(double(RAND_MAX)+0.0F));
+			currentNeuronReference->bias = (double(rand() * 1.0F)/(double(RAND_MAX)+0.0F));
 			#else
 			#ifdef TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS
-			currentNeuronReference->neuron->bias = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_BIAS_MULT;
+			currentNeuronReference->bias = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_BIAS_MULT;
 			#else
 			#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_BIASES
-			currentNeuronReference->neuron->bias = 0.5;
+			currentNeuronReference->bias = 0.5;
 			#else
 			#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-			currentNeuronReference->neuron->bias = (double(777 * 2.0F)/(double(RAND_MAX)))-1.0F;
+			currentNeuronReference->bias = (double(777 * 2.0F)/(double(RAND_MAX)))-1.0F;
 			#else
 			#ifdef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
-			currentNeuronReference->neuron->bias = (double(rand() * 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
+			currentNeuronReference->bias = (double(rand() * 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
 			#else
-			currentNeuronReference->neuron->bias = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;
+			currentNeuronReference->bias = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;
 			#endif
-			//cout << "currentNeuronReference->neuron->bias = " << currentNeuronReference->neuron->bias << endl;
+			//cout << "currentNeuronReference->bias = " << currentNeuronReference->bias << endl;
 			#endif
 			#endif
 			#endif
 			#endif
 
 			#ifdef ANN_DEBUG
-			cout << "NeuronContainer Bias = " << currentNeuronReference->neuron->bias << endl;
+			cout << "Neuron Bias = " << currentNeuronReference->bias << endl;
 			#endif
 		}
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, resetNeuralNetworkWithRandomBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
-			NeuronConnectionContainer * currentNeuronReferenceInFrontLayer = currentNeuronReference->firstFrontNeuronConnectionContainer;
-
-			while(currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer != NULL)
+			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuronReference->frontNeuronConnectionList.begin(); connectionIter != currentNeuronReference->frontNeuronConnectionList.end(); connectionIter++)
 			{
+				NeuronConnection * currentNeuronConnection = *connectionIter;
+
 				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(rand() * 1.0F)/(double(RAND_MAX)+0.0F));
+				currentNeuronConnection->weight = (double(rand() * 1.0F)/(double(RAND_MAX)+0.0F));
 				#else
 				#ifdef TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_WEIGHT_MULT;
+				currentNeuronConnection->weight = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_WEIGHT_MULT;
 				#else
 				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_WEIGHTS
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = -0.1;
+				currentNeuronConnection->weight = -0.1;
 				#else
 				#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(888 * 2.0F)/(double(RAND_MAX)))-1.0F;
+				currentNeuronConnection->weight = (double(888 * 2.0F)/(double(RAND_MAX)))-1.0F;
 				#else
 				#ifdef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
+				currentNeuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
 				#else
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;
+				currentNeuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;
 				#endif
 				#endif
 				#endif
@@ -856,22 +852,20 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 				#endif
 
 				#ifdef ANN_DEBUG
-				//cout << "currentNeuronReferenceInFrontLayer->neuronConnection->weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;				
-				cout << "Front NeuronContainer Connection Weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;
+				//cout << "currentNeuronConnection->weight = " << currentNeuronConnection->weight << endl;				
+				cout << "Front Neuron Connection Weight = " << currentNeuronConnection->weight << endl;
 				#endif
-
-				currentNeuronReferenceInFrontLayer = currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer;
 			}
 
 		#ifdef ANN_ADVANCED
 			if(currentNeuronReference->isSubnet)
 			{
-				resetNeuralNetworkWithRandomBiasAndWeights(currentNeuronReference->firstNeuronContainerInBackLayerOfSubnet);
+				resetNeuralNetworkWithRandomBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 		#endif
 		}
 
-		currentNeuronReference = currentNeuronReference -> nextNeuronContainer;
+		currentNeuronReference = currentNeuronReference->nextNeuron;
 	}
 
 
@@ -890,38 +884,38 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 
 
 /************************************************************ Reset Input/ClassTarget Neurons Neural Network Routines ******************************************************/
-void resetInputsAndClassTargets(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * currentExperienceInDataSet)
+void resetInputsAndClassTargets(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * currentExperienceInDataSet)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetInputsAndClassTargets(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, int testSegment)" << endl;
+	cout << "\nvoid resetInputsAndClassTargets(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, int testSegment)" << endl;
 	#endif
 
 	//sets inputData into ANN
 	//(NB normalisedInputData[i][0] is target class
 
-	NeuronContainer * currentNeuronReference = firstInputNeuron;
+	Neuron * currentNeuronReference = firstInputNeuron;
 	ExperienceInput * currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 	for(long i = 0; i < numberOfInputNeurons; i++)
 	{
 		#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_2
 		cout << "currentExperienceInputInExperience->inputValue = " << currentExperienceInputInExperience->inputValue << endl;
 		#endif
-		currentNeuronReference->neuron->output = currentExperienceInputInExperience->inputValue;	 //normalisedInputData[testSegment][(i+1)];
-		currentNeuronReference = currentNeuronReference->nextNeuronContainer;
+		currentNeuronReference->output = currentExperienceInputInExperience->inputValue;	 //normalisedInputData[testSegment][(i+1)];
+		currentNeuronReference = currentNeuronReference->nextNeuron;
 		currentExperienceInputInExperience = currentExperienceInputInExperience->next;
 	}
 
 	currentNeuronReference = firstOutputNeuron;
 	for(long i = 0; i < numberOfOutputNeurons; i++)
 	{
-		currentNeuronReference->neuron->classTarget = 0.0F;
+		currentNeuronReference->classTarget = 0.0F;
 
 		if(i == currentExperienceInDataSet->classTargetValue)
 		{
-			currentNeuronReference->neuron->classTarget = 1.0F;
+			currentNeuronReference->classTarget = 1.0F;
 		}
 
-		currentNeuronReference = currentNeuronReference->nextNeuronContainer;
+		currentNeuronReference = currentNeuronReference->nextNeuron;
 	}
 
 #ifdef ANN_ADVANCED

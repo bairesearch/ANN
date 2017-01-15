@@ -20,21 +20,63 @@
  
 /*******************************************************************************
  *
- * File Name: ANNparser.h
+ * File Name: ANNneuronConnectionClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3d1a 13-April-2014
- * Comments: TH = Test Harness
+ * Comments:
  *
  *******************************************************************************/
 
-#ifndef HEADER_ANN_PARSER
-#define HEADER_ANN_PARSER
+#include "ANNneuronConnectionClass.h"
 
-//#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
+/************************************************************ Neural Network Class Definitions ******************************************************/
+
+#include <ctime>
+#include <cstdlib>	//for random number generation
+#include <cmath>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <string.h>
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 
 
-void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile);
 
-#endif
+
+
+
+NeuronConnection::NeuronConnection(void)
+{
+	frontNeuronID = 0;
+
+	//weight = 0;		//this value must be initialised explicity
+	//storedWeight = 0; 	//this value must be initialised explicity
+	frontNeuron = NULL;
+	backNeuron = NULL;
+}
+
+NeuronConnection::~NeuronConnection(void)
+{
+	if(frontNeuron != NULL)
+	{
+		delete frontNeuron;
+	}
+
+	/*
+	if(backNeuron != NULL)
+	{
+		delete backNeuron;
+	}
+	*/
+
+	//do not delete neurons in this destructor
+}
+
+/************************************************************ End Neural Network Class Definitions **************************************************/
+
+

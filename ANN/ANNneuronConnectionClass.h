@@ -20,21 +20,42 @@
  
 /*******************************************************************************
  *
- * File Name: ANNparser.h
+ * File Name: ANNneuronConnectionClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3d1a 13-April-2014
- * Comments: TH = Test Harness
+ * Comments:
  *
  *******************************************************************************/
 
-#ifndef HEADER_ANN_PARSER
-#define HEADER_ANN_PARSER
+ //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
+//NB when create NeuronList class change all referecnes to "...List->firstFrontNeuronConnectionContainer.." to "...List->neuronReferences"
 
-//#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
+/************************************************************ Neural Network Class Definitions ******************************************************/
 
 
+#ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
+#define HEADER_ANN_NEURON_CONNECTION_CLASS
 
-void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile);
+class Neuron;
+
+class NeuronConnection
+{
+public:
+
+	long frontNeuronID;		//temporary variable required for neural net creation from xml files
+
+	NeuronConnection(void);
+	~NeuronConnection(void);
+
+	double weight;
+	double storedWeight;
+
+	Neuron * frontNeuron;
+	Neuron * backNeuron;
+};
 
 #endif
+
+/************************************************************ End Neural Network Class Definitions **************************************************/
+

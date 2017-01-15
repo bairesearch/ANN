@@ -21,9 +21,9 @@
 /*******************************************************************************
  *
  * File Name: ANNtraining.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c9a 06-February-2014
+ * Project Version: 3d1a 13-April-2014
  * Comments:
  *
  *******************************************************************************/
@@ -32,6 +32,7 @@
 #define HEADER_ANN_TRAINING
 
 #include "ANNneuronClass.h"
+#include "ANNneuronConnectionClass.h"
 #include "ANNexperienceClass.h"
 #include "ANNglobalDefs.h"
 
@@ -56,17 +57,17 @@
 
 
 
-double calculateExperienceErrorForHypotheticalDecision(NeuronContainer * firstInputNeuronInNetwork, NeuronContainer * firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * experience);
+double calculateExperienceErrorForHypotheticalDecision(Neuron * firstInputNeuronInNetwork, Neuron * firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * experience);
 
-void feedNeuralNetworkWithASetOfExperiences(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, Experience * firstExperienceInList);
+void feedNeuralNetworkWithASetOfExperiences(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, Experience * firstExperienceInList);
 
-void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, Experience * firstExperienceInDataSet, long numberOfExperiences);
-void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, Experience * firstExperienceInDataSet, long numberOfExperiences, int maxEpochs);
+void trainNeuralNetworkSimple(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, Experience * firstExperienceInDataSet, long numberOfExperiences);
+void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, Experience * firstExperienceInDataSet, long numberOfExperiences, int maxEpochs);
 
-	void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed);
-	void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingAccessed);
-	void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAccessed);
-	void resetInputsAndClassTargets(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * currentExperienceInDataSet);
+	void storeNeuralNetworkBiasAndWeights(Neuron * neuronBeingAccessed);
+	void restoreNeuralNetworkWithStoredBiasAndWeights(Neuron * neuronBeingAccessed);
+	void resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed);
+	void resetInputsAndClassTargets(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * currentExperienceInDataSet);
 	float calculateStandardDeviation(float* array, int length, float average);
 
 

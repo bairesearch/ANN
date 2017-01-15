@@ -21,9 +21,9 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronClass.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c9a 06-February-2014
+ * Project Version: 3d1a 13-April-2014
  * Comments:
  *
  *******************************************************************************/
@@ -48,199 +48,9 @@ using namespace std;
 
 
 
-
-
-NeuronConnection::NeuronConnection(void)
-{
-	//weight = 0;		//this value must be initialised explicity
-	//storedWeight = 0; 	//this value must be initialised explicity
-}
-
-NeuronConnection::~NeuronConnection(void)
-{
-
-}
-
-
-
-
-
-
-
-
-NeuronConnectionContainer::NeuronConnectionContainer(void)
-{
-	neuronID = 0;
-	neuron = NULL;
-	neuronConnection = NULL;
-	nextNeuronConnectionContainer = NULL;
-}
-
-NeuronConnectionContainer::NeuronConnectionContainer(Neuron * initialNeuron)
-{
-	neuronID = initialNeuron->id;
-	neuron = initialNeuron;
-	neuronConnection = NULL;
-	nextNeuronConnectionContainer = NULL;
-}
-
-NeuronConnectionContainer::NeuronConnectionContainer(Neuron * initialNeuron, NeuronConnection * initialConnection)
-{
-	neuronID = initialNeuron->id;
-	neuron = initialNeuron;
-	neuronConnection = initialConnection;
-	nextNeuronConnectionContainer = NULL;
-}
-
-NeuronConnectionContainer::~NeuronConnectionContainer(void)
-{
-	if(nextNeuronConnectionContainer != NULL)
-	{
-		delete nextNeuronConnectionContainer;
-	}
-
-	if(neuronConnection != NULL)
-	{
-		delete neuronConnection;
-	}
-
-	//do not delete neurons in this destructor
-}
-
-
-
-
-
-
-
-
-
-
-NeuronContainer::NeuronContainer(void)
-{
-	neuron = new Neuron();
-
-	nextNeuronContainer = NULL;
-	//previousNeuronContainer = NULL;
-	hasFrontLayer = false;
-	hasBackLayer = false;
-	firstNeuronInFrontLayer = NULL;
-	firstNeuronInBackLayer = NULL;
-
-	//numFrontNeuronConnections = 0;
-	//numBackNeuronConnections = 0;
-
-	firstFrontNeuronConnectionContainer = new NeuronConnectionContainer();		//OLD: firstFrontNeuronConnectionContainer = NULL;
-	firstBackNeuronConnectionContainer = new NeuronConnectionContainer();		//OLD: firstBackNeuronConnectionContainer = NULL;
-	currentFrontNeuronConnectionContainer = firstFrontNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
-	currentBackNeuronConnectionContainer = firstBackNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
-
-#ifdef ANN_ADVANCED
-	isSubnet = false;
-
-	//numNeuronsInBackLayerOfSubnet = 0;
-	//numNeuronsInFrontLayerOfSubnet = 0;
-	firstNeuronContainerInBackLayerOfSubnet = NULL;
-	firstNeuronContainerInFrontLayerOfSubnet = NULL;
-
-	isInputSubnet = false;
-	isOutputSubnet = false;
-#endif
-
-}
-
-NeuronContainer::NeuronContainer(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
-{
-	neuron = new Neuron(IDinit, orderIDinit, layerIDinit, subnetIDinit);
-
-	nextNeuronContainer = NULL;
-	//previousNeuronContainer = NULL;
-	hasFrontLayer = false;
-	hasBackLayer = false;
-	firstNeuronInFrontLayer = NULL;
-	firstNeuronInBackLayer = NULL;
-
-	//numFrontNeuronConnections = 0;
-	//numBackNeuronConnections = 0;
-	firstFrontNeuronConnectionContainer = new NeuronConnectionContainer();			//OLD: firstFrontNeuronConnectionContainer = NULL;
-	firstBackNeuronConnectionContainer = new NeuronConnectionContainer();			//OLD: firstBackNeuronConnectionContainer = NULL;
-	currentFrontNeuronConnectionContainer = firstFrontNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
-	currentBackNeuronConnectionContainer = firstBackNeuronConnectionContainer;		//this variable is temporary and is used for neural network Formation only
-
-
-#ifdef ANN_ADVANCED
-	isSubnet = false;
-
-	//numNeuronsInBackLayerOfSubnet = 0;
-	//numNeuronsInFrontLayerOfSubnet = 0;
-	firstNeuronContainerInBackLayerOfSubnet = NULL;
-	firstNeuronContainerInFrontLayerOfSubnet = NULL;
-
-	isInputSubnet = false;
-	isOutputSubnet = false;
-#endif
-
-}
-
-
-
-NeuronContainer::~NeuronContainer(void)
-{
-
-	if(neuron != NULL)
-	{
-		delete neuron;
-	}
-
-	if(firstFrontNeuronConnectionContainer != NULL)
-	{
-		delete firstFrontNeuronConnectionContainer;
-	}
-
-	if(firstBackNeuronConnectionContainer != NULL)
-	{
-		delete firstBackNeuronConnectionContainer;
-	}
-
-	if(firstNeuronContainerInBackLayerOfSubnet != NULL)
-	{
-		delete firstNeuronContainerInBackLayerOfSubnet;
-	}
-
-	if(firstNeuronContainerInFrontLayerOfSubnet != NULL)
-	{
-		delete firstNeuronContainerInFrontLayerOfSubnet;
-	}
-
-	if(nextNeuronContainer != NULL)
-	{
-		delete nextNeuronContainer;
-	}
-	else
-	{
-		if(firstNeuronInFrontLayer != NULL)
-		{
-			delete firstNeuronInFrontLayer;
-		}
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Neuron::Neuron(void)
 {
-	id = 0;			//none = 0
+	id = 0;		//none = 0
 	orderID = 0;	//none = 0
 	layerID = 0;	//none = 0
 	subnetID = 0;	//none = 0
@@ -255,6 +65,23 @@ Neuron::Neuron(void)
 	//xPosRel = 0;		//this value must be initialised explicity
 	//yPosRel = 0;		//this value must be initialised explicity
 	//zPosRel = 0;		//this value must be initialised explicity
+
+	nextNeuron = NULL;
+
+	hasFrontLayer = false;
+	hasBackLayer = false;
+	firstNeuronInFrontLayer = NULL;
+	firstNeuronInBackLayer = NULL;
+
+#ifdef ANN_ADVANCED
+	isSubnet = false;
+
+	firstNeuronInBackLayerOfSubnet = NULL;
+	firstNeuronInFrontLayerOfSubnet = NULL;
+
+	isInputSubnet = false;
+	isOutputSubnet = false;
+#endif
 }
 
 Neuron::Neuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
@@ -274,11 +101,72 @@ Neuron::Neuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDini
 	//xPosRel = 0;		//this value must be initialised explicity
 	//yPosRel = 0;		//this value must be initialised explicity
 	//zPosRel = 0;		//this value must be initialised explicity
+
+	nextNeuron = NULL;
+
+	hasFrontLayer = false;
+	hasBackLayer = false;
+	firstNeuronInFrontLayer = NULL;
+	firstNeuronInBackLayer = NULL;
+
+#ifdef ANN_ADVANCED
+	isSubnet = false;
+
+	firstNeuronInBackLayerOfSubnet = NULL;
+	firstNeuronInFrontLayerOfSubnet = NULL;
+
+	isInputSubnet = false;
+	isOutputSubnet = false;
+#endif
 }
 
 Neuron::~Neuron(void)
 {
+	for(vector<NeuronConnection*>::iterator connectionIter = frontNeuronConnectionList.begin(); connectionIter != frontNeuronConnectionList.end(); connectionIter++)
+	{
+		if(*connectionIter != NULL)
+		{
+			#ifdef GIA_FREE_MEMORY_DEBUG
+			//cout << "deleting: frontNeuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
+			#endif
+			delete *connectionIter;
+		}
+	}
 
+	/*
+	for(vector<NeuronConnection*>::iterator connectionIter = backNeuronConnectionList.begin(); connectionIter != backNeuronConnectionList.end(); connectionIter++)
+	{
+		if(*connectionIter != NULL)
+		{
+			#ifdef GIA_FREE_MEMORY_DEBUG
+			//cout << "deleting: backNeuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
+			#endif
+			delete *connectionIter;
+		}
+	}
+	*/
+
+	if(firstNeuronInBackLayerOfSubnet != NULL)
+	{
+		delete firstNeuronInBackLayerOfSubnet;
+	}
+
+	if(firstNeuronInFrontLayerOfSubnet != NULL)
+	{
+		delete firstNeuronInFrontLayerOfSubnet;
+	}
+
+	if(nextNeuron != NULL)
+	{
+		delete nextNeuron;
+	}
+	else
+	{
+		if(firstNeuronInFrontLayer != NULL)
+		{
+			delete firstNeuronInFrontLayer;
+		}
+	}
 }
 
 
