@@ -23,7 +23,7 @@
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3d2a 14-April-2014
+ * Project Version: 3d2b 14-April-2014
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -851,15 +851,16 @@ bool outputNetworkAsVectorGraphics()
 		cout << "vector graphics file name without sprites = " << NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITHOUT_SPRITES << endl;
 		cout << "vector graphics file name with sprites = " << NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES << endl;
 		cout << "vector graphics file svg = " << NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME << endl;
+		cout << "vector graphics file ppm = " << NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME << endl;
 
-		XMLparserTag * firstTagInSVGFile = new XMLparserTag();
-		
-		ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITHOUT_SPRITES, NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES, firstInputNeuronInNetwork, true, true, &firstTagInSVGFile);
-
-		if(!writeSVGfile(NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME, firstTagInSVGFile))
-		{
-			result = false;
-		}
+		bool display = false;
+		bool useOutputPPMFile = false;
+		bool allowRaytrace = false;
+		string outputPPMFileNameRaytraced = "";
+		string outputTALFileName = "";
+		int rasterImageWidth = 0;
+		int rasterImageHeight = 0;
+		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, true, allowRaytrace, display, true, useOutputPPMFile, true, NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITHOUT_SPRITES, NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES, NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME, NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 	}
 	else
 	{
