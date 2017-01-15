@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a4a 06-June-2016
+ * Project Version: 4a5a 06-June-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -132,7 +132,7 @@ void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int im
 
 
 
-bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileNameWithSprites, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs)
+bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs)
 {
 	bool result = true;
 
@@ -177,12 +177,11 @@ bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwo
 	}
 
 	string vectorGraphicsLDRNNSceneFileName = charstarvectorGraphicsLDRNNSceneFileName;
-	string vectorGraphicsLDRNNSceneFileNameWithSprites = charstarvectorGraphicsLDRNNSceneFileNameWithSprites;
 	string vectorGraphicsTALNNSceneFileName = charstarvectorGraphicsTALNNSceneFileName;
 	string raytracedImagePPMNNSceneFileName = charstarraytracedImagePPMNNSceneFileName;
 	string outputSVGFileName = "";
 	string outputPPMFileName = "";
-	outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, false, true, true, false, vectorGraphicsLDRNNSceneFileName, vectorGraphicsLDRNNSceneFileNameWithSprites, NULL, NULL, raytracedImagePPMNNSceneFileName, vectorGraphicsTALNNSceneFileName, NULL, NULL);
+	outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, false, true, true, false, vectorGraphicsLDRNNSceneFileName, NULL, NULL, raytracedImagePPMNNSceneFileName, vectorGraphicsTALNNSceneFileName, NULL, NULL);
 
 
 	writeExperienceListToFile(charstarexperienceNNSceneFileName, firstExperienceInList);
@@ -194,7 +193,7 @@ bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwo
 
 
 
-void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool display, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileNameWithoutSprites, string outputLDRFileNameWithSprites, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
+void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool display, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
 {
 	bool result = true;
 
@@ -203,8 +202,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 		initiateOpenGL(width, height, 0, 0, false);
 	}
 
-	char* outputFileNameLDRwithoutSpritescharstar = const_cast<char*>(outputLDRFileNameWithoutSprites.c_str());
-	char* outputFileNameLDRwithSpritescharstar = const_cast<char*>(outputLDRFileNameWithSprites.c_str());
+	char* outputFileNameLDRcharstar = const_cast<char*>(outputLDRFileName.c_str());
 	char* outputFileNameSVGcharstar = const_cast<char*>(outputSVGFileName.c_str());
 	char* displayFileNamePPMcharstar = const_cast<char*>(outputPPMFileName.c_str());
 	char* outputFileNamePPMrayTracedcharstar = const_cast<char*>(outputPPMFileNameRaytraced.c_str());
@@ -218,21 +216,18 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 		XMLparserTag* firstTagInSVGFile = new XMLparserTag();
 		XMLparserTag* currentTagInSVGFile = firstTagInSVGFile;
 
-		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, &currentTagInSVGFile);
-
-		LDreference* nonSpriteListInitialReference = new LDreference();
-		LDreference* spriteListInitialReference = new LDreference();
+		LDreference* initialReference = new LDreference();
 
 		int numSpritesAdded = 0;
 
-		if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonSpriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
+		if(!ANNcreateNeuralNetworkReferenceLists(outputFileNameLDRcharstar, initialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
 		{
 			result = false;
 		}
 
 		if(useOutputLDRFile)
 		{
-			if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonSpriteListInitialReference, spriteListInitialReference, numSpritesAdded))
+			if(!ANNcreateNeuralNetworkSceneFilesFromReferenceLists(outputFileNameLDRcharstar, addSprites, initialReference, numSpritesAdded))
 			{
 				result = false;
 			}
@@ -248,15 +243,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 		}
 
 		char* charstarsceneFileNameForRayTracing;
-
-		if(addSprites)
-		{
-			charstarsceneFileNameForRayTracing = outputFileNameLDRwithSpritescharstar;
-		}
-		else
-		{
-			charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
-		}
+		charstarsceneFileNameForRayTracing = outputFileNameLDRcharstar;
 
 		if(display || allowRaytrace)
 		{
@@ -308,16 +295,15 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 					#ifdef TH_USE_POVRAY_FOR_NEURAL_NETWORK_VEC_GRAPHICS	//NOT YET TEST;
 
 
-						LDreference* nonSpriteListInitialReference = new LDreference();
-						LDreference* spriteListInitialReference = new LDreference();
+						LDreference* initialReference = new LDreference();
 
 						int numSpritesAdded = 0;
-						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonSpriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
+						if(!ANNcreateNeuralNetworkReferenceLists(outputFileNameLDRcharstar, initialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
 						{
 							result = false;
 						}
 
-						if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonSpriteListInitialReference, spriteListInitialReference, numSpritesAdded))
+						if(!ANNcreateNeuralNetworkSceneFilesFromReferenceLists(outputFileNameLDRcharstar, addSprites, initialReference, numSpritesAdded))
 						{
 							result = false;
 						}

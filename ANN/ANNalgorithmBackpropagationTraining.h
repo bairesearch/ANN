@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a4a 06-June-2016
+ * Project Version: 4a5a 06-June-2016
  * Comments:
  *
  *******************************************************************************/
