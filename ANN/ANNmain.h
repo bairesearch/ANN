@@ -3,7 +3,7 @@
  * File Name: ANNmain.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -11,6 +11,7 @@
 #ifndef HEADER_ANN_MAIN
 #define HEADER_ANN_MAIN
 
+#include "SHAREDglobalDefs.h"
 
 //#define LOAD_NETWORK_FROM_XML_FILE
 //#define SKIP_NETWORK_TRAINING_AND_ONLY_OUTPUT_VIS
@@ -40,7 +41,7 @@ bool mainUI();
 bool loadANetworkFromXML();
 bool loadAnExperienceDataFile();
 bool createANetwork();
-bool trainANetwork();
+bool trainANetwork(bool advancedTraining);
 bool outputANetworkToXML();
 bool outputANetworkAsVectorGraphics();
 

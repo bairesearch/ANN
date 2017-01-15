@@ -3,7 +3,7 @@
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a6a 20-Mar-2012
+ * Project Version: 3a6b 30-Apr-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -20,8 +20,7 @@
 #include <fstream>
 using namespace std;
 
-
-#include "SHAREDglobalDefs.h"
+#include "ANNmain.h"
 
 #include "ANNFormation.h"
 #include "ANNTraining.h"
@@ -31,7 +30,6 @@ using namespace std;
 #include "ANNdisplay.h"
 
 #include "ANNData.h"
-#include "ANNmain.h"
 
 #include "LDsvg.h"
 #include "LDsprite.h"
@@ -963,21 +961,6 @@ bool mainUI()
 
 	return result;
 }
-
-
-/*
-int main()
-{
-	bool result = true;
-
-	//srand(static_cast<unsigned>(time(0)));
-	srand( (unsigned)time(NULL) );	//seeds randomness
-
-	result = mainUI();
-
-	return result;
-}
-*/
 
 
 
