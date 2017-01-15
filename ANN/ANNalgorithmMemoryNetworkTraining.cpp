@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -50,14 +50,14 @@ void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, ANNneuron* firs
 	arbitary number hidden layers/subnets with arbitary number hidden neurons with
 	Y output neurons
 	*/
-	
+
 	#ifndef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_OPTIMISE_CLASSIFICATION_NET
 	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
 	#endif
-	
-	int numberOfExperiencesTrain = 0; 
-	int numberOfExperiencesTest = 0; 
-			
+
+	int numberOfExperiencesTrain = 0;
+	int numberOfExperiencesTest = 0;
+
 	//training
 	ANNexperience* currentExperience = firstExperienceInDataSet;
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
@@ -69,8 +69,8 @@ void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, ANNneuron* firs
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTrain++;
 	}
-	
-	//testing	
+
+	//testing
 	double testingMemoryResultSum = 0.0;
 	//creates and stores copy of the trained neural network
 	storeNeuralNetworkMemoryTrace(firstInputNeuron);
@@ -109,30 +109,30 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutpu
 	arbitary number hidden layers/subnets with arbitary number hidden neurons with
 	Y output neurons
 	*/
-	
+
 	#ifndef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_OPTIMISE_CLASSIFICATION_NET
 	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
 	#endif
-	
+
 	for(int foldNum=0; foldNum < maxFolds; foldNum++)
 	{
 		cout << "foldNum = " << foldNum << endl;
-		
-		int numberOfExperiencesTrain = 0; 
-		int numberOfExperiencesTest = 0; 
-		
+
+		int numberOfExperiencesTrain = 0;
+		int numberOfExperiencesTest = 0;
+
 		long indexOfFirstExperienceInFoldTrainPartA = 0;
 		long indexOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
 		ANNexperience* firstExperienceInFoldTrainPartA = firstExperienceInDataSet;
-		
+
 		long indexOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
 		long indexOfLastExperienceInFoldTrainPartB = numberOfExperiences;
 		ANNexperience* firstExperienceInFoldTrainPartB = findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTrainPartB);
-		
+
 		long indexOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
 		long indexOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
 		ANNexperience* firstExperienceInFoldTestPart = findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTestPart);
-		
+
 		/*
 		cout << "indexOfFirstExperienceInFoldTrainPartA = " << indexOfFirstExperienceInFoldTrainPartA << endl;
 		cout << "indexOfLastExperienceInFoldTrainPartA = " << indexOfLastExperienceInFoldTrainPartA << endl;
@@ -141,7 +141,7 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutpu
 		cout << "indexOfFirstExperienceInFoldTestPart = " << indexOfFirstExperienceInFoldTestPart << endl;
 		cout << "indexOfLastExperienceInFoldTestPart = " << indexOfLastExperienceInFoldTestPart << endl;
 		*/
-		
+
 		//training
 		//from start of dataSet -> beginning of test segment
 		ANNexperience* currentExperienceInFold;
@@ -171,7 +171,7 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutpu
 			numberOfExperiencesTrain++;
 		}
 
-		//testing	
+		//testing
 		double testingMemoryResultSum = 0.0;
 		//creates and stores copy of the trained neural network
 		storeNeuralNetworkMemoryTrace(firstInputNeuron);
@@ -191,7 +191,7 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutpu
 			currentExperienceInFold = currentExperienceInFold->next;
 			numberOfExperiencesTest++;
 		}
-		
+
 		double testingMemoryResultAverage = testingMemoryResultSum/numberOfExperiencesTest;
 		cout << "testingMemoryResultAverage = " << testingMemoryResultAverage << endl;
 
@@ -382,11 +382,11 @@ void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* ne
 				#endif
 				#endif
 				#endif
-				
+
 				#ifdef ANN_DEBUG
 				cout << "Front ANNneuron Connection Weight = " << currentANNneuronConnection->weight << endl;
 				#endif
-				
+
 				currentANNneuronConnection->memoryTrace = 0.0;
 			}
 

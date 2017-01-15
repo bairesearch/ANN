@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -249,7 +249,7 @@ bool ANNcreateNeuralNetworkReferenceLists(string sceneFileName, LDreference* ini
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	ANNsearchNeuralNetworkAndCreateReferencesReset(firstNeuronInNetwork);
 	#endif
-		
+
 	return result;
 }
 
@@ -265,27 +265,26 @@ bool ANNcreateNeuralNetworkSceneFilesFromReferenceLists(string sceneFileName, bo
 
 
 
-
 LDreference* ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* firstNeuronInLayer, LDreference* currentListReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, bool isSubnet, vec* positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag** currentTagSVG, bool writeLDR)
-{	
+{
 	bool result = true;
 
 	ANNneuron* currentNeuron = firstNeuronInLayer;
 	while(currentNeuron->nextNeuron != NULL)
-	{		
+	{
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		if(!(currentNeuron->printed))
 		{
 			currentNeuron->printed = true;
 		#endif
-			
+
 			ANNfillNeuronDisplayReference(currentListReference, currentNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTagSVG);
 			LDreference* currentNeuronReferenceOnLayer = currentListReference;
 
 			LDreference* newNeuronDispayReference = new LDreference();
 			currentListReference->next = newNeuronDispayReference;
 			currentListReference = currentListReference->next;
-			
+
 			#ifndef ANN_DISPLAY_DISABLE_SPRITES
 			if(addSprites)
 			{
@@ -298,7 +297,7 @@ LDreference* ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* firstNeuronInL
 				}
 			}
 			#endif
-			
+
 			if(currentNeuron->hasBackLayer == true)
 			{
 				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->backANNneuronConnectionList.begin(); connectionIter != currentNeuron->backANNneuronConnectionList.end(); connectionIter++)
@@ -318,7 +317,7 @@ LDreference* ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* firstNeuronInL
 					LDreference* newNeuronDispayReference = new LDreference();
 					currentListReference->next = newNeuronDispayReference;
 					currentListReference = currentListReference->next;
-					
+
 					#ifndef ANN_DISPLAY_DISABLE_SPRITES
 					if(addSprites)
 					{
@@ -398,7 +397,7 @@ LDreference* ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* firstNeuronInL
 				currentListReference = ANNsearchNeuralNetworkAndCreateReferences(currentNeuron->firstNeuronInBackLayerOfSubnet, currentListReference, eyeCoords, numSpritesAdded, sceneFileName, (true|isSubnet), &(currentNeuronReferenceOnLayer->relativePosition), addSprites, writeSVG, currentTagSVG, writeLDR);
 			}
 			#endif
-			
+
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 			if(currentNeuron->hasFrontLayer)
 			{
@@ -409,20 +408,20 @@ LDreference* ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* firstNeuronInL
 				}
 			}
 			#endif
-			
+
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		}
 		#endif
-		
+
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
-		currentListReference = ANNsearchNeuralNetworkAndCreateReferences(firstNeuronInLayer->firstNeuronInFrontLayer, spriteListInitialReference, currentListReference, eyeCoords, numSpritesAdded, sceneFileNameWithSprites, isSubnet, positionOfSubnetNeuron, addSprites, writeSVG, currentTagSVG);
+		currentListReference = ANNsearchNeuralNetworkAndCreateReferences(firstNeuronInLayer->firstNeuronInFrontLayer, currentListReference, eyeCoords, numSpritesAdded, sceneFileName, isSubnet, positionOfSubnetNeuron, addSprites, writeSVG, currentTagSVG, writeLDR);
 	}
 	#endif
-	
+
 	return currentListReference;
 
 }
@@ -430,10 +429,10 @@ LDreference* ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* firstNeuronInL
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 void ANNsearchNeuralNetworkAndCreateReferencesReset(ANNneuron* firstNeuronInLayer)
-{	
+{
 	ANNneuron* currentNeuron = firstNeuronInLayer;
 	while(currentNeuron->nextNeuron != NULL)
-	{		
+	{
 		if(currentNeuron->printed)
 		{
 			currentNeuron->printed = false;
@@ -446,7 +445,7 @@ void ANNsearchNeuralNetworkAndCreateReferencesReset(ANNneuron* firstNeuronInLaye
 				}
 			}
 		}
-		
+
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 
@@ -676,8 +675,8 @@ bool ANNfillANNneuronConnectionDisplayReference(LDreference* currentNeuronDispay
 	}
 	else
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;	
-	}	
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+	}
 	#else
 	if(ANNneuronConnection->weight < (-3.0))
 	{
@@ -819,7 +818,7 @@ bool ANNdetermineSpriteInfoForANNneuronConnectionAndAddSpriteToSpriteRefList(ANN
 
 	//generate sprite reference name
 	string spriteReferenceFileName = LDcreateSpriteReferenceName(*numSpritesAdded, sceneFileName);
-	
+
 	if(writeLDR)
 	{
 		#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
@@ -830,7 +829,7 @@ bool ANNdetermineSpriteInfoForANNneuronConnectionAndAddSpriteToSpriteRefList(ANN
 		{
 			result = false;
 		}
-	}	
+	}
 
 	delete spriteSubmodelInitialReference;
 
@@ -908,7 +907,7 @@ void writeSpriteTextToSVG(string* spriteTextString, bool writeSVG, XMLparserTag*
 				{
 					stringCurrentLine = spriteTextString->substr(i-stringCurrentLineIndex, stringCurrentLineIndex+1);
 				}
-				
+
 				vec positionSVG;
 				positionSVG.x = referencePosition->x*ANN_SVG_SCALE_FACTOR - ANN_SVG_NEURON_SIZE/2;
 				positionSVG.y = referencePosition->y*ANN_SVG_SCALE_FACTOR - (numberOfLines)*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE + lineIndex*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE;
@@ -1043,7 +1042,7 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 		tempString = convertDoubleToString(neuron->error, "%0.2f");
 		*spriteTextString = *spriteTextString + "error = " + tempString;
 	}
-	
+
 	#ifdef ANN_DEBUG
 	//cout << "*spriteTextString = \n" <<* spriteTextString << "\n\n" << endl;
 	#endif
@@ -1066,12 +1065,12 @@ void ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneuronConnection* 
 	/*Unit Name Information*/
 
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-	tempString = convertDoubleToString(ANNneuronConnection->idealValue, "%0.2f");	
+	tempString = convertDoubleToString(ANNneuronConnection->idealValue, "%0.2f");
 	#else
 	tempString = convertDoubleToString(ANNneuronConnection->weight, "%0.2f");
 	#endif
 	*spriteTextString = "\n\n" + *spriteTextString + "IV = " + tempString;
-	
+
 	#ifdef ANN_DEBUG
 	//cout << "*spriteTextString = \n" << *spriteTextString << "\n\n" << endl;
 	#endif

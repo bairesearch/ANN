@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkUpdate.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -48,9 +48,9 @@ double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNn
 		void readAndUpdateMemoryTrace(ANNneuron* currentNeuronInLayer, double* trainingMemoryResult);
 			void updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(ANNneuronConnection* currentANNneuronConnectionSide);
 			void incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(double* trainingMemoryResult);
-	
 
-	
+
+
 #endif
 
 #endif

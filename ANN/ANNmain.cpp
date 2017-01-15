@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -140,13 +140,13 @@ int main(int argc,char* *argv)
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	long numberOfInputNeurons = 0;	//need to be generated based upon dataset or xml input file
 	long numberOfOutputNeurons = 0;	//dynamically generated while creating classification net
-	double numberOfLayers = 0;	//NOTUSED	
+	double numberOfLayers = 0;	//NOTUSED
 	#else
 	long numberOfInputNeurons = 5;	//need to be generated based upon dataset or xml input file
 	long numberOfOutputNeurons = 3;	//need to be generated based upon dataset or xml input file
 	double numberOfLayers = 3;
 	#endif
-	
+
 	int layerDivergenceType = LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING;
 	double meanLayerDivergenceFactor = DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR;
 	double probabilityANNneuronConnectionWithPreviousLayerNeuron = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH;
@@ -170,7 +170,7 @@ int main(int argc,char* *argv)
 	bool useOutputLDRFile = false;
 	string outputLDRFileName = NEURAL_NETWORK_VISUALISATION_LDR_FILE_NAME;
 	bool useSprites = true;	//default true
-	
+
 	bool useOutputSVGFile = false;
 	string outputSVGFileName = NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME;
 
@@ -212,12 +212,12 @@ int main(int argc,char* *argv)
 		{
 			numberOfLayers = getFloatArgument(argc, argv, "-layers");
 		}
-		
+
 		if(argumentExists(argc, argv, "-ineurons"))
 		{
 			numberOfInputNeurons = getFloatArgument(argc, argv, "-ineurons");
 		}
-		
+
 		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		if(argumentExists(argc, argv, "-oneurons"))
 		{
@@ -229,42 +229,42 @@ int main(int argc,char* *argv)
 		{
 			layerDivergenceType = getFloatArgument(argc, argv, "-divtype");
 		}
-		
+
 		if(argumentExists(argc, argv, "-divfactor"))
 		{
 			meanLayerDivergenceFactor = getFloatArgument(argc, argv, "-divfactor");
 		}
-		
+
 		if(argumentExists(argc, argv, "-con"))
 		{
 			probabilityANNneuronConnectionWithPreviousLayerNeuron = getFloatArgument(argc, argv, "-con");
 		}
-		
+
 		if(argumentExists(argc, argv, "-conall"))
 		{
 			probabilityANNneuronConnectionWithAllPreviousLayersNeurons = getFloatArgument(argc, argv, "-conall");
 		}
-		
+
 		if(argumentExists(argc, argv, "-usesubnets"))
 		{
 			useSubnets = true;
 		}
-		
+
 		if(argumentExists(argc, argv, "-numsubnets"))
 		{
 			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
 		}
-		
+
 		if(argumentExists(argc, argv, "-probsubnet"))
 		{
 			probabilityOfSubnetCreation = getFloatArgument(argc, argv, "-probsubnet");
 		}
-		
+
 		if(argumentExists(argc, argv, "-subnetdepl"))
 		{
 			useSubnetDependentNumberOfLayers = true;
 		}
-		
+
 		if(argumentExists(argc, argv, "-epochs"))
 		{
 			numEpochs=getFloatArgument(argc, argv, "-epochs");
@@ -275,7 +275,7 @@ int main(int argc,char* *argv)
 		{
 			maxNumEpochs = getFloatArgument(argc, argv, "-maxepochs");
 		}
-		
+
 		if(argumentExists(argc, argv, "-maxFolds"))
 		{
 			maxFolds = getFloatArgument(argc, argv, "-maxFolds");
@@ -286,7 +286,7 @@ int main(int argc,char* *argv)
 		{
 			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
 		}
-		
+
 		if(argumentExists(argc, argv, "-numsubnets"))
 		{
 			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
@@ -358,7 +358,7 @@ int main(int argc,char* *argv)
 		{
 			rasterImageWidth = getFloatArgument(argc, argv, "-width");
 		}
-		
+
 		if(argumentExists(argc, argv, "-height"))
 		{
 			rasterImageHeight = getFloatArgument(argc, argv, "-height");
@@ -406,7 +406,7 @@ int main(int argc,char* *argv)
 		}
 		if(argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3i17a 20-September-2016" << endl;
+			cout << "Project Version: 3i18a 21-September-2016" << endl;
 			exit(1);
 		}
 	}
@@ -425,14 +425,14 @@ int main(int argc,char* *argv)
 	if(useTextUI)
 	{
 		mainUI();
-	}		
+	}
 
 	if(displayInOpenGL)
 	{
 		drawOutput = true;
 		useOutputLDRFile = true;	//required for OpenGL image generation
 	}
-		
+
 	if(drawOutput)
 	{
 		if(!useOutputLDRFile)
@@ -568,7 +568,7 @@ int main(int argc,char* *argv)
 				trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-				trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
+				trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
 				#endif
 				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
@@ -580,10 +580,10 @@ int main(int argc,char* *argv)
 				trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-				trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
+				trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
 				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);				
+				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
 			}
 		}
@@ -857,10 +857,10 @@ bool trainNetwork(bool advancedTraining)
 			trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-			trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
+			trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);				
+			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 		}
 		else
@@ -870,10 +870,10 @@ bool trainNetwork(bool advancedTraining)
 			trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-			trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
+			trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);					
+			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 		}
 	}

@@ -26,7 +26,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -62,7 +62,7 @@ void formNeuralNetworkInputLayer(ANNneuron* firstInputNeuronInNetwork, int numbe
 
 		currentNeuron->hasFrontLayer = true;
 		currentNeuron->neuronTypeInput = true;
-			
+
 		ANNneuron* newNeuron = new ANNneuron();
 		currentNeuron->nextNeuron = newNeuron;
 		currentNeuron = currentNeuron->nextNeuron;
@@ -198,7 +198,7 @@ void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeur
 		}
 		currentNeuronL1 = currentNeuronL1->nextNeuron;
 	}
-	
+
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	addSideConnectionsForLayer(firstInputNeuron);
 	addSideConnectionsForLayer(firstHiddenNeuron);
@@ -549,7 +549,7 @@ void linkNewFrontLayerWithPreviousLayers(ANNneuron* firstNeuronInCurrentLayer, A
 		firstNeuronInPreviousLayerX=firstNeuronInPreviousLayerX->firstNeuronInFrontLayer;
 
 	}
-	
+
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	addSideConnectionsForLayer(firstNeuronInCurrentLayer);	//only required for input layer*
 	addSideConnectionsForLayer(firstNeuronInNewFrontLayer);
@@ -869,7 +869,7 @@ void linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNeuronInCurrentLayer,
 
 		firstNeuronInPreviousLayerX=firstNeuronInPreviousLayerX->firstNeuronInFrontLayer;
 	}
-	
+
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	addSideConnectionsForLayer2D(firstNeuronInCurrentLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);	//only required for input layer*
 	addSideConnectionsForLayer2D(firstNeuronInNewFrontLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);
@@ -1393,7 +1393,7 @@ void addSideConnectionsForLayer(ANNneuron* firstNeuronInLayer)
 		{
 			addSideConnectionIfNotAlreadyAdded(currentNeuronL1, currentNeuronL2);
 			currentNeuronL2 = currentNeuronL2->nextNeuron;
-		}	
+		}
 		currentNeuronL1 = currentNeuronL1->nextNeuron;
 	}
 }
@@ -1401,7 +1401,7 @@ void addSideConnectionsForLayer(ANNneuron* firstNeuronInLayer)
 void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDivergenceType, long currentNumberOfLayers, long numberOfLayers)
 {
 	int probabilityANNneuronConnectionWithSideLayerNeurons = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_SIDE_LAYER_NEURONS_ANNTH;
-	
+
 	long numberOfNeuronsInL1 = 0;
 	ANNneuron* currentNeuronL1 = firstNeuronInLayer;
 	while(currentNeuronL1->nextNeuron != NULL)
@@ -1429,7 +1429,7 @@ void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDiverg
 				if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D)
 				{
 					double distanceBetweenPosRelL1AndPosRelL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
-			
+
 					#ifdef ANN_DEBUG
 					/*
 					cout << " " << endl;
@@ -1455,9 +1455,9 @@ void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDiverg
 				}
 				else if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS)
 				{
-					
+
 					#ifdef IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_USE_NEARBY_POINTS_INSTEAD
-						
+
 					long distanceBetweenNeuronL1AndL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
 
 					//if(abs(distanceBetweenNeuronL1AndL2*IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS) < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
@@ -1475,7 +1475,7 @@ void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDiverg
 						spatialCondition2D = true;
 					}
 					#endif
-					
+
 				}
 			}
 			else
@@ -1491,7 +1491,7 @@ void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDiverg
 				#endif
 
 				if(randomNumberBetween0And1 < probabilityANNneuronConnectionWithSideLayerNeurons)
-				{//add connections to side layer neuron 
+				{//add connections to side layer neuron
 					addSideConnectionIfNotAlreadyAdded(currentNeuronL1, currentNeuronL2);
 				}
 			}
@@ -1501,7 +1501,7 @@ void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDiverg
 	}
 }
 
-	
+
 
 void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* currentNeuronL2)
 {
@@ -1510,7 +1510,7 @@ void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* c
 	{
 		sideConnectionExists = true;
 	}
-	
+
 	//required to prevent replication of side connection for non-input lower level layers (see "only required for input layer*" x2)
 	for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuronL1->sideANNneuronConnectionList.begin(); connectionIter != currentNeuronL1->sideANNneuronConnectionList.end(); connectionIter++)
 	{
@@ -1520,7 +1520,7 @@ void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* c
 			sideConnectionExists = true;
 		}
 	}
-	
+
 	//required to prevent replication due to connection symmetry
 	for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuronL1->sideANNneuronConnectionList.begin(); connectionIter != currentNeuronL1->sideANNneuronConnectionList.end(); connectionIter++)
 	{
@@ -1530,7 +1530,7 @@ void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* c
 			sideConnectionExists = true;
 		}
 	}
-	
+
 	if(!sideConnectionExists)
 	{
 		ANNneuronConnection* newANNneuronConnection = new ANNneuronConnection();

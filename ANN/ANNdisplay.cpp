@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -148,10 +148,10 @@ bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwo
 		trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences, maxNumEpochs);
 		#endif
 		#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-		trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences);		
+		trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences);
 		#endif
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-		trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);	
+		trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
 		#endif
 		//this is done dynamically if do not have heaps of RAM
 	}
@@ -162,7 +162,7 @@ bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwo
 		trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, setNumEpochs, firstExperienceInList, numberOfExperiences);
 		#endif
 		#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-		trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);		
+		trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
 		#endif
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
@@ -216,7 +216,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 		#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 		cout << "referenceFileName = " << outputLDRFileName << endl;
 		#endif
-		
+
 		XMLparserTag* firstTagInSVGFile = new XMLparserTag();
 		XMLparserTag* currentTagInSVGFile = firstTagInSVGFile;
 
@@ -298,9 +298,9 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 						result = false;
 					}
 				#else
-					#ifdef TH_USE_POVRAY_FOR_NEURAL_NETWORK_VEC_GRAPHICS	//NOT YET TEST;
+					#ifdef TH_USE_POVRAY_FOR_NEURAL_NETWORK_VEC_GRAPHICS	//NOT YET TESTED [CHECKTHIS];
 
-
+						/*
 						LDreference* initialReference = new LDreference();
 
 						int numSpritesAdded = 0;
@@ -313,22 +313,9 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 						{
 							result = false;
 						}
+						*/
 
-						char* charstarsceneFileNameForRayTracing;
-						if(addSprites)
-						{
-							if(!joinReferenceLists(nonSpriteListInitialReference, spriteListInitialReference))
-							{
-								result = false;
-							}
-
-							charstarsceneFileNameForRayTracing = outputFileNameLDRwithSpritescharstar;
-						}
-						else
-						{
-							charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
-						}
-
+						char* charstarsceneFileNameForRayTracing = outputFileNameLDRcharstar;
 
 						//use third party raytracer, povray;
 
@@ -342,10 +329,6 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 						system(l3pCommand.c_str());
 						cout << povrayCommand <<endl;
 						system(povrayCommand.c_str());
-
-
-						delete nonSpriteListInitialReference;
-						delete spriteListInitialReference;
 
 					#else
 						cout << "Error: no ray tracer enabled" << endl;

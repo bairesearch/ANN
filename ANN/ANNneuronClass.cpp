@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -57,10 +57,10 @@ ANNneuron::ANNneuron(void)
 	neuronTypeTopLevelCategory = false;
 	neuronTypeIntermediary = false;
 	printed = false;
-	printedXML = false;
 	topLevelCategoryAlreadyExistsDeleteThisNewCopy = false;
 	#endif
-	
+	printedXML = false;
+
 	spatialCoordinatesSet2D = false;
 	xPosRel = 0;
 	yPosRel = 0;
@@ -71,7 +71,7 @@ ANNneuron::ANNneuron(void)
 	yPosRelFrac = 0.0;
 	zPosRelFrac = 0.0;
 	#endif
-	
+
 	nextNeuron = NULL;
 
 	hasFrontLayer = false;
@@ -113,7 +113,7 @@ ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subne
 	printedXML = false;
 	topLevelCategoryAlreadyExistsDeleteThisNewCopy = false;
 	#endif
-	
+
 	spatialCoordinatesSet2D = false;
 	xPosRel = 0;	      //this value must be initialised explicity
 	yPosRel = 0;	      //this value must be initialised explicity
@@ -123,8 +123,8 @@ ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subne
 	xPosRelFrac = 0.0;
 	yPosRelFrac = 0.0;
 	zPosRelFrac = 0.0;
-	#endif	
-	
+	#endif
+
 	nextNeuron = NULL;
 
 	hasFrontLayer = false;
@@ -168,7 +168,7 @@ ANNneuron::~ANNneuron(void)
 		}
 	}
 	*/
-	
+
 	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
 	if(firstNeuronInBackLayerOfSubnet != NULL)
@@ -192,7 +192,7 @@ ANNneuron::~ANNneuron(void)
 			delete firstNeuronInFrontLayer;
 		}
 	}
-	
+
 	#endif
 }
 

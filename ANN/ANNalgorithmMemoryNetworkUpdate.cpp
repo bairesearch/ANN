@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -46,18 +46,18 @@ double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNn
 
 	//classification routine
 	backPropogationForwardPassStep(firstInputNeuronInNetwork);
-	
+
 	calculateBinaryOutputCode(firstOutputNeuronInNetwork, trainingClassificationResult);
-	
+
 	//memory trace update (write) and detect (read) routine
 	memoryTraceForwardPassStep(firstInputNeuronInNetwork, trainingMemoryResult);
-	
+
 }
 
 void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult)
-{	
+{
 	//NB trainingClassificationResult = binaryOutputCode
-	
+
 	ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
 	int outputNeuronIndex = 0;
 	while(currentNeuron->nextNeuron != NULL)
@@ -74,7 +74,7 @@ void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* tr
 		outputNeuronIndex++;
 		currentNeuron = currentNeuron->nextNeuron;
 	}
-	
+
 	#ifdef ANN_DEBUG_ALGORITHM_MEMORY_NETWORK
 	cout << "trainingClassificationResult = " << *trainingClassificationResult << endl;
 	#endif
@@ -178,7 +178,7 @@ void readAndUpdateMemoryTrace(ANNneuron* currentNeuronInLayer, double* trainingM
 			updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(currentANNneuronConnectionSide);
 			incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(trainingMemoryResult);
 		}
-	}	
+	}
 }
 
 void updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(ANNneuronConnection* currentANNneuronConnectionSide)

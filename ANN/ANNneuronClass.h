@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -84,11 +84,10 @@ public:
 	bool neuronTypeTopLevelCategory;
 	bool neuronTypeIntermediary;
 	bool printed;
-	bool printedXML;
 	bool topLevelCategoryAlreadyExistsDeleteThisNewCopy;
 	#endif
-	
-	
+	bool printedXML;
+
 	//for visualising highly structured networks [Eg used to visualise a 2D visual processing unit/subnet]
 	bool spatialCoordinatesSet2D;
 	long xPosRel;
@@ -100,7 +99,7 @@ public:
 	double yPosRelFrac;
 	double zPosRelFrac;
 	#endif
-	
+
 	ANNneuron* nextNeuron;		//OLD: nextNeuronContainer
 
 	bool hasFrontLayer;
@@ -114,7 +113,7 @@ public:
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	vector<ANNneuronConnection*> sideANNneuronConnectionList;
 	#endif
-	
+
 	#ifdef ANN_SUBNETS
 	bool isSubnet;	 	//alternative to being a subnet is being a distinct neuron
 

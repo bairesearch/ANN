@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -349,7 +349,7 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 			#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
 			cout << currentExperienceInputInExperience->inputValue << " ";
 			#endif
-		
+
 			ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 			currentExperienceInputInExperience->next = newExperienceInput;
 			currentExperienceInputInExperience = currentExperienceInputInExperience->next;
@@ -362,7 +362,7 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 		currentExperienceInDataSet->next = newExperience;
 		currentExperienceInDataSet = currentExperienceInDataSet->next;
 	}
-	
+
 	#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
 	exit(0);
 	#endif

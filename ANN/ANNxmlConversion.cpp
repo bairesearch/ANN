@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments
  *
  *******************************************************************************/
@@ -187,7 +187,7 @@ bool writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork)
 	XMLparserTag* newTag2 = new XMLparserTag();	//had to add a null tag	//removed ANN4a3j
 	currentTagL2->nextTag = newTag2;
 	*/
-	
+
 	if(!generateXMLtagListBasedUponSubnet(currentTagL1->firstLowerLevelTag, firstInputNeuronInNetwork))
 	{
 		result = false;
@@ -230,9 +230,9 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 	{
 		currentTagL0 = currentTagL0->nextTag;	//skip already created layers
 	}
-	
+
 	XMLparserTag* layerTag = currentTagL0;
-	
+
 	currentTagL0->name = NET_XML_TAG_layer;
 	XMLparserTag* newTag0 = new XMLparserTag();	//had to add a null tag
 	currentTagL0->nextTag = newTag0;
@@ -242,22 +242,22 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 	currentTagL0->nextTag = newTag;
 	currentTagL0 = currentTagL0->nextTag;
 	*/
-	
+
 	XMLparserTag* firstTagL1 = new XMLparserTag();
 	currentTagL0->firstLowerLevelTag = firstTagL1;
 	XMLparserTag* currentTagL1 = currentTagL0->firstLowerLevelTag;
 	XMLparserTag* newTag1 = new XMLparserTag();	//had to add a null tag
 	currentTagL1->nextTag = newTag1;
- 
+
 	bool foundNonPrintedNeuronOnLayer = false;
-	
+
 	while(currentNeuron->nextNeuron != NULL)
 	{
 		if(!(currentNeuron->printedXML))
 		{
 			foundNonPrintedNeuronOnLayer = true;
 			currentNeuron->printedXML = true;
-			
+
 			//generate neuron container tag
 			currentTagL1->name = NET_XML_TAG_neuronContainer;
 			XMLparserTag* firstTagL2 = new XMLparserTag();
@@ -304,11 +304,11 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 			currentAttribute->value = convertDoubleToString((currentNeuron->error), "%0.6f");
 			currentAttribute = createNewAttribute(currentAttribute);
 			#endif
-			
+
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 			currentAttribute->name = NET_XML_ATTRIBUTE_memoryTrace;
 			currentAttribute->value = convertIntToString((currentNeuron->memoryTrace));
-			currentAttribute = createNewAttribute(currentAttribute);			
+			currentAttribute = createNewAttribute(currentAttribute);
 			#endif
 
 			#ifndef DO_NOT_STORE_NET_XML_NEURON_SPATIAL_COORD_PARAMETERS
@@ -338,7 +338,7 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRelFrac;
 				currentAttribute->value = convertDoubleToString((currentNeuron->yPosRelFrac), "%0.6f");
 				currentAttribute = createNewAttribute(currentAttribute);
-				
+
 				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRelFrac;
 				currentAttribute->value = convertDoubleToString((currentNeuron->zPosRelFrac), "%0.6f");
 				currentAttribute = createNewAttribute(currentAttribute);
@@ -379,9 +379,9 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 					#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 					currentAttribute->name = NET_XML_ATTRIBUTE_idealValue;
 					currentAttribute->value = convertDoubleToString((currentANNneuronConnection->idealValue), "%0.6f");
-					currentAttribute = createNewAttribute(currentAttribute);			
+					currentAttribute = createNewAttribute(currentAttribute);
 					#endif
-		
+
 					XMLparserTag* newTag = new XMLparserTag();
 					currentTagL3->nextTag = newTag;
 					currentTagL3 = currentTagL3->nextTag;
@@ -429,10 +429,10 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 			currentTagL1->nextTag = newTag2;
 			currentTagL1 = currentTagL1->nextTag;
 		}
-		
+
 		currentNeuron = currentNeuron->nextNeuron;
 	}
-	
+
 	if(!foundNonPrintedNeuronOnLayer)
 	{
 		clearTag(layerTag);
@@ -842,7 +842,7 @@ bool parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConne
 		{
 			currentANNneuronConnection->idealValue = convertStringToDouble(currentAttribute->value);
 			idealValueFound = true;
-		}			
+		}
 		#endif
 
 		currentAttribute = currentAttribute->nextAttribute;
@@ -965,7 +965,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 			double attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->memoryTrace = attributeValue;
 			errorFound = true;
-		}			
+		}
 		#endif
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_xPosRel)
 		{
@@ -1004,7 +1004,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 			double attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRelFrac = attributeValue;
 		}
-		#endif	
+		#endif
 		else
 		{
 			cout << "parseNeuronTag error: illegal attribute name detected";
@@ -1055,7 +1055,7 @@ void clearTag(XMLparserTag* tag)
 	delete (tag->nextTag);
 	tag->nextTag = NULL;
 	delete (tag->firstLowerLevelTag);
-	tag->firstLowerLevelTag = NULL;	
+	tag->firstLowerLevelTag = NULL;
 }
 
 

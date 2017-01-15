@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i17a 20-September-2016
+ * Project Version: 3i18a 21-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -107,7 +107,7 @@ void trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneu
 		#ifdef ANN_DEBUG
 		//cout << "Neural Net Training Epoch: " << e << endl;
 		#endif
-		
+
 		ANNexperience* currentExperience = firstExperienceInDataSet;
 
 		//from start of dataSet -> end of dataSet
@@ -317,7 +317,7 @@ void trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* f
 
 				currentExperienceInFold = currentExperienceInFold->next;
 			}
-			
+
 			//from end of test segment -> end of dataSet
 			currentExperienceInFold = firstExperienceInFoldTrainPartB;
 			for(int experienceNum = indexOfFirstExperienceInFoldTrainPartB; experienceNum<indexOfLastExperienceInFoldTrainPartB; experienceNum++)
