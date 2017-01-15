@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -34,24 +34,12 @@
 
 #include "ANNmain.h"
 
-#include "ANNformation.h"
-#include "ANNalgorithmBackpropagationTraining.h"
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
-#include "ANNalgorithmMemoryNetworkTraining.h"
 #endif
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-#include "ANNalgorithmClassificationNetworkTraining.h"
 #endif
-#include "ANNparser.h"
-#include "ANNxmlConversion.h"
-#include "ANNdraw.h"
-#include "ANNdisplay.h"
 
-#include "ANNdata.h"
 
-#include "LDsvg.h"
-#include "LDsprite.h"
-#include "XMLrulesClass.h"
 
 #ifdef USE_LRRC
 //#include "LRRCgame.h"
@@ -199,214 +187,214 @@ int main(const int argc,const char* *argv)
 
 	//basic execution flow outline; if no dataset or xml input file is specified, just form network - do not train network
 
-	if((argumentExists(argc, argv, "-idata")) || (argumentExists(argc, argv, "-ixml")) || (argumentExists(argc, argv, "-oxml")) || (argumentExists(argc, argv, "-oldr")) || (argumentExists(argc, argv, "-osvg")) || (argumentExists(argc, argv, "-oppm")) || (argumentExists(argc, argv, "-oppm2")) || (argumentExists(argc, argv, "-oall")) || (argumentExists(argc, argv, "-ui")))
+	if((SHAREDvarsClass().argumentExists(argc, argv, "-idata")) || (SHAREDvarsClass().argumentExists(argc, argv, "-ixml")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oxml")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oldr")) || (SHAREDvarsClass().argumentExists(argc, argv, "-osvg")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oppm")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oppm2")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oall")) || (SHAREDvarsClass().argumentExists(argc, argv, "-ui")))
 	{
-		if(argumentExists(argc, argv, "-idata"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-idata"))
 		{
-			inputDatasetFileName = getStringArgument(argc, argv, "-idata");
+			inputDatasetFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-idata");
 			//train = true;
 			useInputDatasetFile = true;
 		}
 
-		if(argumentExists(argc, argv, "-layers"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-layers"))
 		{
-			numberOfLayers = getFloatArgument(argc, argv, "-layers");
+			numberOfLayers = SHAREDvarsClass().getFloatArgument(argc, argv, "-layers");
 		}
 
-		if(argumentExists(argc, argv, "-ineurons"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-ineurons"))
 		{
-			numberOfInputNeurons = getFloatArgument(argc, argv, "-ineurons");
+			numberOfInputNeurons = SHAREDvarsClass().getFloatArgument(argc, argv, "-ineurons");
 		}
 
 		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-		if(argumentExists(argc, argv, "-oneurons"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-oneurons"))
 		{
-			numberOfOutputNeurons = getFloatArgument(argc, argv, "-oneurons");
+			numberOfOutputNeurons = SHAREDvarsClass().getFloatArgument(argc, argv, "-oneurons");
 		}
 		#endif
 
-		if(argumentExists(argc, argv, "-divtype"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-divtype"))
 		{
-			layerDivergenceType = getFloatArgument(argc, argv, "-divtype");
+			layerDivergenceType = SHAREDvarsClass().getFloatArgument(argc, argv, "-divtype");
 		}
 
-		if(argumentExists(argc, argv, "-divfactor"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-divfactor"))
 		{
-			meanLayerDivergenceFactor = getFloatArgument(argc, argv, "-divfactor");
+			meanLayerDivergenceFactor = SHAREDvarsClass().getFloatArgument(argc, argv, "-divfactor");
 		}
 
-		if(argumentExists(argc, argv, "-con"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-con"))
 		{
-			probabilityANNneuronConnectionWithPreviousLayerNeuron = getFloatArgument(argc, argv, "-con");
+			probabilityANNneuronConnectionWithPreviousLayerNeuron = SHAREDvarsClass().getFloatArgument(argc, argv, "-con");
 		}
 
-		if(argumentExists(argc, argv, "-conall"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-conall"))
 		{
-			probabilityANNneuronConnectionWithAllPreviousLayersNeurons = getFloatArgument(argc, argv, "-conall");
+			probabilityANNneuronConnectionWithAllPreviousLayersNeurons = SHAREDvarsClass().getFloatArgument(argc, argv, "-conall");
 		}
 
-		if(argumentExists(argc, argv, "-usesubnets"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-usesubnets"))
 		{
 			useSubnets = true;
 		}
 
-		if(argumentExists(argc, argv, "-numsubnets"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-numsubnets"))
 		{
-			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
+			maxNumRecursiveSubnets = SHAREDvarsClass().getFloatArgument(argc, argv, "-numsubnets");
 		}
 
-		if(argumentExists(argc, argv, "-probsubnet"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-probsubnet"))
 		{
-			probabilityOfSubnetCreation = getFloatArgument(argc, argv, "-probsubnet");
+			probabilityOfSubnetCreation = SHAREDvarsClass().getFloatArgument(argc, argv, "-probsubnet");
 		}
 
-		if(argumentExists(argc, argv, "-subnetdepl"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-subnetdepl"))
 		{
 			useSubnetDependentNumberOfLayers = true;
 		}
 
-		if(argumentExists(argc, argv, "-epochs"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-epochs"))
 		{
-			numEpochs=getFloatArgument(argc, argv, "-epochs");
+			numEpochs=SHAREDvarsClass().getFloatArgument(argc, argv, "-epochs");
 			usePresetNumberOfEpochs = true;
 		}
 
-		if(argumentExists(argc, argv, "-maxepochs"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-maxepochs"))
 		{
-			maxNumEpochs = getFloatArgument(argc, argv, "-maxepochs");
+			maxNumEpochs = SHAREDvarsClass().getFloatArgument(argc, argv, "-maxepochs");
 		}
 
-		if(argumentExists(argc, argv, "-maxFolds"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-maxFolds"))
 		{
-			maxFolds = getFloatArgument(argc, argv, "-maxFolds");
+			maxFolds = SHAREDvarsClass().getFloatArgument(argc, argv, "-maxFolds");
 		}
 
 
-		if(argumentExists(argc, argv, "-numsubnets"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-numsubnets"))
 		{
-			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
+			maxNumRecursiveSubnets = SHAREDvarsClass().getFloatArgument(argc, argv, "-numsubnets");
 		}
 
-		if(argumentExists(argc, argv, "-numsubnets"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-numsubnets"))
 		{
-			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
+			maxNumRecursiveSubnets = SHAREDvarsClass().getFloatArgument(argc, argv, "-numsubnets");
 		}
 
-		if(argumentExists(argc, argv, "-ixml"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-ixml"))
 		{
-			inputXMLFileName = getStringArgument(argc, argv, "-ixml");
+			inputXMLFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-ixml");
 			//train = true;
 			useInputXMLFile = true;
 		}
 
-		if(argumentExists(argc, argv, "-oxml"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-oxml"))
 		{
-			outputXMLFileName = getStringArgument(argc, argv, "-oxml");
+			outputXMLFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oxml");
 			useOutputXMLFile = true;
 		}
 
-		if(argumentExists(argc, argv, "-oldr"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-oldr"))
 		{
-			outputLDRFileName = getStringArgument(argc, argv, "-oldr");
+			outputLDRFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oldr");
 			useOutputLDRFile = true;
 			drawOutput = true;
 		}
 		#ifndef ANN_DISPLAY_DISABLE_SPRITES
-		if(argumentExists(argc, argv, "-sprites"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-sprites"))
 		{
 			useSprites = true;
 		}
 		#endif
 
-		if(argumentExists(argc, argv, "-osvg"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-osvg"))
 		{
-			outputSVGFileName = getStringArgument(argc, argv, "-osvg");
+			outputSVGFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-osvg");
 			useOutputSVGFile = true;
 			drawOutput = true;
 		}
 
-		if(argumentExists(argc, argv, "-oppm"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-oppm"))
 		{
-			outputPPMFileName = getStringArgument(argc, argv, "-oppm");
+			outputPPMFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oppm");
 			useOutputPPMFile = true;
 			drawOutput = true;
 			useOutputLDRFile = true;	//required for OpenGL image generation
 			displayInOpenGL = true;		//required for OpenGL image generation
 		}
 
-		if(argumentExists(argc, argv, "-oppm2"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-oppm2"))
 		{
-			outputPPMFileNameRaytraced = getStringArgument(argc, argv, "-oppm2");
+			outputPPMFileNameRaytraced = SHAREDvarsClass().getStringArgument(argc, argv, "-oppm2");
 			useOutputPPMFileRaytraced = true;
 			drawOutput = true;
 			useOutputLDRFile = true;	//required for raytrace image generation
 		}
 
-		if(argumentExists(argc, argv, "-oall"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-oall"))
 		{
-			outputAllFileName = getStringArgument(argc, argv, "-oall");
+			outputAllFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oall");
 			useOutputAllFile = true;
 			drawOutput = true;
 		}
 
-		if(argumentExists(argc, argv, "-notshow"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-notshow"))
 		{
 			displayInOpenGL = false;
 		}
 
-		if(argumentExists(argc, argv, "-width"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-width"))
 		{
-			rasterImageWidth = getFloatArgument(argc, argv, "-width");
+			rasterImageWidth = SHAREDvarsClass().getFloatArgument(argc, argv, "-width");
 		}
 
-		if(argumentExists(argc, argv, "-height"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-height"))
 		{
-			rasterImageHeight = getFloatArgument(argc, argv, "-height");
+			rasterImageHeight = SHAREDvarsClass().getFloatArgument(argc, argv, "-height");
 		}
 
-		if(argumentExists(argc, argv, "-train"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-train"))
 		{
 			int trainInt;
-			trainInt = getFloatArgument(argc, argv, "-train");
+			trainInt = SHAREDvarsClass().getFloatArgument(argc, argv, "-train");
 			trainIfUseInputDatasetFile = (bool)trainInt;
 		}
 
-		string currentFolder = getCurrentDirectory();
+		string currentFolder = SHAREDvarsClass().getCurrentDirectory();
 
-		if(argumentExists(argc, argv, "-workingfolder"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-workingfolder"))
 		{
-			workingFolder = getStringArgument(argc, argv, "-workingfolder");
+			workingFolder = SHAREDvarsClass().getStringArgument(argc, argv, "-workingfolder");
 		}
 		else
 		{
 			workingFolder = currentFolder;
 		}
-		if(argumentExists(argc, argv, "-exefolder"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-exefolder"))
 		{
-			exeFolder = getStringArgument(argc, argv, "-exefolder");
+			exeFolder = SHAREDvarsClass().getStringArgument(argc, argv, "-exefolder");
 		}
 		else
 		{
 			exeFolder = currentFolder;
 		}
-		if(argumentExists(argc, argv, "-tempfolder"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-tempfolder"))
 		{
-			tempFolder = getStringArgument(argc, argv, "-tempfolder");
+			tempFolder = SHAREDvarsClass().getStringArgument(argc, argv, "-tempfolder");
 		}
 		else
 		{
 			tempFolder = currentFolder;
 		}
 
-		setCurrentDirectory(workingFolder);
+		SHAREDvarsClass().setCurrentDirectory(workingFolder);
 
-		if(argumentExists(argc, argv, "-ui"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-ui"))
 		{
 			useTextUI = true;
 		}
-		if(argumentExists(argc, argv, "-version"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3j1a 14-January-2017" << endl;
+			cout << "Project Version: 3j1b 14-January-2017" << endl;
 			exit(1);
 		}
 	}
@@ -416,15 +404,15 @@ int main(const int argc,const char* *argv)
 		exit(1);
 	}
 
-	if(!parseANNrulesXMLfile())
+	if(!XMLrulesClassClass().parseANNrulesXMLfile())
 	{
 		result = false;
 	}
-	fillInANNSpriteExternVariables();
+	ANNdrawClass().fillInANNSpriteExternVariables();
 
 	if(useTextUI)
 	{
-		mainUI();
+		ANNmainClass().mainUI();
 	}
 
 	if(displayInOpenGL)
@@ -491,7 +479,7 @@ int main(const int argc,const char* *argv)
 
 		string xmlFileName = inputXMLFileName;
 
-		firstOutputNeuronInNetwork = readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
+		firstOutputNeuronInNetwork = ANNxmlConversionClass().readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
 		//check  number of input and number of output neurons
 
 		numberOfInputNeurons = numberOfInputNeuronsLoaded;
@@ -512,7 +500,7 @@ int main(const int argc,const char* *argv)
 			string nameOfExperiencesDataSetFile = inputDatasetFileName;
 			cout << "nameOfExperiencesDataSetFile = " << nameOfExperiencesDataSetFile << endl;
 
-			ANNparseDataFile(nameOfExperiencesDataSetFile);
+			ANNparserClass().ANNparseDataFile(nameOfExperiencesDataSetFile);
 
 			numberOfInputNeurons = numInputNeurons;
 			numberOfOutputNeurons = numOutputNeurons;
@@ -531,16 +519,16 @@ int main(const int argc,const char* *argv)
 		firstInputNeuronInNetwork = new ANNneuron();
 
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-		formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons);
+		ANNformationClass().formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons);
 		#else
 		if(useSubnets)
 		{
-			firstOutputNeuronInNetwork = formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = ANNformationClass().formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 
 		}
 		else
 		{
-			firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = ANNformationClass().formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 		}
 
 		cout << "subnet Divergence Type = " << layerDivergenceType << endl;
@@ -565,42 +553,42 @@ int main(const int argc,const char* *argv)
 			if(!usePresetNumberOfEpochs)
 			{
 				#ifdef ANN_ALGORITHM_BACKPROPAGATION
-				trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
+				ANNalgorithmBackpropagationTrainingClass().trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-				trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
 				#endif
 				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmClassificationNetworkTrainingClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
 			}
 			else
 			{
 				#ifdef ANN_ALGORITHM_BACKPROPAGATION
-				trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmBackpropagationTrainingClass().trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-				trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
 				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmClassificationNetworkTrainingClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
 			}
 		}
 	}
 
-	setCurrentDirectory(tempFolder);
+	SHAREDvarsClass().setCurrentDirectory(tempFolder);
 
 	if(drawOutput)
 	{
-		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, useSprites, useOutputPPMFileRaytraced, displayInOpenGL, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
+		ANNdisplayClass().outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, useSprites, useOutputPPMFileRaytraced, displayInOpenGL, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 	}
 
 	if(useOutputXMLFile)
 	{
 		cout << "XML file name = " << outputXMLFileName << endl;
 
-		if(!writeNetXMLfile(outputXMLFileName, firstInputNeuronInNetwork))
+		if(!ANNxmlConversionClass().writeNetXMLfile(outputXMLFileName, firstInputNeuronInNetwork))
 		{
 			result = false;
 		}
@@ -610,7 +598,7 @@ int main(const int argc,const char* *argv)
 
 
 
-bool loadNetworkFromXML()
+bool ANNmainClass::loadNetworkFromXML()
 {
 	bool result = true;
 
@@ -622,7 +610,7 @@ bool loadNetworkFromXML()
 
 	string xmlFileName = NET_XML_FILE_NAME;
 
-	firstOutputNeuronInNetwork = readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
+	firstOutputNeuronInNetwork = ANNxmlConversion.readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
 	//check  number of input and number of output neurons
 
 	numberOfInputNeurons = numberOfInputNeuronsLoaded;
@@ -634,7 +622,7 @@ bool loadNetworkFromXML()
 }
 
 #ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-bool createNetwork()
+bool ANNmainClass::createNetwork()
 {
 	bool result = true;
 
@@ -667,12 +655,12 @@ bool createNetwork()
 	{
 		cout <<	"\nEnter the number of input neurons (2, 3, 4, 5 [Default], ... etc):\n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(convertStringToDouble(answerAsString));
+		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
 		numberOfInputNeurons = answerAsInt;
 
 		cout <<	"\nEnter the number of output neurons (2, 3 [Default], 4, 5, ... etc):\n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(convertStringToDouble(answerAsString));
+		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
 		numberOfOutputNeurons = answerAsInt;
 
 		numberOfInputAndOutputNeuronsSelected = true;
@@ -681,7 +669,7 @@ bool createNetwork()
 
 	cout <<	"\nEnter the number of top level Layers (2, 3 [Default], ... etc):\n\n>> ";
 	cin >> answerAsString;
-	answerAsInt = long(convertStringToDouble(answerAsString));
+	answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
 	numberOfLayers = answerAsInt;
 	if(numberOfLayers < 2)
 	{
@@ -698,12 +686,12 @@ bool createNetwork()
 		//non subnet/ANN specific parameters....
 		cout <<	"\nEnter layer divergence type [Default = " << LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING << "]:\n\t1 (LINEAR_CONVERGING), \n\t2 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_THEN_CONVERGING),\n\t3 (LAYER_DIVERGENCE_TYPE_NONLINEAR_DIVERGING_THEN_CONVERGING),\n\t4 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING),\n\t5 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D),\n\t6 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS). \n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(convertStringToDouble(answerAsString));
+		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
 		layerDivergenceType = answerAsInt;
 
 		cout <<	"\nEnter the mean layer divergence factor [Default = " << DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR << "]:\n\n>> ";
 		cin >> answerAsString;
-		answerAsDouble = convertStringToDouble(answerAsString);
+		answerAsDouble = SHAREDvars.convertStringToDouble(answerAsString);
 		meanLayerDivergenceFactor = answerAsDouble;
 
 		#ifdef ANN_DEBUG
@@ -712,13 +700,13 @@ bool createNetwork()
 
 		cout <<	"\nEnter the probability of neuron having a connection with a previous layer neuron [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;
-		answerAsDouble = convertStringToDouble(answerAsString);
+		answerAsDouble = SHAREDvars.convertStringToDouble(answerAsString);
 		probabilityANNneuronConnectionWithPreviousLayerNeuron = answerAsDouble;
 
 
 		cout <<	"\nEnter the probability of a neuron having a direct link with all previous layers neurons [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;
-		answerAsDouble = convertStringToDouble(answerAsString);
+		answerAsDouble = SHAREDvars.convertStringToDouble(answerAsString);
 		probabilityANNneuronConnectionWithAllPreviousLayersNeurons = answerAsDouble;
 
 
@@ -731,12 +719,12 @@ bool createNetwork()
 		{
 			cout <<	"\nEnter the maximum number of subnet layers you wish to create (1,2,3,4,5,... etc) [Default = " << DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH << "]:\n\n>> ";
 			cin >> answerAsString;
-			answerAsInt = long(convertStringToDouble(answerAsString));
+			answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
 			maxNumRecursiveSubnets = answerAsInt;
 
 			cout <<	"\nEnter the probability of subnet creation [Default = " << DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH << "]:\n\n>> ";
 			cin >> answerAsString;
-			answerAsDouble = convertStringToDouble(answerAsString);
+			answerAsDouble = SHAREDvars.convertStringToDouble(answerAsString);
 			probabilityOfSubnetCreation = answerAsDouble;
 
 			cout <<	"\nDo you wish to use subnet dependant number of layers? (y/n). [Default = n]:\n\n>> ";
@@ -751,17 +739,17 @@ bool createNetwork()
 				useSubnetDependentNumberOfLayers = false;
 			}
 
-			firstOutputNeuronInNetwork = formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = ANNformation.formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 
 		}
 		else
 		{
-			firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = ANNformation.formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 		}
 	}
 	else
 	{
-		firstOutputNeuronInNetwork = formNeuralNetWithOptimisedProperties(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers);
+		firstOutputNeuronInNetwork = ANNformation.formNeuralNetWithOptimisedProperties(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers);
 	}
 
 	cout << "subnet Divergence Type = " << layerDivergenceType << endl;
@@ -783,7 +771,7 @@ bool createNetwork()
 
 
 
-bool loadExperienceDataFile()
+bool ANNmainClass::loadExperienceDataFile()
 {
 	bool result = true;
 
@@ -810,7 +798,7 @@ bool loadExperienceDataFile()
 
 	cout << "nameOfExperiencesDataSetFile = " << nameOfExperiencesDataSetFile << endl;
 
-	ANNparseDataFile(nameOfExperiencesDataSetFile);
+	ANNparser.ANNparseDataFile(nameOfExperiencesDataSetFile);
 
 	if(numberOfInputAndOutputNeuronsSelected)
 	{
@@ -834,14 +822,14 @@ bool loadExperienceDataFile()
 }
 
 
-bool trainNetwork(const bool advancedTraining)
+bool ANNmainClass::trainNetwork(const bool advancedTraining)
 {
 	bool result = true;
 
 
 	if(!loadedExperienceDataset)
 	{
-		if(!loadExperienceDataFile())
+		if(!this->loadExperienceDataFile())
 		{
 			result = false;
 		}
@@ -854,26 +842,26 @@ bool trainNetwork(const bool advancedTraining)
 			int maxFolds = MAX_NUM_FOLDS_ANNTH;		//maximum number of folds are same regardless of TEST_LEVEL_X_ANNT
 			#ifdef ANN_ALGORITHM_BACKPROPAGATION
 			int maxNumEpochs = ANN_DEFAULT_MAX_NUMBER_OF_EPOCHS;
-			trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
+			ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-			trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 		}
 		else
 		{
 			#ifdef ANN_ALGORITHM_BACKPROPAGATION
 			int numEpochs = ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS;
-			trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-			trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 		}
 	}
@@ -885,16 +873,16 @@ bool trainNetwork(const bool advancedTraining)
 
 }
 
-bool outputNetworkToXML()
+bool ANNmainClass::outputNetworkToXML()
 {
-	setCurrentDirectory(tempFolder);
+	SHAREDvars.setCurrentDirectory(tempFolder);
 	bool result = true;
 
 	cout << "XML file name = " << NET_XML_FILE_NAME << endl;
 
 	if(formedNetwork)
 	{
-		if(!writeNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
+		if(!ANNxmlConversion.writeNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
 		{
 			result = false;
 		}
@@ -908,9 +896,9 @@ bool outputNetworkToXML()
 
 
 
-bool outputNetworkAsVectorGraphics()
+bool ANNmainClass::outputNetworkAsVectorGraphics()
 {
-	setCurrentDirectory(tempFolder);
+	SHAREDvars.setCurrentDirectory(tempFolder);
 	bool result = true;
 
 	if(formedNetwork)
@@ -926,7 +914,7 @@ bool outputNetworkAsVectorGraphics()
 		string outputTALFileName = "";
 		int rasterImageWidth = 0;
 		int rasterImageHeight = 0;
-		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, true, allowRaytrace, displayInOpenGL, true, useOutputPPMFile, true, NEURAL_NETWORK_VISUALISATION_LDR_FILE_NAME, NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME, NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
+		ANNdisplay.outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, true, allowRaytrace, displayInOpenGL, true, useOutputPPMFile, true, NEURAL_NETWORK_VISUALISATION_LDR_FILE_NAME, NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME, NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 	}
 	else
 	{
@@ -937,7 +925,7 @@ bool outputNetworkAsVectorGraphics()
 }
 
 
-bool mainUI()
+bool ANNmainClass::mainUI()
 {
 	bool result = true;
 
@@ -979,36 +967,36 @@ bool mainUI()
 		cout <<	"Enter Answer (0,1,2,3... etc):\n\n>> ";
 
 		cin >> answerAsString;
-		answerAsInt = long(convertStringToDouble(answerAsString));
+		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
 		if(answerAsInt == 1)
 		{
-			loadNetworkFromXML();
+			this->loadNetworkFromXML();
 		}
 		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(answerAsInt == 2)
 		{
-			createNetwork();
+			this->createNetwork();
 		}
 		#endif
 		else if(answerAsInt == 3)
 		{
-			loadExperienceDataFile();
+			this->loadExperienceDataFile();
 		}
 		else if(answerAsInt == 4)
 		{
-			trainNetwork(true);
+			this->trainNetwork(true);
 		}
 		else if(answerAsInt == 8)
 		{
-			trainNetwork(false);
+			this->trainNetwork(false);
 		}
 		else if(answerAsInt == 5)
 		{
-			outputNetworkToXML();
+			this->outputNetworkToXML();
 		}
 		else if(answerAsInt == 6)
 		{
-			outputNetworkAsVectorGraphics();
+			this->outputNetworkAsVectorGraphics();
 		}
 		#ifdef USE_LRRC
 		else if(answerAsInt == 7)

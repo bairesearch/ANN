@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments
  *
  *******************************************************************************/
@@ -34,46 +34,45 @@
 
 
 #include "ANNxmlConversion.h"
-#include "SHAREDvars.h"
 
 //this function works and no longer needs to be tested
 #ifdef NN_XML_DEBUG
-bool testReadNetXMLFile()
+bool ANNxmlConversionClass::testReadNetXMLFile()
 {
 	bool result = true;
 
 	ANNneuron* firstInputNeuronInNetwork = new ANNneuron();	//the firstInputNeuronInNetwork object must be initialised here (in ANNxmlConversion.cpp scope). if it is initialised in another .cpp it will be come corrupted,
 
-	if(!readNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
+	if(!this->readNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
 	#define TEMP_NET_XML_FILE_NAME1 "tempnet1.xml"
-	if(!writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, firstInputNeuronInNetwork))
+	if(!this->writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 	return result;
 }
 
-bool testReadNetXMLFile2(ANNneuron* firstInputNeuronInNetwork)
+bool ANNxmlConversionClass::testReadNetXMLFile2(ANNneuron* firstInputNeuronInNetwork)
 {
 	bool result = true;
 
-	if(!writeNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
+	if(!this->writeNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
 	ANNneuron* tempFirstInputNeuronInNetwork = new ANNneuron();
-	if(!readNetXMLfile(NET_XML_FILE_NAME, tempFirstInputNeuronInNetwork))
+	if(!this->readNetXMLfile(NET_XML_FILE_NAME, tempFirstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
 	#define TEMP_NET_XML_FILE_NAME1 "tempnet1.xml"
-	if(!writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, tempFirstInputNeuronInNetwork))
+	if(!this->writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, tempFirstInputNeuronInNetwork))
 	{
 		result = false;
 	}
@@ -82,17 +81,17 @@ bool testReadNetXMLFile2(ANNneuron* firstInputNeuronInNetwork)
 
 #endif
 
-ANNneuron* readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons)
+ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons)
 {
 	ANNneuron* firstOutputNeuronInNetwork;
 
-	readNetXMLfile(xmlFileName, firstInputNeuronInNetwork);
+	this->readNetXMLfile(xmlFileName, firstInputNeuronInNetwork);
 
-	firstOutputNeuronInNetwork = recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons);
+	firstOutputNeuronInNetwork = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons);
 	return firstOutputNeuronInNetwork;
 }
 
-ANNneuron* recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons)
+ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons)
 {
 	ANNneuron* firstOutputNeuronInNetwork;
 
@@ -139,30 +138,30 @@ ANNneuron* recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* fir
 }
 
 
-bool readNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork)
+bool ANNxmlConversionClass::readNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork)
 {
 	bool result = true;
 
  	XMLparserTag* firstTagInXMLFile = new XMLparserTag();	//the firstTagInXMLFile object must be initialised here (in ANNxmlConversion.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
 
- 	if(!readXMLfile(xmlFileName, firstTagInXMLFile))
+ 	if(!XMLparserClass.readXMLfile(xmlFileName, firstTagInXMLFile))
  	{
 		result = false;
 	}
 
-	if(!parseNetTag(firstTagInXMLFile, firstInputNeuronInNetwork))
+	if(!this->parseNetTag(firstTagInXMLFile, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
-	if(!linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstInputNeuronInNetwork, firstInputNeuronInNetwork, false, NULL))
+	if(!this->linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstInputNeuronInNetwork, firstInputNeuronInNetwork, false, NULL))
 	{
 		result = false;
 	}
 	return result;
 }
 
-bool writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork)
+bool ANNxmlConversionClass::writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork)
 {
 	bool result = true;
 
@@ -188,12 +187,12 @@ bool writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork)
 	currentTagL2->nextTag = newTag2;
 	*/
 
-	if(!generateXMLtagListBasedUponSubnet(currentTagL1->firstLowerLevelTag, firstInputNeuronInNetwork))
+	if(!this->generateXMLtagListBasedUponSubnet(currentTagL1->firstLowerLevelTag, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
- 	if(!writeXMLfile(xmlFileName, firstTagInXMLFile))
+ 	if(!XMLparserClass.writeXMLfile(xmlFileName, firstTagInXMLFile))
  	{
 		result = false;
 	}
@@ -204,12 +203,12 @@ bool writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork)
 }
 
 
-bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet)
+bool ANNxmlConversionClass::generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet)
 {
 	bool result = true;
 
 	XMLparserTag* currentTagL0 = firstTagInSubnet;
-	if(!generateXMLtagListBasedUponLayer(currentTagL0, firstNeuronInSubnet))
+	if(!this->generateXMLtagListBasedUponLayer(currentTagL0, firstNeuronInSubnet))
 	{
 		result = false;
 	}
@@ -218,7 +217,7 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 }
 
 
-bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInLayer)
+bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInLayer)
 {
 	bool result = true;
 
@@ -270,61 +269,61 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 			XMLparserAttribute* currentAttribute = currentTagL2->firstAttribute;
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_id;
-			currentAttribute->value = convertIntToString((currentNeuron->id));
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->id));
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			#ifndef DO_NOT_STORE_NET_XML_NEURON_ID_PARAMETERS
 			currentAttribute->name = NET_XML_ATTRIBUTE_layerID;
-			currentAttribute->value = convertIntToString((currentNeuron->layerID));
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->layerID));
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_orderID;
-			currentAttribute->value = convertIntToString((currentNeuron->orderID));
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->orderID));
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_subnetID;
-			currentAttribute->value = convertIntToString((currentNeuron->subnetID));
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->subnetID));
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			#endif
 
 			#ifndef DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
 			currentAttribute->name = NET_XML_ATTRIBUTE_bias;
-			currentAttribute->value = convertDoubleToString((currentNeuron->bias), "%0.6f");
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->bias), "%0.6f");
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_output;
-			currentAttribute->value = convertDoubleToString((currentNeuron->output), "%0.6f");
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->output), "%0.6f");
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_classTarget;
-			currentAttribute->value = convertDoubleToString((currentNeuron->classTarget), "%0.6f");
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->classTarget), "%0.6f");
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_error;
-			currentAttribute->value = convertDoubleToString((currentNeuron->error), "%0.6f");
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->error), "%0.6f");
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			#endif
 
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 			currentAttribute->name = NET_XML_ATTRIBUTE_memoryTrace;
-			currentAttribute->value = convertIntToString((currentNeuron->memoryTrace));
-			currentAttribute = createNewAttribute(currentAttribute);
+			currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->memoryTrace));
+			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			#endif
 
 			#ifndef DO_NOT_STORE_NET_XML_NEURON_SPATIAL_COORD_PARAMETERS
 			if(currentNeuron->spatialCoordinatesSet2D)
 			{
 				currentAttribute->name = NET_XML_ATTRIBUTE_xPosRel;
-				currentAttribute->value = convertIntToString((currentNeuron->xPosRel));
-				currentAttribute = createNewAttribute(currentAttribute);
+				currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->xPosRel));
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRel;
-				currentAttribute->value = convertIntToString((currentNeuron->yPosRel));
-				currentAttribute = createNewAttribute(currentAttribute);
+				currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->yPosRel));
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRel;
-				currentAttribute->value = convertIntToString((currentNeuron->zPosRel));
-				currentAttribute = createNewAttribute(currentAttribute);
+				currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->zPosRel));
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			}
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
@@ -332,16 +331,16 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 			{
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_xPosRelFrac;
-				currentAttribute->value = convertDoubleToString((currentNeuron->xPosRelFrac), "%0.6f");
-				currentAttribute = createNewAttribute(currentAttribute);
+				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->xPosRelFrac), "%0.6f");
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRelFrac;
-				currentAttribute->value = convertDoubleToString((currentNeuron->yPosRelFrac), "%0.6f");
-				currentAttribute = createNewAttribute(currentAttribute);
+				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->yPosRelFrac), "%0.6f");
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRelFrac;
-				currentAttribute->value = convertDoubleToString((currentNeuron->zPosRelFrac), "%0.6f");
-				currentAttribute = createNewAttribute(currentAttribute);
+				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->zPosRelFrac), "%0.6f");
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			}
 			#endif
 
@@ -367,19 +366,19 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 					XMLparserAttribute* currentAttribute = currentTagL3->firstAttribute;
 
 					currentAttribute->name = NET_XML_ATTRIBUTE_neuronID;
-					currentAttribute->value = convertIntToString((currentANNneuronConnection->frontNeuron->id));
-					currentAttribute = createNewAttribute(currentAttribute);
+					currentAttribute->value = SHAREDvars.convertIntToString((currentANNneuronConnection->frontNeuron->id));
+					currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 					#ifndef DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
 					currentAttribute->name = NET_XML_ATTRIBUTE_weight;
-					currentAttribute->value = convertDoubleToString((currentANNneuronConnection->weight), "%0.6f");
-					currentAttribute = createNewAttribute(currentAttribute);
+					currentAttribute->value = SHAREDvars.convertDoubleToString((currentANNneuronConnection->weight), "%0.6f");
+					currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 					#endif
 
 					#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 					currentAttribute->name = NET_XML_ATTRIBUTE_idealValue;
-					currentAttribute->value = convertDoubleToString((currentANNneuronConnection->idealValue), "%0.6f");
-					currentAttribute = createNewAttribute(currentAttribute);
+					currentAttribute->value = SHAREDvars.convertDoubleToString((currentANNneuronConnection->idealValue), "%0.6f");
+					currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 					#endif
 
 					XMLparserTag* newTag = new XMLparserTag();
@@ -400,7 +399,7 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 
 				XMLparserTag* newTag1 = new XMLparserTag();
 				currentTagL2->firstLowerLevelTag = newTag1;
-				if(!generateXMLtagListBasedUponSubnet(currentTagL2->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet))
+				if(!this->generateXMLtagListBasedUponSubnet(currentTagL2->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet))
 				{
 					result = false;
 				}
@@ -417,7 +416,7 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 				{
 					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
-					if(!generateXMLtagListBasedUponLayer(firstTagInSubnet, currentANNneuronConnection->frontNeuron))
+					if(!this->generateXMLtagListBasedUponLayer(firstTagInSubnet, currentANNneuronConnection->frontNeuron))
 					{
 						result = false;
 					}
@@ -435,13 +434,13 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 
 	if(!foundNonPrintedNeuronOnLayer)
 	{
-		clearTag(layerTag);
+		this->clearTag(layerTag);
 	}
 
 	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
-		if(!generateXMLtagListBasedUponLayer(firstTagInSubnet, firstNeuronInLayer->firstNeuronInFrontLayer))
+		if(!this->generateXMLtagListBasedUponLayer(firstTagInSubnet, firstNeuronInLayer->firstNeuronInFrontLayer))
 		{
 			result = false;
 		}
@@ -451,7 +450,7 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 	return result;
 }
 
-bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* firstNeuronInLayer, ANNneuron* firstInputNeuronInNetwork, bool hasBackLayer, ANNneuron* firstNeuronInBackLayer)
+bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* firstNeuronInLayer, ANNneuron* firstInputNeuronInNetwork, bool hasBackLayer, ANNneuron* firstNeuronInBackLayer)
 {
 	bool result = true;
 
@@ -467,7 +466,7 @@ bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* 
 
 			bool tempResult = false;
 
-			ANNneuron* neuronToConnect = findNeuron(firstInputNeuronInNetwork, currentANNneuronConnection->frontNeuronID, &tempResult);
+			ANNneuron* neuronToConnect = this->findNeuron(firstInputNeuronInNetwork, currentANNneuronConnection->frontNeuronID, &tempResult);
 			if(tempResult)
 			{
 				//link neurons
@@ -506,14 +505,14 @@ bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* 
 				currentNeuron->isOutputSubnet = true;
 			}
 
-			if(!linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(currentNeuron->firstNeuronInBackLayerOfSubnet, firstInputNeuronInNetwork, false, NULL))
+			if(!this->linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(currentNeuron->firstNeuronInBackLayerOfSubnet, firstInputNeuronInNetwork, false, NULL))
 			{
 				result = false;
 			}
 
 			ANNneuron* firstOutputNeuronInSubnet;
 			long temp;
-			firstOutputNeuronInSubnet = recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp);
+			firstOutputNeuronInSubnet = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp);
 			currentNeuron->firstNeuronInFrontLayerOfSubnet	= firstOutputNeuronInSubnet;
 		}
 		#endif
@@ -522,7 +521,7 @@ bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* 
 	}
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
-		if(!linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstNeuronInLayer->firstNeuronInFrontLayer, firstInputNeuronInNetwork, true, firstNeuronInLayer))
+		if(!this->linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstNeuronInLayer->firstNeuronInFrontLayer, firstInputNeuronInNetwork, true, firstNeuronInLayer))
 		{
 			result = false;
 		}
@@ -532,7 +531,7 @@ bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* 
 }
 
 
-ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* result)
+ANNneuron* ANNxmlConversionClass::findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* result)
 {
 	ANNneuron* foundNeuron = NULL;
 
@@ -552,7 +551,7 @@ ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* 
 		{
 			bool tempResult = false;
 			ANNneuron* tempFoundNeuron;
-			tempFoundNeuron = findNeuron(currentNeuron->firstNeuronInBackLayerOfSubnet, neuronIDtoFind, &tempResult);
+			tempFoundNeuron = this->findNeuron(currentNeuron->firstNeuronInBackLayerOfSubnet, neuronIDtoFind, &tempResult);
 			if(tempResult)
 			{
 				*result = true;
@@ -567,7 +566,7 @@ ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* 
 	{
 		bool tempResult = false;
 		ANNneuron* tempFoundNeuron;
-		tempFoundNeuron = findNeuron(firstNeuronInLayer->firstNeuronInFrontLayer, neuronIDtoFind, &tempResult);
+		tempFoundNeuron = this->findNeuron(firstNeuronInLayer->firstNeuronInFrontLayer, neuronIDtoFind, &tempResult);
 		if(tempResult)
 		{
 			*result = true;
@@ -580,7 +579,7 @@ ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* 
 
 
 //Top Level
-bool parseNetTag(XMLparserTag* firstTagInNetwork, ANNneuron* currentNeuron)
+bool ANNxmlConversionClass::parseNetTag(XMLparserTag* firstTagInNetwork, ANNneuron* currentNeuron)
 {
 	bool result = true;
 
@@ -648,7 +647,7 @@ bool parseNetTag(XMLparserTag* firstTagInNetwork, ANNneuron* currentNeuron)
 		if(currentTagUpdatedL1->name == NET_XML_TAG_subnet)
 		{
 			long wrongAndNotUsedIDcounter = 1;
-			if(!parseSubnetTag(currentTagUpdatedL1->firstLowerLevelTag, currentNeuron, 1, &wrongAndNotUsedIDcounter, 1))
+			if(!this->parseSubnetTag(currentTagUpdatedL1->firstLowerLevelTag, currentNeuron, 1, &wrongAndNotUsedIDcounter, 1))
 			{
 				result = false;
 			}
@@ -662,7 +661,7 @@ bool parseNetTag(XMLparserTag* firstTagInNetwork, ANNneuron* currentNeuron)
 	return result;
 }
 
-bool parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet, long layerIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet, long layerIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
@@ -676,7 +675,7 @@ bool parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubn
 	{
 		if(currentTag->name == NET_XML_TAG_layer)
 		{
-			if(!parseLayerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter++, 1, wrongAndNotUsedIDcounter, subnetIDcounter))
+			if(!this->parseLayerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter++, 1, wrongAndNotUsedIDcounter, subnetIDcounter))
 			{
 				result = false;
 			}
@@ -699,7 +698,7 @@ bool parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubn
 	return result;
 }
 
-bool parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
@@ -710,7 +709,7 @@ bool parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer,
 	{
 		if(currentTag->name == NET_XML_TAG_neuronContainer)
 		{
-			if(!parseNeuronContainerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter, orderIDcounter++, wrongAndNotUsedIDcounter, subnetIDcounter))
+			if(!this->parseNeuronContainerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter, orderIDcounter++, wrongAndNotUsedIDcounter, subnetIDcounter))
 			{
 				result = false;
 			}
@@ -730,7 +729,7 @@ bool parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer,
 }
 
 
-bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
@@ -738,7 +737,7 @@ bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron*
 
 	if(currentTag->name == NET_XML_TAG_neuron)
 	{
-		if(!parseNeuronTag(currentTag, currentNeuron, layerIDcounter, orderIDcounter, wrongAndNotUsedIDcounter, subnetIDcounter))
+		if(!this->parseNeuronTag(currentTag, currentNeuron, layerIDcounter, orderIDcounter, wrongAndNotUsedIDcounter, subnetIDcounter))
 		{
 			result = false;
 		}
@@ -751,7 +750,7 @@ bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron*
 
 	if(currentTag->name == NET_XML_TAG_forwardANNneuronConnectionsList)
 	{
-		if(!parseForwardANNneuronConnectionsListTag(currentTag->firstLowerLevelTag, currentNeuron))
+		if(!this->parseForwardANNneuronConnectionsListTag(currentTag->firstLowerLevelTag, currentNeuron))
 		{
 			result = false;
 		}
@@ -770,7 +769,7 @@ bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron*
 	{
 		ANNneuron* newNeuron = new ANNneuron();
 		currentNeuron->firstNeuronInBackLayerOfSubnet = newNeuron;
-		if(!parseSubnetTag(currentTag->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet, 1, wrongAndNotUsedIDcounter, (subnetIDcounter+1)))
+		if(!this->parseSubnetTag(currentTag->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet, 1, wrongAndNotUsedIDcounter, (subnetIDcounter+1)))
 		{
 			result = false;
 		}
@@ -788,7 +787,7 @@ bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron*
 
 
 
-bool parseForwardANNneuronConnectionsListTag(XMLparserTag* firstTagInForwardANNneuronConnectionsList, ANNneuron* currentNeuron)
+bool ANNxmlConversionClass::parseForwardANNneuronConnectionsListTag(XMLparserTag* firstTagInForwardANNneuronConnectionsList, ANNneuron* currentNeuron)
 {
 	bool result = true;
 
@@ -799,7 +798,7 @@ bool parseForwardANNneuronConnectionsListTag(XMLparserTag* firstTagInForwardANNn
 		//create a new neuron connection
 		ANNneuronConnection* newANNneuronConnection = new ANNneuronConnection();
 
-		if(!parseForwardANNneuronConnectionTag(currentTag, newANNneuronConnection))
+		if(!this->parseForwardANNneuronConnectionTag(currentTag, newANNneuronConnection))
 		{
 			result = false;
 		}
@@ -815,7 +814,7 @@ bool parseForwardANNneuronConnectionsListTag(XMLparserTag* firstTagInForwardANNn
 }
 
 
-bool parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConnection* currentANNneuronConnection)
+bool ANNxmlConversionClass::parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConnection* currentANNneuronConnection)
 {
 	bool result = true;
 
@@ -829,18 +828,18 @@ bool parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConne
 	{
 		if(currentAttribute->name == NET_XML_ATTRIBUTE_neuronID)
 		{
-			currentANNneuronConnection->frontNeuronID = convertStringToDouble(currentAttribute->value);		//temporary variable used to link neuron connections at a later stage
+			currentANNneuronConnection->frontNeuronID = SHAREDvars.convertStringToDouble(currentAttribute->value);		//temporary variable used to link neuron connections at a later stage
 			neuronIDFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_weight)
 		{
-			currentANNneuronConnection->weight = convertStringToDouble(currentAttribute->value);
+			currentANNneuronConnection->weight = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			weightFound = true;
 		}
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_idealValue)
 		{
-			currentANNneuronConnection->idealValue = convertStringToDouble(currentAttribute->value);
+			currentANNneuronConnection->idealValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			idealValueFound = true;
 		}
 		#endif
@@ -869,7 +868,7 @@ bool parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConne
 
 
 
-bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
@@ -894,7 +893,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 	{
 		if(currentAttribute->name == NET_XML_ATTRIBUTE_id)
 		{
-			long attributeValue = convertStringToDouble(currentAttribute->value);
+			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			//always use XML file's neuron id as this has been generated in a different order than wrongAndNotUsedIDcounter
 			//#ifndef DO_NOT_REGENERATE_NEURON_IDS_WHEN_PARSING_NET_XML
 
@@ -904,7 +903,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_orderID)
 		{
-			long attributeValue = convertStringToDouble(currentAttribute->value);
+			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			if(attributeValue != orderIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != orderIDcounter, attributeValue = " << attributeValue << ", orderIDcounter = " << subnetIDcounter << endl;
@@ -915,7 +914,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_layerID)
 		{
-			long attributeValue = convertStringToDouble(currentAttribute->value);
+			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			if(attributeValue != layerIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != layerIDcounter, attributeValue = " << attributeValue << ", layerIDcounter = " << subnetIDcounter << endl;
@@ -926,7 +925,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_subnetID)
 		{
-			long attributeValue = convertStringToDouble(currentAttribute->value);
+			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			if(attributeValue != subnetIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != subnetIDcounter, attributeValue = " << attributeValue << ", subnetIDcounter = " << subnetIDcounter << endl;
@@ -937,32 +936,32 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_bias)
 		{
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->bias = attributeValue;
 			biasFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_output)
 		{
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->output = attributeValue;
 			outputFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_classTarget)
 		{
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->classTarget = attributeValue;
 			classTargetFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_error)
 		{
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->error = attributeValue;
 			errorFound = true;
 		}
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_memoryTrace)
 		{
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->memoryTrace = attributeValue;
 			errorFound = true;
 		}
@@ -970,38 +969,38 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_xPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet2D = true;
-			long attributeValue = convertStringToDouble(currentAttribute->value);
+			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->xPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_yPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet2D = true;
-			long attributeValue = convertStringToDouble(currentAttribute->value);
+			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->yPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_zPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet2D = true;
-			long attributeValue = convertStringToDouble(currentAttribute->value);
+			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRel = attributeValue;
 		}
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_xPosRelFrac)
 		{
 			currentNeuron->spatialCoordinatesSetClassification = true;
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->xPosRelFrac = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_yPosRelFrac)
 		{
 			currentNeuron->spatialCoordinatesSetClassification = true;
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->yPosRelFrac = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_zPosRelFrac)
 		{
 			currentNeuron->spatialCoordinatesSetClassification = true;
-			double attributeValue = convertStringToDouble(currentAttribute->value);
+			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRelFrac = attributeValue;
 		}
 		#endif
@@ -1050,7 +1049,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 	return result;
 }
 
-void clearTag(XMLparserTag* tag)
+void ANNxmlConversionClass::clearTag(XMLparserTag* tag)
 {
 	delete (tag->nextTag);
 	tag->nextTag = NULL;

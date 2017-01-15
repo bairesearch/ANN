@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -39,16 +39,23 @@
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
 #include "ANNexperienceClass.h"
+#include "ANNalgorithmMemoryNetworkUpdate.h"
+#include "ANNdata.h"
 
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
-void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences);
-void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences);
+class ANNalgorithmMemoryNetworkTrainingClass
+{
+	private: ANNalgorithmMemoryNetworkUpdateClass ANNalgorithmMemoryNetworkUpdate;
+	private: ANNexperienceClassClass ANNexperienceClass;
+	public: void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences);
+	public: void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences);
 
-void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed);
-void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed);
-void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed);
-void resetInputs(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet);
+	private: void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed);
+	private: void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed);
+	private: void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed);
+	private: void resetInputs(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet);
+};
 
 #endif
 #endif

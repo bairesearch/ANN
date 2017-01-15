@@ -26,14 +26,13 @@
  * File Name: ANNexperienceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments:
  *
  *******************************************************************************/
 
 
 #include "ANNexperienceClass.h"
-#include "SHAREDvars.h"
 
 ANNexperience::ANNexperience(void)
 {
@@ -75,7 +74,7 @@ ANNexperienceInput::~ANNexperienceInput(void)
 
 
 
-void copyExperiences(ANNexperience* newExperience, ANNexperience* experienceToCopy)
+void ANNexperienceClassClass::copyExperiences(ANNexperience* newExperience, ANNexperience* experienceToCopy)
 {
 	newExperience->classTargetValue = experienceToCopy->classTargetValue;
 
@@ -92,7 +91,7 @@ void copyExperiences(ANNexperience* newExperience, ANNexperience* experienceToCo
 	}
 }
 
-ANNexperience* findExperience(ANNexperience* firstExperienceInDataSet, const long experienceNumToFind)
+ANNexperience* ANNexperienceClassClass::findExperience(ANNexperience* firstExperienceInDataSet, const long experienceNumToFind)
 {
 	ANNexperience* foundExperience;
 	ANNexperience* currentExperience = firstExperienceInDataSet;
@@ -104,7 +103,7 @@ ANNexperience* findExperience(ANNexperience* firstExperienceInDataSet, const lon
 	return foundExperience;
 }
 
-long countNumberOfExperienceInputs(const ANNexperience* experience)
+long ANNexperienceClassClass::countNumberOfExperienceInputs(const ANNexperience* experience)
 {
 	long numberOfExperienceInputs = 0;
 
@@ -118,14 +117,14 @@ long countNumberOfExperienceInputs(const ANNexperience* experience)
 	return numberOfExperienceInputs;
 }
 
-long countNumberOfExperiences(const ANNexperience* firstExperienceInList)
+long ANNexperienceClassClass::countNumberOfExperiences(const ANNexperience* firstExperienceInList)
 {
 	long numberOfExperiences = 0;
 
 	const ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		countNumberOfExperienceInputs(currentExperience);
+		this->countNumberOfExperienceInputs(currentExperience);
 
 		numberOfExperiences++;
 		currentExperience = currentExperience->next;
@@ -135,7 +134,7 @@ long countNumberOfExperiences(const ANNexperience* firstExperienceInList)
 }
 
 
-void printExperienceInputs(const ANNexperience* experience)
+void ANNexperienceClassClass::printExperienceInputs(const ANNexperience* experience)
 {
 	const ANNexperienceInput* currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
@@ -146,7 +145,7 @@ void printExperienceInputs(const ANNexperience* experience)
 	}
 }
 
-void printExperiences(const ANNexperience* firstExperienceInList)
+void ANNexperienceClassClass::printExperiences(const ANNexperience* firstExperienceInList)
 {
 	const ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
@@ -154,25 +153,25 @@ void printExperiences(const ANNexperience* firstExperienceInList)
 		cout << "ANNexperience:" << endl;
 		cout << "class Target = " << currentExperience->classTargetValue << endl;
 
-		printExperienceInputs(currentExperience);
+		this->printExperienceInputs(currentExperience);
 
 		currentExperience = currentExperience->next;
 	}
 }
 
-void addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, const ANNexperience* firstExperienceInList)
+void ANNexperienceClassClass::addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, const ANNexperience* firstExperienceInList)
 {
 	const ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		addExperienceToOFStream(experienceDataSetOfStreamObject, currentExperience);
+		this->addExperienceToOFStream(experienceDataSetOfStreamObject, currentExperience);
 		currentExperience = currentExperience->next;
 	}
 }
 
-void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, const ANNexperience* experience)
+void ANNexperienceClassClass::addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, const ANNexperience* experience)
 {
-	string tempString = convertIntToString(experience->classTargetValue);
+	string tempString = SHAREDvars.convertIntToString(experience->classTargetValue);
 	//experienceDataSetOfStreamObject->write(tempString);
 	for(int i = 0; i<(int)(tempString.length());i++)
 	{
@@ -183,7 +182,7 @@ void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, const AN
 	const ANNexperienceInput* currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
 	{
-		string tempString2 = convertDoubleToString(currentExperienceInput->inputValue, "%0.6f");
+		string tempString2 = SHAREDvars.convertDoubleToString(currentExperienceInput->inputValue, "%0.6f");
 		//experienceDataSetOfStreamObject->write(tempString2);
 		for(int i = 0; i<(int)(tempString2.length());i++)
 		{
@@ -199,7 +198,7 @@ void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, const AN
 
 
 
-double normaliseExperienceInput(double currentInputValue, double maxInputValue)
+double ANNexperienceClassClass::normaliseExperienceInput(double currentInputValue, double maxInputValue)
 {
 	double minInputValue = 0.0;
 	if(currentInputValue > maxInputValue)
@@ -210,7 +209,7 @@ double normaliseExperienceInput(double currentInputValue, double maxInputValue)
 
 	double normalisedExperienceInput;
 
-	if(compareDoubles(maxInputValue, minInputValue))
+	if(SHAREDvars.compareDoubles(maxInputValue, minInputValue))
 	{
 		normalisedExperienceInput = currentInputValue;
 	}

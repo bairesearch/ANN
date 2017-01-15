@@ -26,22 +26,18 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments:
  *
  *******************************************************************************/
 
 
-#include "ANNglobalDefs.h"
-#include "ANNneuronClass.h"
 #include "ANNalgorithmMemoryNetworkTraining.h"
-#include "ANNalgorithmMemoryNetworkUpdate.h"
-#include "ANNdata.h"
 
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
 
-void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
+void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
 {
 	/*
 	network structure
@@ -52,7 +48,7 @@ void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron
 	*/
 
 	#ifndef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_OPTIMISE_CLASSIFICATION_NET
-	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
+	this->resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
 	#endif
 
 	int numberOfExperiencesTrain = 0;
@@ -62,10 +58,10 @@ void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron
 	ANNexperience* currentExperience = firstExperienceInDataSet;
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
-		resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperience);
+		this->resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperience);
 		string trainingClassificationResult = "";	//NOT USED
 		double trainingMemoryResult = 0.0;	//NOT USED
-		ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
+		ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTrain++;
 	}
@@ -73,16 +69,16 @@ void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron
 	//testing
 	double testingMemoryResultSum = 0.0;
 	//creates and stores copy of the trained neural network
-	storeNeuralNetworkMemoryTrace(firstInputNeuron);
+	this->storeNeuralNetworkMemoryTrace(firstInputNeuron);
 	//from start of test segment -> end of test segment
 	currentExperience = firstExperienceInDataSet;
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
-		restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
-		resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperience);
+		this->restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
+		this->resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperience);
 		string testingClassificationResult = "";	//NOT USED
 		double testingMemoryResult = 0.0;
-		ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &testingClassificationResult, &testingMemoryResult);
+		ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &testingClassificationResult, &testingMemoryResult);
 		testingMemoryResultSum = testingMemoryResultSum + testingMemoryResult;
 		#ifdef ANN_DEBUG
 		//cout << "current testingMemoryResult = " << testingMemoryResult << endl;
@@ -95,12 +91,12 @@ void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron
 	cout << "testingMemoryResultAverage = " << testingMemoryResultAverage << endl;
 
 	//resets the trained neural network to the stored copy
-	restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
+	this->restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
 }
 
 
 
-void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
+void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
 {
 	/*
 	network structure
@@ -111,7 +107,7 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firs
 	*/
 
 	#ifndef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_OPTIMISE_CLASSIFICATION_NET
-	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
+	this->resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
 	#endif
 
 	for(int foldNum=0; foldNum < maxFolds; foldNum++)
@@ -127,11 +123,11 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firs
 
 		long indexOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
 		long indexOfLastExperienceInFoldTrainPartB = numberOfExperiences;
-		ANNexperience* firstExperienceInFoldTrainPartB = findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTrainPartB);
+		ANNexperience* firstExperienceInFoldTrainPartB = ANNexperienceClass.findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTrainPartB);
 
 		long indexOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
 		long indexOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
-		ANNexperience* firstExperienceInFoldTestPart = findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTestPart);
+		ANNexperience* firstExperienceInFoldTestPart = ANNexperienceClass.findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTestPart);
 
 		/*
 		cout << "indexOfFirstExperienceInFoldTrainPartA = " << indexOfFirstExperienceInFoldTrainPartA << endl;
@@ -148,10 +144,10 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firs
 		currentExperienceInFold = firstExperienceInFoldTrainPartA;
 		for(int experienceNum = indexOfFirstExperienceInFoldTrainPartA; experienceNum < indexOfLastExperienceInFoldTrainPartA; experienceNum++)
 		{
-			resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperienceInFold);
+			this->resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperienceInFold);
 			string trainingClassificationResult = "";	//NOT USED
 			double trainingMemoryResult = 0.0;	//NOT USED
-			ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
+			ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
 			#ifdef ANN_DEBUG
 			#endif
 			currentExperienceInFold = currentExperienceInFold->next;
@@ -161,10 +157,10 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firs
 		currentExperienceInFold = firstExperienceInFoldTrainPartB;
 		for(int experienceNum = indexOfFirstExperienceInFoldTrainPartB; experienceNum<indexOfLastExperienceInFoldTrainPartB; experienceNum++)
 		{
-			resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperienceInFold);
+			this->resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperienceInFold);
 			string trainingClassificationResult = "";	//NOT USED
 			double trainingMemoryResult = 0.0;	//NOT USED
-			ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
+			ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
 			#ifdef ANN_DEBUG
 			#endif
 			currentExperienceInFold = currentExperienceInFold->next;
@@ -174,16 +170,16 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firs
 		//testing
 		double testingMemoryResultSum = 0.0;
 		//creates and stores copy of the trained neural network
-		storeNeuralNetworkMemoryTrace(firstInputNeuron);
+		this->storeNeuralNetworkMemoryTrace(firstInputNeuron);
 		//from start of test segment -> end of test segment
 		currentExperienceInFold = firstExperienceInFoldTestPart;
 		for(int experienceNum = indexOfFirstExperienceInFoldTestPart; experienceNum < indexOfLastExperienceInFoldTestPart; experienceNum++)
 		{
-			restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
-			resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperienceInFold);
+			this->restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
+			this->resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperienceInFold);
 			string testingClassificationResult = "";	//NOT USED
 			double testingMemoryResult = 0.0;
-			ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &testingClassificationResult, &testingMemoryResult);
+			ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &testingClassificationResult, &testingMemoryResult);
 			testingMemoryResultSum = testingMemoryResultSum + testingMemoryResult;
 			#ifdef ANN_DEBUG
 			//cout << "current testingMemoryResult = " << testingMemoryResult << endl;
@@ -196,7 +192,7 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firs
 		cout << "testingMemoryResultAverage = " << testingMemoryResultAverage << endl;
 
 		//resets the trained neural network to the stored copy
-		restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
+		this->restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
 	}
 }
 
@@ -210,7 +206,7 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firs
 
 
 
-void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmMemoryNetworkTrainingClass::storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
 	cout << "storeNeuralNetworkMemoryTrace{}:" << endl;
@@ -244,7 +240,7 @@ void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
 			#ifdef ANN_SUBNETS
 			if(currentNeuronReference->isSubnet)
 			{
-				storeNeuralNetworkMemoryTrace(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
+				this->storeNeuralNetworkMemoryTrace(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 			#endif
 		}
@@ -255,11 +251,11 @@ void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
 	//recursion [NB there will be unnecessay redundancy here, as the same neuron will be accessed more than once]
 	if(neuronBeingAccessed->hasFrontLayer)
 	{
-		storeNeuralNetworkMemoryTrace(neuronBeingAccessed->firstNeuronInFrontLayer);
+		this->storeNeuralNetworkMemoryTrace(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
 }
 
-void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmMemoryNetworkTrainingClass::restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
 	cout << "restoreNeuralNetworkWithStoredMemoryTrace{}:" << endl;
@@ -293,7 +289,7 @@ void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
 			#ifdef ANN_SUBNETS
 			if(currentNeuronReference->isSubnet)
 			{
-				restoreNeuralNetworkWithStoredMemoryTrace(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
+				this->restoreNeuralNetworkWithStoredMemoryTrace(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 			#endif
 		}
@@ -304,11 +300,11 @@ void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
 	//recursion [NB there will be unnecessay redundancy here, as the same neuron will be accessed more than once]
 	if(neuronBeingAccessed->hasFrontLayer)
 	{
-		restoreNeuralNetworkWithStoredMemoryTrace(neuronBeingAccessed->firstNeuronInFrontLayer);
+		this->restoreNeuralNetworkWithStoredMemoryTrace(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
 }
 
-void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
 	cout << "resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace{}:" << endl;
@@ -393,7 +389,7 @@ void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* ne
 			#ifdef ANN_SUBNETS
 			if(currentNeuronReference->isSubnet)
 			{
-				resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
+				this->resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 			#endif
 		}
@@ -405,11 +401,11 @@ void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* ne
 	//recursion [NB there will be unnecessay redundancy here, as the same neuron will be accessed more than once]
 	if(neuronBeingAccessed->hasFrontLayer)
 	{
-		resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(neuronBeingAccessed->firstNeuronInFrontLayer);
+		this->resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
 }
 
-void resetInputs(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
+void ANNalgorithmMemoryNetworkTrainingClass::resetInputs(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
 {
 	#ifdef ANN_DEBUG
 	cout << "resetInputs{}:" << endl;

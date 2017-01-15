@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -39,47 +39,55 @@
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
 #include "ANNexperienceClass.h"
+#include "ANNalgorithmClassificationNetworkUpdate.h"
+#include "ANNdata.h"
+#include "SHAREDvars.h"
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
-void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
-	void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron);
+class ANNalgorithmClassificationNetworkTrainingClass
+{
+	private: SHAREDvarsClass SHAREDvars;
+	public: void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
+		private: void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron);
 	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
-	void resetBackNeuronMatchTemp(ANNneuron* categoryNeuron);
+		private: void resetBackNeuronMatchTemp(ANNneuron* categoryNeuron);
 	#endif
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
-	void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
+		private: void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
 	#endif
-	void deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
+		private: void deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
 	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
-	void mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
+		private: void mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
 	#endif
 	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS
-	bool cullRedundantNeurons(ANNneuron* categoryNeuron, ANNneuron* parentNeuron, ANNneuron** firstOutputNeuron);
+		private: bool cullRedundantNeurons(ANNneuron* categoryNeuron, ANNneuron* parentNeuron, ANNneuron** firstOutputNeuron);
 	#endif
-	void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage);
-		bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level);
-		ANNneuronConnection* connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron);
-		void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron, bool updateIdealValues);
-		void updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron, bool updateIdealValues);
-		void updateConnectionIdealValue(ANNneuronConnection* connection);
-		void updateConnectionIdealValueNoUpdating(ANNneuronConnection* connection);
-		double calculateIdealOutputValue(ANNneuron* categoryNeuron);
-		double calculateOutput(double totalOutput, double numberOfCategoryInputValues);
-		double calculateDiff(double idealValue, double value);
-		double calculateSum(double value);
+		private: void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage);
+			private: bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level);
+			private: ANNneuronConnection* connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron);
+			private: void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron, bool updateIdealValues);
+			private: void updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron, bool updateIdealValues);
+			private: void updateConnectionIdealValue(ANNneuronConnection* connection);
+			private: void updateConnectionIdealValueNoUpdating(ANNneuronConnection* connection);
+			private: double calculateIdealOutputValue(ANNneuron* categoryNeuron);
+			private: double calculateOutput(double totalOutput, double numberOfCategoryInputValues);
+			private: double calculateDiff(double idealValue, double value);
+			private: double calculateSum(double value);
 
-string printTabsDEBUG(int level);
+	private: string printTabsDEBUG(int level);
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_ALLOW_FOR_CASE_WHERE_INTERMEDIARY_NEURON_IS_CONNECTED_TO_ALL_INPUTS
-void findInputs(ANNneuron* categoryNeuron, vector<bool>* inputFound, int level);
+	private: void findInputs(ANNneuron* categoryNeuron, vector<bool>* inputFound, int level);
 #endif
 
 #ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK3
-void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron);
+	private: void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron);
 #endif
 #ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6
-void checkMinNumberOfInputNeurons(ANNneuron* categoryNeuron);
+	private: void checkMinNumberOfInputNeurons(ANNneuron* categoryNeuron);
 #endif
+};
+
 
 #endif
 #endif

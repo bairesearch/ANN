@@ -26,7 +26,7 @@
  * File Name: ANNmain.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -36,6 +36,18 @@
 #define HEADER_ANN_MAIN
 
 #include "ANNglobalDefs.h"
+#include "ANNformation.h"
+#include "ANNalgorithmBackpropagationTraining.h"
+#include "ANNalgorithmMemoryNetworkTraining.h"
+#include "ANNalgorithmClassificationNetworkTraining.h"
+#include "ANNparser.h"
+#include "ANNxmlConversion.h"
+#include "ANNdraw.h"
+#include "ANNdisplay.h"
+#include "ANNdata.h"
+#include "LDsvg.h"
+#include "LDsprite.h"
+#include "XMLrulesClass.h"
 
 //#define LOAD_NETWORK_FROM_XML_FILE
 //#define SKIP_NETWORK_TRAINING_AND_ONLY_OUTPUT_VIS
@@ -57,19 +69,36 @@
 //#define TEST_LEVEL_7_ANNTH			//with subnets, ...
 
 
-
 int main(const int argc,const char* *argv);
 
-bool mainUI();
+class ANNmainClass
+{
+	private: SHAREDvarsClass SHAREDvars;
+	private: ANNxmlConversionClass ANNxmlConversion;
+	private: ANNparserClass ANNparser;
+	private: ANNformationClass ANNformation;
+	#ifdef ANN_ALGORITHM_BACKPROPAGATION
+	private: ANNalgorithmBackpropagationTrainingClass ANNalgorithmBackpropagationTraining;
+	#endif
+	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+	private: ANNalgorithmMemoryNetworkTrainingClass ANNalgorithmMemoryNetworkTraining;
+	#endif
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	private: ANNalgorithmClassificationNetworkTrainingClass ANNalgorithmClassificationNetworkTraining;
+	#endif
+	private: ANNdisplayClass ANNdisplay;
 
-bool loadNetworkFromXML();
-bool loadExperienceDataFile();
+	public: bool mainUI();
+
+	private: bool loadNetworkFromXML();
+	private: bool loadExperienceDataFile();
 #ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-bool createNetwork();
+	private: bool createNetwork();
 #endif
-bool trainNetwork(const bool advancedTraining);
-bool outputNetworkToXML();
-bool outputNetworkAsVectorGraphics();
+	private: bool trainNetwork(const bool advancedTraining);
+	private: bool outputNetworkToXML();
+	private: bool outputNetworkAsVectorGraphics();
+};
 
 
 #endif

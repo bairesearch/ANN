@@ -1,0 +1,19 @@
+
+
+CC=g++
+#CFLAGS=-c -Wall
+CFLAGS=-c -W --no-warn -g
+LDFLAGS=-lglut -lGL -lGLU
+SOURCES= ANNformation.cpp ANNalgorithmBackpropagationTraining.cpp ANNalgorithmBackpropagationUpdate.cpp ANNalgorithmMemoryNetworkTraining.cpp ANNalgorithmMemoryNetworkUpdate.cpp ANNalgorithmClassificationNetworkTraining.cpp ANNalgorithmClassificationNetworkUpdate.cpp ANNneuronClass.cpp ANNneuronConnectionClass.cpp ANNdata.cpp ANNmain.cpp ANNparser.cpp ANNdraw.cpp ANNexperienceClass.cpp ANNdisplay.cpp ANNxmlConversion.cpp XMLparserClass.cpp XMLrulesClass.cpp LDreferenceClass.cpp LDreferenceManipulation.cpp LDsprite.cpp LDparser.cpp LDsvg.cpp LDopengl.cpp SHAREDglobalDefs.cpp SHAREDvector.cpp SHAREDvars.cpp
+
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=ANNwithRT.exe
+
+all: $(SOURCES) $(EXECUTABLE)
+	
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
+

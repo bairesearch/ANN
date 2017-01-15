@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -128,12 +128,15 @@ public:
 };
 
 
-void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
+class ANNneuronClassClass
+{
+	public: void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
 
 
-void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
+	private: void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
 
-void averageNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
+	public: void averageNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
+};
 
 #endif
 

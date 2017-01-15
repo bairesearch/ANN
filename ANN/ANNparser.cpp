@@ -26,22 +26,19 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
 
-#include "ANNdata.h"
 #include "ANNparser.h"
-#include "ANNexperienceClass.h"
-#include "SHAREDvars.h"
 
 
 
 
 
-void ANNparseDataFile(string nameOfExperiencesDataSetFile)
+void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 {
 	float* inputData = new float[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH];
 
@@ -80,7 +77,7 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 		{
 			case CHAR_NEWLINE:
 			{
-				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = convertStringToDouble(currentNumberString);
+				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = SHAREDvars.convertStringToDouble(currentNumberString);
 				currentNumberString = "";
 
 					#ifdef ANN_DEBUG
@@ -98,7 +95,7 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 			}
 			case CHAR_COMMA:
 			{
-				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = convertStringToDouble(currentNumberString);
+				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = SHAREDvars.convertStringToDouble(currentNumberString);
 				currentNumberString = "";
 				currentColumn++;
 				break;

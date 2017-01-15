@@ -26,11 +26,16 @@
  * File Name: ANNparser.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
+
+
+#include "ANNdata.h"
+#include "ANNexperienceClass.h"
+#include "SHAREDvars.h"
 
 #ifndef HEADER_ANN_PARSER
 #define HEADER_ANN_PARSER
@@ -41,6 +46,10 @@
 #define	SOME_REALLY_SMALL_FLOAT 0.0F
 #define	SOME_REALLY_LARGE_FLOAT 500.0F
 
-void ANNparseDataFile(string nameOfExperiencesDataSetFile);
+class ANNparserClass
+{
+	private: SHAREDvarsClass SHAREDvars;
+	public: void ANNparseDataFile(string nameOfExperiencesDataSetFile);
+};
 
 #endif

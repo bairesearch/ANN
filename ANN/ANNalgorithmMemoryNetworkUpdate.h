@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkUpdate.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -38,16 +38,21 @@
 #include "ANNglobalDefs.h"
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
+#include "ANNalgorithmBackpropagationUpdate.h"	//required for backPropogationForwardPassStep
 
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
-double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult);
-	void calculateBinaryOutputCode(const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult);
-	bool isNeuronOutputFire(const ANNneuron* currentNeuron);
-	void memoryTraceForwardPassStep(ANNneuron* neuronBeingAccessed, double* trainingMemoryResult);
-		void readAndUpdateMemoryTrace(ANNneuron* currentNeuronInLayer, double* trainingMemoryResult);
-			void updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(ANNneuronConnection* currentANNneuronConnectionSide);
-			void incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(double* trainingMemoryResult);
+class ANNalgorithmMemoryNetworkUpdateClass
+{
+	private: ANNalgorithmBackpropagationUpdateClass ANNalgorithmBackpropagationUpdate;
+	public: double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult);
+		private: void calculateBinaryOutputCode(const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult);
+		private: bool isNeuronOutputFire(const ANNneuron* currentNeuron);
+		private: void memoryTraceForwardPassStep(ANNneuron* neuronBeingAccessed, double* trainingMemoryResult);
+			private: void readAndUpdateMemoryTrace(ANNneuron* currentNeuronInLayer, double* trainingMemoryResult);
+				private: void updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(ANNneuronConnection* currentANNneuronConnectionSide);
+				private: void incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(double* trainingMemoryResult);
+};
 
 
 

@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1a 14-January-2017
+ * Project Version: 3j1b 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -200,7 +200,7 @@ ANNneuron::~ANNneuron(void)
 
 
 
-void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
+void ANNneuronClassClass::fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
 {
 	neuronToUpdate->id = IDinit;
 	neuronToUpdate->orderID = orderIDinit;
@@ -209,7 +209,7 @@ void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long order
 }
 
 
-void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy)
+void ANNneuronClassClass::copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy)
 {
 	neuronToUpdate->bias = neuronToCopy->bias;
 	neuronToUpdate->storedBias = neuronToCopy->storedBias;
@@ -218,7 +218,7 @@ void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy)
 	neuronToUpdate->error = neuronToCopy->error;
 }
 
-void averageNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy)
+void ANNneuronClassClass::averageNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy)
 {
 	neuronToUpdate->bias = (neuronToUpdate->bias + neuronToCopy->bias)/2.0;
 	neuronToUpdate->storedBias = (neuronToUpdate->storedBias + neuronToCopy->storedBias)/2.0;
