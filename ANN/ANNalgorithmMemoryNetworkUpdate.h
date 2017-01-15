@@ -23,23 +23,23 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmClassificationAndMemoryUpdate.h
+ * File Name: ANNalgorithmMemoryNetworkUpdate.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_ALGORITHM_CLASSIFICATION_AND_MEMORY_UPDATE
-#define HEADER_ANN_ALGORITHM_CLASSIFICATION_AND_MEMORY_UPDATE
+#ifndef HEADER_ANN_ALGORITHM_MEMORY_NETWORK_UPDATE
+#define HEADER_ANN_ALGORITHM_MEMORY_NETWORK_UPDATE
 
 #include "ANNglobalDefs.h"
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
 
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
 double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult);
 	void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult);

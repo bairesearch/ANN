@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmClassificationAndMemoryTraining.cpp
+ * File Name: ANNalgorithmMemoryNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -34,14 +34,14 @@
 
 #include "ANNglobalDefs.h"
 #include "ANNneuronClass.h"
-#include "ANNalgorithmClassificationAndMemoryTraining.h"
-#include "ANNalgorithmClassificationAndMemoryUpdate.h"
+#include "ANNalgorithmMemoryNetworkTraining.h"
+#include "ANNalgorithmMemoryNetworkUpdate.h"
 #include "ANNdata.h"
 
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
 
-void trainNeuralNetworkClassificationAndMemorySimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences)
+void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences)
 {
 	/*
 	network structure
@@ -51,7 +51,7 @@ void trainNeuralNetworkClassificationAndMemorySimple(ANNneuron* firstInputNeuron
 	Y output neurons
 	*/
 	
-	#ifndef ANN_ALGORITHM_BACKPROPAGATION
+	#ifndef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_OPTIMISE_CLASSIFICATION_NET
 	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
 	#endif
 	
@@ -102,7 +102,7 @@ void trainNeuralNetworkClassificationAndMemorySimple(ANNneuron* firstInputNeuron
 
 
 
-void trainNeuralNetworkClassificationAndMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, ANNexperience* firstExperienceInDataSet, long numberOfExperiences)
+void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, ANNexperience* firstExperienceInDataSet, long numberOfExperiences)
 {
 	/*
 	network structure
@@ -112,7 +112,7 @@ void trainNeuralNetworkClassificationAndMemory(ANNneuron* firstInputNeuron, ANNn
 	Y output neurons
 	*/
 	
-	#ifndef ANN_ALGORITHM_BACKPROPAGATION
+	#ifndef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_OPTIMISE_CLASSIFICATION_NET
 	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
 	#endif
 	

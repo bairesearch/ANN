@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -76,7 +76,11 @@ public:
 	double output;
 	double classTarget;					//only relevant to output layer neurons
 	double error;
-
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	double memoryTrace;	//popularity
+	bool inputNeuronMatchTemp;
+	#endif
+	
 	//for visualising highly structured networks [Eg used to visualise a 2D visual processing unit/subnet]
 	bool spatialCoordinatesSet;
 	long xPosRel;	//not currently used
@@ -93,7 +97,7 @@ public:
 	vector<ANNneuronConnection*> frontANNneuronConnectionList;
 	vector<ANNneuronConnection*> backANNneuronConnectionList;
 
-	#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	vector<ANNneuronConnection*> sideANNneuronConnectionList;
 	#endif
 	

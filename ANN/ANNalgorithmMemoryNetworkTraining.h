@@ -23,32 +23,27 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmClassificationAndMemoryTraining.h
+ * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_ALGORITHM_CLASSIFICATION_AND_MEMORY_TRAINING
-#define HEADER_ANN_ALGORITHM_CLASSIFICATION_AND_MEMORY_TRAINING
+#ifndef HEADER_ANN_ALGORITHM_MEMORY_NETWORK_TRAINING
+#define HEADER_ANN_ALGORITHM_MEMORY_NETWORK_TRAINING
 
 #include "ANNglobalDefs.h"
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
 #include "ANNexperienceClass.h"
 
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
-#define	MAX_NUM_FOLDS_ANNTH 10
-
-#define	ANN_DEFAULT_MAX_NUMBER_OF_EPOCHS 5000
-#define	ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS 320
-
-void trainNeuralNetworkClassificationAndMemorySimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
-void trainNeuralNetworkClassificationAndMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
+void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
+void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
 
 void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed);
 void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed);

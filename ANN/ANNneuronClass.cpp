@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -49,7 +49,11 @@ ANNneuron::ANNneuron(void)
 	output = 0;		//this value must be initialised explicity
 	classTarget = 0;	//this value must be initialised explicity
 	error = 0;		//this value must be initialised explicity
-
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	memoryTrace = 0;
+	inputNeuronMatchTemp = false;
+	#endif
+	
 	spatialCoordinatesSet = 0;
 	xPosRel = 0;		//this value must be initialised explicity
 	yPosRel = 0;		//this value must be initialised explicity
@@ -80,16 +84,20 @@ ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subne
 	layerID = layerIDinit;
 	subnetID = subnetIDinit;
 
-	//bias = 0;		 //this value must be initialised explicity
-	//storedBias = 0; 	//this value must be initialised explicity
-	//output = 0; 		//this value must be initialised explicity
-	//classTarget = 0; 	//this value must be initialised explicity
-	//error = 0; 		//this value must be initialised explicity
-
+	bias = 0;		//this value must be initialised explicity
+	storedBias = 0;		//this value must be initialised explicity
+	output = 0;		//this value must be initialised explicity
+	classTarget = 0;	//this value must be initialised explicity
+	error = 0;		//this value must be initialised explicity
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	memoryTrace = 0;
+	inputNeuronMatchTemp = false;
+	#endif
+	
 	spatialCoordinatesSet = 0;
-	//xPosRel = 0;		//this value must be initialised explicity
-	//yPosRel = 0;		//this value must be initialised explicity
-	//zPosRel = 0;		//this value must be initialised explicity
+	xPosRel = 0;	      //this value must be initialised explicity
+	yPosRel = 0;	      //this value must be initialised explicity
+	zPosRel = 0;	      //this value must be initialised explicity
 
 	nextNeuron = NULL;
 

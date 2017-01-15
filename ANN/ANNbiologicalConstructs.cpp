@@ -26,7 +26,7 @@
  * File Name: ANNbiologicalConstructs.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
  *			how to record movement information? (Eg recurrent network required) how to get synthetic network to modify its focus; left, right, in, out towards the objects of most interest?
  *******************************************************************************/

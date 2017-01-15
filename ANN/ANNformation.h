@@ -26,7 +26,7 @@
  * File Name: ANNformation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -38,7 +38,7 @@
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
 
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	#define DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_SIDE_LAYER_NEURONS_ANNTH (1.0)		//100% probability that a neuron will be connected to a neuron on the same layer (memory trace connections only)
 #endif
 
@@ -72,6 +72,9 @@
 
 #define BASIC_NUMBER_OF_HIDDEN_NEURONS_HEURISTIC_ANNTH (1.0F)	//only used for backwards compatability
 
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+void formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons)
+#else
 void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfHiddenNeurons, long numberOfOutputNeurons);
 ANNneuron* formNeuralNetWithOptimisedProperties(ANNneuron* firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers);
 	ANNneuron* formNeuralNet(ANNneuron* firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
@@ -94,10 +97,11 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 
 double calculateDistanceBetween2Points(double xPositionOfUnit1, double xPositionOfUnit2, double yPositionOfUnit1, double yPositionOfUnit2);
 
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 void addSideConnectionsForLayer(ANNneuron* firstNeuronInLayer);
 void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDivergenceType, long currentNumberOfLayers, long numberOfLayers);
 void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* currentNeuronL2);
+#endif
 #endif
 
 #endif

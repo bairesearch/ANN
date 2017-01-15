@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -36,8 +36,8 @@
 
 #include "ANNformation.h"
 #include "ANNalgorithmBackpropagationTraining.h"
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
-#include "ANNalgorithmClassificationAndMemoryTraining.h"
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+#include "ANNalgorithmMemoryNetworkTraining.h"
 #endif
 #include "ANNparser.h"
 #include "ANNxmlConversion.h"
@@ -205,8 +205,10 @@ int main(int argc,char* *argv)
 		if(argumentExists(argc,argv,"-ineurons"))
 		numberOfInputNeurons = getFloatArgument(argc,argv,"-ineurons");
 
+		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		if(argumentExists(argc,argv,"-oneurons"))
 		numberOfOutputNeurons = getFloatArgument(argc,argv,"-oneurons");
+		#endif
 
 		if(argumentExists(argc,argv,"-divtype"))
 		layerDivergenceType = getFloatArgument(argc,argv,"-divtype");
@@ -467,7 +469,6 @@ int main(int argc,char* *argv)
 		}
 
 
-
 		//now create a network;
 
 		bool result = true;
@@ -475,6 +476,9 @@ int main(int argc,char* *argv)
 		//Neural Network initialisations
 		firstInputNeuronInNetwork = new ANNneuron();
 
+		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons);
+		#else
 		if(useSubnets)
 		{
 			firstOutputNeuronInNetwork = formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
@@ -494,6 +498,7 @@ int main(int argc,char* *argv)
 		cout << "Number Of top level Layers = " << numberOfLayers << endl;
 		cout << "number Of Input Neurons = " << numberOfInputNeurons << endl;
 		cout << "number Of Output Neurons = " << numberOfOutputNeurons << endl;
+		#endif
 
 	}
 
@@ -508,8 +513,11 @@ int main(int argc,char* *argv)
 				#ifdef ANN_ALGORITHM_BACKPROPAGATION
 				trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 				#endif
-				#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
-				trainNeuralNetworkClassificationAndMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
+				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+				trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
+				#endif
+				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);	
 				#endif
 			}
 			else
@@ -517,8 +525,11 @@ int main(int argc,char* *argv)
 				#ifdef ANN_ALGORITHM_BACKPROPAGATION
 				trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 				#endif
-				#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
-				trainNeuralNetworkClassificationAndMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
+				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+				trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
+				#endif
+				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);				
 				#endif
 			}
 		}
@@ -804,8 +815,11 @@ bool trainNetwork(bool advancedTraining)
 			int maxNumEpochs = ANN_DEFAULT_MAX_NUMBER_OF_EPOCHS;
 			trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 			#endif
-			#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
-			trainNeuralNetworkClassificationAndMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
+			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+			trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
+			#endif
+			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);				
 			#endif
 		}
 		else
@@ -814,8 +828,11 @@ bool trainNetwork(bool advancedTraining)
 			int numEpochs = ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS;
 			trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 			#endif
-			#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
-			trainNeuralNetworkClassificationAndMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
+			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+			trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
+			#endif
+			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);					
 			#endif
 		}
 	}
@@ -907,7 +924,9 @@ bool mainUI()
 		cout << "Do you wish to \n";
 		cout << " ---\n";
 		cout << "1. Load a network from xml \n";
+		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		cout << "2. Create a new network \n";
+		#endif
 		cout << " --- \n";
 		cout << "3. Load an experience dataset \n";
 		cout << " --- \n";
@@ -917,10 +936,10 @@ bool mainUI()
 		cout << "5. Output the network as xml \n";
 		cout << "6. Output the network as vector graphics (.ldr) \n";
 		cout << " --- \n";
-#ifdef USE_LRRC
+		#ifdef USE_LRRC
 		cout << "7. Generate ANNexperience Data Using LRRC \n";
 		cout << " ---\n";
-#endif
+		#endif
 		cout << "0. Exit\n";
 		cout << " ---\n";
 		cout <<	"Enter Answer (0,1,2,3... etc):\n\n>> ";
@@ -931,10 +950,12 @@ bool mainUI()
 		{
 			loadNetworkFromXML();
 		}
+		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(answerAsInt == 2)
 		{
 			createNetwork();
 		}
+		#endif
 		else if(answerAsInt == 3)
 		{
 			loadExperienceDataFile();

@@ -23,20 +23,20 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmClassificationAndMemoryUpdate.cpp
+ * File Name: ANNalgorithmMemoryNetworkUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
 
 
-#include "ANNalgorithmClassificationAndMemoryUpdate.h"
+#include "ANNalgorithmMemoryNetworkUpdate.h"
 #include "ANNalgorithmBackpropagationUpdate.h"	//required for backPropogationForwardPassStep
 #include "ANNneuronClass.h"
 
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
 double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult)
 {
@@ -75,7 +75,7 @@ void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* tr
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 	
-	#ifdef ANN_DEBUG_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	#ifdef ANN_DEBUG_ALGORITHM_MEMORY_NETWORK
 	cout << "trainingClassificationResult = " << *trainingClassificationResult << endl;
 	#endif
 }
@@ -83,7 +83,7 @@ void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* tr
 bool isNeuronOutputFire(ANNneuron* currentNeuron)
 {
 	bool neuronOutputFire = false;
-	if(currentNeuron->output > ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_OUTPUT_NEURON_FIRE_TRESHOLD_FOR_CLASSIFICATION_BIT)
+	if(currentNeuron->output > ANN_ALGORITHM_MEMORY_NETWORK_OUTPUT_NEURON_FIRE_TRESHOLD_FOR_CLASSIFICATION_BIT)
 	{
 		neuronOutputFire = true;
 	}
@@ -183,12 +183,12 @@ void readAndUpdateMemoryTrace(ANNneuron* currentNeuronInLayer, double* trainingM
 
 void updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(ANNneuronConnection* currentANNneuronConnectionSide)
 {
-	currentANNneuronConnectionSide->memoryTrace = currentANNneuronConnectionSide->memoryTrace + ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_MEMORY_TRACE_UPDATE_VALUE;
+	currentANNneuronConnectionSide->memoryTrace = currentANNneuronConnectionSide->memoryTrace + ANN_ALGORITHM_MEMORY_NETWORK_MEMORY_TRACE_UPDATE_VALUE;
 }
 
 void incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(double* trainingMemoryResult)
 {
-	*trainingMemoryResult = *trainingMemoryResult + ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS_MEMORY_TRACE_TALLY_INCREMENT_VALUE;
+	*trainingMemoryResult = *trainingMemoryResult + ANN_ALGORITHM_MEMORY_NETWORK_MEMORY_TRACE_TALLY_INCREMENT_VALUE;
 }
 
 

@@ -26,7 +26,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a2a 29-April-2016
+ * Project Version: 4a3a 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -44,6 +44,31 @@ static long subnetIDcounter;
 
 /************************************************************ Form Neural Network Routines* *****************************************************/
 
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+void formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons)
+{
+	//initiate Input Layer in Neural Network
+	IDCounter = 1;
+	orderIDcounter = 1;
+	layerIDcounter = 1;
+	subnetIDcounter = 1;
+	ANNneuron* currentNeuron = firstInputNeuronInNetwork;
+	for(long i = 0; i < numberOfInputNeurons; i++)
+	{
+		fillInNeuronIDProperties(currentNeuron, IDCounter, orderIDcounter, layerIDcounter, subnetIDcounter);
+
+		currentNeuron->hasFrontLayer = true;
+
+		ANNneuron* newNeuron = new ANNneuron();
+		currentNeuron->nextNeuron = newNeuron;
+		currentNeuron = currentNeuron->nextNeuron;
+
+		IDCounter++;
+		orderIDcounter++;
+	}
+}
+#else
+
 /*forms a 3 layered net similar to that used in original c project*/
 //assumes firstInputNeuron and firstOutputNeuron have already been filled
 void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfHiddenNeurons, long numberOfOutputNeurons)
@@ -58,7 +83,6 @@ void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeur
 
 
 	//initiate Input Layer in Neural Network
-
 	IDCounter = 1;
 	orderIDcounter = 1;
 	layerIDcounter = 1;
@@ -171,7 +195,7 @@ void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeur
 		currentNeuronL1 = currentNeuronL1->nextNeuron;
 	}
 	
-	#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	addSideConnectionsForLayer(firstInputNeuron);
 	addSideConnectionsForLayer(firstHiddenNeuron);
 	addSideConnectionsForLayer(firstOutputNeuron);
@@ -522,7 +546,7 @@ void linkNewFrontLayerWithPreviousLayers(ANNneuron* firstNeuronInCurrentLayer, A
 
 	}
 	
-	#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	addSideConnectionsForLayer(firstNeuronInCurrentLayer);	//only required for input layer*
 	addSideConnectionsForLayer(firstNeuronInNewFrontLayer);
 	#endif
@@ -842,7 +866,7 @@ void linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNeuronInCurrentLayer,
 		firstNeuronInPreviousLayerX=firstNeuronInPreviousLayerX->firstNeuronInFrontLayer;
 	}
 	
-	#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	addSideConnectionsForLayer2D(firstNeuronInCurrentLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);	//only required for input layer*
 	addSideConnectionsForLayer2D(firstNeuronInNewFrontLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);
 	#endif
@@ -1353,7 +1377,7 @@ double advancedDivergenceFactor(long currentNumberOfLayersFromNearestEndPoint, l
 
 
 
-#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
 void addSideConnectionsForLayer(ANNneuron* firstNeuronInLayer)
 {
@@ -1513,5 +1537,6 @@ void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* c
 		currentNeuronL2->sideANNneuronConnectionList.push_back(newANNneuronConnection);
 	}
 }
+#endif
 #endif
 

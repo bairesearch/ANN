@@ -23,7 +23,7 @@
 
 /*******************************************************************************
  *
- * File Name: ANNneuronConnectionClass.h
+ * File Name: ANNalgorithmClassificationNetworkUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 4a3a 02-May-2016
@@ -31,45 +31,25 @@
  *
  *******************************************************************************/
 
- //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
-//NB when create NeuronList class change all referecnes to "...List->firstFrontANNneuronConnectionContainer.." to "...List->neuronReferences"
 
-/************************************************************ Neural Network Class Definitions* *****************************************************/
+#include "ANNalgorithmClassificationNetworkUpdate.h"
+#include "ANNneuronClass.h"
+
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
 
-#ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
-#define HEADER_ANN_NEURON_CONNECTION_CLASS
-
-#include "ANNglobalDefs.h"
-
-class ANNneuron;
-
-class ANNneuronConnection
-{
-public:
-
-	long frontNeuronID;		//temporary variable required for neural net creation from xml files
-
-	ANNneuronConnection(void);
-	~ANNneuronConnection(void);
-
-	double weight;
-	double storedWeight;
-	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-	bool memoryTraceConnection;
-	double memoryTrace;
-	double storedMemoryTrace;
-	#endif
-	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-	double idealValue;
-	int numberOfTimesConnectionHasBeenAccessedOrConnectionStrength;
-	#endif
-
-	ANNneuron* frontNeuron;
-	ANNneuron* backNeuron;
-};
 
 #endif
 
-/************************************************************ End Neural Network Class Definitions* *************************************************/
+
+
+
+
+
+
+
+
+
+
+
 
