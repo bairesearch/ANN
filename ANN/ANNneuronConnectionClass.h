@@ -26,7 +26,7 @@
  * File Name: ANNneuronConnectionClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3i 02-May-2016
+ * Project Version: 4a3j 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -62,7 +62,6 @@ public:
 	#endif
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	double idealValue;
-	//int numberOfTimesConnectionHasBeenAccessedOrConnectionStrength;	//reconcile with neuron memoryTrace variable (redundant information)
 	#endif
 
 	ANNneuron* frontNeuron;

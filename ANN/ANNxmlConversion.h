@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3i 02-May-2016
+ * Project Version: 4a3j 02-May-2016
  * Comments
  *
  *******************************************************************************/
@@ -43,9 +43,12 @@
 
 //#define ENFORCE_EXPLICIT_NET_XML_NEURON_ID_PARAMETERS
 //#define ENFORCE_EXPLICIT_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
+//#define DO_NOT_STORE_NET_XML_NEURON_SPATIAL_COORD_PARAMETERS
 
-//#define DO_NOT_STORE_NET_XML_NEURON_ID_PARAMETERS
-//#define DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	#define DO_NOT_STORE_NET_XML_NEURON_ID_PARAMETERS
+	#define DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
+#endif
 
 #define MAX_ATTRIBUTE_VALUE_SIZE 200
 
@@ -73,11 +76,21 @@
 #define NET_XML_ATTRIBUTE_output ((string)"output")
 #define NET_XML_ATTRIBUTE_classTarget ((string)"classTarget")
 #define NET_XML_ATTRIBUTE_error ((string)"error")
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+#define NET_XML_ATTRIBUTE_memoryTrace ((string)"memoryTrace")
+#endif
 #define NET_XML_ATTRIBUTE_xPosRel ((string)"xPosRel")
 #define NET_XML_ATTRIBUTE_yPosRel ((string)"yPosRel")
 #define NET_XML_ATTRIBUTE_zPosRel ((string)"zPosRel")
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+#define NET_XML_ATTRIBUTE_xPosRelFrac ((string)"xPosRelFrac")
+#define NET_XML_ATTRIBUTE_yPosRelFrac ((string)"yPosRelFrac")
+#endif
 #define NET_XML_ATTRIBUTE_neuronID ((string)"neuronID")
 #define NET_XML_ATTRIBUTE_weight ((string)"weight")
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+#define NET_XML_ATTRIBUTE_idealValue ((string)"idealValue")
+#endif
 
 
 //#define NN_XML_DEBUG
@@ -88,6 +101,7 @@ bool testReadNetXMLFile2(ANNneuron* firstInputNeuronInNetwork);
 
 bool writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork);
 	bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet);
+		bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInLayer);
 
 ANNneuron* readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons);
 	bool readNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork);
@@ -102,5 +116,6 @@ ANNneuron* readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneur
 			ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* result);
 	ANNneuron* recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons);
 
+void clearTag(XMLparserTag* tag);
 
 #endif

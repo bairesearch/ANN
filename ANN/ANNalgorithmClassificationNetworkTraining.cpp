@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3i 02-May-2016
+ * Project Version: 4a3j 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -44,6 +44,8 @@
 multimap<int, ANNneuron*> neuronUsageList;
 #endif
 
+long IDCounter;
+
 void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences)
 {
 	int numberOfExperiencesTrain = 0; 
@@ -55,6 +57,9 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_STORE_OUTPUT_NEURONS
 	ANNneuron* experienceClassificationTopLevelCategoryNeuronPrevious = NULL;
 	#endif
+	
+	IDCounter = numberOfInputNeurons+1;
+	
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
 		//#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
@@ -218,6 +223,9 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		#endif
 		if(!alreadyAddedOutputNeuronToList)
 		{	
+			experienceClassificationTopLevelCategoryNeuron->id = IDCounter;
+			IDCounter++;
+			
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_OPTIMISE
 			neuronUsageList.insert(pair<int, ANNneuron*>(experienceClassificationTopLevelCategoryNeuron->memoryTrace, experienceClassificationTopLevelCategoryNeuron));
 			#endif
@@ -282,7 +290,7 @@ void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron)
 		ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 		ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
 		
-			cout << "af0" << endl;
+		cout << "af0" << endl;
 		
 		if(frontNeuron->memoryTrace < ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_MINIMUM_MEMORY_TRACE_TO_RETAIN_CATEGORY_NEURON)
 		{
@@ -482,7 +490,8 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 								//create a new intermediary category neuron for every criteria satisfied, and connect this to experienceClassificationTopLevelCategoryNeuron
 								ANNneuron* intermediaryCategoryNeuron = new ANNneuron();
 								intermediaryCategoryNeuron->nextNeuron = new ANNneuron();	//class architecture required to create a blank neuron
-								
+								intermediaryCategoryNeuron->id = IDCounter;
+								IDCounter++;
 								intermediaryCategoryNeuron->hasFrontLayer = true;
 								intermediaryCategoryNeuron->hasBackLayer = true;
 
