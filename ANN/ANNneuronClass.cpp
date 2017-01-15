@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3v 02-May-2016
+ * Project Version: 4a3w 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -41,7 +41,7 @@ ANNneuron::ANNneuron(void)
 	id = 0;		//none = 0
 	orderID = 0;	//none = 0
 	layerID = 0;	//none = 0
-	subnetID = 0;	//none = 0
+	subnetID = 1;
 
 	//incase network is never trained, but output for visualisation purposes, set these values to dummy values
 	bias = 0;		//this value must be initialised explicity
