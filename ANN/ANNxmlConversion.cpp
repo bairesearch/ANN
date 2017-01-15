@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a14b 16-June-2016
+ * Project Version: 3i15a 11-August-2016
  * Comments
  *
  *******************************************************************************/
@@ -128,7 +128,9 @@ ANNneuron* recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* fir
 		{
 			*numberOfOutputNeurons = numNeuronsInCurrentLayer;
 			firstOutputNeuronInNetwork = firstNeuronInLayer;
+			#ifdef ANN_DEBUG
 			//cout << "firstOutputNeuronInNetwork ID = " << firstOutputNeuronInNetwork->neuron->id << endl;
+			#endif
 			stillMoreLayers = false;
 		}
 	}
@@ -458,7 +460,9 @@ bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* 
 	{
 		for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 		{
+			#ifdef ANN_DEBUG
 			//cout << "linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs:" << endl;
+			#endif
 			ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 			bool tempResult = false;
@@ -537,7 +541,9 @@ ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* 
 	{
 		if(currentNeuron->id == neuronIDtoFind)
 		{
+			#ifdef ANN_DEBUG
 			//cout << "currentNeuron->id  = " << currentNeuron->id << endl;
+			#endif
 			*result = true;
 			foundNeuron = currentNeuron;
 		}
@@ -754,7 +760,9 @@ bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron*
 	else
 	{
 		//NB there may not be a forwardANNneuronConnectionsList
+		#ifdef ANN_DEBUG
 		//cout << "parseNeuronContainerTag error: no forwardANNneuronConnectionsList tag detected";
+		#endif
 	}
 
 	#ifdef ANN_SUBNETS

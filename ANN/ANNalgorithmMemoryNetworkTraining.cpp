@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a14b 16-June-2016
+ * Project Version: 3i15a 11-August-2016
  * Comments:
  *
  *******************************************************************************/
@@ -66,8 +66,6 @@ void trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, ANNneuron* firs
 		string trainingClassificationResult = "";	//NOT USED
 		double trainingMemoryResult = 0.0;	//NOT USED
 		ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
-		#ifdef ANN_DEBUG
-		#endif
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTrain++;
 	}
@@ -347,7 +345,6 @@ void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* ne
 			#else
 			currentNeuronReference->bias = (double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F;
 			#endif
-			//cout << "currentNeuronReference->bias = " << currentNeuronReference->bias << endl;
 			#endif
 			#endif
 			#endif
@@ -387,7 +384,6 @@ void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* ne
 				#endif
 				
 				#ifdef ANN_DEBUG
-				//cout << "currentANNneuronConnection->weight = " << currentANNneuronConnection->weight << endl;
 				cout << "Front ANNneuron Connection Weight = " << currentANNneuronConnection->weight << endl;
 				#endif
 				

@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a14b 16-June-2016
+ * Project Version: 3i15a 11-August-2016
  * Comments:
  *
  *******************************************************************************/
@@ -104,8 +104,10 @@ void trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneu
 	float finalError;
 	for(int e=0;e < numEpochs;e++)
 	{
+		#ifdef ANN_DEBUG
 		//cout << "Neural Net Training Epoch: " << e << endl;
-
+		#endif
+		
 		ANNexperience* currentExperience = firstExperienceInDataSet;
 
 		//from start of dataSet -> end of dataSet
@@ -757,7 +759,6 @@ void resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)
 			#else
 			currentNeuronReference->bias = (double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F;
 			#endif
-			//cout << "currentNeuronReference->bias = " << currentNeuronReference->bias << endl;
 			#endif
 			#endif
 			#endif
@@ -797,7 +798,6 @@ void resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)
 				#endif
 
 				#ifdef ANN_DEBUG
-				//cout << "currentANNneuronConnection->weight = " << currentANNneuronConnection->weight << endl;
 				cout << "Front ANNneuron Connection Weight = " << currentANNneuronConnection->weight << endl;
 				#endif
 			}

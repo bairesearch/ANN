@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 4a14b 16-June-2016
+ * Project Version: 3i15a 11-August-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -603,8 +603,6 @@ bool ANNfillNeuronDisplayReference(LDreference* currentNeuronDispayReference, AN
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(neuron->spatialCoordinatesSetClassification)
 		{
-			//cout << "neuron->xPosRelFrac = " << neuron->xPosRelFrac << endl;
-			//cout << "neuron->yPosRelFrac = " << neuron->yPosRelFrac << endl;
 			currentNeuronDispayReference->relativePosition.x = (neuron->xPosRelFrac);
 			currentNeuronDispayReference->relativePosition.y = (neuron->yPosRelFrac);
 			currentNeuronDispayReference->relativePosition.z = (neuron->zPosRelFrac);
@@ -910,8 +908,6 @@ void writeSpriteTextToSVG(string* spriteTextString, bool writeSVG, XMLparserTag*
 				{
 					stringCurrentLine = spriteTextString->substr(i-stringCurrentLineIndex, stringCurrentLineIndex+1);
 				}
-				//cout << "*spriteTextString = " << *spriteTextString << endl;
-				//cout << "stringCurrentLine = " << stringCurrentLine << endl;
 				
 				vec positionSVG;
 				positionSVG.x = referencePosition->x*ANN_SVG_SCALE_FACTOR - ANN_SVG_NEURON_SIZE/2;
