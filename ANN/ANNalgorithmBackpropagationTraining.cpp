@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19c 15-December-2016
+ * Project Version: 3i19d 15-December-2016
  * Comments:
  *
  *******************************************************************************/
@@ -605,7 +605,7 @@ void trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* f
 void storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "storeNeuralNetworkBiasAndWeights{}:" << endl;
 	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -664,7 +664,7 @@ void storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed)
 void restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "restoreNeuralNetworkWithStoredBiasAndWeights{}:" << endl;
 	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -725,7 +725,7 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed
 void resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "resetNeuralNetworkWithRandomBiasAndWeights{}:" << endl;
 	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -824,7 +824,7 @@ void resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)
 void resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet)" << endl;
+	cout << "resetInputsAndClassTargets{}:" << endl;
 	#endif
 
 	//sets inputData into ANN

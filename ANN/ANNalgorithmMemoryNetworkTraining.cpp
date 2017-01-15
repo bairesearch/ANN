@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19c 15-December-2016
+ * Project Version: 3i19d 15-December-2016
  * Comments:
  *
  *******************************************************************************/
@@ -213,7 +213,7 @@ void trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, ANNneuron* firstOutpu
 void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "storeNeuralNetworkMemoryTrace{}:" << endl;
 	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -262,7 +262,7 @@ void storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
 void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "restoreNeuralNetworkWithStoredMemoryTrace{}:" << endl;
 	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -311,7 +311,7 @@ void restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
 void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace{}:" << endl;
 	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -412,7 +412,7 @@ void resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* ne
 void resetInputs(ANNneuron* firstInputNeuron, long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetInputs(ANNneuron* firstInputNeuron, long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)" << endl;
+	cout << "resetInputs{}:" << endl;
 	#endif
 
 	//sets inputData into ANN
