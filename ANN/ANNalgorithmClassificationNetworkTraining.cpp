@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3j 02-May-2016
+ * Project Version: 4a3k 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -232,6 +232,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_STORE_OUTPUT_NEURONS
 			if(firstOutputNeuronHasBeenSet)
 			{	
+				//cout << "experienceClassificationTopLevelCategoryNeuronPrevious->nextNeuron->id = " << experienceClassificationTopLevelCategoryNeuronPrevious->nextNeuron->id << endl;
 				delete(experienceClassificationTopLevelCategoryNeuronPrevious->nextNeuron);
 				experienceClassificationTopLevelCategoryNeuronPrevious->nextNeuron = experienceClassificationTopLevelCategoryNeuron;
 			}
@@ -417,10 +418,11 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 										//set experienceClassificationTopLevelCategoryNeuron to an existing category neuron in the network [1*]
 										delete(*experienceClassificationTopLevelCategoryNeuron);
 										delete((*experienceClassificationTopLevelCategoryNeuron)->nextNeuron);
-										*experienceClassificationTopLevelCategoryNeuron = frontNeuron;
+										//*experienceClassificationTopLevelCategoryNeuron = frontNeuron;
 										#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 										//exit(0);
 										#endif
+										createIntermediaryNeuronsStage = 10;	//added 4a3k - to prevent overwriting of experienceClassificationTopLevelCategoryNeuron
 									}
 									else
 									{
