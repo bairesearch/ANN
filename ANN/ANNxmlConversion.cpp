@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNxmlConversion.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments
  *
  *******************************************************************************/
@@ -333,7 +333,7 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 				currentTagL2->nextTag = newTag;
 			}
 
-		#ifdef ANN_ADVANCED
+		#ifdef ANN_SUBNETS
 			currentTagL2 = currentTagL2->nextTag;
 
 			//generate subtag tag
@@ -419,7 +419,7 @@ bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* 
 			currentNeuron->firstNeuronInBackLayer = firstNeuronInBackLayer;
 		}
 
-	#ifdef ANN_ADVANCED
+	#ifdef ANN_SUBNETS
 		if(currentNeuron->firstNeuronInBackLayerOfSubnet != NULL)
 		{
 			currentNeuron->isSubnet = true;
@@ -471,7 +471,7 @@ ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* 
 			*result = true;
 			foundNeuron = currentNeuron;
 		}
-	#ifdef ANN_ADVANCED
+	#ifdef ANN_SUBNETS
 		if(currentNeuron->firstNeuronInBackLayerOfSubnet != NULL)
 		{
 			bool tempResult = false;
@@ -687,7 +687,7 @@ bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron*
 		//cout << "parseNeuronContainerTag error: no forwardANNneuronConnectionsList tag detected";
 	}
 
-#ifdef ANN_ADVANCED
+#ifdef ANN_SUBNETS
 	if(currentTag->name == NET_XML_TAG_subnet)
 	{
 		ANNneuron* newNeuron = new ANNneuron();

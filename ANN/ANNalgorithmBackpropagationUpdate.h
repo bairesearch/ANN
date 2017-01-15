@@ -23,48 +23,50 @@
 
 /*******************************************************************************
  *
- * File Name: ANNupdateAlgorithm.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * File Name: ANNalgorithmBackpropagationUpdate.h
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments:
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_UPDATE_ALGORITHM
-#define HEADER_ANN_UPDATE_ALGORITHM
+#ifndef HEADER_ANN_ALGORITHM_BACKPROPAGATION_UPDATE
+#define HEADER_ANN_ALGORITHM_BACKPROPAGATION_UPDATE
 
+#include "ANNglobalDefs.h"
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
 
-#include "ANNglobalDefs.h"
+
 #ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_4
 extern bool debugPrintNNOutputs;
 #endif
 
-double ANNBackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork);
-	void forwardPassStep(ANNneuron* neuronBeingAccessed);
-		void adjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed);
-	void backwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer, bool isSubnet);
+#ifdef ANN_ALGORITHM_BACKPROPAGATION
+double ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork);
+	double calculateErrorOfBackPropPass(ANNneuron* firstOutputNeuronInNetwork);
+	void calculateErrorOfOutputNeurons(ANNneuron* firstOutputNeuronInNetwork);
+#endif
+	void backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed);
+		void backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed);
+			float calculateOValue(float netValue);
+#ifdef ANN_ALGORITHM_BACKPROPAGATION
+	void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer, bool isSubnet);
 		void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed);
 		void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed);
 		void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed);
 		void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed);
-	double calculateErrorOfBackPropPass(ANNneuron* firstOutputNeuronInNetwork);
-
-	void calculateErrorOfOutputNeurons(ANNneuron* firstOutputNeuronInNetwork);
-
-
-
-#ifdef ANN_ADVANCED
-
-void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, bool frontOrBack);
-void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, bool frontOrBack);
-
 #endif
 
-float calculateOValue(float netValue);
+#ifdef ANN_SUBNETS
+void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, bool frontOrBack);
+void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, bool frontOrBack);
+#endif
+
+
+
 
 #endif
 

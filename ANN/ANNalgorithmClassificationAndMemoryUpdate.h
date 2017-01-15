@@ -23,20 +23,35 @@
 
 /*******************************************************************************
  *
- * File Name: ANNdata.cpp
+ * File Name: ANNalgorithmClassificationAndMemoryUpdate.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 4a1a 28-April-2016
- * Comments: TH = Test Harness
+ * Comments:
  *
  *******************************************************************************/
 
 
-#include "ANNdata.h"
+#ifndef HEADER_ANN_ALGORITHM_CLASSIFICATION_AND_MEMORY_UPDATE
+#define HEADER_ANN_ALGORITHM_CLASSIFICATION_AND_MEMORY_UPDATE
 
-//for specific Thyroid data {215lines, 6 columns - comma delimited}
+#include "ANNglobalDefs.h"
+#include "ANNneuronClass.h"
+#include "ANNneuronConnectionClass.h"
 
-long numInputNeurons;
-long numOutputNeurons;
-long numExperiences;
-ANNexperience* firstExperienceInDataSet;
+#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+
+double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult);
+	void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult);
+	bool isNeuronOutputFire(ANNneuron* currentNeuron);
+	void memoryTraceForwardPassStep(ANNneuron* neuronBeingAccessed, double* trainingMemoryResult);
+		void readAndUpdateMemoryTrace(ANNneuron* currentNeuronInLayer, double* trainingMemoryResult);
+			void updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(ANNneuronConnection* currentANNneuronConnectionSide);
+			void incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(double* trainingMemoryResult);
+	
+
+	
+#endif
+
+#endif
+

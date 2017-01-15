@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronClass.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments:
  *
  *******************************************************************************/
@@ -62,7 +62,7 @@ ANNneuron::ANNneuron(void)
 	firstNeuronInFrontLayer = NULL;
 	firstNeuronInBackLayer = NULL;
 
-#ifdef ANN_ADVANCED
+	#ifdef ANN_SUBNETS
 	isSubnet = false;
 
 	firstNeuronInBackLayerOfSubnet = NULL;
@@ -70,7 +70,7 @@ ANNneuron::ANNneuron(void)
 
 	isInputSubnet = false;
 	isOutputSubnet = false;
-#endif
+	#endif
 }
 
 ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
@@ -98,7 +98,7 @@ ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subne
 	firstNeuronInFrontLayer = NULL;
 	firstNeuronInBackLayer = NULL;
 
-#ifdef ANN_ADVANCED
+	#ifdef ANN_SUBNETS
 	isSubnet = false;
 
 	firstNeuronInBackLayerOfSubnet = NULL;
@@ -106,7 +106,7 @@ ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subne
 
 	isInputSubnet = false;
 	isOutputSubnet = false;
-#endif
+	#endif
 }
 
 ANNneuron::~ANNneuron(void)

@@ -23,24 +23,25 @@
 
 /*******************************************************************************
  *
- * File Name: ANNtraining.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * File Name: ANNalgorithmBackpropagationTraining.h
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments:
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_TRAINING
-#define HEADER_ANN_TRAINING
+#ifndef HEADER_ANN_ALGORITHM_BACKPROPAGATION_TRAINING
+#define HEADER_ANN_ALGORITHM_BACKPROPAGATION_TRAINING
 
+#include "ANNglobalDefs.h"
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
 #include "ANNexperienceClass.h"
-#include "ANNglobalDefs.h"
 
 #define	MAX_NUM_FOLDS_ANNTH 10
+
 #define IRRELEVANT 0.0
 #define	ACCEPTABLE_ERROR_RATE 0.005
 //#define	ACCEPTABLE_ERROR_RATE 0.01F	//after original, before 4 sept 10 to below
@@ -57,16 +58,14 @@
 
 #define REAL_LIFE_ACCURACY_DIAGNOSTICS_CUTOFF 0.1
 
+#ifdef ANN_ALGORITHM_BACKPROPAGATION
 
+double calculateExperienceErrorForHypotheticalDecisionBackpropagation(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* experience);
 
+void feedNeuralNetworkWithASetOfExperiencesBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, ANNexperience* firstExperienceInList);
 
-
-double calculateExperienceErrorForHypotheticalDecision(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* experience);
-
-void feedNeuralNetworkWithASetOfExperiences(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, ANNexperience* firstExperienceInList);
-
-void trainNeuralNetworkSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
-void trainNeuralNetwork(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, ANNexperience* firstExperienceInDataSet, long numberOfExperiences, int maxEpochs);
+void trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
+void trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, ANNexperience* firstExperienceInDataSet, long numberOfExperiences, int maxEpochs);
 
 	void storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed);
 	void restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed);
@@ -75,4 +74,5 @@ void trainNeuralNetwork(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuro
 	float calculateStandardDeviation(float* array, int length, float average);
 
 
+#endif
 #endif

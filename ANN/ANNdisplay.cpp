@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNdisplay.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -34,10 +34,13 @@
 
 #include "ANNdisplay.h"
 #include "ANNformation.h"
-#include "ANNtraining.h"
+#include "ANNalgorithmBackpropagationTraining.h"
+#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+#include "ANNalgorithmClassificationAndMemoryTraining.h"
+#endif
 #include "ANNxmlConversion.h"
 #include "ANNsprite.h"
-#include "ANNupdateAlgorithm.h"
+#include "ANNalgorithmBackpropagationUpdate.h"
 #include "LDparser.h"
 #include "LDreferenceManipulation.h"
 #include "LDsvg.h"
@@ -137,14 +140,24 @@ bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwo
 	if(useFoldsDuringTraining)
 	{
 		int maxFolds = MAX_NUM_FOLDS_ANNTH;
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION
 		int maxNumEpochs = maxOrSetNumEpochs;
-		trainNeuralNetwork(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences, maxNumEpochs);
+		trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences, maxNumEpochs);
+		#endif
+		#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+		trainNeuralNetworkClassificationAndMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences);		
+		#endif
 			//this is done dynamically if do not have heaps of RAM
 	}
 	else
 	{
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION
 		int setNumEpochs = maxOrSetNumEpochs; //ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS;
-		trainNeuralNetworkSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, setNumEpochs, firstExperienceInList, numberOfExperiences);
+		trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, setNumEpochs, firstExperienceInList, numberOfExperiences);
+		#endif
+		#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+		trainNeuralNetworkClassificationAndMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);		
+		#endif
 	}
 
 

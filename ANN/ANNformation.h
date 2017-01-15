@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNformation.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments:
  *
  *******************************************************************************/
@@ -37,6 +37,10 @@
 
 #include "ANNneuronClass.h"
 #include "ANNneuronConnectionClass.h"
+
+#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	#define DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_SIDE_LAYER_NEURONS_ANNTH (1.0)		//100% probability that a neuron will be connected to a neuron on the same layer (memory trace connections only)
+#endif
 
 	//probability of subnet creation parameters
 #define DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH (0.6)				//60% probability of a neuron object being a subnet (assuming the neuron object can be made into a subnet - it has a front layer and a back layer)
@@ -71,7 +75,7 @@
 void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfHiddenNeurons, long numberOfOutputNeurons);
 ANNneuron* formNeuralNetWithOptimisedProperties(ANNneuron* firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers);
 	ANNneuron* formNeuralNet(ANNneuron* firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
-	#ifdef ANN_ADVANCED
+	#ifdef ANN_SUBNETS
 	ANNneuron* formAdvancedNeuralNetwork(ANNneuron* firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, bool useSubnetDependentNumberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 	#endif
 		ANNneuron* formNonDistinctLayeredNeuralNetwork(ANNneuron* firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
@@ -90,8 +94,10 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 
 double calculateDistanceBetween2Points(double xPositionOfUnit1, double xPositionOfUnit2, double yPositionOfUnit1, double yPositionOfUnit2);
 
-
-
-
+#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+void addSideConnectionsForLayer(ANNneuron* firstNeuronInLayer);
+void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, int layerDivergenceType, long currentNumberOfLayers, long numberOfLayers);
+void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* currentNeuronL2);
+#endif
 
 #endif

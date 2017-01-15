@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments:
  *
  *******************************************************************************/
@@ -40,10 +40,10 @@
 #ifndef HEADER_ANN_NEURON_CLASS
 #define HEADER_ANN_NEURON_CLASS
 
-#include "SHAREDglobalDefs.h"
+#include "ANNglobalDefs.h"
 
 
-#define ANN_ADVANCED
+#define ANN_SUBNETS
 //#define ANN_DEBUG
 //#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS	//must also be defined in ANNparser.cpp
 #ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
@@ -93,8 +93,11 @@ public:
 	vector<ANNneuronConnection*> frontANNneuronConnectionList;
 	vector<ANNneuronConnection*> backANNneuronConnectionList;
 
-#ifdef ANN_ADVANCED
-
+	#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	vector<ANNneuronConnection*> sideANNneuronConnectionList;
+	#endif
+	
+	#ifdef ANN_SUBNETS
 	bool isSubnet;	 	//alternative to being a subnet is being a distinct neuron
 
 	//variables only used by subnets (abstract neurons)
@@ -104,8 +107,7 @@ public:
 	bool isInputSubnet;		//input subnets are a special case - they do not require linking of their input neurons with a back layer (firstBackANNneuronConnectionContainer)
 		//input subnets are used when a network is created with a selection of predefined subnets to cator for the preprocessing of different kinds of input information (Eg visual/audio etc)
 	bool isOutputSubnet;	//output subnets are a special case - they do not require linking of their output neurons with a front layer (firstFrontANNneuronConnectionContainer)
-
-#endif
+	#endif
 };
 
 

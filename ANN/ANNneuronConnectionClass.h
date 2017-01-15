@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronConnectionClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h15b 29-February-2016
+ * Project Version: 4a1a 28-April-2016
  * Comments:
  *
  *******************************************************************************/
@@ -40,7 +40,7 @@
 #ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
 #define HEADER_ANN_NEURON_CONNECTION_CLASS
 
-#include "SHAREDglobalDefs.h"
+#include "ANNglobalDefs.h"
 
 class ANNneuron;
 
@@ -55,6 +55,11 @@ public:
 
 	double weight;
 	double storedWeight;
+	#ifdef ANN_ALGORITHM_SEPARATE_CLASSIFICATION_AND_MEMORY_NETWORKS
+	bool memoryTraceConnection;
+	double memoryTrace;
+	double storedMemoryTrace;
+	#endif
 
 	ANNneuron* frontNeuron;
 	ANNneuron* backNeuron;
