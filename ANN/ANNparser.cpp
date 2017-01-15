@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3s 02-May-2016
+ * Project Version: 4a3t 02-May-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -239,23 +239,23 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 	int cnt = 0;
 
 
-
-#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
+	#ifndef ANN_DEBUG_DO_NOT_RANDOMISE_INPUT_DATA
+	#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
 	//cout << "RAND_MAX = " << RAND_MAX << endl;
 	int index = 0;
-#endif
+	#endif
 	while(stillToFill)
 	{
-	#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
+		#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
 		int res = index;
 		index++;
 		if(index == maxRows)
 		{
 			index = 0;
 		}
-	#else
+		#else
 		int res = (int) (float(rand()* float(maxRows))/(float(RAND_MAX)+1.0));
-	#endif
+		#endif
 
 		if(normalisedInputDataTempFilled[res] == false)
 		{//fill it
@@ -298,6 +298,7 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 			#endif
 		}
 	}
+	#endif
 
 
 	#ifdef ANN_DEBUG
@@ -339,7 +340,8 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 		{
 			currentExperienceInputInExperience->inputValue = normalisedInputData[i*maxCols + j];
 				//currentExperienceInputInExperience->inputValue = (normalisedInputData[i*maxCols + j]*2.0 - 1.0) - allows negative input values
-
+			//cout << "currentExperienceInputInExperience->inputValue = " << currentExperienceInputInExperience->inputValue  << endl;
+			
 			ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 			currentExperienceInputInExperience->next = newExperienceInput;
 			currentExperienceInputInExperience = currentExperienceInputInExperience->next;

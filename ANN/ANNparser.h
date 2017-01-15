@@ -26,7 +26,7 @@
  * File Name: ANNparser.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3s 02-May-2016
+ * Project Version: 4a3t 02-May-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -34,8 +34,6 @@
 
 #ifndef HEADER_ANN_PARSER
 #define HEADER_ANN_PARSER
-
-//#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
 
 #define EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH 1000	//max num experiences in dataset
 #define EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH 101 	//max num input neurons +1
