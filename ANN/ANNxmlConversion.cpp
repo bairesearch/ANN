@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f7e 16-August-2015
+ * Project Version: 3g1a 14-October-2015
  * Comments
  *
  *******************************************************************************/
@@ -235,7 +235,7 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 			//generate neuron tag
 			currentTagL2->name = NET_XML_TAG_neuron;
 
-			XMLParserAttribute* currentAttribute = currentTagL2->firstAttribute;
+			XMLparserAttribute* currentAttribute = currentTagL2->firstAttribute;
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_id;
 			currentAttribute->value = convertIntToString((currentNeuron->id));
@@ -313,7 +313,7 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 					//generate NET_XML_TAG_forwardANNneuronConnection tag and attributes
 					currentTagL3->name = NET_XML_TAG_forwardANNneuronConnection;
 
-					XMLParserAttribute* currentAttribute = currentTagL3->firstAttribute;
+					XMLparserAttribute* currentAttribute = currentTagL3->firstAttribute;
 
 					currentAttribute->name = NET_XML_ATTRIBUTE_neuronID;
 					currentAttribute->value = convertIntToString((currentANNneuronConnection->frontNeuron->id));
@@ -741,7 +741,7 @@ bool parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConne
 {
 	bool result = true;
 
-	XMLParserAttribute* currentAttribute = currentTag->firstAttribute;
+	XMLparserAttribute* currentAttribute = currentTag->firstAttribute;
 
 	bool neuronIDFound = false;
 	bool weightFound = false;
@@ -787,7 +787,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 {
 	bool result = true;
 
-	XMLParserAttribute* currentAttribute = currentTag->firstAttribute;
+	XMLparserAttribute* currentAttribute = currentTag->firstAttribute;
 
 	bool idFound = false;
 	bool orderIDFound = false;
