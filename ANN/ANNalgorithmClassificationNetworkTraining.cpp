@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3l 02-May-2016
+ * Project Version: 4a3m 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -91,7 +91,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		
 		bool foundCategoryNeuronsThatUseAllInputs = false;
 
-		//YET TO DO: for stages 1->3; update ideal values
+		//OLD: YET TO DO: for stages 1->3; update ideal values
 		
 		int createIntermediaryNeuronsStage = 1;
 		currentNeuron = firstInputNeuron;
@@ -240,7 +240,17 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTrain++;
 	}
+
+	/*//DIAGNOSIS: output neuron list is being created fine (the issue is that some output neurons have front layers for some strange reason...):
+	ANNneuron* currentNeuron = *firstOutputNeuron;
+	while(currentNeuron->nextNeuron != NULL)
+	{
+		cout << "outputneuron = " << currentNeuron->id << endl;
+		currentNeuron = currentNeuron->nextNeuron;
+	}
+	*/
 	
+		
 	/*
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
 	ANNneuron* currentNeuron = firstInputNeuron;
@@ -455,10 +465,10 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 							#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 							cout << "at3" << endl;
 							#endif
+							
+							//recurse
+							findCategoriesForExperienceWrapper(frontNeuron, inputValuesCategoryFound, experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 						}
-
-						//recurse
-						findCategoriesForExperienceWrapper(frontNeuron, inputValuesCategoryFound, experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 					}
 					else
 					{
