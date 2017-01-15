@@ -23,7 +23,7 @@
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c3a 16-November-2012
+ * Project Version: 3c3g 18-November-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -376,7 +376,7 @@ int main(int argc,char **argv)
 		}
 		if (argumentExists(argc,argv,"-version"))
 		{
-			cout << "Project Version: 3c3a 16-November-2012" << endl;
+			cout << "Project Version: 3c3g 18-November-2012" << endl;
 			exit(1);
 		}
 	}
