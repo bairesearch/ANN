@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i15a 11-August-2016
+ * Project Version: 3i15b 11-August-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -199,167 +199,199 @@ int main(int argc,char* *argv)
 
 	//basic execution flow outline; if no dataset or xml input file is specified, just form network - do not train network
 
-	if((argumentExists(argc,argv,"-idata")) || (argumentExists(argc,argv,"-ixml")) || (argumentExists(argc,argv,"-oxml")) || (argumentExists(argc,argv,"-oldr")) || (argumentExists(argc,argv,"-osvg")) || (argumentExists(argc,argv,"-oppm")) || (argumentExists(argc,argv,"-oppm2")) || (argumentExists(argc,argv,"-oall")) || (argumentExists(argc,argv,"-ui")))
+	if((argumentExists(argc, argv, "-idata")) || (argumentExists(argc, argv, "-ixml")) || (argumentExists(argc, argv, "-oxml")) || (argumentExists(argc, argv, "-oldr")) || (argumentExists(argc, argv, "-osvg")) || (argumentExists(argc, argv, "-oppm")) || (argumentExists(argc, argv, "-oppm2")) || (argumentExists(argc, argv, "-oall")) || (argumentExists(argc, argv, "-ui")))
 	{
-		if(argumentExists(argc,argv,"-idata"))
+		if(argumentExists(argc, argv, "-idata"))
 		{
-			inputDatasetFileName = getStringArgument(argc,argv,"-idata");
+			inputDatasetFileName = getStringArgument(argc, argv, "-idata");
 			//train = true;
 			useInputDatasetFile = true;
 		}
 
-		if(argumentExists(argc,argv,"-layers"))
-		numberOfLayers = getFloatArgument(argc,argv,"-layers");
-
-		if(argumentExists(argc,argv,"-ineurons"))
-		numberOfInputNeurons = getFloatArgument(argc,argv,"-ineurons");
-
+		if(argumentExists(argc, argv, "-layers"))
+		{
+			numberOfLayers = getFloatArgument(argc, argv, "-layers");
+		}
+		
+		if(argumentExists(argc, argv, "-ineurons"))
+		{
+			numberOfInputNeurons = getFloatArgument(argc, argv, "-ineurons");
+		}
+		
 		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-		if(argumentExists(argc,argv,"-oneurons"))
-		numberOfOutputNeurons = getFloatArgument(argc,argv,"-oneurons");
+		if(argumentExists(argc, argv, "-oneurons"))
+		{
+			numberOfOutputNeurons = getFloatArgument(argc, argv, "-oneurons");
+		}
 		#endif
 
-		if(argumentExists(argc,argv,"-divtype"))
-		layerDivergenceType = getFloatArgument(argc,argv,"-divtype");
-
-		if(argumentExists(argc,argv,"-divfactor"))
-		meanLayerDivergenceFactor = getFloatArgument(argc,argv,"-divfactor");
-
-		if(argumentExists(argc,argv,"-con"))
-		probabilityANNneuronConnectionWithPreviousLayerNeuron = getFloatArgument(argc,argv,"-con");
-
-		if(argumentExists(argc,argv,"-conall"))
-		probabilityANNneuronConnectionWithAllPreviousLayersNeurons = getFloatArgument(argc,argv,"-conall");
-
-		if(argumentExists(argc,argv,"-usesubnets"))
-		useSubnets = true;
-
-		if(argumentExists(argc,argv,"-numsubnets"))
-		maxNumRecursiveSubnets = getFloatArgument(argc,argv,"-numsubnets");
-
-		if(argumentExists(argc,argv,"-probsubnet"))
-		probabilityOfSubnetCreation = getFloatArgument(argc,argv,"-probsubnet");
-
-		if(argumentExists(argc,argv,"-subnetdepl"))
-		useSubnetDependentNumberOfLayers = true;
-
-		if(argumentExists(argc,argv,"-epochs"))
+		if(argumentExists(argc, argv, "-divtype"))
 		{
-			numEpochs=getFloatArgument(argc,argv,"-epochs");
+			layerDivergenceType = getFloatArgument(argc, argv, "-divtype");
+		}
+		
+		if(argumentExists(argc, argv, "-divfactor"))
+		{
+			meanLayerDivergenceFactor = getFloatArgument(argc, argv, "-divfactor");
+		}
+		
+		if(argumentExists(argc, argv, "-con"))
+		{
+			probabilityANNneuronConnectionWithPreviousLayerNeuron = getFloatArgument(argc, argv, "-con");
+		}
+		
+		if(argumentExists(argc, argv, "-conall"))
+		{
+			probabilityANNneuronConnectionWithAllPreviousLayersNeurons = getFloatArgument(argc, argv, "-conall");
+		}
+		
+		if(argumentExists(argc, argv, "-usesubnets"))
+		{
+			useSubnets = true;
+		}
+		
+		if(argumentExists(argc, argv, "-numsubnets"))
+		{
+			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
+		}
+		
+		if(argumentExists(argc, argv, "-probsubnet"))
+		{
+			probabilityOfSubnetCreation = getFloatArgument(argc, argv, "-probsubnet");
+		}
+		
+		if(argumentExists(argc, argv, "-subnetdepl"))
+		{
+			useSubnetDependentNumberOfLayers = true;
+		}
+		
+		if(argumentExists(argc, argv, "-epochs"))
+		{
+			numEpochs=getFloatArgument(argc, argv, "-epochs");
 			usePresetNumberOfEpochs = true;
 		}
 
-		if(argumentExists(argc,argv,"-maxepochs"))
-		maxNumEpochs = getFloatArgument(argc,argv,"-maxepochs");
-
-		if(argumentExists(argc,argv,"-maxFolds"))
-		maxFolds = getFloatArgument(argc,argv,"-maxFolds");
-
-
-
-		if(argumentExists(argc,argv,"-numsubnets"))
-		maxNumRecursiveSubnets = getFloatArgument(argc,argv,"-numsubnets");
-
-		if(argumentExists(argc,argv,"-numsubnets"))
-		maxNumRecursiveSubnets = getFloatArgument(argc,argv,"-numsubnets");
-
-
-		if(argumentExists(argc,argv,"-ixml"))
+		if(argumentExists(argc, argv, "-maxepochs"))
 		{
-			inputXMLFileName = getStringArgument(argc,argv,"-ixml");
+			maxNumEpochs = getFloatArgument(argc, argv, "-maxepochs");
+		}
+		
+		if(argumentExists(argc, argv, "-maxFolds"))
+		{
+			maxFolds = getFloatArgument(argc, argv, "-maxFolds");
+		}
+
+
+		if(argumentExists(argc, argv, "-numsubnets"))
+		{
+			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
+		}
+		
+		if(argumentExists(argc, argv, "-numsubnets"))
+		{
+			maxNumRecursiveSubnets = getFloatArgument(argc, argv, "-numsubnets");
+		}
+
+		if(argumentExists(argc, argv, "-ixml"))
+		{
+			inputXMLFileName = getStringArgument(argc, argv, "-ixml");
 			//train = true;
 			useInputXMLFile = true;
 		}
 
-		if(argumentExists(argc,argv,"-oxml"))
+		if(argumentExists(argc, argv, "-oxml"))
 		{
-			outputXMLFileName = getStringArgument(argc,argv,"-oxml");
+			outputXMLFileName = getStringArgument(argc, argv, "-oxml");
 			useOutputXMLFile = true;
 		}
 
-		if(argumentExists(argc,argv,"-oldr"))
+		if(argumentExists(argc, argv, "-oldr"))
 		{
-			outputLDRFileName = getStringArgument(argc,argv,"-oldr");
+			outputLDRFileName = getStringArgument(argc, argv, "-oldr");
 			useOutputLDRFile = true;
 			drawOutput = true;
 		}
 		#ifndef ANN_DISPLAY_DISABLE_SPRITES
-		if(argumentExists(argc,argv,"-sprites"))
+		if(argumentExists(argc, argv, "-sprites"))
 		{
 			useSprites = true;
 		}
 		#endif
 
-		if(argumentExists(argc,argv,"-osvg"))
+		if(argumentExists(argc, argv, "-osvg"))
 		{
-			outputSVGFileName = getStringArgument(argc,argv,"-osvg");
+			outputSVGFileName = getStringArgument(argc, argv, "-osvg");
 			useOutputSVGFile = true;
 			drawOutput = true;
 		}
 
-		if(argumentExists(argc,argv,"-oppm"))
+		if(argumentExists(argc, argv, "-oppm"))
 		{
-			outputPPMFileName = getStringArgument(argc,argv,"-oppm");
+			outputPPMFileName = getStringArgument(argc, argv, "-oppm");
 			useOutputPPMFile = true;
 			drawOutput = true;
 			useOutputLDRFile = true;	//required for OpenGL image generation
 			displayInOpenGL = true;		//required for OpenGL image generation
 		}
 
-		if(argumentExists(argc,argv,"-oppm2"))
+		if(argumentExists(argc, argv, "-oppm2"))
 		{
-			outputPPMFileNameRaytraced = getStringArgument(argc,argv,"-oppm2");
+			outputPPMFileNameRaytraced = getStringArgument(argc, argv, "-oppm2");
 			useOutputPPMFileRaytraced = true;
 			drawOutput = true;
 			useOutputLDRFile = true;	//required for raytrace image generation
 		}
 
-		if(argumentExists(argc,argv,"-oall"))
+		if(argumentExists(argc, argv, "-oall"))
 		{
-			outputAllFileName = getStringArgument(argc,argv,"-oall");
+			outputAllFileName = getStringArgument(argc, argv, "-oall");
 			useOutputAllFile = true;
 			drawOutput = true;
 		}
 
-		if(argumentExists(argc,argv,"-notshow"))
+		if(argumentExists(argc, argv, "-notshow"))
 		{
 			displayInOpenGL = false;
 		}
 
-		if (argumentExists(argc,argv,"-width"))
-		rasterImageWidth = getFloatArgument(argc,argv,"-width");
+		if(argumentExists(argc, argv, "-width"))
+		{
+			rasterImageWidth = getFloatArgument(argc, argv, "-width");
+		}
+		
+		if(argumentExists(argc, argv, "-height"))
+		{
+			rasterImageHeight = getFloatArgument(argc, argv, "-height");
+		}
 
-		if (argumentExists(argc,argv,"-height"))
-		rasterImageHeight = getFloatArgument(argc,argv,"-height");
-
-		if(argumentExists(argc,argv,"-train"))
+		if(argumentExists(argc, argv, "-train"))
 		{
 			int trainInt;
-			trainInt = getFloatArgument(argc,argv,"-train");
+			trainInt = getFloatArgument(argc, argv, "-train");
 			trainIfUseInputDatasetFile = (bool)trainInt;
 		}
 
 		string currentFolder = getCurrentDirectory();
 
-		if (argumentExists(argc,argv,"-workingfolder"))
+		if(argumentExists(argc, argv, "-workingfolder"))
 		{
-			workingFolder = getStringArgument(argc,argv,"-workingfolder");
+			workingFolder = getStringArgument(argc, argv, "-workingfolder");
 		}
 		else
 		{
 			workingFolder = currentFolder;
 		}
-		if(argumentExists(argc,argv,"-exefolder"))
+		if(argumentExists(argc, argv, "-exefolder"))
 		{
-			exeFolder = getStringArgument(argc,argv,"-exefolder");
+			exeFolder = getStringArgument(argc, argv, "-exefolder");
 		}
 		else
 		{
 			exeFolder = currentFolder;
 		}
-		if(argumentExists(argc,argv,"-tempfolder"))
+		if(argumentExists(argc, argv, "-tempfolder"))
 		{
-			tempFolder = getStringArgument(argc,argv,"-tempfolder");
+			tempFolder = getStringArgument(argc, argv, "-tempfolder");
 		}
 		else
 		{
@@ -368,13 +400,13 @@ int main(int argc,char* *argv)
 
 		setCurrentDirectory(workingFolder);
 
-		if(argumentExists(argc,argv,"-ui"))
+		if(argumentExists(argc, argv, "-ui"))
 		{
 			useTextUI = true;
 		}
-		if (argumentExists(argc,argv,"-version"))
+		if(argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3i15a 11-August-2016" << endl;
+			cout << "Project Version: 3i15b 11-August-2016" << endl;
 			exit(1);
 		}
 	}
