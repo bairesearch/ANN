@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a13b 14-June-2016
+ * Project Version: 4a14a 16-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -382,6 +382,14 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		currentNeuron = currentNeuron->nextNeuron;
 	}	
 	#endif
+	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS
+	currentNeuron = firstInputNeuron;
+	while(currentNeuron->nextNeuron != NULL)
+	{
+		cullRedundantNeurons(currentNeuron, NULL, firstOutputNeuron);
+		currentNeuron = currentNeuron->nextNeuron;
+	}	
+	#endif
 }
 
 void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron)
@@ -506,84 +514,7 @@ void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** 
 		}
 	}
 }
-#endif
-
-void deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
-{
-	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_OPTIMISE
-	multimap<int, ANNneuron*>::iterator it = neuronUsageList.find(experienceClassificationneuronTypeTopLevelCategory);
-	if(it != neuronUsageList.last())	//does not find element (see [1*])
-	{
-		neuronUsageList.erase(it);
-	}
-	#endif
-
-	for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->backANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->backANNneuronConnectionList.end(); connectionIter2++)
-	{
-		ANNneuronConnection* currentANNneuronConnection2 = *connectionIter2;
-		ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection2->backNeuron;
-		if(frontNeuronBackNeuron != categoryNeuron)	//prevent deleting currentANNneuronConnection (do this later)
-		{
-			for(vector<ANNneuronConnection*>::iterator connectionIter3 = frontNeuronBackNeuron->frontANNneuronConnectionList.begin(); connectionIter3 != frontNeuronBackNeuron->frontANNneuronConnectionList.end(); )
-			{
-				if(*connectionIter3 == *connectionIter2)
-				{
-					connectionIter3 = frontNeuronBackNeuron->frontANNneuronConnectionList.erase(connectionIter3);
-				}
-				else
-				{
-					connectionIter3++;
-				}
-			}
-		}
-		updateConnectionIdealValuesParent(frontNeuronBackNeuron, false);				
-	}
-
-	for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->frontANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->frontANNneuronConnectionList.end(); connectionIter2++)
-	{
-		ANNneuronConnection* currentANNneuronConnection2 = *connectionIter2;
-		ANNneuron* frontNeuronFrontNeuron = currentANNneuronConnection2->frontNeuron;
-
-		for(vector<ANNneuronConnection*>::iterator connectionIter3 = frontNeuronFrontNeuron->backANNneuronConnectionList.begin(); connectionIter3 != frontNeuronFrontNeuron->backANNneuronConnectionList.end(); )
-		{
-			if(*connectionIter3 == *connectionIter2)
-			{
-				connectionIter3 = frontNeuronFrontNeuron->backANNneuronConnectionList.erase(connectionIter3);
-			}
-			else
-			{
-				connectionIter3++;
-			}
-		}
-	}
-
-	if(frontNeuron->neuronTypeTopLevelCategory)
-	{
-		//remove frontNeuron from outputNeuron list
-		ANNneuron* currentOutputNeuron = *firstOutputNeuron;
-		ANNneuron* previousOutputNeuron = NULL;
-		while(currentOutputNeuron->nextNeuron != NULL)
-		{
-			if(currentOutputNeuron == frontNeuron)
-			{
-				if(previousOutputNeuron == NULL)
-				{
-					*firstOutputNeuron = currentOutputNeuron->nextNeuron;
-				}
-				else
-				{
-					previousOutputNeuron->nextNeuron = currentOutputNeuron->nextNeuron;
-				}
-			}
-			else
-			{
-				previousOutputNeuron = currentOutputNeuron;
-			}
-			currentOutputNeuron = currentOutputNeuron->nextNeuron;
-		}
-	}
-	delete frontNeuron;
-}			
+#endif		
 
 #ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
 void mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
@@ -664,7 +595,161 @@ void mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuro
 }
 #endif
 	
+#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS
+//remove neurons which are being connected to an intermediary neuron and its child only
+//LIMITATION: only checks grand children (not great grand children) - verify whether this is a practical limitation (it may not be)
+bool cullRedundantNeurons(ANNneuron* categoryNeuron, ANNneuron* parentNeuron, ANNneuron** firstOutputNeuron)
+{
+	bool neuronIsRedundant = false;
+		
+	for(vector<ANNneuronConnection*>::iterator backConnectionIter = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != categoryNeuron->backANNneuronConnectionList.end(); )
+	{
+		ANNneuronConnection* currentANNneuronConnectionBack = *backConnectionIter;
+		ANNneuron* backNeuron = currentANNneuronConnectionBack->backNeuron;		//assume this is the child neuron
+		bool neuronIsBeingConnectedToAnIntermediaryNeuronAndItsChild = false;
+		bool foundIntermediaryNeuronThatIsNotConnectedToTheChild = false;
+			
+		for(vector<ANNneuronConnection*>::iterator backConnectionIter2 = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter2 != categoryNeuron->backANNneuronConnectionList.end(); backConnectionIter2++)
+		{
+			ANNneuronConnection* currentANNneuronConnectionBack2 = *backConnectionIter2;
+			ANNneuron* backNeuron2 = currentANNneuronConnectionBack2->backNeuron;
+			if(backNeuron2 != backNeuron)
+			{
+				for(vector<ANNneuronConnection*>::iterator backConnectionIter2back = backNeuron2->backANNneuronConnectionList.begin(); backConnectionIter2back != backNeuron2->backANNneuronConnectionList.end(); backConnectionIter2back++)
+				{
+					ANNneuronConnection* currentANNneuronConnectionBack2Back = *backConnectionIter2back;
+					ANNneuron* backNeuron2back = currentANNneuronConnectionBack2Back->backNeuron;
+					if(backNeuron2back == backNeuron)
+					{
+						neuronIsBeingConnectedToAnIntermediaryNeuronAndItsChild = true;
+					}
+				}
+				if(!neuronIsBeingConnectedToAnIntermediaryNeuronAndItsChild)
+				{
+					foundIntermediaryNeuronThatIsNotConnectedToTheChild = true;
+				}
+			}
+		}
+		
+		if(neuronIsBeingConnectedToAnIntermediaryNeuronAndItsChild && foundIntermediaryNeuronThatIsNotConnectedToTheChild)
+		{
+			//just cull the redundant connection
+			cout << "ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS{}: cullRedundantNeurons - culling redundant connection" << endl;	
+			backConnectionIter = categoryNeuron->backANNneuronConnectionList.erase(backConnectionIter);
+		}
+		else
+		{
+			if(neuronIsBeingConnectedToAnIntermediaryNeuronAndItsChild && !foundIntermediaryNeuronThatIsNotConnectedToTheChild)
+			{
+				neuronIsRedundant = true;
+			}
+			backConnectionIter++;
+		}
+	}
 	
+	if(neuronIsRedundant)
+	{
+		cout << "ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS{}: cullRedundantNeurons - culling redundant neuron" << endl;	
+		deleteNeuron(categoryNeuron, parentNeuron, firstOutputNeuron);
+		cout << "deleted neuron" << endl;
+	}
+	else
+	{
+		for(vector<ANNneuronConnection*>::iterator connectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); connectionIter != categoryNeuron->frontANNneuronConnectionList.end(); )
+		{
+			ANNneuronConnection* currentANNneuronConnection = *connectionIter;
+			ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
+			if(cullRedundantNeurons(frontNeuron, categoryNeuron, firstOutputNeuron))
+			{
+				connectionIter = categoryNeuron->frontANNneuronConnectionList.erase(connectionIter);
+			}
+			else
+			{
+				connectionIter++;
+			}
+		}	
+	}
+	
+	return neuronIsRedundant;
+}	
+#endif
+
+void deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
+{
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_OPTIMISE
+	multimap<int, ANNneuron*>::iterator it = neuronUsageList.find(experienceClassificationneuronTypeTopLevelCategory);
+	if(it != neuronUsageList.last())	//does not find element (see [1*])
+	{
+		neuronUsageList.erase(it);
+	}
+	#endif
+
+	for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->backANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->backANNneuronConnectionList.end(); connectionIter2++)
+	{
+		ANNneuronConnection* currentANNneuronConnection2 = *connectionIter2;
+		ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection2->backNeuron;
+		if(frontNeuronBackNeuron != categoryNeuron)	//prevent deleting currentANNneuronConnection (do this later)
+		{
+			for(vector<ANNneuronConnection*>::iterator connectionIter3 = frontNeuronBackNeuron->frontANNneuronConnectionList.begin(); connectionIter3 != frontNeuronBackNeuron->frontANNneuronConnectionList.end(); )
+			{
+				if(*connectionIter3 == *connectionIter2)
+				{
+					connectionIter3 = frontNeuronBackNeuron->frontANNneuronConnectionList.erase(connectionIter3);
+				}
+				else
+				{
+					connectionIter3++;
+				}
+			}
+		}
+		updateConnectionIdealValuesParent(frontNeuronBackNeuron, false);				
+	}
+
+	for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->frontANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->frontANNneuronConnectionList.end(); connectionIter2++)
+	{
+		ANNneuronConnection* currentANNneuronConnection2 = *connectionIter2;
+		ANNneuron* frontNeuronFrontNeuron = currentANNneuronConnection2->frontNeuron;
+
+		for(vector<ANNneuronConnection*>::iterator connectionIter3 = frontNeuronFrontNeuron->backANNneuronConnectionList.begin(); connectionIter3 != frontNeuronFrontNeuron->backANNneuronConnectionList.end(); )
+		{
+			if(*connectionIter3 == *connectionIter2)
+			{
+				connectionIter3 = frontNeuronFrontNeuron->backANNneuronConnectionList.erase(connectionIter3);
+			}
+			else
+			{
+				connectionIter3++;
+			}
+		}
+	}
+
+	if(frontNeuron->neuronTypeTopLevelCategory)
+	{
+		//remove frontNeuron from outputNeuron list
+		ANNneuron* currentOutputNeuron = *firstOutputNeuron;
+		ANNneuron* previousOutputNeuron = NULL;
+		while(currentOutputNeuron->nextNeuron != NULL)
+		{
+			if(currentOutputNeuron == frontNeuron)
+			{
+				if(previousOutputNeuron == NULL)
+				{
+					*firstOutputNeuron = currentOutputNeuron->nextNeuron;
+				}
+				else
+				{
+					previousOutputNeuron->nextNeuron = currentOutputNeuron->nextNeuron;
+				}
+			}
+			else
+			{
+				previousOutputNeuron = currentOutputNeuron;
+			}
+			currentOutputNeuron = currentOutputNeuron->nextNeuron;
+		}
+	}
+	delete frontNeuron;
+}	
 
 void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage)
 {
