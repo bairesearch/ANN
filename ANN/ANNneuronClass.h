@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3g 02-May-2016
+ * Project Version: 4a3h 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -79,6 +79,7 @@ public:
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	bool inputNeuronMatchTemp;
 	int memoryTrace;	//popularity
+	bool intermediaryNeuronCreatedThisRound;
 	#endif
 	
 	//for visualising highly structured networks [Eg used to visualise a 2D visual processing unit/subnet]

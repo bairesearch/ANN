@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3g 02-May-2016
+ * Project Version: 4a3h 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -52,6 +52,7 @@ ANNneuron::ANNneuron(void)
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	inputNeuronMatchTemp = false;
 	memoryTrace = 1;
+	intermediaryNeuronCreatedThisRound = false;
 	#endif
 	
 	spatialCoordinatesSet2D = false;
@@ -97,6 +98,7 @@ ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subne
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	inputNeuronMatchTemp = false;
 	memoryTrace = 1;
+	intermediaryNeuronCreatedThisRound = false;
 	#endif
 	
 	spatialCoordinatesSet2D = false;
@@ -136,7 +138,7 @@ ANNneuron::~ANNneuron(void)
 			#ifdef GIA_FREE_MEMORY_DEBUG
 			//cout << "deleting: frontANNneuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
 			#endif
-			delete* connectionIter;
+			delete *connectionIter;
 		}
 	}
 
@@ -152,6 +154,8 @@ ANNneuron::~ANNneuron(void)
 		}
 	}
 	*/
+	
+	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
 	if(firstNeuronInBackLayerOfSubnet != NULL)
 	{
@@ -174,6 +178,8 @@ ANNneuron::~ANNneuron(void)
 			delete firstNeuronInFrontLayer;
 		}
 	}
+	
+	#endif
 }
 
 

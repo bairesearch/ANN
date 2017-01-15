@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3g 02-May-2016
+ * Project Version: 4a3h 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -43,6 +43,7 @@
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
 void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
+	void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron);
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
 	void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron);
 	#endif
