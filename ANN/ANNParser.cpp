@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: ANNParser.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -42,8 +42,7 @@ using namespace std;
 #define	SOME_REALLY_SMALL_FLOAT 0.0F
 #define	SOME_REALLY_LARGE_FLOAT 500.0F
 
-#define CHAR_COMMA ','
-#define CHAR_NEW_LINE '\n'
+
 
 /*
 bool doSomething()
@@ -111,7 +110,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	{
 		switch(c)
 		{
-			case CHAR_NEW_LINE:
+			case CHAR_NEWLINE:
 			{
 				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString);
 				currentNumberString[0] = '\0';

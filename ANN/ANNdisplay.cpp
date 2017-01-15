@@ -1,23 +1,24 @@
 /*******************************************************************************
  *
  * File Name: ANNdisplay.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
-#include "LDparser.h"
 #include "ANNdisplay.h"
 #include "ANNFormation.h"
 #include "ANNTraining.h"
 #include "ANNXMLconversion.h"
 #include "ANNsprite.h"
 #include "ANNUpdateAlgorithm.h"
+#include "LDparser.h"
 #include "LDreferenceManipulation.h"
 #include "LDsvg.h"
 #include "LDopengl.h"
+
 
 #ifdef USE_RT
 #include "RTscene.h"
@@ -116,7 +117,6 @@ bool trainAndOutputNeuralNetworkWithFileNames(NeuronContainer * firstInputNeuron
 
 	cout << "num experiences in list = " << countNumberOfExperiences(firstExperienceInList) << endl;
 
-	#ifndef TH_LRRC_LOW_RAM_AVAILABLE
 	long numberOfExperiences = countNumberOfExperiences(firstExperienceInList);
 
 
@@ -133,7 +133,6 @@ bool trainAndOutputNeuralNetworkWithFileNames(NeuronContainer * firstInputNeuron
 		trainNeuralNetworkSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, setNumEpochs, firstExperienceInList, numberOfExperiences);
 	}
 
-	#endif
 
 #ifndef USE_OR
 	if(!writeNetXMLFile(*XMLNNSceneFileName, firstInputNeuronInNetwork))
@@ -152,11 +151,8 @@ bool trainAndOutputNeuralNetworkWithFileNames(NeuronContainer * firstInputNeuron
 
 	//cout << "H6" << endl;
 
-	#ifndef TH_LRRC_LOW_RAM_AVAILABLE
 
 	writeExperienceListToFile(charstarexperienceNNSceneFileName, firstExperienceInList);
-
-	#endif
 
 #endif
 
@@ -171,19 +167,26 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 
 	if(display)
 	{
-		initiateOpenGL(width, height);
+		initiateOpenGL(width, height, 0, 0, false);
 	}
-		
+	
+	
+	
 	char * outputFileNameLDRwithoutSpritescharstar = const_cast<char*>(outputLDRFileNameWithoutSprites.c_str());	
-	char * outputFileNameLDRWithSpritescharstar = const_cast<char*>(outputLDRFileNameWithSprites.c_str());
+	char * outputFileNameLDRwithSpritescharstar = const_cast<char*>(outputLDRFileNameWithSprites.c_str());
 	char * outputFileNameSVGcharstar = const_cast<char*>(outputSVGFileName.c_str());
 	char * displayFileNamePPMcharstar = const_cast<char*>(outputPPMFileName.c_str());	
 	char * outputFileNamePPMrayTracedcharstar = const_cast<char*>(outputPPMFileNameRaytraced.c_str());
 	char * outputFileNameTALcharstar = const_cast<char*>(outputTALFileName.c_str());
 	
+	
+	
+	
 	//now output the network to vector graphics file
 	if(useOutputLDRFile || display || allowRaytrace)
 	{
+	
+		
 		//now output the vector graphics file to image file via ray tracer
 
 		ofstream * writeFileObject;
@@ -193,21 +196,21 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 			writeSVGHeader(writeFileObject);
 		}
 		
-		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRcharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, writeFileObject);
+		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, writeFileObject);
 
 		Reference * nonspriteListInitialReference = new Reference();
 		Reference * spriteListInitialReference = new Reference();
 
 		int numSpritesAdded = 0;
 
-		if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRWithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, writeFileObject))
+		if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, writeFileObject))
 		{
 			result = false;
 		}
 	
 		if(useOutputLDRFile)
 		{
-			if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRWithSpritescharstar, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
+			if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
 			{
 				result = false;
 			}		
@@ -224,17 +227,17 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 
 		if(addSprites)
 		{
-			charstarsceneFileNameForRayTracing = outputFileNameLDRWithSpritescharstar;
+			charstarsceneFileNameForRayTracing = outputFileNameLDRwithSpritescharstar;
 		}
 		else
 		{
 			charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
 		}
-
+		
 		if(display || allowRaytrace)
-		{
+		{			
 			// OLD; if using RT, do not ray trace sprites as the RT raytracer is not optimised - use povray instead
-			//charstarsceneFileNameForRayTracing = outputFileNameLDRcharstar;
+			//charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
 			// NEW; use ANNrules.xml to remove sprites for RT speed
 
 			//reparse scenefilewithandwithout sprites - to build absolute position information
@@ -245,9 +248,11 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 				cout << "The file: " << charstarsceneFileNameForRayTracing << " does not exist in the directory" << endl;
 				result = false;
 			}
-		
+			
 			if(allowRaytrace)
 			{
+
+			
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 
 					view_info vi;
@@ -284,13 +289,12 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 						Reference * spriteListInitialReference = new Reference();
 
 						int numSpritesAdded = 0;
-
-						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded))
+						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, writeFileObject))
 						{
 							result = false;
 						}
 
-						if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRcharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
+						if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
 						{
 							result = false;
 						}
@@ -307,7 +311,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 						}
 						else
 						{
-							charstarsceneFileNameForRayTracing = outputFileNameLDRcharstar;
+							charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
 						}
 
 
@@ -315,7 +319,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 
 						string temp = "";
 						string l3pCommand = temp + OBJECT_EXPERIENCE_GEN_L3P_EXCCMD_PART_1 + OBJECT_EXPERIENCE_GEN_L3P_EXCCMD_PART_2 + charstarsceneFileNameForRayTracing + OBJECT_EXPERIENCE_GEN_L3P_EXCCMD_PART_5 + OBJECT_EXPERIENCE_GEN_L3P_EXCCMD_PART_6 + OBJECT_EXPERIENCE_GEN_L3P_EXCCMD_PART_7;
-						string povrayCommand = temp + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_1 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_2 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_3 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_4 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_5 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_6 + outputFileNameSVGcharstar + OBJECT_EXPERIENCE_GEN_L3P_EXCCMD_PART_9 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_10 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_11 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_12 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_13 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_14;
+						string povrayCommand = temp + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_1 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_2 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_3 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_4 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_5 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_6 + outputFileNamePPMrayTracedcharstar + OBJECT_EXPERIENCE_GEN_L3P_EXCCMD_PART_9 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_10 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_11 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_12 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_13 + OBJECT_EXPERIENCE_GEN_POVRAY_EXCCMD_PART_14;
 
 						//Eg system("env LDRAWDIR=/usr/share/local/LDRAW l3p /usr/share/local/LDRAW/MODELS/car.dat object -cg30,45 -b -f");
 						//Eg system("povray object.pov");
@@ -364,10 +368,12 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 				drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);
 					//due to opengl code bug, need to execute this function twice.
 
+				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 				if(useOutputPPMFile)
 				{
 					generatePixmapFromRGBMap(displayFileNamePPMcharstar, width, height, rgbMap);
 				}
+				#endif
 			}
 		}
 				

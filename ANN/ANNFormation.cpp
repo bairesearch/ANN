@@ -1,9 +1,9 @@
 /*******************************************************************************
  *
  * File Name: ANNFormation.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a6c 07-May-2012
+ * Project Version: 3a7a 06-June-2012
  * Comments:
  *
  *******************************************************************************/
@@ -22,7 +22,7 @@
 using namespace std;
 
 #include "ANNFormation.h"
-#include "SHAREDglobalDefs.h"
+#include "ANNglobalDefs.h"
 
 
 
@@ -875,7 +875,7 @@ void linkNewFrontLayerWithPreviousLayers2D(NeuronContainer * firstNeuronInCurren
 
 					#else
 						long distanceBetweenNeuronL1AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
-						#ifdef #ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
+						#ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
 						long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));						
 						#else
 						long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
