@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3h 02-May-2016
+ * Project Version: 4a3i 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -60,7 +60,7 @@ ANNneuron::ANNneuron(void)
 	yPosRel = 0;
 	zPosRel = 0;
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-	spatialCoordinatesSetClassification = false;
+	spatialCoordinatesSetClassification = true;
 	xPosRelFrac = 0.0;
 	yPosRelFrac = 0.0;
 	#endif

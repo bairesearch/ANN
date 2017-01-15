@@ -26,7 +26,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3h 02-May-2016
+ * Project Version: 4a3i 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -57,7 +57,6 @@ void formNeuralNetworkInputLayer(ANNneuron* firstInputNeuronInNetwork, int numbe
 	{
 		fillInNeuronIDProperties(currentNeuron, IDCounter, orderIDcounter, layerIDcounter, subnetIDcounter);
 
-		currentNeuron->spatialCoordinatesSetClassification = true;
 		currentNeuron->xPosRelFrac = (double)IDCounter;
 		currentNeuron->yPosRelFrac = (double)layerIDcounter;
 

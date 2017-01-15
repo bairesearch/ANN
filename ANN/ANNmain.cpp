@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3h 02-May-2016
+ * Project Version: 4a3i 02-May-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -105,7 +105,9 @@ static char errmessage[] = "Usage:  OpenANN.exe [options]"
 "\n"
 "\n\t-oxml [string]    : neural network definition .xml output filename (def: neuralNet.xml)"
 "\n\t-oldr [string]    : neural network display .ldr output filename (def: neuralNetWithoutSprites.ldr)"
+#ifndef ANN_DISPLAY_DISABLE_SPRITES
 "\n\t-oldr2 [string]   : neural network display .ldr output filename with sprites (def: neuralNetWithSprites.ldr)"
+#endif
 "\n\t-osvg [string]    : neural network display .svg output filename (def: neuralNet.svg)"
 "\n\t-oppm [string]    : neural network display .ppm opengl output filename (def: neuralNet.ppm)"
 "\n\t-oppm2 [string]   : neural network display .ppm raytraced output filename (def: neuralNetRaytraced.ppm)"
@@ -283,13 +285,14 @@ int main(int argc,char* *argv)
 			useOutputLDRFileWithoutSprites = true;
 			printOutput = true;
 		}
-
+		#ifndef ANN_DISPLAY_DISABLE_SPRITES
 		if(argumentExists(argc,argv,"-oldr2"))
 		{
 			outputLDRFileNameWithSprites = getStringArgument(argc,argv,"-oldr2");
 			useOutputLDRFileWithSprites = true;
 			printOutput = true;
 		}
+		#endif
 
 		if(argumentExists(argc,argv,"-osvg"))
 		{
@@ -392,6 +395,7 @@ int main(int argc,char* *argv)
 				outputXMLFileName = outputAllFileName + ".xml";
 			}
 		}
+		 #ifndef ANN_DISPLAY_DISABLE_SPRITES
 		if(!useOutputLDRFileWithSprites)
 		{
 			if(useOutputAllFile || displayInOpenGLAndOutputScreenshot)		//LDR output is always required when displaying neural network in OpenGL and outputing screenshot
@@ -401,6 +405,7 @@ int main(int argc,char* *argv)
 				outputLDRFileNameWithSprites = outputAllFileName + "WithSprites.ldr";
 			}
 		}
+		#endif
 		if(!useOutputLDRFileWithoutSprites)		//LDR output is always required when printing neural network
 		{
 			useOutputLDRFileWithoutSprites = true;

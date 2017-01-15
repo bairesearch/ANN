@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3h 02-May-2016
+ * Project Version: 4a3i 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -77,6 +77,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		}
 		
 		ANNneuron* experienceClassificationTopLevelCategoryNeuron = new ANNneuron();
+		experienceClassificationTopLevelCategoryNeuron->nextNeuron = new ANNneuron();	//class architecture required to create a blank neuron
 		experienceClassificationTopLevelCategoryNeuron->xPosRelFrac = (*numberOfOutputNeurons);
 		experienceClassificationTopLevelCategoryNeuron->yPosRelFrac = ANN_ALGORITHM_CLASSIFICATION_NETWORK_NETWORK_DISPLAY_HEIGHT;
 		experienceClassificationTopLevelCategoryNeuron->hasBackLayer = true;
@@ -222,7 +223,8 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_STORE_OUTPUT_NEURONS
 			if(firstOutputNeuronHasBeenSet)
-			{
+			{	
+				delete(experienceClassificationTopLevelCategoryNeuronPrevious->nextNeuron);
 				experienceClassificationTopLevelCategoryNeuronPrevious->nextNeuron = experienceClassificationTopLevelCategoryNeuron;
 			}
 			else
@@ -239,6 +241,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		numberOfExperiencesTrain++;
 	}
 	
+	/*
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
 	ANNneuron* currentNeuron = firstInputNeuron;
 	while(currentNeuron->nextNeuron != NULL)
@@ -248,6 +251,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 	}	
 	#endif
 	cout << "af8" << endl;
+	*/
 }
 
 void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron)
@@ -404,6 +408,7 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 
 										//set experienceClassificationTopLevelCategoryNeuron to an existing category neuron in the network [1*]
 										delete(*experienceClassificationTopLevelCategoryNeuron);
+										delete((*experienceClassificationTopLevelCategoryNeuron)->nextNeuron);
 										*experienceClassificationTopLevelCategoryNeuron = frontNeuron;
 										#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 										//exit(0);
@@ -476,34 +481,53 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 
 								//create a new intermediary category neuron for every criteria satisfied, and connect this to experienceClassificationTopLevelCategoryNeuron
 								ANNneuron* intermediaryCategoryNeuron = new ANNneuron();
+								intermediaryCategoryNeuron->nextNeuron = new ANNneuron();	//class architecture required to create a blank neuron
+								
 								intermediaryCategoryNeuron->hasFrontLayer = true;
 								intermediaryCategoryNeuron->hasBackLayer = true;
 
 								bool partialCriteriaSatisfaction = false;
 								partialCriteriaSatisfaction = true;
+								double frontNeuronBackNeuronXposAvg = 0.0;
+								double frontNeuronBackNeuronYposAvg = 0.0;
+								int numberOfInputMatchesTemp = 0;
 								for(vector<ANNneuronConnection*>::iterator connectionIter = frontNeuron->backANNneuronConnectionList.begin(); connectionIter != frontNeuron->backANNneuronConnectionList.end(); connectionIter++)
 								{
 									ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 									ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection->backNeuron;
 									if(frontNeuronBackNeuron->inputNeuronMatchTemp)
 									{
+										frontNeuronBackNeuronXposAvg = frontNeuronBackNeuronXposAvg + frontNeuronBackNeuron->xPosRelFrac;
+										frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg + frontNeuronBackNeuron->yPosRelFrac;
+
 										//modify connection to insert intermediary category neuron
 										currentANNneuronConnection->frontNeuron = intermediaryCategoryNeuron;
 										intermediaryCategoryNeuron->backANNneuronConnectionList.push_back(currentANNneuronConnection);
 										updateConnectionIdealValue(currentANNneuronConnection);
-
+				
+										numberOfInputMatchesTemp++;
 										//DOING: set output
 										//DOING: set output
 									}
 								}
-
+								
+								if(numberOfInputMatchesTemp != numberOfInputMatches)
+								{
+									cout << "implementation error: (numberOfInputMatchesTemp != numberOfInputMatches)" << endl;
+									exit(0);
+								}
+								frontNeuronBackNeuronXposAvg = frontNeuronBackNeuronXposAvg/numberOfInputMatches;
+								frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg/numberOfInputMatches;
+								
 								ANNneuronConnection* connection = connectNeurons(frontNeuron, intermediaryCategoryNeuron);
 								updateConnectionIdealValue(connection);
 								
 								intermediaryCategoryNeuron->intermediaryNeuronCreatedThisRound = true;
-								intermediaryCategoryNeuron->xPosRelFrac = ((*experienceClassificationTopLevelCategoryNeuron)->xPosRelFrac + frontNeuron->xPosRelFrac)/2.0;
-								intermediaryCategoryNeuron->yPosRelFrac = ((*experienceClassificationTopLevelCategoryNeuron)->yPosRelFrac + frontNeuron->yPosRelFrac)/2.0;
-
+								intermediaryCategoryNeuron->xPosRelFrac = (frontNeuronBackNeuronXposAvg + frontNeuron->xPosRelFrac)/2.0;
+								intermediaryCategoryNeuron->yPosRelFrac = (frontNeuronBackNeuronYposAvg + frontNeuron->yPosRelFrac)/2.0;
+								//cout << "intermediaryCategoryNeuron->xPosRelFrac = " << intermediaryCategoryNeuron->xPosRelFrac << endl;
+								//cout << "intermediaryCategoryNeuron->yPosRelFrac = " << intermediaryCategoryNeuron->yPosRelFrac << endl;
+								
 								connectNeurons(*experienceClassificationTopLevelCategoryNeuron, intermediaryCategoryNeuron);
 								intermediaryCategoryNeuron->memoryTrace = frontNeuron->memoryTrace + 1; //CHECKTHIS
 								#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_OPTIMISE
