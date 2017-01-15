@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3t 02-May-2016
+ * Project Version: 4a3u 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -48,7 +48,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 	void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron);
 	#endif
 	void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage);
-		bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound);
+		bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level);
 		ANNneuronConnection* connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron);
 		void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron);
 		void updateConnectionIdealValue(ANNneuronConnection* connection);
@@ -56,6 +56,11 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		double calculateOutput(double totalOutput, double numberOfCategoryInputValues);
 		double calculateDiff(double idealValue, double value);
 		double calculateSum(double value);
+		
+string printTabsDEBUG(int level);
+#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK5
+void findInputsDEBUG(ANNneuron* categoryNeuron, vector<bool>* inputFound, int level);
+#endif
 
 #ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK3
 void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron);

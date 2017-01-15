@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3t 02-May-2016
+ * Project Version: 4a3u 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -88,7 +88,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		experienceClassificationneuronTypeTopLevelCategory->yPosRelFrac = ANN_ALGORITHM_CLASSIFICATION_NETWORK_NETWORK_DISPLAY_HEIGHT;
 		experienceClassificationneuronTypeTopLevelCategory->hasBackLayer = true;
 		
-		vector<bool> inputValuesCategoryFound(numberOfInputNeurons, false);
+		vector<bool> inputValuesCategoryFound(numberOfInputNeurons);
 		
 		bool foundCategoryNeuronsThatUseAllInputs = false;
 
@@ -103,7 +103,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 				#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 				cout <<"\t\tcreateIntermediaryNeuronsStage = 1" << endl;
 				#endif
-				//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
+				//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size());
 				findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 				
 				//prevent the needless rexecution of findCategoriesForExperienceWrapper:
@@ -118,12 +118,29 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 			}
 			currentNeuron = currentNeuron->nextNeuron;
 		}
+		
+		//added 4a3u
+		bool topLevelCategoryAlreadyExistsDeleteThisNewCopy = experienceClassificationneuronTypeTopLevelCategory->topLevelCategoryAlreadyExistsDeleteThisNewCopy;
+		if(topLevelCategoryAlreadyExistsDeleteThisNewCopy)
+		{
+			if(foundCategoryNeuronsThatUseAllInputs)
+			{
+				delete(experienceClassificationneuronTypeTopLevelCategory->nextNeuron);
+				experienceClassificationneuronTypeTopLevelCategory->nextNeuron = NULL;
+				delete(experienceClassificationneuronTypeTopLevelCategory);
+				cout << "experienceClassificationneuronTypeTopLevelCategory->topLevelCategoryAlreadyExistsDeleteThisNewCopy" << endl;
+			}
+			else
+			{
+				cout << "trainNeuralNetworkClassificationSimple{} error: experienceClassificationneuronTypeTopLevelCategory->topLevelCategoryAlreadyExistsDeleteThisNewCopy && !foundCategoryNeuronsThatUseAllInputs" << endl;
+				exit(0);
+			}
+		}
 				
 		if(!foundCategoryNeuronsThatUseAllInputs)
 		{
 			createIntermediaryNeuronsStage = 2;
 			ANNneuron* currentNeuron = firstInputNeuron;
-			bool foundCategoryNeuronsThatUseAllInputs = false;
 			while(currentNeuron->nextNeuron != NULL)
 			{	
 				if(!foundCategoryNeuronsThatUseAllInputs)
@@ -132,7 +149,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 					cout <<"\t\tcreateIntermediaryNeuronsStage = 2" << endl;
 					#endif
 				
-					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
+					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size());
 					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
@@ -153,7 +170,6 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		{
 			createIntermediaryNeuronsStage = 3;
 			ANNneuron* currentNeuron = firstInputNeuron;
-			bool foundCategoryNeuronsThatUseAllInputs = false;
 			while(currentNeuron->nextNeuron != NULL)
 			{	
 				if(!foundCategoryNeuronsThatUseAllInputs)
@@ -162,7 +178,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 					cout <<"\t\tcreateIntermediaryNeuronsStage = 3" << endl;
 					#endif
 					
-					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
+					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size());
 					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 					
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
@@ -185,19 +201,22 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 				currentNeuron = currentNeuron->nextNeuron;
 			}
 		}
-	
+									
 		if(!foundCategoryNeuronsThatUseAllInputs)
 		{
 			//link experienceClassificationneuronTypeTopLevelCategory and set idealValues
 			ANNneuron* currentNeuron = firstInputNeuron;
 			int i = 0;
+			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 			cout << "(!foundCategoryNeuronsThatUseAllInputs): update all relevant connections of experienceClassificationneuronTypeTopLevelCategory" << endl;
+			#endif
 			
 			while(currentNeuron->nextNeuron != NULL)
 			{	
 				if(inputValuesCategoryFound[i] == false)
 				{
 					ANNneuronConnection* connection = connectNeurons(currentNeuron, experienceClassificationneuronTypeTopLevelCategory);
+					cout << "connection->idealValue = " << connection->idealValue << endl;
 					#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 					if(experienceClassificationneuronTypeTopLevelCategory == currentNeuron)
 					{
@@ -205,12 +224,39 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 						exit(0);
 					}
 					#endif
-					cout << "connection->idealValue = " << connection->idealValue << endl;
 				}
 				i++;
 				currentNeuron = currentNeuron->nextNeuron;
 			}
 		}
+
+		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK5
+		if(!topLevelCategoryAlreadyExistsDeleteThisNewCopy)
+		{
+			vector<bool> inputFound(inputValuesCategoryFound.size());
+			findInputsDEBUG(experienceClassificationneuronTypeTopLevelCategory, &inputFound, 0);
+			bool foundAllInputs = true;
+			for(int i=0; i<inputValuesCategoryFound.size(); i++)
+			{
+				if(!(inputFound[i]))
+				{
+					foundAllInputs = false;
+					cout << "i = " << i << endl;
+				}
+			}
+			if(!foundAllInputs)
+			{
+				cout << "" << endl;
+				cout << "" << endl;
+				cout << "" << endl;
+				cout << "trainNeuralNetworkClassificationSimple{} error; top level category neuron is not connected to all inputs" << endl;
+				cout << "" << endl;
+				cout << "" << endl;
+				cout << "" << endl;
+				exit(0);
+			}
+		}
+		#endif
 
 		bool alreadyAddedOutputNeuronToList = false;
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_OPTIMISE
@@ -222,7 +268,10 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		#else
 		if(createIntermediaryNeuronsStage == 1)
 		{
-			alreadyAddedOutputNeuronToList = true;
+			if(foundCategoryNeuronsThatUseAllInputs)
+			{
+				alreadyAddedOutputNeuronToList = true;
+			}
 		}
 		#endif
 		if(!alreadyAddedOutputNeuronToList)
@@ -271,7 +320,6 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 	*/
-	
 		
 	/*
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
@@ -308,7 +356,7 @@ void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron)
 
 #ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK3
 void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron)
-{
+{		
 	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
 	{
 		ANNneuronConnection* currentANNneuronConnection = *frontConnectionIter;
@@ -417,20 +465,21 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 		
 	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
 	{
-		ANNneuronConnection* currentANNneuronConnection = *frontConnectionIter;
-		ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
-							
-		if(frontNeuron != *experienceClassificationneuronTypeTopLevelCategory)
+		ANNneuronConnection* currentANNneuronConnectionFront = *frontConnectionIter;
+		ANNneuron* frontNeuron = currentANNneuronConnectionFront->frontNeuron;
+					
+		if(!((*experienceClassificationneuronTypeTopLevelCategory)->topLevelCategoryAlreadyExistsDeleteThisNewCopy))
 		{				
 			if(!(frontNeuron->intermediaryNeuronCreatedThisRound))	//added 4a3h
 			{
 				double inputValue = categoryNeuron->output;
-				if(calculateDiff(currentANNneuronConnection->idealValue, inputValue) < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)	//CHECKTHIS - use the same threshold?
+				if(calculateDiff(currentANNneuronConnectionFront->idealValue, inputValue) < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)	//CHECKTHIS - use the same threshold?
 				{
 
-					ANNneuron* experienceClassificationneuronTypeTopLevelCategoryTEMP = categoryNeuron;		
-					vector<bool> inputValuesCategoryFoundAbove(inputValuesCategoryFound->size(), false);	//ensure that values are initialised to false
-					findCategoriesForExperienceWrapper(frontNeuron, &inputValuesCategoryFoundAbove, &experienceClassificationneuronTypeTopLevelCategoryTEMP, 4);
+					ANNneuron experienceClassificationneuronTypeTopLevelCategoryTEMP;		
+					ANNneuron* experienceClassificationneuronTypeTopLevelCategoryTEMPpointer = &experienceClassificationneuronTypeTopLevelCategoryTEMP;
+					vector<bool> inputValuesCategoryFoundAbove(inputValuesCategoryFound->size());	//ensure that values are initialised to false
+					findCategoriesForExperienceWrapper(frontNeuron, &inputValuesCategoryFoundAbove, &experienceClassificationneuronTypeTopLevelCategoryTEMPpointer, 4);
 					
 					int numberOfInputMatchesMaxAbove = 0;
 					for(vector<bool>::iterator inputValuesCategoryFoundAboveIter = inputValuesCategoryFoundAbove.begin(); inputValuesCategoryFoundAboveIter != inputValuesCategoryFoundAbove.end(); inputValuesCategoryFoundAboveIter++)
@@ -441,8 +490,8 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 						}
 					}
 
-					vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound->size(), false);	//ensure that values are initialised to false
-					bool foundCategoriesForExperience = findCategoriesForExperience(frontNeuron, &inputValuesCategoryFoundTemp);
+					vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound->size());	//ensure that values are initialised to false
+					bool foundCategoriesForExperience = findCategoriesForExperience(frontNeuron, &inputValuesCategoryFoundTemp, 0);
 
 					#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 					cout << "findCategoriesForExperience{} passed" << endl;
@@ -463,9 +512,9 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 					}
 
 					int numberOfBackMatches = 0;
-					for(vector<ANNneuronConnection*>::iterator connectionIter = frontNeuron->backANNneuronConnectionList.begin(); connectionIter != frontNeuron->backANNneuronConnectionList.end(); connectionIter++)
+					for(vector<ANNneuronConnection*>::iterator backConnectionIter = frontNeuron->backANNneuronConnectionList.begin(); backConnectionIter != frontNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
 					{
-						ANNneuronConnection* currentANNneuronConnection = *connectionIter;
+						ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 						ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection->backNeuron;
 						if(frontNeuronBackNeuron->backNeuronMatchTemp)
 						{
@@ -473,7 +522,7 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 						}
 					}
 
-					cout << "numberOfInputMatches = " << numberOfInputMatches << ", numberOfInputMatchesMaxAbove = " << numberOfInputMatchesMaxAbove << endl;
+					//cout << "numberOfInputMatches = " << numberOfInputMatches << ", numberOfInputMatchesMaxAbove = " << numberOfInputMatchesMaxAbove << endl;
 
 					if(numberOfInputMatches >= numberOfInputMatchesMaxAbove)	//added 4a3p
 					{
@@ -490,21 +539,24 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 										//#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 										cout << "\t\t (createIntermediaryNeuronsStage == 1)" << endl;
 										//#endif
+										#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 										cout << "frontNeuron = " << frontNeuron << endl;
 										cout << "frontNeuron->neuronTypeTopLevelCategory = " << frontNeuron->neuronTypeTopLevelCategory << endl;
 										cout << "numberOfInputMatches = " << numberOfInputMatches << endl;
+										#endif
 
 										//algorithm assumptions: frontNeuron is a top level network category neuron
 										if(frontNeuron->frontANNneuronConnectionList.size() == 0)
 										{
 											//top level category neuron detected
-
-											//set experienceClassificationneuronTypeTopLevelCategory to an existing category neuron in the network [1*]
-											delete(*experienceClassificationneuronTypeTopLevelCategory);
+											(*experienceClassificationneuronTypeTopLevelCategory)->topLevelCategoryAlreadyExistsDeleteThisNewCopy = true;
+											/*
 											delete((*experienceClassificationneuronTypeTopLevelCategory)->nextNeuron);
-											//*experienceClassificationneuronTypeTopLevelCategory = frontNeuron;
-
+											delete(*experienceClassificationneuronTypeTopLevelCategory);
+											//set experienceClassificationneuronTypeTopLevelCategory to an existing category neuron in the network [1*]
+											*experienceClassificationneuronTypeTopLevelCategory = frontNeuron;
 											createIntermediaryNeuronsStage = 10;	//added 4a3k - to prevent overwriting of experienceClassificationneuronTypeTopLevelCategory
+											*/
 										}
 										else
 										{
@@ -513,6 +565,7 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 											cout << "numberOfInputMatchesMaxAbove = " << numberOfInputMatchesMaxAbove << endl;
 											cout << "frontNeuron->neuronTypeTopLevelCategory = " << frontNeuron->neuronTypeTopLevelCategory << endl;
 											cout << "frontNeuron->neuronTypeIntermediary = " << frontNeuron->neuronTypeIntermediary << endl;
+											cout << "frontNeuron->frontANNneuronConnectionList.size() = " << frontNeuron->frontANNneuronConnectionList.size() << endl;
 											exit(0);
 										}
 									}
@@ -534,7 +587,9 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 												ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
 												if(backNeuron == frontNeuron)
 												{
+													#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 													cout << "numberOfBackMatches = " << numberOfBackMatches << endl;
+													#endif
 													alreadyConnectedNeurons = true;
 												}
 											}
@@ -547,7 +602,11 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 										}
 										else
 										{
-											cout << "findCategoriesForExperienceWrapper{} error:  findCategoriesForExperience && !categoryNeuronUsesAllInputs && (createIntermediaryNeuronsStage == 2) && !(frontNeuron->neuronTypeIntermediary)" << endl;
+											cout << "findCategoriesForExperienceWrapper{} error: findCategoriesForExperience && !categoryNeuronUsesAllInputs && (createIntermediaryNeuronsStage == 2) && !(frontNeuron->neuronTypeIntermediary)" << endl;
+											cout << "frontNeuron->neuronTypeTopLevelCategory = " << frontNeuron->neuronTypeTopLevelCategory << endl;
+											cout << "frontNeuron->frontANNneuronConnectionList.size() = " << frontNeuron->frontANNneuronConnectionList.size() << endl;
+											cout << "numberOfInputMatches = " << numberOfInputMatches << endl;
+											exit(0);
 										}
 									}
 								}	
@@ -577,13 +636,16 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 									
 									double frontNeuronBackNeuronXposAvg = 0.0;
 									double frontNeuronBackNeuronYposAvg = 0.0;
-									int numberOfBackMatchesTemp = 0;
+									int numberOfBackMatchesNew = 0;
 									bool foundAtLeastOneBackMismatch = false;
 									double intermediaryCategoryNeuronTotalOutput = 0;
-									double frontNeuronTotalOutput = 0;
-									for(vector<ANNneuronConnection*>::iterator connectionIter = frontNeuron->backANNneuronConnectionList.begin(); connectionIter != frontNeuron->backANNneuronConnectionList.end();)
+									double frontNeuronTotalOutputNew = 0;
+									int intermediaryCategoryNeuronNumInputConnections = 0;
+									int frontNeuronNumInputConnectionsNew = 0;
+									
+									for(vector<ANNneuronConnection*>::iterator backConnectionIter = frontNeuron->backANNneuronConnectionList.begin(); backConnectionIter != frontNeuron->backANNneuronConnectionList.end();)
 									{
-										ANNneuronConnection* currentANNneuronConnection = *connectionIter;
+										ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 										ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection->backNeuron;
 										if(frontNeuronBackNeuron->backNeuronMatchTemp)
 										{
@@ -591,32 +653,34 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 											frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg + frontNeuronBackNeuron->yPosRelFrac;
 
 											//modify connection to insert intermediary category neuron
-											connectionIter = frontNeuron->backANNneuronConnectionList.erase(connectionIter);
+											backConnectionIter = frontNeuron->backANNneuronConnectionList.erase(backConnectionIter);
 											currentANNneuronConnection->frontNeuron = intermediaryCategoryNeuron;
 											intermediaryCategoryNeuron->backANNneuronConnectionList.push_back(currentANNneuronConnection);
 											updateConnectionIdealValue(currentANNneuronConnection);
 											
 											intermediaryCategoryNeuronTotalOutput = intermediaryCategoryNeuronTotalOutput + frontNeuronBackNeuron->output;
 											
-											numberOfBackMatchesTemp++;
+											numberOfBackMatchesNew++;
+											intermediaryCategoryNeuronNumInputConnections++;
 
 										}
 										else
 										{	
-											frontNeuronTotalOutput = frontNeuronTotalOutput + frontNeuronBackNeuron->output;
+											frontNeuronTotalOutputNew = frontNeuronTotalOutputNew + frontNeuronBackNeuron->output;
 											
-											connectionIter++;
+											backConnectionIter++;
 											foundAtLeastOneBackMismatch = true;
+											frontNeuronNumInputConnectionsNew++;
 										}
 									}
-									intermediaryCategoryNeuron->output = intermediaryCategoryNeuronTotalOutput;
-									frontNeuron->output = frontNeuronTotalOutput;
+									intermediaryCategoryNeuron->output = calculateOutput(intermediaryCategoryNeuronTotalOutput, intermediaryCategoryNeuronNumInputConnections);
+									frontNeuron->output = calculateOutput(frontNeuronTotalOutputNew, frontNeuronNumInputConnectionsNew);
 									//NOTREQUIRED: set output of experienceClassificationneuronTypeTopLevelCategory
 
 									if(!foundAtLeastOneBackMismatch)
 									{
 										cout << "error: = !foundAtLeastOneBackMismatch" << endl;
-										cout << "numberOfBackMatchesTemp = " << numberOfBackMatchesTemp << endl;
+										cout << "numberOfBackMatchesNew = " << numberOfBackMatchesNew << endl;
 										exit(0);
 									}
 									
@@ -635,28 +699,78 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 
 									ANNneuronConnection* connection2 = connectNeurons(intermediaryCategoryNeuron, *experienceClassificationneuronTypeTopLevelCategory);
 									
-									cout << "\tRESULTS:" << endl;
+									/*
+									#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK5
+									if(!topLevelCategoryAlreadyExistsDeleteThisNewCopy)
+									{
+										vector<bool> inputFound(inputValuesCategoryFound.size());
+										findInputsDEBUG(experienceClassificationneuronTypeTopLevelCategory, &inputFound, 0);
+										bool foundAllInputs = true;
+										for(int i=0; i<inputValuesCategoryFound.size(); i++)
+										{
+											if(!(inputFound[i]))
+											{
+												foundAllInputs = false;
+												cout << "i = " << i << endl;
+											}
+										}
+										if(!foundAllInputs)
+										{
+											cout << "" << endl;
+											cout << "" << endl;
+											cout << "" << endl;
+											cout << "trainNeuralNetworkClassificationSimple{} error; top level category neuron is not connected to all inputs" << endl;
+											cout << "" << endl;
+											cout << "" << endl;
+											cout << "" << endl;
+											exit(0);
+										}
+									}
+									#endif
+									*/
+		
+									/*
+									cout << "\n\tRESULTS:" << endl;
 									cout << "frontNeuron->output = " << frontNeuron->output << endl;
 									for(vector<ANNneuronConnection*>::iterator connectionIter = frontNeuron->backANNneuronConnectionList.begin(); connectionIter != frontNeuron->backANNneuronConnectionList.end(); connectionIter++)
 									{
 										ANNneuronConnection* currentANNneuronConnection = *connectionIter;
-										cout << "currentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
-										cout << "currentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
+										cout << "\tcurrentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
+										cout << "\tcurrentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
+									}
+									for(vector<ANNneuronConnection*>::iterator connectionIter = frontNeuron->frontANNneuronConnectionList.begin(); connectionIter != frontNeuron->frontANNneuronConnectionList.end(); connectionIter++)
+									{
+										ANNneuronConnection* currentANNneuronConnection2 = *connectionIter;
+										cout << "\tcurrentANNneuronConnection2->idealValue = " << currentANNneuronConnection2->idealValue << endl;
+										cout << "\tcurrentANNneuronConnection2->frontNeuron->output = " << currentANNneuronConnection2->frontNeuron->output << endl;
 									}
 									cout << "intermediaryCategoryNeuron->output = " << intermediaryCategoryNeuron->output << endl;
 									for(vector<ANNneuronConnection*>::iterator connectionIter = intermediaryCategoryNeuron->backANNneuronConnectionList.begin(); connectionIter != intermediaryCategoryNeuron->backANNneuronConnectionList.end(); connectionIter++)
 									{
 										ANNneuronConnection* currentANNneuronConnection = *connectionIter;
-										cout << "currentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
-										cout << "currentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
+										cout << "\tcurrentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
+										cout << "\tcurrentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
+									}
+									for(vector<ANNneuronConnection*>::iterator connectionIter = intermediaryCategoryNeuron->frontANNneuronConnectionList.begin(); connectionIter != intermediaryCategoryNeuron->frontANNneuronConnectionList.end(); connectionIter++)
+									{
+										ANNneuronConnection* currentANNneuronConnection2 = *connectionIter;
+										cout << "\tcurrentANNneuronConnection2->idealValue = " << currentANNneuronConnection2->idealValue << endl;
+										cout << "\tcurrentANNneuronConnection2->frontNeuron->output = " << currentANNneuronConnection2->frontNeuron->output << endl;
 									}
 									cout << "experienceClassificationneuronTypeTopLevelCategory->output = " << (*experienceClassificationneuronTypeTopLevelCategory)->output << endl;
 									for(vector<ANNneuronConnection*>::iterator connectionIter = (*experienceClassificationneuronTypeTopLevelCategory)->backANNneuronConnectionList.begin(); connectionIter != (*experienceClassificationneuronTypeTopLevelCategory)->backANNneuronConnectionList.end(); connectionIter++)
 									{
 										ANNneuronConnection* currentANNneuronConnection = *connectionIter;
-										cout << "currentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
-										cout << "currentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
+										cout << "\tcurrentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
+										cout << "\tcurrentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
 									}
+									for(vector<ANNneuronConnection*>::iterator connectionIter = (*experienceClassificationneuronTypeTopLevelCategory)->frontANNneuronConnectionList.begin(); connectionIter != (*experienceClassificationneuronTypeTopLevelCategory)->frontANNneuronConnectionList.end(); connectionIter++)
+									{
+										ANNneuronConnection* currentANNneuronConnection2 = *connectionIter;
+										cout << "\tcurrentANNneuronConnection2->idealValue = " << currentANNneuronConnection2->idealValue << endl;
+										cout << "\tcurrentANNneuronConnection2->frontNeuron->output = " << currentANNneuronConnection2->frontNeuron->output << endl;
+									}
+									*/
 																		
 									
 									intermediaryCategoryNeuron->memoryTrace = frontNeuron->memoryTrace + 1; //CHECKTHIS
@@ -702,10 +816,43 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 	#endif
 }
 
-bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound)
+string printTabsDEBUG(int level)
+{
+	string tabs = "";
+	for(int i=0; i<level; i++)
+	{
+		tabs = tabs + "\t";
+	}
+	return tabs;
+}
+
+#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK5
+void findInputsDEBUG(ANNneuron* categoryNeuron, vector<bool>* inputFound, int level)
+{
+	cout << printTabsDEBUG(level) << "findInputsDEBUG{} start" << endl;
+		
+	for(vector<ANNneuronConnection*>::iterator backConnectionIter = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != categoryNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
+	{
+		ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
+		ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
+		
+		findInputsDEBUG(backNeuron, inputFound, (level+1));
+
+		if(backNeuron->neuronTypeInput)
+		{
+			cout << printTabsDEBUG(level) << "backNeuron->orderID = " << backNeuron->orderID << endl;
+			(*inputFound)[backNeuron->orderID - 1] = true;
+		}
+	}
+	
+	cout << printTabsDEBUG(level) << "findInputsDEBUG{} end" << endl;
+}
+#endif
+
+bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level)
 {
 	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-	cout << "findCategoriesForExperience{} start" << endl;
+	cout << printTabsDEBUG(level) << "findCategoriesForExperience{} start" << endl;
 	#endif
 		
 	bool allInputNeuronsForCategoryHaveMatchingValues = true; 
@@ -715,25 +862,21 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 	double totalOutput = 0;	//DOING: work out how to calculate this
 	for(vector<ANNneuronConnection*>::iterator backConnectionIter = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != categoryNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
 	{
-		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-		cout << "backNeuron = " << endl;
-		#endif
-		
 		ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 		ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
 		
-		if(findCategoriesForExperience(backNeuron, inputValuesCategoryFound))
+		if(findCategoriesForExperience(backNeuron, inputValuesCategoryFound, (level+1)))
 		{
 			backNeuron->backNeuronMatchTemp = true;
 			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-			cout << "backNeuron->backNeuronMatchTemp = true " << endl;
+			cout << printTabsDEBUG(level) << "backNeuron->backNeuronMatchTemp = true " << endl;
 			#endif
 		}
 		else
 		{
 			backNeuron->backNeuronMatchTemp = false;
 			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-			cout << "backNeuron->backNeuronMatchTemp = false " << endl;
+			cout << printTabsDEBUG(level) << "backNeuron->backNeuronMatchTemp = false " << endl;
 			#endif
 			allInputNeuronsForCategoryHaveMatchingValues = false;
 		}
@@ -743,11 +886,18 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 		totalOutput = totalOutput + calculateSum(backNeuron->output);
 		
 		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-		cout << "\tcurrentDiff = " << currentDiff << endl;
-		cout << "\tbackNeuron->output = " << backNeuron->output << endl;
-		cout << "\tcurrentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
+		cout << printTabsDEBUG(level) << "currentDiff = " << currentDiff << endl;
+		cout << printTabsDEBUG(level) << "backNeuron->output = " << backNeuron->output << endl;
+		cout << printTabsDEBUG(level) << "currentANNneuronConnection->idealValue = " << currentANNneuronConnection->idealValue << endl;
 		#endif
-			
+		
+		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK4
+		if(backNeuron->neuronTypeInput)
+		{
+			cout << printTabsDEBUG(level) << "backNeuron->orderID = " << backNeuron->orderID << endl;
+		}
+		#endif
+		
 		i++;
 	}
 
@@ -756,40 +906,40 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 		categoryNeuron->output = calculateOutput(totalOutput, i);
 	
 		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-		cout << "categoryNeuron->output = " << categoryNeuron->output << endl;
+		cout << printTabsDEBUG(level) << "categoryNeuron->output = " << categoryNeuron->output << endl;
 		#endif				
 	}	
 				
 				
-	if(allInputNeuronsForCategoryHaveMatchingValues)
-	{
+	int numberOfCategoryInputValues = categoryNeuron->backANNneuronConnectionList.size();
+	//if(numberOfCategoryInputValues > 0)
+	if(!(categoryNeuron->neuronTypeInput))
+	{	
 		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-		cout << "allInputNeuronsForCategoryHaveMatchingValues" << endl;
+		cout << printTabsDEBUG(level) << "!(categoryNeuron->neuronTypeInput)" << endl;
 		#endif
-		
-		
-		int numberOfCategoryInputValues = categoryNeuron->backANNneuronConnectionList.size();
-		//if(numberOfCategoryInputValues > 0)
-		if(!(categoryNeuron->neuronTypeInput))
-		{	
-			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-			cout << "(numberOfCategoryInputValues > 0)" << endl;
-			#endif
 				
+		if(allInputNeuronsForCategoryHaveMatchingValues)
+		{
+			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
+			cout << printTabsDEBUG(level) << "allInputNeuronsForCategoryHaveMatchingValues" << endl;
+			#endif
+
 			double averageDiff = totalDiff/numberOfCategoryInputValues;
 			allInputNeuronsForCategoryHaveMatchingValues = false;
 			if(averageDiff < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_AVERAGE_DIFF_THRESHOLD)
 			{
 				allInputNeuronsForCategoryHaveMatchingValues = true;
 
-				for(vector<ANNneuronConnection*>::iterator connectionIter = categoryNeuron->backANNneuronConnectionList.begin(); connectionIter != categoryNeuron->backANNneuronConnectionList.end(); connectionIter++)
+				for(vector<ANNneuronConnection*>::iterator backConnectionIter = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != categoryNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
 				{
-					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
+					ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 					ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
 					if(backNeuron->neuronTypeInput)
 					{
 						//network input neuron detected
 						(*inputValuesCategoryFound)[backNeuron->orderID - 1] = true;
+						//cout << printTabsDEBUG(level) << " " << backNeuron->orderID << " inputValuesCategoryFound = " << (*inputValuesCategoryFound)[backNeuron->orderID - 1] << " PASS" << endl;
 					}
 				}
 
@@ -805,61 +955,64 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
 			else
 			{
-				cout << "!(averageDiff < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_AVERAGE_DIFF_THRESHOLD)" << endl;
-				cout << "averageDiff = " << averageDiff << endl;
+				cout << printTabsDEBUG(level) << "!(averageDiff < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_AVERAGE_DIFF_THRESHOLD)" << endl;
+				cout << printTabsDEBUG(level) << "averageDiff = " << averageDiff << endl;
 			}
 			#endif
-			
-			//added 4a3t
-			bool allIndividualBackConnectionsAreSatisfiedDebug = true;
-			for(vector<ANNneuronConnection*>::iterator connectionIter = categoryNeuron->backANNneuronConnectionList.begin(); connectionIter != categoryNeuron->backANNneuronConnectionList.end(); connectionIter++)
-			{
-				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
-				ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
-				
-				double currentDiff = calculateDiff(currentANNneuronConnection->idealValue, backNeuron->output);
-				#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-				cout << "currentDiff = " << currentDiff << endl;
-				#endif
-					
-				if(backNeuron->neuronTypeInput)
-				{
-					#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-					cout << "backNeuron->neuronTypeInput" << endl;
-					#endif
-					if(currentDiff < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)
-					{
-						backNeuron->backNeuronMatchTemp = true;	
-					}
-					else
-					{
-						backNeuron->backNeuronMatchTemp = false;
-						allIndividualBackConnectionsAreSatisfiedDebug = false;
-					}
-				}
-				
-				#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-				cout << "backNeuron->backNeuronMatchTemp = " << backNeuron->backNeuronMatchTemp << endl;
-				#endif
-			}				
-		
 		}
-		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
 		else
 		{
-			cout << "!(numberOfCategoryInputValues > 0)" << endl;
+			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
+			cout << printTabsDEBUG(level) << "!allInputNeuronsForCategoryHaveMatchingValues" << endl;
+			#endif		
 		}
-		#endif
+		
+		//added 4a3t
+		bool allIndividualBackConnectionsAreSatisfiedDebug = true;
+		for(vector<ANNneuronConnection*>::iterator backConnectionIter = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != categoryNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
+		{
+			ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
+			ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
+
+			double currentDiff = calculateDiff(currentANNneuronConnection->idealValue, backNeuron->output);
+			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
+			cout << printTabsDEBUG(level) << "currentDiff = " << currentDiff << endl;
+			#endif
+
+			if(backNeuron->neuronTypeInput)
+			{
+				#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
+				cout << printTabsDEBUG(level) << "backNeuron->neuronTypeInput" << endl;
+				#endif
+				if(currentDiff < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)
+				{
+					backNeuron->backNeuronMatchTemp = true;	
+				}
+				else
+				{
+					backNeuron->backNeuronMatchTemp = false;
+					allIndividualBackConnectionsAreSatisfiedDebug = false;
+				}
+
+				//cout << printTabsDEBUG(level) << " " << backNeuron->orderID << " backNeuron->backNeuronMatchTemp = " << backNeuron->backNeuronMatchTemp << endl;
+			}
+
+			#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
+			cout << printTabsDEBUG(level) << "backNeuron->backNeuronMatchTemp = " << backNeuron->backNeuronMatchTemp << endl;
+			#endif
+		}
+								
 	}
+	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
 	else
 	{
-		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-		cout << "!allInputNeuronsForCategoryHaveMatchingValues" << endl;
-		#endif		
+		cout << printTabsDEBUG(level) << "(categoryNeuron->neuronTypeInput)" << endl;
 	}
+	#endif
+
 	
 	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK2
-	cout << "findCategoriesForExperience{} end" << endl;
+	cout << printTabsDEBUG(level) << "findCategoriesForExperience{} end" << endl;
 	#endif
 	
 	return allInputNeuronsForCategoryHaveMatchingValues;
@@ -869,6 +1022,7 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 ANNneuronConnection* connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron)
 {
 	childNeuron->hasFrontLayer = true;
+	parentNeuron->hasBackLayer = true;	//redundant
 
 	ANNneuronConnection* newANNneuronConnection = new ANNneuronConnection();
 	newANNneuronConnection->backNeuron = childNeuron;
