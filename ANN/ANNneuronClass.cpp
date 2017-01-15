@@ -23,7 +23,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3d1a 13-April-2014
+ * Project Version: 3d2a 14-April-2014
  * Comments:
  *
  *******************************************************************************/
@@ -55,16 +55,17 @@ Neuron::Neuron(void)
 	layerID = 0;	//none = 0
 	subnetID = 0;	//none = 0
 
-	//bias = 0;		 //this value must be initialised explicity
-	//storedBias = 0; 	//this value must be initialised explicity
-	//output = 0; 		//this value must be initialised explicity
-	//classTarget = 0; 	//this value must be initialised explicity
-	//error = 0; 		//this value must be initialised explicity
+	//incase network is never trained, but output for visualisation purposes, set these values to dummy values
+	bias = 0;		//this value must be initialised explicity
+	storedBias = 0; 	//this value must be initialised explicity
+	output = 0;		//this value must be initialised explicity
+	classTarget = 0;	//this value must be initialised explicity
+	error = 0;		//this value must be initialised explicity
 
 	spatialCoordinatesSet = 0;
-	//xPosRel = 0;		//this value must be initialised explicity
-	//yPosRel = 0;		//this value must be initialised explicity
-	//zPosRel = 0;		//this value must be initialised explicity
+	xPosRel = 0;		//this value must be initialised explicity
+	yPosRel = 0;		//this value must be initialised explicity
+	zPosRel = 0;		//this value must be initialised explicity
 
 	nextNeuron = NULL;
 

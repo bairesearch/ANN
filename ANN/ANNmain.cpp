@@ -23,7 +23,7 @@
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3d1a 13-April-2014
+ * Project Version: 3d2a 14-April-2014
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -492,7 +492,6 @@ int main(int argc,char **argv)
 			firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityNeuronConnectionWithPreviousLayerNeuron, probabilityNeuronConnectionWithAllPreviousLayersNeurons);
 		}
 
-
 		cout << "subnet Divergence Type = " << layerDivergenceType << endl;
 		cout << "mean Subnet Divergence Factor = " << meanLayerDivergenceFactor << endl;
 		cout << "probability Of Neuron Connection Exclusivity = " << probabilityNeuronConnectionWithPreviousLayerNeuron <<endl;
@@ -547,7 +546,7 @@ int main(int argc,char **argv)
 
 	if(useOutputXMLFile)
 	{
-		cout << "xml file name = " << outputXMLFileName << endl;
+		cout << "XML file name = " << outputXMLFileName << endl;
 
 		if(!writeNetXMLfile(outputXMLFileName, firstInputNeuronInNetwork))
 		{
@@ -713,8 +712,6 @@ bool createNetwork()
 		firstOutputNeuronInNetwork = formNeuralNetWithOptimisedProperties(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers);
 	}
 
-
-
 	cout << "subnet Divergence Type = " << layerDivergenceType << endl;
 	cout << "mean Subnet Divergence Factor = " << meanLayerDivergenceFactor << endl;
 	cout << "probability Of Neuron Connection Exclusivity = " << probabilityNeuronConnectionWithPreviousLayerNeuron <<endl;
@@ -823,9 +820,10 @@ bool trainNetwork(bool advancedTraining)
 
 bool outputNetworkToXML()
 {
+	setCurrentDirectory(tempFolderCharStar);
 	bool result = true;
 
-	cout << "xml file name = " << NET_XML_FILE_NAME << endl;
+	cout << "XML file name = " << NET_XML_FILE_NAME << endl;
 
 	if(formedNetwork)
 	{
@@ -845,6 +843,7 @@ bool outputNetworkToXML()
 
 bool outputNetworkAsVectorGraphics()
 {
+	setCurrentDirectory(tempFolderCharStar);
 	bool result = true;
 
 	if(formedNetwork)
@@ -874,6 +873,12 @@ bool outputNetworkAsVectorGraphics()
 bool mainUI()
 {
 	bool result = true;
+
+	if(!parseANNrulesXMLfile())
+	{
+		result = false;
+	}
+	fillInANNSpriteExternVariables();
 
 	bool UIstatus = true;
 	numberOfInputAndOutputNeuronsSelected = false;

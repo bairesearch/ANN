@@ -23,7 +23,7 @@
  * File Name: ANNsprite.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3d1a 13-April-2014
+ * Project Version: 3d2a 14-April-2014
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV] 
  *
  *******************************************************************************/
@@ -64,6 +64,7 @@
 #define NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITHOUT_SPRITES "netWithoutSprites.ldr"
 #define NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES "netWithSprites.ldr"
 #define NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME "net.svg"
+#define NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME "net.ppm"
 
 #define LDRAW_UNITS_PER_CM 25.189
 	//create xml rules for above parameters
