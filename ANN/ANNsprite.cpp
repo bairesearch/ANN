@@ -26,7 +26,7 @@
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -55,7 +55,7 @@ static int SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_COLOUR;
 static int SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_COLOUR;
 static int SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_COLOUR;
 static int SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR;
-static int SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR;
+static int SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR;
 static double SPRITE_SUBMODEL_RANGE_SCALE_FACTOR;
 
 bool SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO;
@@ -66,16 +66,16 @@ bool SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO;
 bool SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO;
 bool SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO;
 bool SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO;
-bool SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO;
+bool SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_INFO;
 
 bool SPRITE_TEXTUAL_INCLUDE_NEURON_EXTRA_SECONDARY_INFO;
-bool SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_INFO;
+bool SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_INFO;
 bool SPRITE_TEXTUAL_INCLUDE_NEURON_INFO;
 bool SPRITE_TEXTUAL_INCLUDE_INFO;
 
 void fillInANNSpriteExternVariables()
 {
-	RulesClass* currentReferenceRulesClass = ANNrulesSprite;
+	XMLrulesClass* currentReferenceRulesClass = ANNrulesSprite;
 
 	while(currentReferenceRulesClass->next != NULL)
 	{
@@ -115,9 +115,9 @@ void fillInANNSpriteExternVariables()
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR = currentReferenceRulesClass->fractionalValue;
 		}
-		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR_NAME)
+		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR_NAME)
 		{
-			SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR = currentReferenceRulesClass->fractionalValue;
+			SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR = currentReferenceRulesClass->fractionalValue;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_SUBMODEL_RANGE_SCALE_FACTOR_NAME)
 		{
@@ -156,9 +156,9 @@ void fillInANNSpriteExternVariables()
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
 		}
-		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO_NAME)
+		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_INFO_NAME)
 		{
-			SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
+			SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
 		}
 		else
 		{
@@ -184,15 +184,15 @@ void fillInANNSpriteExternVariables()
 		SPRITE_TEXTUAL_INCLUDE_NEURON_INFO = false;
 	}
 
-	if(SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO)
+	if(SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_INFO)
 	{
-		SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_INFO = true;
+		SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_INFO = true;
 	}
 	else
 	{
-		SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_INFO = false;
+		SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_INFO = false;
 	}
-	if(SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_INFO)
+	if(SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_INFO)
 	{
 		SPRITE_TEXTUAL_INCLUDE_INFO = true;
 	}
@@ -208,12 +208,12 @@ void fillInANNSpriteExternVariables()
 /*top level sprite routines - required for independent LRRCsprite.cpp calculations*/
 
 
-bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, Neuron* firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag** currentTag)
+bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, ANNneuron* firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag** currentTag)
 {
 	bool result = true;
 
-	Reference* nonSpriteListInitialReference = new Reference();
-	Reference* spriteListInitialReference = new Reference();
+	LDreference* nonSpriteListInitialReference = new LDreference();
+	LDreference* spriteListInitialReference = new LDreference();
 
 	int numSpritesAdded = 0;
 
@@ -235,7 +235,7 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(string sceneFileNameW
 
 
 
-bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(string sceneFileNameWithSprites, Reference* nonSpriteListInitialReference, Reference* spriteListInitialReference, Neuron* firstNeuronInNetwork, bool addSprites, int* numSpritesAdded, bool writeSVG, XMLparserTag** currentTag)
+bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(string sceneFileNameWithSprites, LDreference* nonSpriteListInitialReference, LDreference* spriteListInitialReference, ANNneuron* firstNeuronInNetwork, bool addSprites, int* numSpritesAdded, bool writeSVG, XMLparserTag** currentTag)
 {
 	bool result = true;
 
@@ -251,7 +251,7 @@ bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(string sceneFileN
 }
 
 
-bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, bool addSprites, Reference* nonSpriteListInitialReference, Reference* spriteListInitialReference, int numSpritesAdded)
+bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, bool addSprites, LDreference* nonSpriteListInitialReference, LDreference* spriteListInitialReference, int numSpritesAdded)
 {
 	bool result = true;
 
@@ -271,17 +271,17 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(str
 
 
 
-Reference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron* firstNeuronInLayer, Reference* spriteListInitialReference, Reference* currentNonSpriteListReference, vec* eyeCoords, int* numSpritesAdded, int* numnonSpritesAdded, string sceneFileNameWithSprites, bool isSubnet, vec* positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag** currentTag)
+LDreference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(ANNneuron* firstNeuronInLayer, LDreference* spriteListInitialReference, LDreference* currentNonSpriteListReference, vec* eyeCoords, int* numSpritesAdded, int* numnonSpritesAdded, string sceneFileNameWithSprites, bool isSubnet, vec* positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag** currentTag)
 {
-	Reference* updatedNonSpriteListReference = currentNonSpriteListReference;
+	LDreference* updatedNonSpriteListReference = currentNonSpriteListReference;
 
 	bool result = true;
 
-	Neuron* currentNeuron = firstNeuronInLayer;
+	ANNneuron* currentNeuron = firstNeuronInLayer;
 	while(currentNeuron->nextNeuron != NULL)
 	{
 		ANNfillNeuronDisplayReference(updatedNonSpriteListReference, currentNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTag);
-		Reference* currentNeuronReferenceOnLayer = updatedNonSpriteListReference;
+		LDreference* currentNeuronReferenceOnLayer = updatedNonSpriteListReference;
 
 		if(addSprites)
 		{
@@ -294,39 +294,39 @@ Reference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron* f
 			}
 		}
 
-		Reference* newNeuronDispayReference = new Reference();
+		LDreference* newNeuronDispayReference = new LDreference();
 		updatedNonSpriteListReference->next = newNeuronDispayReference;
 		updatedNonSpriteListReference = updatedNonSpriteListReference->next;
 
 
 		if(currentNeuron->hasBackLayer == true)
 		{
-			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuron->backNeuronConnectionList.begin(); connectionIter != currentNeuron->backNeuronConnectionList.end(); connectionIter++)
+			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->backANNneuronConnectionList.begin(); connectionIter != currentNeuron->backANNneuronConnectionList.end(); connectionIter++)
 			{
-				NeuronConnection* currentNeuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
 
 				//regenerate reference properties for a neuron display reference in the previous layer (which is connected to the current neuron)
 
-				Reference currentNeuronReferenceOnPreviousLayer;
-				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnPreviousLayer, currentNeuronConnection->backNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTag);
+				LDreference currentNeuronReferenceOnPreviousLayer;
+				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnPreviousLayer, currentANNneuronConnection->backNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTag);
 
-				if(!ANNfillNeuronConnectionDisplayReference(updatedNonSpriteListReference, &currentNeuronReferenceOnPreviousLayer, currentNeuronReferenceOnLayer, currentNeuronConnection, writeSVG, currentTag))
+				if(!ANNfillANNneuronConnectionDisplayReference(updatedNonSpriteListReference, &currentNeuronReferenceOnPreviousLayer, currentNeuronReferenceOnLayer, currentANNneuronConnection, writeSVG, currentTag))
 				{
 					result = false;
 				}
 
 				if(addSprites)
 				{
-					if(SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_INFO)
+					if(SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_INFO)
 					{
-						if(!ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(updatedNonSpriteListReference, currentNeuronConnection, spriteListInitialReference, eyeCoords, numSpritesAdded, sceneFileNameWithSprites, &currentNeuronReferenceOnPreviousLayer, currentNeuronReferenceOnLayer, writeSVG, currentTag))
+						if(!ANNdetermineSpriteInfoForANNneuronConnectionAndAddSpriteToSpriteRefList(updatedNonSpriteListReference, currentANNneuronConnection, spriteListInitialReference, eyeCoords, numSpritesAdded, sceneFileNameWithSprites, &currentNeuronReferenceOnPreviousLayer, currentNeuronReferenceOnLayer, writeSVG, currentTag))
 						{
 							result = false;
 						}
 					}
 				}
 
-				Reference* newNeuronDispayReference = new Reference();
+				LDreference* newNeuronDispayReference = new LDreference();
 				updatedNonSpriteListReference->next = newNeuronDispayReference;
 				updatedNonSpriteListReference = updatedNonSpriteListReference->next;
 			}
@@ -338,28 +338,28 @@ Reference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron* f
 		{
 			//create back layer of subnet 1-1 connections for display only
 
-			Neuron* currentNeuronInBackLayerOfSubnet = currentNeuron->firstNeuronInBackLayerOfSubnet;
+			ANNneuron* currentNeuronInBackLayerOfSubnet = currentNeuron->firstNeuronInBackLayerOfSubnet;
 
-			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuron->backNeuronConnectionList.begin(); connectionIter != currentNeuron->backNeuronConnectionList.end(); connectionIter++)
+			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->backANNneuronConnectionList.begin(); connectionIter != currentNeuron->backANNneuronConnectionList.end(); connectionIter++)
 			{
-				NeuronConnection* currentNeuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
 
 				//regenerate reference properties for a neuron display reference in the previous layer (which is connected to the current neuron)
 
-				Reference currentNeuronReferenceOnPreviousLayer;
-				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnPreviousLayer, currentNeuronConnection->backNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTag);
+				LDreference currentNeuronReferenceOnPreviousLayer;
+				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnPreviousLayer, currentANNneuronConnection->backNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTag);
 
-				Reference currentNeuronReferenceOnBackLayerOfSubnet;
+				LDreference currentNeuronReferenceOnBackLayerOfSubnet;
 				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnBackLayerOfSubnet, currentNeuronInBackLayerOfSubnet, true, &(currentNeuronReferenceOnLayer->relativePosition), writeSVG, currentTag);
 
-				NeuronConnection blankOneToOneNeuronConnection;
-				blankOneToOneNeuronConnection.weight = 0.0;
-				if(!ANNfillNeuronConnectionDisplayReference(updatedNonSpriteListReference, &currentNeuronReferenceOnBackLayerOfSubnet, &currentNeuronReferenceOnPreviousLayer, &blankOneToOneNeuronConnection, writeSVG, currentTag))
+				ANNneuronConnection blankOneToOneANNneuronConnection;
+				blankOneToOneANNneuronConnection.weight = 0.0;
+				if(!ANNfillANNneuronConnectionDisplayReference(updatedNonSpriteListReference, &currentNeuronReferenceOnBackLayerOfSubnet, &currentNeuronReferenceOnPreviousLayer, &blankOneToOneANNneuronConnection, writeSVG, currentTag))
 				{
 					result = false;
 				}
 
-				Reference* newNeuronDispayReference = new Reference();
+				LDreference* newNeuronDispayReference = new LDreference();
 				updatedNonSpriteListReference->next = newNeuronDispayReference;
 				updatedNonSpriteListReference = updatedNonSpriteListReference->next;
 
@@ -367,27 +367,27 @@ Reference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron* f
 			}
 
 			//create front layer of subnet 1-1 connections for display only
-			Neuron* currentNeuronInFrontLayerOfSubnet = currentNeuron->firstNeuronInFrontLayerOfSubnet;
+			ANNneuron* currentNeuronInFrontLayerOfSubnet = currentNeuron->firstNeuronInFrontLayerOfSubnet;
 
-			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuron->frontNeuronConnectionList.begin(); connectionIter != currentNeuron->frontNeuronConnectionList.end(); connectionIter++)
+			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 			{
-				NeuronConnection* currentNeuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
 				//regenerate reference properties for a neuron display reference in the previous layer (which is connected to the current neuron)
 
-				Reference currentNeuronReferenceOnNextLayer;
-				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnNextLayer, currentNeuronConnection->frontNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTag);
+				LDreference currentNeuronReferenceOnNextLayer;
+				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnNextLayer, currentANNneuronConnection->frontNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTag);
 
-				Reference currentNeuronReferenceOnFrontLayerOfSubnet;
+				LDreference currentNeuronReferenceOnFrontLayerOfSubnet;
 				ANNfillNeuronDisplayReference(&currentNeuronReferenceOnFrontLayerOfSubnet, currentNeuronInFrontLayerOfSubnet, true, &(currentNeuronReferenceOnLayer->relativePosition), writeSVG, currentTag);
 
-				NeuronConnection blankOneToOneNeuronConnection;
-				blankOneToOneNeuronConnection.weight = 0.0;
-				if(!ANNfillNeuronConnectionDisplayReference(updatedNonSpriteListReference, &currentNeuronReferenceOnFrontLayerOfSubnet, &currentNeuronReferenceOnNextLayer, &blankOneToOneNeuronConnection, writeSVG, currentTag))
+				ANNneuronConnection blankOneToOneANNneuronConnection;
+				blankOneToOneANNneuronConnection.weight = 0.0;
+				if(!ANNfillANNneuronConnectionDisplayReference(updatedNonSpriteListReference, &currentNeuronReferenceOnFrontLayerOfSubnet, &currentNeuronReferenceOnNextLayer, &blankOneToOneANNneuronConnection, writeSVG, currentTag))
 				{
 					result = false;
 				}
 
-				Reference* newNeuronDispayReference = new Reference();
+				LDreference* newNeuronDispayReference = new LDreference();
 				updatedNonSpriteListReference->next = newNeuronDispayReference;
 				updatedNonSpriteListReference = updatedNonSpriteListReference->next;
 
@@ -456,7 +456,7 @@ Reference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron* f
 
 /*medium level sprite routines - these can be used by LRRCsprite.cpp top level routines or by LRRCgame.cpp routines*/
 
-bool ANNfillNeuronDisplayReference(Reference* currentNeuronDispayReference, Neuron* neuron, bool hasSubnetNeuron, vec* positionOfsubnetNeuron, bool writeSVG, XMLparserTag** currentTag)
+bool ANNfillNeuronDisplayReference(LDreference* currentNeuronDispayReference, ANNneuron* neuron, bool hasSubnetNeuron, vec* positionOfsubnetNeuron, bool writeSVG, XMLparserTag** currentTag)
 {
 	bool result = true;
 
@@ -551,7 +551,7 @@ bool ANNfillNeuronDisplayReference(Reference* currentNeuronDispayReference, Neur
 }
 
 //currently this function just adds a plain line between neuron1 and neuron2, in the future it could be more complex
-bool ANNfillNeuronConnectionDisplayReference(Reference* currentNeuronDispayReference, Reference* backNeuronReference, Reference* forwardNeuronReference, NeuronConnection* neuronConnection, bool writeSVG, XMLparserTag** currentTag)
+bool ANNfillANNneuronConnectionDisplayReference(LDreference* currentNeuronDispayReference, LDreference* backNeuronReference, LDreference* forwardNeuronReference, ANNneuronConnection* ANNneuronConnection, bool writeSVG, XMLparserTag** currentTag)
 {
 	bool result = true;
 
@@ -559,35 +559,35 @@ bool ANNfillNeuronConnectionDisplayReference(Reference* currentNeuronDispayRefer
 	currentNeuronDispayReference->type = REFERENCE_TYPE_LINE;
 
 
-	if(neuronConnection->weight < (-3.0))
+	if(ANNneuronConnection->weight < (-3.0))
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
 	}
-	else if(neuronConnection->weight < (-0.8))
+	else if(ANNneuronConnection->weight < (-0.8))
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
 	}
-	else if(neuronConnection->weight < -0.4)
+	else if(ANNneuronConnection->weight < -0.4)
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
 	}
-	else if(neuronConnection->weight < -0.01)
+	else if(ANNneuronConnection->weight < -0.01)
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
 	}
-	else if(neuronConnection->weight < 0.01)
+	else if(ANNneuronConnection->weight < 0.01)
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_DARKGREY;
 	}
-	else if(neuronConnection->weight < 0.4)
+	else if(ANNneuronConnection->weight < 0.4)
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_GREEN;
 	}
-	else if(neuronConnection->weight < 0.8)
+	else if(ANNneuronConnection->weight < 0.8)
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_CYAN;
 	}
-	else if(neuronConnection->weight < 3.0)
+	else if(ANNneuronConnection->weight < 3.0)
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_BLUE;
 	}
@@ -622,13 +622,13 @@ bool ANNfillNeuronConnectionDisplayReference(Reference* currentNeuronDispayRefer
 
 
 
-bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Reference* neuronReference, NeuronConnection* neuronConnection, Reference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, Reference* backNeuronReference, Reference* forwardNeuronReference, bool writeSVG, XMLparserTag** currentTag)
+bool ANNdetermineSpriteInfoForANNneuronConnectionAndAddSpriteToSpriteRefList(LDreference* neuronReference, ANNneuronConnection* ANNneuronConnection, LDreference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, LDreference* backNeuronReference, LDreference* forwardNeuronReference, bool writeSVG, XMLparserTag** currentTag)
 {
 	bool result = true;
 
 	//add sprite info [textual + range info] to reference list:
-	Reference* spriteSubmodelInitialReference = new Reference();
-	Reference* spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
+	LDreference* spriteSubmodelInitialReference = new LDreference();
+	LDreference* spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
 
 	//create textual sprite info:
 	string spriteTextString = "";
@@ -636,7 +636,7 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 	int spriteNumberOfLines;
 	spriteNumberOfLines = SPRITE_TEXTUAL_MAX_NUM_OF_LINES;
 	int spriteColourArray[SPRITE_TEXTUAL_MAX_NUM_OF_LINES];
-	ANNgenerateTextualNeuronConnectionSpriteInfoString(neuronConnection, &spriteTextString, spriteColourArray);
+	ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneuronConnection, &spriteTextString, spriteColourArray);
 
 	int numSpritesAddedTemp = 0;
 	spriteSubmodelCurrentReference = LDaddTextualSpriteInfoStringToReferenceList(NULL, spriteTextString, spriteColourArray, spriteSubmodelCurrentReference, spriteNumberOfLines, &numSpritesAddedTemp, true);
@@ -677,13 +677,13 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 }
 
 
-bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference* neuronReference, Neuron* neuron, Reference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, bool writeSVG, XMLparserTag** currentTag)
+bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(LDreference* neuronReference, ANNneuron* neuron, LDreference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, bool writeSVG, XMLparserTag** currentTag)
 {
 	bool result = true;
 
 	//add sprite info [textual + range info] to reference list:
-	Reference* spriteSubmodelInitialReference = new Reference();
-	Reference* spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
+	LDreference* spriteSubmodelInitialReference = new LDreference();
+	LDreference* spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
 
 	//create textual sprite info:
 	string spriteTextString = "";
@@ -773,7 +773,7 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference* neuro
 
 
 
-void ANNgenerateTextualNeuronSpriteInfoString(Neuron* neuron, string* spriteTextString, int spriteColourArray[])
+void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteTextString, int spriteColourArray[])
 {
 	/*Start Sprite Text Creation*/
 
@@ -886,21 +886,21 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron* neuron, string* spriteText
 }
 
 
-void ANNgenerateTextualNeuronConnectionSpriteInfoString(NeuronConnection* neuronConnection, string* spriteTextString, int spriteColourArray[])
+void ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneuronConnection* ANNneuronConnection, string* spriteTextString, int spriteColourArray[])
 {
 	/*Start Sprite Text Creation*/
 
-	spriteColourArray[0] = SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR;
-	spriteColourArray[1] = SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR;
-	spriteColourArray[2] = SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR;
-	spriteColourArray[3] = SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR;
+	spriteColourArray[0] = SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR;
+	spriteColourArray[1] = SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR;
+	spriteColourArray[2] = SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR;
+	spriteColourArray[3] = SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR;
 
 	char tempString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 	//char* tempString = new char[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
 	/*Unit Name Information*/
 
-	sprintf(tempString, "%0.2f", neuronConnection->weight);
+	sprintf(tempString, "%0.2f", ANNneuronConnection->weight);
 	*spriteTextString = "\n\n" +* spriteTextString + "w = " + tempString;
 
 	#ifdef ANN_DEBUG

@@ -26,7 +26,7 @@
  * File Name: ANNexperienceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -53,14 +53,14 @@ using namespace std;
 
 
 
-Experience::Experience(void)
+ANNexperience::ANNexperience(void)
 {
 	classTargetValue = 0;
-	firstExperienceInput = new ExperienceInput();
+	firstExperienceInput = new ANNexperienceInput();
 	next = NULL;
 }
 
-Experience::~Experience(void)
+ANNexperience::~ANNexperience(void)
 {
 	if(firstExperienceInput != NULL)
 	{
@@ -76,13 +76,13 @@ Experience::~Experience(void)
 
 
 
-ExperienceInput::ExperienceInput(void)
+ANNexperienceInput::ANNexperienceInput(void)
 {
 	inputValue = 0;
 	next = NULL;
 }
 
-ExperienceInput::~ExperienceInput(void)
+ANNexperienceInput::~ANNexperienceInput(void)
 {
 	if(next != NULL)
 	{
@@ -93,27 +93,27 @@ ExperienceInput::~ExperienceInput(void)
 
 
 
-void copyExperiences(Experience* newExperience, Experience* experienceToCopy)
+void copyExperiences(ANNexperience* newExperience, ANNexperience* experienceToCopy)
 {
 	newExperience->classTargetValue = experienceToCopy->classTargetValue;
 
-	ExperienceInput* currentExperienceToCopyInput = experienceToCopy->firstExperienceInput;
-	ExperienceInput* currentNewExperienceInput = newExperience->firstExperienceInput;
+	ANNexperienceInput* currentExperienceToCopyInput = experienceToCopy->firstExperienceInput;
+	ANNexperienceInput* currentNewExperienceInput = newExperience->firstExperienceInput;
 
 	while(currentExperienceToCopyInput->next != NULL)
 	{
 		currentNewExperienceInput->inputValue = currentExperienceToCopyInput->inputValue;
-		ExperienceInput* newExperienceInput = new ExperienceInput();
+		ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 		currentNewExperienceInput->next = newExperienceInput;
 		currentNewExperienceInput = currentNewExperienceInput->next;
 		currentExperienceToCopyInput = currentExperienceToCopyInput->next;
 	}
 }
 
-Experience* findExperience(Experience* firstExperienceInDataSet, long experienceNumToFind)
+ANNexperience* findExperience(ANNexperience* firstExperienceInDataSet, long experienceNumToFind)
 {
-	Experience* foundExperience;
-	Experience* currentExperience = firstExperienceInDataSet;
+	ANNexperience* foundExperience;
+	ANNexperience* currentExperience = firstExperienceInDataSet;
 	for(long i = 0; i < experienceNumToFind; i++)
 	{
 		currentExperience = currentExperience->next;
@@ -122,11 +122,11 @@ Experience* findExperience(Experience* firstExperienceInDataSet, long experience
 	return foundExperience;
 }
 
-long countNumberOfExperienceInputs(Experience* experience)
+long countNumberOfExperienceInputs(ANNexperience* experience)
 {
 	long numberOfExperienceInputs = 0;
 
-	ExperienceInput* currentExperienceInput = experience->firstExperienceInput;
+	ANNexperienceInput* currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
 	{
 		numberOfExperienceInputs++;
@@ -136,11 +136,11 @@ long countNumberOfExperienceInputs(Experience* experience)
 	return numberOfExperienceInputs;
 }
 
-long countNumberOfExperiences(Experience* firstExperienceInList)
+long countNumberOfExperiences(ANNexperience* firstExperienceInList)
 {
 	long numberOfExperiences = 0;
 
-	Experience* currentExperience = firstExperienceInList;
+	ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
 		countNumberOfExperienceInputs(currentExperience);
@@ -153,9 +153,9 @@ long countNumberOfExperiences(Experience* firstExperienceInList)
 }
 
 
-void printExperienceInputs(Experience* experience)
+void printExperienceInputs(ANNexperience* experience)
 {
-	ExperienceInput* currentExperienceInput = experience->firstExperienceInput;
+	ANNexperienceInput* currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
 	{
 		cout << "\tInput Value = " << currentExperienceInput->inputValue << endl;
@@ -164,12 +164,12 @@ void printExperienceInputs(Experience* experience)
 	}
 }
 
-void printExperiences(Experience* firstExperienceInList)
+void printExperiences(ANNexperience* firstExperienceInList)
 {
-	Experience* currentExperience = firstExperienceInList;
+	ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		cout << "Experience:" << endl;
+		cout << "ANNexperience:" << endl;
 		cout << "class Target = " << currentExperience->classTargetValue << endl;
 
 		printExperienceInputs(currentExperience);
@@ -178,9 +178,9 @@ void printExperiences(Experience* firstExperienceInList)
 	}
 }
 
-void addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, Experience* firstExperienceInList)
+void addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, ANNexperience* firstExperienceInList)
 {
-	Experience* currentExperience = firstExperienceInList;
+	ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
 		addExperienceToOFStream(experienceDataSetOfStreamObject, currentExperience);
@@ -188,7 +188,7 @@ void addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, Experie
 	}
 }
 
-void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, Experience* experience)
+void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, ANNexperience* experience)
 {
 	char tempString[MAX_EXPERIENCE_SIGNIFICANT_BITS];
 
@@ -200,7 +200,7 @@ void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, Experien
 	}
 	experienceDataSetOfStreamObject->put(CHAR_COMMA);
 
-	ExperienceInput* currentExperienceInput = experience->firstExperienceInput;
+	ANNexperienceInput* currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
 	{
 		sprintf(tempString, "%0.6f",  currentExperienceInput->inputValue);

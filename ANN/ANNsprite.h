@@ -26,7 +26,7 @@
  * File Name: ANNsprite.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -38,7 +38,7 @@
 
 #include "LDreferenceClass.h"
 #include "ANNneuronClass.h"
-#include "ANNneuronConnectionClass.h"
+#include "ANNANNneuronConnectionClass.h"
 #include "XMLparserClass.h"
 
 #define NEURON_SPRITE_SCALE_FACTOR 0.005	//0.005
@@ -85,7 +85,7 @@
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_COLOUR_NAME 	"SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_COLOUR"
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_COLOUR_NAME 	"SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_COLOUR"
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR_NAME 	"SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR"
-#define SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR_NAME 	"SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR"
+#define SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR_NAME 	"SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR"
 #define SPRITE_SUBMODEL_RANGE_SCALE_FACTOR_NAME 			"SPRITE_SUBMODEL_RANGE_SCALE_FACTOR"		//this value is now multiplied by LDRAW_UNITS_PER_CM
 
 
@@ -101,7 +101,7 @@
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO_NAME				"SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO"
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO_NAME			"SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO"
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO_NAME				"SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO"
-#define SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO_NAME	"SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO"
+#define SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_INFO_NAME	"SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_INFO"
 /*
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_EXTRA_SECONDARY_INFO
@@ -113,7 +113,7 @@
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO
-#define SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO
+#define SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_INFO
 #endif
 */
 
@@ -127,19 +127,19 @@ void fillInANNSpriteExternVariables();
 
 //void checkThis();
 
-bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, Neuron* firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag** currentTag);
-	bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(string sceneFileNameWithSprites, Reference* nonSpriteListInitialReference, Reference* spriteListInitialReference, Neuron* firstNeuronInNetwork, bool addSprites, int* numSpritesAdded, bool writeSVG, XMLparserTag** currentTag);
-	bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, bool addSprites, Reference* nonSpriteListInitialReference, Reference* spriteListInitialReference, int numSpritesAdded);
-		Reference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron* firstNeuronInLayer, Reference* spriteListInitialReference, Reference* currentNonSpriteListReference, vec* eyeCoords, int* numSpritesAdded, int* numnonSpritesAdded, string sceneFileNameWithSprites, bool isSubnet, vec* positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag** currentTag);
-			bool ANNfillNeuronDisplayReference(Reference* currentNeuronDispayReference, Neuron* neuron, bool hasSubnetNeuron, vec* positionOfsubnetNeuron, bool writeSVG, XMLparserTag** currentTag);
-			bool ANNfillNeuronConnectionDisplayReference(Reference* currentNeuronDispayReference, Reference* backNeuronReference, Reference* forwardNeuronReference, NeuronConnection* neuronConnection, bool writeSVG, XMLparserTag** currentTag);
+bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, ANNneuron* firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag** currentTag);
+	bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(string sceneFileNameWithSprites, LDreference* nonSpriteListInitialReference, LDreference* spriteListInitialReference, ANNneuron* firstNeuronInNetwork, bool addSprites, int* numSpritesAdded, bool writeSVG, XMLparserTag** currentTag);
+	bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, bool addSprites, LDreference* nonSpriteListInitialReference, LDreference* spriteListInitialReference, int numSpritesAdded);
+		LDreference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(ANNneuron* firstNeuronInLayer, LDreference* spriteListInitialReference, LDreference* currentNonSpriteListReference, vec* eyeCoords, int* numSpritesAdded, int* numnonSpritesAdded, string sceneFileNameWithSprites, bool isSubnet, vec* positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag** currentTag);
+			bool ANNfillNeuronDisplayReference(LDreference* currentNeuronDispayReference, ANNneuron* neuron, bool hasSubnetNeuron, vec* positionOfsubnetNeuron, bool writeSVG, XMLparserTag** currentTag);
+			bool ANNfillANNneuronConnectionDisplayReference(LDreference* currentNeuronDispayReference, LDreference* backNeuronReference, LDreference* forwardNeuronReference, ANNneuronConnection* ANNneuronConnection, bool writeSVG, XMLparserTag** currentTag);
 
-			bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Reference* neuronReference, NeuronConnection* neuronConnection, Reference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, Reference* backNeuronReference, Reference* forwardNeuronReference, bool writeSVG, XMLparserTag** currentTag);
-			bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference* neuronReference, Neuron* neuron, Reference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, bool writeSVG, XMLparserTag** currentTag);
+			bool ANNdetermineSpriteInfoForANNneuronConnectionAndAddSpriteToSpriteRefList(LDreference* neuronReference, ANNneuronConnection* ANNneuronConnection, LDreference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, LDreference* backNeuronReference, LDreference* forwardNeuronReference, bool writeSVG, XMLparserTag** currentTag);
+			bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(LDreference* neuronReference, ANNneuron* neuron, LDreference* spriteListInitialReference, vec* eyeCoords, int* numSpritesAdded, string sceneFileName, bool writeSVG, XMLparserTag** currentTag);
 
 
-			void ANNgenerateTextualNeuronSpriteInfoString(Neuron* neuron, string* spriteTextString, int spriteColourArray[]);
-			void ANNgenerateTextualNeuronConnectionSpriteInfoString(NeuronConnection* neuronConnection, string* spriteTextString, int spriteColourArray[]);
+			void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteTextString, int spriteColourArray[]);
+			void ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneuronConnection* ANNneuronConnection, string* spriteTextString, int spriteColourArray[]);
 
 
 #endif

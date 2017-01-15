@@ -26,7 +26,7 @@
  * File Name: ANNupdateAlgorithm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -62,7 +62,7 @@ int dataSetNum;
 bool debugPrintNNOutputs;
 #endif
 
-double calculateErrorOfBackPropPass(Neuron* firstOutputNeuronInNetwork)
+double calculateErrorOfBackPropPass(ANNneuron* firstOutputNeuronInNetwork)
 {
 	/*
 
@@ -76,7 +76,7 @@ double calculateErrorOfBackPropPass(Neuron* firstOutputNeuronInNetwork)
 
 	double total2xError = 0.0;
 
-	Neuron* currentNeuron = firstOutputNeuronInNetwork;
+	ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
 	while(currentNeuron->nextNeuron != NULL)
 	{
 		#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_4
@@ -93,12 +93,12 @@ double calculateErrorOfBackPropPass(Neuron* firstOutputNeuronInNetwork)
 
 		#ifdef ANN_DEBUG
 		cout << "\nNeural Network Total Error Calculations" << endl;
-		cout << "NeuronContainer ID = " << currentNeuron->id << endl;
-		cout << "NeuronContainer ID Order = " << currentNeuron->orderID << endl;
-		cout << "NeuronContainer ID Layer = " << currentNeuron->layerID << endl;
-		cout << "NeuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
-		cout << "NeuronContainer classTarget = " << currentNeuron->classTarget << endl;
-		cout << "NeuronContainer Output = " << currentNeuron->output << endl;
+		cout << "ANNneuronContainer ID = " << currentNeuron->id << endl;
+		cout << "ANNneuronContainer ID Order = " << currentNeuron->orderID << endl;
+		cout << "ANNneuronContainer ID Layer = " << currentNeuron->layerID << endl;
+		cout << "ANNneuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
+		cout << "ANNneuronContainer classTarget = " << currentNeuron->classTarget << endl;
+		cout << "ANNneuronContainer Output = " << currentNeuron->output << endl;
 		cout << "total2xError = " << total2xError << "\n" << endl;
 		#endif
 
@@ -121,10 +121,10 @@ double calculateErrorOfBackPropPass(Neuron* firstOutputNeuronInNetwork)
 	return total2xError;
 }
 
-double ANNBackPropogationPass(Neuron* firstInputNeuronInNetwork, Neuron* firstOutputNeuronInNetwork)
+double ANNBackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork)
 {
 	#ifdef ANN_DEBUG
-	cout << "\ndouble ANNBackPropogationPass(Neuron* firstInputNeuronInNetwork, Neuron* firstOutputNeuronInNetwork)" << endl;
+	cout << "\ndouble ANNBackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork)" << endl;
 	#endif
 
 	forwardPassStep(firstInputNeuronInNetwork);
@@ -141,44 +141,44 @@ double ANNBackPropogationPass(Neuron* firstInputNeuronInNetwork, Neuron* firstOu
 
 #ifdef ANN_ADVANCED
 
-void copyNeuronContainerListToNeuronConnectionContainerList(vector<NeuronConnection*>* neuronConnectionListToUpdate, Neuron* firstNeuronInListToCopy, bool frontOrBack)
+void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, bool frontOrBack)
 {
-	Neuron* currentNeuronToCopy = firstNeuronInListToCopy;
+	ANNneuron* currentNeuronToCopy = firstNeuronInListToCopy;
 
-	for(vector<NeuronConnection*>::iterator neuronConnectionListToUpdateIter = neuronConnectionListToUpdate->begin(); neuronConnectionListToUpdateIter != neuronConnectionListToUpdate->end(); neuronConnectionListToUpdateIter++)
+	for(vector<ANNneuronConnection*>::iterator ANNneuronConnectionListToUpdateIter = ANNneuronConnectionListToUpdate->begin(); ANNneuronConnectionListToUpdateIter != ANNneuronConnectionListToUpdate->end(); ANNneuronConnectionListToUpdateIter++)
 	{
 		//average
 		if(frontOrBack)
 		{
-			averageNeuronKeyProperties((*neuronConnectionListToUpdateIter)->frontNeuron, currentNeuronToCopy);
+			averageNeuronKeyProperties((*ANNneuronConnectionListToUpdateIter)->frontNeuron, currentNeuronToCopy);
 		}
 		else
 		{
-			averageNeuronKeyProperties((*neuronConnectionListToUpdateIter)->backNeuron, currentNeuronToCopy);
+			averageNeuronKeyProperties((*ANNneuronConnectionListToUpdateIter)->backNeuron, currentNeuronToCopy);
 		}
 		currentNeuronToCopy = currentNeuronToCopy->nextNeuron;
 	}
 }
 
-void copyNeuronConnectionContainerListToNeuronContainerList(Neuron* firstNeuronInListToUpdate, vector<NeuronConnection*>* neuronConnectionListToCopy, bool frontOrBack)
+void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, bool frontOrBack)
 {
-	Neuron* currentNeuronToUpdate = firstNeuronInListToUpdate;
-	vector<NeuronConnection*>::iterator neuronConnectionListToCopyIter = neuronConnectionListToCopy->begin();
+	ANNneuron* currentNeuronToUpdate = firstNeuronInListToUpdate;
+	vector<ANNneuronConnection*>::iterator ANNneuronConnectionListToCopyIter = ANNneuronConnectionListToCopy->begin();
 
 	while(currentNeuronToUpdate->nextNeuron != NULL)		//?this will fail; it appears as the neuron connection containers have less neuron connections than neurons in the layer - this is a mistake
-	//while(currentNeuronConnectionContainerToCopy -> nextNeuronConnectionContainer != NULL)
+	//while(currentANNneuronConnectionContainerToCopy -> nextANNneuronConnectionContainer != NULL)
 	{
 		//average
 		if(frontOrBack)
 		{
-			averageNeuronKeyProperties(currentNeuronToUpdate, (*neuronConnectionListToCopyIter)->frontNeuron);
+			averageNeuronKeyProperties(currentNeuronToUpdate, (*ANNneuronConnectionListToCopyIter)->frontNeuron);
 		}
 		else
 		{
-			averageNeuronKeyProperties(currentNeuronToUpdate, (*neuronConnectionListToCopyIter)->backNeuron);
+			averageNeuronKeyProperties(currentNeuronToUpdate, (*ANNneuronConnectionListToCopyIter)->backNeuron);
 		}
 		currentNeuronToUpdate = currentNeuronToUpdate->nextNeuron;
-		neuronConnectionListToCopyIter++;
+		ANNneuronConnectionListToCopyIter++;
 	}
 }
 
@@ -187,26 +187,26 @@ void copyNeuronConnectionContainerListToNeuronContainerList(Neuron* firstNeuronI
 
 /************************************************************ Forward Pass Step Routines* *****************************************************/
 
-void forwardPassStep(Neuron* neuronBeingAccessed)
+void forwardPassStep(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void forwardPassStep(Neuron* neuronBeingAccessed)" << endl;
-	cout << "NeuronContainer ID = " << neuronBeingAccessed->id << endl;
-	cout << "NeuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
-	cout << "NeuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
-	cout << "NeuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
+	cout << "\nstatic void forwardPassStep(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "ANNneuronContainer ID = " << neuronBeingAccessed->id << endl;
+	cout << "ANNneuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
+	cout << "ANNneuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
+	cout << "ANNneuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
 	#endif
 
-	Neuron* currentNeuron = neuronBeingAccessed->firstNeuronInFrontLayer;
+	ANNneuron* currentNeuron = neuronBeingAccessed->firstNeuronInFrontLayer;
 
 	while(currentNeuron->nextNeuron != NULL)
 	{
 		#ifdef ANN_DEBUG
-		cout << "\nA Hidden level NeuronContainer has been selected for Learning" << endl;
-		cout << "NeuronContainer ID = " << currentNeuron->id << endl;
-		cout << "NeuronContainer ID Order = " << currentNeuron->orderID << endl;
-		cout << "NeuronContainer ID Layer = " << currentNeuron->layerID << endl;
-		cout << "NeuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
+		cout << "\nA Hidden level ANNneuronContainer has been selected for Learning" << endl;
+		cout << "ANNneuronContainer ID = " << currentNeuron->id << endl;
+		cout << "ANNneuronContainer ID Order = " << currentNeuron->orderID << endl;
+		cout << "ANNneuronContainer ID Layer = " << currentNeuron->layerID << endl;
+		cout << "ANNneuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
 		#endif
 
 		if(!(currentNeuron->isSubnet))
@@ -228,28 +228,28 @@ void forwardPassStep(Neuron* neuronBeingAccessed)
 		{
 			#ifdef ANN_DEBUG
 			cout << "\nAbout to perform ANN recursion in forwardPassStep ... " << endl;
-			cout << "currentNeuron NeuronContainer ID = " << currentNeuron->id << endl;
-			cout << "currentNeuron NeuronContainer ID Order = " << currentNeuron->orderID << endl;
-			cout << "currentNeuron NeuronContainer ID Layer = " << currentNeuron->layerID << endl;
-			cout << "currentNeuron NeuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
+			cout << "currentNeuron ANNneuronContainer ID = " << currentNeuron->id << endl;
+			cout << "currentNeuron ANNneuronContainer ID Order = " << currentNeuron->orderID << endl;
+			cout << "currentNeuron ANNneuronContainer ID Layer = " << currentNeuron->layerID << endl;
+			cout << "currentNeuron ANNneuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
 			//cout << "numberOfInputNeurons = " << currentNeuron->numNeuronsInBackLayerOfSubnet << endl;
 			//cout << "numberOfOutputNeurons = " <<  currentNeuron->numNeuronsInFrontLayerOfSubnet << endl;
 			#endif
 
 			if(!(currentNeuron->isInputSubnet))
 			{
-				copyNeuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backNeuronConnectionList), false);
+				copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backANNneuronConnectionList), false);
 			}
 
-			copyNeuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontNeuronConnectionList), true);
+			copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
 			forwardPassStep(currentNeuron->firstNeuronInBackLayerOfSubnet);	//?ISSUE HERE
 
 			if(!(currentNeuron->isInputSubnet))
 			{
-				copyNeuronContainerListToNeuronConnectionContainerList(&(currentNeuron->backNeuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
+				copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->backANNneuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
 			}
 
-			copyNeuronContainerListToNeuronConnectionContainerList(&(currentNeuron->frontNeuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
+			copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->frontANNneuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
 		}
 		currentNeuron = currentNeuron->nextNeuron;
 	}
@@ -264,56 +264,56 @@ void forwardPassStep(Neuron* neuronBeingAccessed)
 
 
 //Only [top level]/[foward level]/[final] Output Neurons have "Class Target" values
-void adjustOutputValueOfANeuronBasedOnBackNeurons(Neuron* neuronBeingAccessed)
+void adjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void adjustOutputValueOfANeuronBasedOnBackNeurons(Neuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void adjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed)" << endl;
 	cout << "\nNeuron Output Value Adjusted" << endl;
-	cout << "NeuronContainer ID = " << neuronBeingAccessed->id << endl;
-	cout << "NeuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
-	cout << "NeuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
-	cout << "NeuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
+	cout << "ANNneuronContainer ID = " << neuronBeingAccessed->id << endl;
+	cout << "ANNneuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
+	cout << "ANNneuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
+	cout << "ANNneuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
 	#endif
 
-	//for every NeuronContainer being accessed
+	//for every ANNneuronContainer being accessed
 
 	float netI = 0.0;
-	for(vector<NeuronConnection*>::iterator connectionIter = neuronBeingAccessed->backNeuronConnectionList.begin(); connectionIter != neuronBeingAccessed->backNeuronConnectionList.end(); connectionIter++)
+	for(vector<ANNneuronConnection*>::iterator connectionIter = neuronBeingAccessed->backANNneuronConnectionList.begin(); connectionIter != neuronBeingAccessed->backANNneuronConnectionList.end(); connectionIter++)
 	{
-		NeuronConnection* currentNeuronConnection =* connectionIter;
+		ANNneuronConnection* currentANNneuronConnection =* connectionIter;
 		#ifdef ANN_DEBUG
-		//cout << "currentNeuronConnection->backNeuron->output = " << currentNeuronConnection->backNeuron->output << endl;
+		//cout << "currentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
 		#endif
 
-		netI = netI + (currentNeuronConnection->backNeuron->output* currentNeuronConnection->weight);
+		netI = netI + (currentANNneuronConnection->backNeuron->output* currentANNneuronConnection->weight);
 
 		#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-		cout << "currentNeuronConnection->backNeuron->id = " << currentNeuronConnection->backNeuron->id << endl;
+		cout << "currentANNneuronConnection->backNeuron->id = " << currentANNneuronConnection->backNeuron->id << endl;
 		#endif
 
 		#ifdef ANN_DEBUG
-		cout << "Back Neuron Output = " << currentNeuronConnection->backNeuron->output << endl;
-		cout << "Back Neuron Connection Weight = " << currentNeuronConnection->weight << endl;
-		cout << "NeuronContainer netI = " << netI << endl;
+		cout << "Back ANNneuron Output = " << currentANNneuronConnection->backNeuron->output << endl;
+		cout << "Back ANNneuron Connection Weight = " << currentANNneuronConnection->weight << endl;
+		cout << "ANNneuronContainer netI = " << netI << endl;
 		/*
-		cout << "currentNeuronConnection->weight > 100" << endl;
-		cout << "currentNeuronConnection->weight = " << currentNeuronConnection->weight << endl;
+		cout << "currentANNneuronConnection->weight > 100" << endl;
+		cout << "currentANNneuronConnection->weight = " << currentANNneuronConnection->weight << endl;
 		cout << "dataSetNum = " << dataSetNum << endl;
 		cout << "\tneuronBeingAccessed ID = " << neuronBeingAccessed->id << endl;
 		cout << "\tneuronBeingAccessed ID Order = " << neuronBeingAccessed->orderID << endl;
 		cout << "\tneuronBeingAccessed ID Layer = " << neuronBeingAccessed->layerID << endl;
 		cout << "\tneuronBeingAccessed ID Subnet = " << neuronBeingAccessed->subnetID << endl;
-		cout << "\t\tcurrentNeuronConnection->backNeuron ID = " << currentNeuronConnection->backNeuron->id << endl;
-		cout << "\t\tcurrentNeuronConnection->backNeuron ID Order = " << currentNeuronConnection->backNeuron->orderID << endl;
-		cout << "\t\tcurrentNeuronConnection->backNeuron ID Layer = " << currentNeuronConnection->backNeuron->layerID << endl;
-		cout << "\t\tcurrentNeuronConnection->backNeuron ID Subnet = " << currentNeuronConnection->backNeuron->subnetID << endl;
+		cout << "\t\tcurrentANNneuronConnection->backNeuron ID = " << currentANNneuronConnection->backNeuron->id << endl;
+		cout << "\t\tcurrentANNneuronConnection->backNeuron ID Order = " << currentANNneuronConnection->backNeuron->orderID << endl;
+		cout << "\t\tcurrentANNneuronConnection->backNeuron ID Layer = " << currentANNneuronConnection->backNeuron->layerID << endl;
+		cout << "\t\tcurrentANNneuronConnection->backNeuron ID Subnet = " << currentANNneuronConnection->backNeuron->subnetID << endl;
 		*/
 		#endif
 	}
 
 	netI = netI + neuronBeingAccessed->bias;
 
-	neuronBeingAccessed->output = calculateOValue(netI);	//set ("hidden") NeuronContainer output value
+	neuronBeingAccessed->output = calculateOValue(netI);	//set ("hidden") ANNneuronContainer output value
 
 	#ifdef ANN_DEBUG
 	cout << "neuronBeingAccessed netI = " << netI << endl;		//this may not be necessary or meaningful
@@ -341,10 +341,10 @@ void adjustOutputValueOfANeuronBasedOnBackNeurons(Neuron* neuronBeingAccessed)
 
 /************************************************************ Backward Pass Step Routines* *****************************************************/
 
-void calculateErrorOfOutputNeurons(Neuron* firstOutputNeuronInNetwork)
+void calculateErrorOfOutputNeurons(ANNneuron* firstOutputNeuronInNetwork)
 {
 	//NB calculate error of output neurons
-	Neuron* currentNeuron = firstOutputNeuronInNetwork;
+	ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
 	while(currentNeuron->nextNeuron != NULL)
 	{
 		calculateOutputErrorOfOutputNeuron(currentNeuron);
@@ -354,10 +354,10 @@ void calculateErrorOfOutputNeurons(Neuron* firstOutputNeuronInNetwork)
 
 
 //preconditions - assumes neuronBeingAccessed has a back neuron references. (ie neuronBeingAccessed->firstBackNeuronReference != NULL)
-void backwardPassStep(Neuron* neuronBeingAccessed, int isOutputLayer, bool isSubnet)
+void backwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer, bool isSubnet)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void backwardPassStep(Neuron* neuronBeingAccessed, int isOutputLayer)" << endl;
+	cout << "\nstatic void backwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer)" << endl;
 	cout << "neuronBeingAccessed ID = " << neuronBeingAccessed->id << endl;
 	cout << "neuronBeingAccessed ID Order = " << neuronBeingAccessed->orderID << endl;
 	cout << "neuronBeingAccessed ID Layer = " << neuronBeingAccessed->layerID << endl;
@@ -368,7 +368,7 @@ void backwardPassStep(Neuron* neuronBeingAccessed, int isOutputLayer, bool isSub
 	{	//calculate errors of output neurons - errors2 (output errors)
 
 		//NB calculate error of neurons at current level
-		Neuron* currentNeuron = neuronBeingAccessed;
+		ANNneuron* currentNeuron = neuronBeingAccessed;
 		while(currentNeuron->nextNeuron != NULL)
 		{
 			calculateOutputErrorOfOutputNeuron(currentNeuron);
@@ -377,7 +377,7 @@ void backwardPassStep(Neuron* neuronBeingAccessed, int isOutputLayer, bool isSub
 	}
 	else
 	{//calculates the errors of the hidden neurons
-		Neuron* currentNeuron = neuronBeingAccessed;
+		ANNneuron* currentNeuron = neuronBeingAccessed;
 		while(currentNeuron->nextNeuron != NULL)
 		{
 			if(!(currentNeuron->isSubnet))
@@ -389,7 +389,7 @@ void backwardPassStep(Neuron* neuronBeingAccessed, int isOutputLayer, bool isSub
 	}
 
 	//NB calculate back Weight of neurons at current level {NB if at the back layer of a subnet, nothing will happen}
-	Neuron* currentNeuron = neuronBeingAccessed;
+	ANNneuron* currentNeuron = neuronBeingAccessed;
 	while(currentNeuron->nextNeuron != NULL)
 	{
 		if(!(currentNeuron->isSubnet))
@@ -420,27 +420,27 @@ void backwardPassStep(Neuron* neuronBeingAccessed, int isOutputLayer, bool isSub
 		{
 			#ifdef ANN_DEBUG
 			cout << "\nAbout to perform ANN recursion in backwardPassStep ... " << endl;
-			cout << "currentNeuron NeuronContainer ID = " << currentNeuron->id << endl;
-			cout << "currentNeuron NeuronContainer ID Order = " << currentNeuron->orderID << endl;
-			cout << "currentNeuron NeuronContainer ID Layer = " << currentNeuron->layerID << endl;
-			cout << "currentNeuron NeuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
+			cout << "currentNeuron ANNneuronContainer ID = " << currentNeuron->id << endl;
+			cout << "currentNeuron ANNneuronContainer ID Order = " << currentNeuron->orderID << endl;
+			cout << "currentNeuron ANNneuronContainer ID Layer = " << currentNeuron->layerID << endl;
+			cout << "currentNeuron ANNneuronContainer ID Subnet = " << currentNeuron->subnetID << endl;
 			//cout << "numberOfInputNeurons = " << currentNeuron->numNeuronsInBackLayerOfSubnet << endl;
 			//cout << "numberOfOutputNeurons = " <<  currentNeuron->numNeuronsInFrontLayerOfSubnet << endl;
 			#endif
 
-			copyNeuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backNeuronConnectionList), false);
+			copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backANNneuronConnectionList), false);
 			if(!(currentNeuron->isOutputSubnet))
 			{
-				copyNeuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontNeuronConnectionList), true);
+				copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
 			}
 
 			backwardPassStep(currentNeuron->firstNeuronInFrontLayerOfSubnet, true, true);
 				//NB CHECK ANNTHIS new requirement; each subnet must have at least 3 layers
 
-			copyNeuronContainerListToNeuronConnectionContainerList(&(currentNeuron->backNeuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
+			copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->backANNneuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
 			if(!(currentNeuron->isOutputSubnet))
 			{
-				copyNeuronContainerListToNeuronConnectionContainerList(&(currentNeuron->frontNeuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
+				copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->frontANNneuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
 			}
 		}
 		currentNeuron = currentNeuron->nextNeuron;
@@ -465,10 +465,10 @@ void backwardPassStep(Neuron* neuronBeingAccessed, int isOutputLayer, bool isSub
 }
 
 
-void calculateOutputErrorOfOutputNeuron(Neuron* neuronBeingAccessed)
+void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateOutputErrorOfOutputNeuron(Neuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed)" << endl;
 	#endif
 
 	double outputError = (neuronBeingAccessed->classTarget - neuronBeingAccessed->output)* neuronBeingAccessed->output* (1.0 - neuronBeingAccessed->output);
@@ -476,44 +476,44 @@ void calculateOutputErrorOfOutputNeuron(Neuron* neuronBeingAccessed)
 
 	#ifdef ANN_DEBUG
 	cout << "\nNeuron Output error Adjusted" << endl;
-	cout << "NeuronContainer ID = " << neuronBeingAccessed->id << endl;
-	cout << "NeuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
-	cout << "NeuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
-	cout << "NeuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
-	cout << "NeuronContainer classTarget = " << neuronBeingAccessed->classTarget << endl;
-	cout << "NeuronContainer Error = " << neuronBeingAccessed->error << endl;
-	cout << "NeuronContainer Output = " << neuronBeingAccessed->output << endl;
+	cout << "ANNneuronContainer ID = " << neuronBeingAccessed->id << endl;
+	cout << "ANNneuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
+	cout << "ANNneuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
+	cout << "ANNneuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
+	cout << "ANNneuronContainer classTarget = " << neuronBeingAccessed->classTarget << endl;
+	cout << "ANNneuronContainer Error = " << neuronBeingAccessed->error << endl;
+	cout << "ANNneuronContainer Output = " << neuronBeingAccessed->output << endl;
 	#endif
 }
 
-void calculateOutputErrorOfNonoutputNeuron(Neuron* neuronBeingAccessed)
+void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateOutputErrorOfNonoutputNeuron(Neuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed)" << endl;
 	#endif
 
 	#ifdef ANN_DEBUG
 	cout << "\nNeuron Output error Adjusted" << endl;
-	cout << "NeuronContainer ID = " << neuronBeingAccessed->id << endl;
-	cout << "NeuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
-	cout << "NeuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
-	cout << "NeuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
+	cout << "ANNneuronContainer ID = " << neuronBeingAccessed->id << endl;
+	cout << "ANNneuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
+	cout << "ANNneuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
+	cout << "ANNneuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
 	#endif
 
 	float partOfHiddenError = 0.0;
 
-	for(vector<NeuronConnection*>::iterator connectionIter = neuronBeingAccessed->frontNeuronConnectionList.begin(); connectionIter != neuronBeingAccessed->frontNeuronConnectionList.end(); connectionIter++)
+	for(vector<ANNneuronConnection*>::iterator connectionIter = neuronBeingAccessed->frontANNneuronConnectionList.begin(); connectionIter != neuronBeingAccessed->frontANNneuronConnectionList.end(); connectionIter++)
 	{
-		NeuronConnection* currentNeuronConnection =* connectionIter;
+		ANNneuronConnection* currentANNneuronConnection =* connectionIter;
 
 		//numberOfChickens++;
 
-		partOfHiddenError = partOfHiddenError + ((currentNeuronConnection->weight)* (currentNeuronConnection->frontNeuron->error));
+		partOfHiddenError = partOfHiddenError + ((currentANNneuronConnection->weight)* (currentANNneuronConnection->frontNeuron->error));
 		/*partOfHiddenError = partOfHiddenError + (weights2[i*numberOfOutputNeurons+j]*errors2[j]);*/
 
 		#ifdef ANN_DEBUG
-		cout << "Front Neuron Error = " << currentNeuronConnection->frontNeuron->error << endl;
-		cout << "Front Neuron Connection Weight = " << currentNeuronConnection->weight << endl;
+		cout << "Front ANNneuron Error = " << currentANNneuronConnection->frontNeuron->error << endl;
+		cout << "Front ANNneuron Connection Weight = " << currentANNneuronConnection->weight << endl;
 		cout << "partOfHiddenError = " << partOfHiddenError << "\n" << endl;
 		#endif
 	}
@@ -522,16 +522,16 @@ void calculateOutputErrorOfNonoutputNeuron(Neuron* neuronBeingAccessed)
 
 	#ifdef ANN_DEBUG
 	cout << "\npartOfHiddenError = " << partOfHiddenError << "\n" << endl;
-	cout << "NeuronContainer output  = " << neuronBeingAccessed->output << endl;
-	cout << "NeuronContainer Error = " << neuronBeingAccessed->error << endl;
+	cout << "ANNneuronContainer output  = " << neuronBeingAccessed->output << endl;
+	cout << "ANNneuronContainer Error = " << neuronBeingAccessed->error << endl;
 	#endif
 }
 
 
-void calculateNewBackConnectionWeightsOfNeuron(Neuron* neuronBeingAccessed)
+void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateNewBackConnectionWeightsOfNeuron(Neuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed)" << endl;
 	#endif
 
 	#ifdef ANN_DEBUG
@@ -544,26 +544,26 @@ void calculateNewBackConnectionWeightsOfNeuron(Neuron* neuronBeingAccessed)
 	cout << "neuronBeingAccessed Error = " << neuronBeingAccessed->error << endl;
 	#endif
 
-	for(vector<NeuronConnection*>::iterator connectionIter = neuronBeingAccessed->backNeuronConnectionList.begin(); connectionIter != neuronBeingAccessed->backNeuronConnectionList.end(); connectionIter++)
+	for(vector<ANNneuronConnection*>::iterator connectionIter = neuronBeingAccessed->backANNneuronConnectionList.begin(); connectionIter != neuronBeingAccessed->backANNneuronConnectionList.end(); connectionIter++)
 	{
-		NeuronConnection* currentNeuronConnection =* connectionIter;
+		ANNneuronConnection* currentANNneuronConnection =* connectionIter;
 
 		float weightChange;
-		weightChange = MU* neuronBeingAccessed->error* currentNeuronConnection->backNeuron->output;
+		weightChange = MU* neuronBeingAccessed->error* currentANNneuronConnection->backNeuron->output;
 
-		currentNeuronConnection->weight = currentNeuronConnection->weight + weightChange;
+		currentANNneuronConnection->weight = currentANNneuronConnection->weight + weightChange;
 
 		#ifdef ANN_DEBUG
-		cout << "Back Neuron Output = " << currentNeuronConnection->backNeuron->output << endl;
-		cout << "Back Neuron Connection Weight = " << currentNeuronConnection->weight << endl;
+		cout << "Back ANNneuron Output = " << currentANNneuronConnection->backNeuron->output << endl;
+		cout << "Back ANNneuron Connection Weight = " << currentANNneuronConnection->weight << endl;
 		#endif
 	}
 }
 
-void calculateNewBiasOfNeuron(Neuron* neuronBeingAccessed)
+void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateNewBiasOfNeuron(Neuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed)" << endl;
 	#endif
 
 	double biasChange;
@@ -573,9 +573,9 @@ void calculateNewBiasOfNeuron(Neuron* neuronBeingAccessed)
 	#ifdef ANN_DEBUG
 	cout << "\nNeuron Bias Value Adjusted" << endl;
 	cout << "neuron ID = " << neuronBeingAccessed->id << endl;
-	cout << "NeuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
-	cout << "NeuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
-	cout << "NeuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
+	cout << "ANNneuronContainer ID Order = " << neuronBeingAccessed->orderID << endl;
+	cout << "ANNneuronContainer ID Layer = " << neuronBeingAccessed->layerID << endl;
+	cout << "ANNneuronContainer ID Subnet = " << neuronBeingAccessed->subnetID << endl;
 	cout << "MU = " << MU << endl;
 	cout << "neuron Error = " << neuronBeingAccessed->error << endl;
 	cout << "neuron Bias = " << neuronBeingAccessed->bias << endl;

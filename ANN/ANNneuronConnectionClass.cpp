@@ -23,15 +23,15 @@
 
 /*******************************************************************************
  *
- * File Name: ANNneuronConnectionClass.cpp
+ * File Name: ANNANNneuronConnectionClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments:
  *
  *******************************************************************************/
 
-#include "ANNneuronConnectionClass.h"
+#include "ANNANNneuronConnectionClass.h"
 
 /************************************************************ Neural Network Class Definitions* *****************************************************/
 
@@ -53,7 +53,7 @@ using namespace std;
 
 
 
-NeuronConnection::NeuronConnection(void)
+ANNneuronConnection::ANNneuronConnection(void)
 {
 	frontNeuronID = 0;
 
@@ -63,7 +63,7 @@ NeuronConnection::NeuronConnection(void)
 	backNeuron = NULL;
 }
 
-NeuronConnection::~NeuronConnection(void)
+ANNneuronConnection::~ANNneuronConnection(void)
 {
 	if(frontNeuron != NULL)
 	{

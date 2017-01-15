@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -53,10 +53,10 @@
 
 #ifdef USE_RT
 
-void generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, Experience* currentExperience, long objectDecision)
+void generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, long objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
-	ExperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
+	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
 
 	//fill experience inputs
 	for(int y=0; y<imageHeight; y++)
@@ -68,7 +68,7 @@ void generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int i
 				unsigned char col = getRGBMapValue(x, y, imageWidth, rgb, rgbMap);
 				double normalisedMapValue =  normaliseExperienceInput((double)col, MAX_RGB_VAL);
 				currentExperienceInput->inputValue = normalisedMapValue;
-				ExperienceInput* newExperienceInput = new ExperienceInput();
+				ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 				currentExperienceInput->next = newExperienceInput;
 				currentExperienceInput = currentExperienceInput->next;
 			}
@@ -77,10 +77,10 @@ void generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int i
 }
 
 
-void generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, Experience* currentExperience, long objectDecision)
+void generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, ANNexperience* currentExperience, long objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
-	ExperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
+	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
 
 	//fill experience inputs
 	for(int y=0; y<imageHeight; y++)
@@ -91,17 +91,17 @@ void generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth
 
 			double normalisedMapValue =  normaliseExperienceInput(mapValue, mapMaxValue);
 			currentExperienceInput->inputValue = normalisedMapValue;
-			ExperienceInput* newExperienceInput = new ExperienceInput();
+			ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 			currentExperienceInput->next = newExperienceInput;
 			currentExperienceInput = currentExperienceInput->next;
 		}
 	}
 }
 
-void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, Experience* currentExperience, long objectDecision)
+void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, long objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
-	ExperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
+	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
 
 	//fill experience inputs
 	for(int y=0; y<imageHeight; y++)
@@ -112,7 +112,7 @@ void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int im
 
 			double normalisedMapValue =  normaliseExperienceInput((double)mapValue, 1.0);
 			currentExperienceInput->inputValue = normalisedMapValue;
-			ExperienceInput* newExperienceInput = new ExperienceInput();
+			ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 			currentExperienceInput->next = newExperienceInput;
 			currentExperienceInput = currentExperienceInput->next;
 		}
@@ -125,7 +125,7 @@ void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int im
 
 
 
-bool trainAndOutputNeuralNetworkWithFileNames(Neuron* firstInputNeuronInNetwork, Neuron* firstOutputNeuronInNetwork, int numberOfInputNeurons, int numberOfOutputNeurons, Experience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileNameWithSprites, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs)
+bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, int numberOfInputNeurons, int numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileNameWithSprites, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs)
 {
 	bool result = true;
 
@@ -171,7 +171,7 @@ bool trainAndOutputNeuralNetworkWithFileNames(Neuron* firstInputNeuronInNetwork,
 
 
 
-void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool display, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileNameWithoutSprites, string outputLDRFileNameWithSprites, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
+void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool display, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileNameWithoutSprites, string outputLDRFileNameWithSprites, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
 {
 	bool result = true;
 
@@ -197,8 +197,8 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron* firstInputNeuronInNe
 
 		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, &currentTagInSVGFile);
 
-		Reference* nonSpriteListInitialReference = new Reference();
-		Reference* spriteListInitialReference = new Reference();
+		LDreference* nonSpriteListInitialReference = new LDreference();
+		LDreference* spriteListInitialReference = new LDreference();
 
 		int numSpritesAdded = 0;
 
@@ -241,8 +241,8 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron* firstInputNeuronInNe
 			// NEW; use ANNrules.xml to remove sprites for RT speed
 
 			//reparse scenefilewithandwithout sprites - to build absolute position information
-			Reference* initialReferenceInSceneFileForRayTracing = new Reference();
-			Reference* topLevelReferenceInSceneFileForRayTracing = new Reference(charstarsceneFileNameForRayTracing, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
+			LDreference* initialReferenceInSceneFileForRayTracing = new LDreference();
+			LDreference* topLevelReferenceInSceneFileForRayTracing = new LDreference(charstarsceneFileNameForRayTracing, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
 			if(!parseFile(charstarsceneFileNameForRayTracing, initialReferenceInSceneFileForRayTracing, topLevelReferenceInSceneFileForRayTracing, true))
 			{//file does not exist
 				cout << "The file: " << charstarsceneFileNameForRayTracing << " does not exist in the directory" << endl;
@@ -255,7 +255,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron* firstInputNeuronInNe
 
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 
-					ViewInfo vi;
+					RTviewInfo vi;
 					vi.imageWidth = width;
 					vi.imageHeight = height;
 					vi.eye.x = TAL_FILE_HEADER_DEFAULT_EYE_X;
@@ -285,8 +285,8 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron* firstInputNeuronInNe
 					#ifdef TH_USE_POVRAY_FOR_NEURAL_NETWORK_VEC_GRAPHICS	//NOT YET TEST;
 
 
-						Reference* nonSpriteListInitialReference = new Reference();
-						Reference* spriteListInitialReference = new Reference();
+						LDreference* nonSpriteListInitialReference = new LDreference();
+						LDreference* spriteListInitialReference = new LDreference();
 
 						int numSpritesAdded = 0;
 						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonSpriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
@@ -350,8 +350,8 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron* firstInputNeuronInNe
 				setViewPort3Dortho(0.0, 5.0, 5.0, 0.0, 2.0, -2.0);
 
 				//now reparse file
-				Reference* initialReferenceInCollapsedSceneFile = new Reference();
-				Reference* topLevelReferenceInCollapsedSceneFile = new Reference(topLevelSceneFileNameCollapsed, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
+				LDreference* initialReferenceInCollapsedSceneFile = new LDreference();
+				LDreference* topLevelReferenceInCollapsedSceneFile = new LDreference(topLevelSceneFileNameCollapsed, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
 				if(!parseFile(topLevelSceneFileNameCollapsed, initialReferenceInCollapsedSceneFile, topLevelReferenceInCollapsedSceneFile, true))
 				{//file does not exist
 					cout << "The file: " << topLevelSceneFileNameCollapsed << " does not exist in the directory" << endl;
@@ -378,11 +378,11 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron* firstInputNeuronInNe
 	}	
 }
 
-void writeExperienceListToFile(char* fileName, Experience* firstExperienceInList)
+void writeExperienceListToFile(char* fileName, ANNexperience* firstExperienceInList)
 {
 	ofstream experienceDataSetOfStreamObject(fileName);
 
-	Experience* currentExperience = firstExperienceInList;
+	ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
 		addExperienceToOFStream(&experienceDataSetOfStreamObject, currentExperience);

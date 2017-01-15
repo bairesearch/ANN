@@ -26,7 +26,7 @@
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -67,8 +67,8 @@ using namespace std;
 #endif
 
 
-Neuron* firstInputNeuronInNetwork;
-Neuron* firstOutputNeuronInNetwork;
+ANNneuron* firstInputNeuronInNetwork;
+ANNneuron* firstOutputNeuronInNetwork;
 
 long numberOfInputNeurons;
 long numberOfOutputNeurons;
@@ -147,8 +147,8 @@ int main(int argc,char* *argv)
 
 	int layerDivergenceType = LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING;
 	double meanLayerDivergenceFactor = DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR;
-	double probabilityNeuronConnectionWithPreviousLayerNeuron = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH;
-	double probabilityNeuronConnectionWithAllPreviousLayersNeurons = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH;
+	double probabilityANNneuronConnectionWithPreviousLayerNeuron = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH;
+	double probabilityANNneuronConnectionWithAllPreviousLayersNeurons = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH;
 	bool useSubnets = false;
 	long maxNumRecursiveSubnets = DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH;
 	double probabilityOfSubnetCreation = DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH;
@@ -224,10 +224,10 @@ int main(int argc,char* *argv)
 		meanLayerDivergenceFactor=getFloatArgument(argc,argv,"-divfactor");
 
 		if (argumentExists(argc,argv,"-con"))
-		probabilityNeuronConnectionWithPreviousLayerNeuron=getFloatArgument(argc,argv,"-con");
+		probabilityANNneuronConnectionWithPreviousLayerNeuron=getFloatArgument(argc,argv,"-con");
 
 		if (argumentExists(argc,argv,"-conall"))
-		probabilityNeuronConnectionWithAllPreviousLayersNeurons=getFloatArgument(argc,argv,"-conall");
+		probabilityANNneuronConnectionWithAllPreviousLayersNeurons=getFloatArgument(argc,argv,"-conall");
 
 		if (argumentExists(argc,argv,"-usesubnets"))
 		useSubnets = true;
@@ -438,7 +438,7 @@ int main(int argc,char* *argv)
 	if(useInputXMLFile)
 	{//create a network and load input dataset file
 		//Neural Network initialisations
-		firstInputNeuronInNetwork = new Neuron();
+		firstInputNeuronInNetwork = new ANNneuron();
 
 		long numberOfInputNeuronsLoaded;
 		long numberOfOutputNeuronsLoaded;
@@ -483,21 +483,21 @@ int main(int argc,char* *argv)
 		bool result = true;
 
 		//Neural Network initialisations
-		firstInputNeuronInNetwork = new Neuron();
+		firstInputNeuronInNetwork = new ANNneuron();
 
 		if(useSubnets)
 		{
-			firstOutputNeuronInNetwork = formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityNeuronConnectionWithPreviousLayerNeuron, probabilityNeuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 
 		}
 		else
 		{
-			firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityNeuronConnectionWithPreviousLayerNeuron, probabilityNeuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 		}
 
 		cout << "subnet Divergence Type = " << layerDivergenceType << endl;
 		cout << "mean Subnet Divergence Factor = " << meanLayerDivergenceFactor << endl;
-		cout << "probability Of Neuron Connection Exclusivity = " << probabilityNeuronConnectionWithPreviousLayerNeuron <<endl;
+		cout << "probability Of ANNneuron Connection Exclusivity = " << probabilityANNneuronConnectionWithPreviousLayerNeuron <<endl;
 		cout << "Probability Of Subnet Creation = " << probabilityOfSubnetCreation <<endl;
 		cout << "use Subnet Dependent Number Of Layers = " << useSubnetDependentNumberOfLayers << endl;
 		cout << "Max Number Recursive Subnets = " << maxNumRecursiveSubnets <<endl;
@@ -567,7 +567,7 @@ bool loadNetworkFromXML()
 	bool result = true;
 
 	//Neural Network initialisations
-	firstInputNeuronInNetwork = new Neuron();
+	firstInputNeuronInNetwork = new ANNneuron();
 
 	long numberOfInputNeuronsLoaded;
 	long numberOfOutputNeuronsLoaded;
@@ -590,7 +590,7 @@ bool createNetwork()
 	bool result = true;
 
 	//Neural Network initialisations
-	firstInputNeuronInNetwork = new Neuron();
+	firstInputNeuronInNetwork = new ANNneuron();
 
 	#ifdef ANN_DEBUG
 	cout << "************************************************************************************" << endl;
@@ -600,12 +600,12 @@ bool createNetwork()
 
 	int layerDivergenceType = 0;
 	double meanLayerDivergenceFactor = 0;
-	double probabilityNeuronConnectionWithPreviousLayerNeuron = 0;
+	double probabilityANNneuronConnectionWithPreviousLayerNeuron = 0;
 	double probabilityOfSubnetCreation = 0;
 	bool useSubnetDependentNumberOfLayers = 0;
 	long maxNumRecursiveSubnets = 0;
 	double numberOfLayers = 0;
-	double probabilityNeuronConnectionWithAllPreviousLayersNeurons = 0;
+	double probabilityANNneuronConnectionWithAllPreviousLayersNeurons = 0;
 
 
 	double answerAsDouble;
@@ -664,13 +664,13 @@ bool createNetwork()
 		cout <<	"\nEnter the probability of neuron having a connection with a previous layer neuron [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;
 		answerAsDouble = atof(answerAsString.c_str());
-		probabilityNeuronConnectionWithPreviousLayerNeuron = answerAsDouble;
+		probabilityANNneuronConnectionWithPreviousLayerNeuron = answerAsDouble;
 
 
 		cout <<	"\nEnter the probability of a neuron having a direct link with all previous layers neurons [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;
 		answerAsDouble = atof(answerAsString.c_str());
-		probabilityNeuronConnectionWithAllPreviousLayersNeurons = answerAsDouble;
+		probabilityANNneuronConnectionWithAllPreviousLayersNeurons = answerAsDouble;
 
 
 		//subnet/ANN specific parameters....
@@ -702,12 +702,12 @@ bool createNetwork()
 				useSubnetDependentNumberOfLayers = false;
 			}
 
-			firstOutputNeuronInNetwork = formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityNeuronConnectionWithPreviousLayerNeuron, probabilityNeuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 
 		}
 		else
 		{
-			firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityNeuronConnectionWithPreviousLayerNeuron, probabilityNeuronConnectionWithAllPreviousLayersNeurons);
+			firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 		}
 	}
 	else
@@ -717,7 +717,7 @@ bool createNetwork()
 
 	cout << "subnet Divergence Type = " << layerDivergenceType << endl;
 	cout << "mean Subnet Divergence Factor = " << meanLayerDivergenceFactor << endl;
-	cout << "probability Of Neuron Connection Exclusivity = " << probabilityNeuronConnectionWithPreviousLayerNeuron <<endl;
+	cout << "probability Of ANNneuron Connection Exclusivity = " << probabilityANNneuronConnectionWithPreviousLayerNeuron <<endl;
 	cout << "Probability Of Subnet Creation = " << probabilityOfSubnetCreation <<endl;
 	cout << "use Subnet Dependent Number Of Layers = " << useSubnetDependentNumberOfLayers << endl;
 	cout << "Max Number Recursive Subnets = " << maxNumRecursiveSubnets <<endl;
@@ -912,7 +912,7 @@ bool mainUI()
 		cout << "6. Output the network as vector graphics (.ldr) \n";
 		cout << " --- \n";
 #ifdef USE_LRRC
-		cout << "7. Generate Experience Data Using LRRC \n";
+		cout << "7. Generate ANNexperience Data Using LRRC \n";
 		cout << " ---\n";
 #endif
 		cout << "0. Exit\n";

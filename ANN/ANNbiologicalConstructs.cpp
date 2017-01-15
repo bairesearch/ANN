@@ -26,7 +26,7 @@
  * File Name: ANNbiologicalConstructs.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
  *			how to record movement information? (Eg recurrent network required) how to get synthetic network to modify its focus; left, right, in, out towards the objects of most interest?
  *******************************************************************************/
@@ -55,24 +55,24 @@ void formNeuralNetworkBiologicalConstructs()
 {
 	//this function is useless without some real data, however it should be pretty clear as to its usage once a data feed can be established (Eg with a robot)
 
-	Neuron* firstNeuronInVisualCortexSubnet = new Neuron();
+	ANNneuron* firstNeuronInVisualCortexSubnet = new ANNneuron();
 	formVisualNetwork(firstNeuronInVisualCortex);
 
-	Neuron* firstNeuronInAudialCentreSubnet = new Neuron();
+	ANNneuron* firstNeuronInAudialCentreSubnet = new ANNneuron();
 	formAudialCentreSubnet(firstNeuronInAudialCentreSubnet);
 
-	Neuron* firstNeuronInSyntheticBrainSubnet = new Neuron();
+	ANNneuron* firstNeuronInSyntheticBrainSubnet = new ANNneuron();
 	formSyntheticBrainSubnet(firstNeuronInSyntheticBrainSubnet, firstNeuronInVisualCortexSubnet, firstNeuronInAudialCentreSubnet);
 
 }
 
-void formVisualNetwork(Neuron* firstNeuronInVisualCortexSubnet)
+void formVisualNetwork(ANNneuron* firstNeuronInVisualCortexSubnet)
 {
-	Neuron* firstNeuronInLeftEyeVisualFieldSubnet = new Neuron();
-	Neuron* firstNeuronInRightEyeVisualFieldSubnet = new Neuron();
-	Neuron* firstNeuronInFocusDistanceSubnet = new Neuron();			//single input neuron identifying the current focus distance of the eyes (effects 1-1 mapping of L/R eye data)
-	Neuron* firstNeuronInParallaxRecognitionSubnet = new Neuron();
-	Neuron* firstNeuronInObjectRecognitionSubnet = new Neuron();
+	ANNneuron* firstNeuronInLeftEyeVisualFieldSubnet = new ANNneuron();
+	ANNneuron* firstNeuronInRightEyeVisualFieldSubnet = new ANNneuron();
+	ANNneuron* firstNeuronInFocusDistanceSubnet = new ANNneuron();			//single input neuron identifying the current focus distance of the eyes (effects 1-1 mapping of L/R eye data)
+	ANNneuron* firstNeuronInParallaxRecognitionSubnet = new ANNneuron();
+	ANNneuron* firstNeuronInObjectRecognitionSubnet = new ANNneuron();
 
 	form2dVisualFieldSubnet(firstNeuronInLeftEyeVisualFieldSubnet, NUMBER_OF_HORIZONTAL_PIXELS_ANNTH, NUMBER_OF_VERTICAL_PIXELS_ANNTH);
 	form2dVisualFieldSubnet(firstNeuronInRightEyeVisualFieldSubnet, NUMBER_OF_HORIZONTAL_PIXELS_ANNTH, NUMBER_OF_VERTICAL_PIXELS_ANNTH);
@@ -84,24 +84,24 @@ void formVisualNetwork(Neuron* firstNeuronInVisualCortexSubnet)
 	//NOW.. to form firstNeuronInVisualCortexSubnet, add the formParallaxRecognitionSubnet and the firstNeuronInObjectRecognitionSubnet in parallel (on a single layer) and have their outputs mixed on the next layer?
 }
 
-void formParallaxRecognitionSubnet(Neuron* firstNeuronInParallaxRecognitionSubnet, Neuron* firstNeuronInLeftEyeVisualFieldSubnet, Neuron* firstNeuronInRightEyeVisualFieldSubnet, Neuron* firstNeuronInFocusDistanceSubnet)
+void formParallaxRecognitionSubnet(ANNneuron* firstNeuronInParallaxRecognitionSubnet, ANNneuron* firstNeuronInLeftEyeVisualFieldSubnet, ANNneuron* firstNeuronInRightEyeVisualFieldSubnet, ANNneuron* firstNeuronInFocusDistanceSubnet)
 {
 	//NOW.. to formParallaxRecognitionSubnet, connect the low level neurons of each eye, if the neural network recognises the same information in all kernels (Eg 10x10 pixel groups) of each eye, it is assumed an object has been focused, and its distance can be determined based upon the current focal distance of the eyes
 }
 
-void formSyntheticBrainSubnet(Neuron* firstNeuronInSyntheticBrainSubnet, Neuron* firstNeuronInVisualCortexSubnet, Neuron* firstNeuronInAudialCentreSubnet)
+void formSyntheticBrainSubnet(ANNneuron* firstNeuronInSyntheticBrainSubnet, ANNneuron* firstNeuronInVisualCortexSubnet, ANNneuron* firstNeuronInAudialCentreSubnet)
 {
 	//NOW.. to formfirstNeuronInSyntheticBrainSubnet, add the firstNeuronInVisualCortexSubnet and firstNeuronInAudialCentreSubnet in parallel (on a single layer) and have their outputs mixed on the next layer
 }
 
-void form2dVisualFieldSubnet(Neuron* firstNeuronInVisualFieldSubnet, long visualArrayWidth, long visualArrayHeight)
+void form2dVisualFieldSubnet(ANNneuron* firstNeuronInVisualFieldSubnet, long visualArrayWidth, long visualArrayHeight)
 {
 	//NOW.. to form2dVisualFieldSubnet, form a network such that each input neuron (cone/rod/pixel) is first connected to neighboring input neurons in the 2D field, enabling contrast recognition and object outline angles to be determined.
 
 	numOutputNeurons >> numInputNeurons
 }
 
-void formObjectRecognitionSubnet(Neuron* firstNeuronInEyeVisualFieldSubnet, long objectRecognitionVisualArrayWidth, long objectRecognitionVisualArrayHeight)
+void formObjectRecognitionSubnet(ANNneuron* firstNeuronInEyeVisualFieldSubnet, long objectRecognitionVisualArrayWidth, long objectRecognitionVisualArrayHeight)
 {
 	//NOW.. to formObjectRecognitionSubnet, take the central section of the visual field, and form a dense complex network
 }

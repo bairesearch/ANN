@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -51,7 +51,7 @@ using namespace std;
 
 
 
-Neuron::Neuron(void)
+ANNneuron::ANNneuron(void)
 {
 	id = 0;		//none = 0
 	orderID = 0;	//none = 0
@@ -88,7 +88,7 @@ Neuron::Neuron(void)
 #endif
 }
 
-Neuron::Neuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
+ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
 {
 	id = IDinit;
 	orderID = orderIDinit;
@@ -124,26 +124,26 @@ Neuron::Neuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDini
 #endif
 }
 
-Neuron::~Neuron(void)
+ANNneuron::~ANNneuron(void)
 {
-	for(vector<NeuronConnection*>::iterator connectionIter = frontNeuronConnectionList.begin(); connectionIter != frontNeuronConnectionList.end(); connectionIter++)
+	for(vector<ANNneuronConnection*>::iterator connectionIter = frontANNneuronConnectionList.begin(); connectionIter != frontANNneuronConnectionList.end(); connectionIter++)
 	{
 		if(*connectionIter != NULL)
 		{
 			#ifdef GIA_FREE_MEMORY_DEBUG
-			//cout << "deleting: frontNeuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
+			//cout << "deleting: frontANNneuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
 			#endif
 			delete* connectionIter;
 		}
 	}
 
 	/*
-	for(vector<NeuronConnection*>::iterator connectionIter = backNeuronConnectionList.begin(); connectionIter != backNeuronConnectionList.end(); connectionIter++)
+	for(vector<ANNneuronConnection*>::iterator connectionIter = backANNneuronConnectionList.begin(); connectionIter != backANNneuronConnectionList.end(); connectionIter++)
 	{
 		if(*connectionIter != NULL)
 		{
 			#ifdef GIA_FREE_MEMORY_DEBUG
-			//cout << "deleting: backNeuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
+			//cout << "deleting: backANNneuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
 			#endif
 			delete* connectionIter;
 		}
@@ -177,7 +177,7 @@ Neuron::~Neuron(void)
 
 
 
-void fillInNeuronIDProperties(Neuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
+void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
 {
 	neuronToUpdate->id = IDinit;
 	neuronToUpdate->orderID = orderIDinit;
@@ -186,7 +186,7 @@ void fillInNeuronIDProperties(Neuron* neuronToUpdate, long IDinit, long orderIDi
 }
 
 
-void copyNeuronKeyProperties(Neuron* neuronToUpdate, Neuron* neuronToCopy)
+void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy)
 {
 	neuronToUpdate->bias = neuronToCopy->bias;
 	neuronToUpdate->storedBias = neuronToCopy->storedBias;
@@ -195,7 +195,7 @@ void copyNeuronKeyProperties(Neuron* neuronToUpdate, Neuron* neuronToCopy)
 	neuronToUpdate->error = neuronToCopy->error;
 }
 
-void averageNeuronKeyProperties(Neuron* neuronToUpdate, Neuron* neuronToCopy)
+void averageNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy)
 {
 	neuronToUpdate->bias = (neuronToUpdate->bias + neuronToCopy->bias)/2.0;
 	neuronToUpdate->storedBias = (neuronToUpdate->storedBias + neuronToCopy->storedBias)/2.0;

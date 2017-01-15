@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -350,8 +350,8 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 
 
 
-	firstExperienceInDataSet = new Experience();
-	Experience* currentExperienceInDataSet = firstExperienceInDataSet;
+	firstExperienceInDataSet = new ANNexperience();
+	ANNexperience* currentExperienceInDataSet = firstExperienceInDataSet;
 
 	for(int i=0;i<maxRows;i++)
 	{
@@ -361,19 +361,19 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		//cout << "currentExperienceInDataSet->classTargetValue = " << currentExperienceInDataSet->classTargetValue << endl;
 		#endif
 
-		ExperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
+		ANNexperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 
 		for(int j=1;j<maxCols;j++)
 		{
 			currentExperienceInputInExperience->inputValue = normalisedInputData[i*maxCols + j];
 				//currentExperienceInputInExperience->inputValue = (normalisedInputData[i*maxCols + j]*2.0 - 1.0) - allows negative input values
 
-			ExperienceInput* newExperienceInput = new ExperienceInput();
+			ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 			currentExperienceInputInExperience->next = newExperienceInput;
 			currentExperienceInputInExperience = currentExperienceInputInExperience->next;
 		}
 
-		Experience* newExperience = new Experience();
+		ANNexperience* newExperience = new ANNexperience();
 		currentExperienceInDataSet->next = newExperience;
 		currentExperienceInDataSet = currentExperienceInDataSet->next;
 	}

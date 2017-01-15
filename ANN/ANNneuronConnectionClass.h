@@ -23,16 +23,16 @@
 
 /*******************************************************************************
  *
- * File Name: ANNneuronConnectionClass.h
+ * File Name: ANNANNneuronConnectionClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments:
  *
  *******************************************************************************/
 
  //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
-//NB when create NeuronList class change all referecnes to "...List->firstFrontNeuronConnectionContainer.." to "...List->neuronReferences"
+//NB when create NeuronList class change all referecnes to "...List->firstFrontANNneuronConnectionContainer.." to "...List->neuronReferences"
 
 /************************************************************ Neural Network Class Definitions* *****************************************************/
 
@@ -40,22 +40,22 @@
 #ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
 #define HEADER_ANN_NEURON_CONNECTION_CLASS
 
-class Neuron;
+class ANNneuron;
 
-class NeuronConnection
+class ANNneuronConnection
 {
 public:
 
 	long frontNeuronID;		//temporary variable required for neural net creation from xml files
 
-	NeuronConnection(void);
-	~NeuronConnection(void);
+	ANNneuronConnection(void);
+	~ANNneuronConnection(void);
 
 	double weight;
 	double storedWeight;
 
-	Neuron* frontNeuron;
-	Neuron* backNeuron;
+	ANNneuron* frontNeuron;
+	ANNneuron* backNeuron;
 };
 
 #endif

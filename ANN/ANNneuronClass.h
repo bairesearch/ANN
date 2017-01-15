@@ -26,13 +26,13 @@
  * File Name: ANNneuronClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7a 27-January-2015
+ * Project Version: 3e7b 27-January-2015
  * Comments:
  *
  *******************************************************************************/
 
  //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
-//NB when create NeuronList class change all referecnes to "...List->firstFrontNeuronConnectionContainer.." to "...List->neuronReferences"
+//NB when create NeuronList class change all referecnes to "...List->firstFrontANNneuronConnectionContainer.." to "...List->neuronReferences"
 
 /************************************************************ Neural Network Class Definitions* *****************************************************/
 
@@ -57,15 +57,15 @@ using namespace std;
 #define DEFAULT_FIRST_INPUT_NEURON_ID 1
 #define DEFAULT_FIRST_OUTPUT_NEURON_ID 2
 
-class NeuronConnection;
+class ANNneuronConnection;
 
-class Neuron
+class ANNneuron
 {
 public:
 
-	Neuron(void);
-	Neuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
-	~Neuron(void);
+	ANNneuron(void);
+	ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
+	~ANNneuron(void);
 
 	long id;
 	long orderID;
@@ -84,38 +84,38 @@ public:
 	long yPosRel;
 	long zPosRel;
 
-	Neuron* nextNeuron;		//OLD: nextNeuronContainer
+	ANNneuron* nextNeuron;		//OLD: nextNeuronContainer
 
 	bool hasFrontLayer;
 	bool hasBackLayer;
-	Neuron* firstNeuronInFrontLayer;
-	Neuron* firstNeuronInBackLayer;
+	ANNneuron* firstNeuronInFrontLayer;
+	ANNneuron* firstNeuronInBackLayer;
 
-	vector<NeuronConnection*> frontNeuronConnectionList;
-	vector<NeuronConnection*> backNeuronConnectionList;
+	vector<ANNneuronConnection*> frontANNneuronConnectionList;
+	vector<ANNneuronConnection*> backANNneuronConnectionList;
 
 #ifdef ANN_ADVANCED
 
 	bool isSubnet;	 	//alternative to being a subnet is being a distinct neuron
 
 	//variables only used by subnets (abstract neurons)
-	Neuron* firstNeuronInBackLayerOfSubnet;	//OLDname: firstNeuronContainerInBackLayerOfSubnet //this variable only used if this object is a subnet, not a neuron - the properties of the neurons in this list are direct copies of those in firstNeuronInFrontLayer
-	Neuron* firstNeuronInFrontLayerOfSubnet;	//OLDname: firstNeuronContainerInFrontLayerOfSubnet
+	ANNneuron* firstNeuronInBackLayerOfSubnet;	//OLDname: firstNeuronContainerInBackLayerOfSubnet //this variable only used if this object is a subnet, not a neuron - the properties of the neurons in this list are direct copies of those in firstNeuronInFrontLayer
+	ANNneuron* firstNeuronInFrontLayerOfSubnet;	//OLDname: firstNeuronContainerInFrontLayerOfSubnet
 
-	bool isInputSubnet;		//input subnets are a special case - they do not require linking of their input neurons with a back layer (firstBackNeuronConnectionContainer)
+	bool isInputSubnet;		//input subnets are a special case - they do not require linking of their input neurons with a back layer (firstBackANNneuronConnectionContainer)
 		//input subnets are used when a network is created with a selection of predefined subnets to cator for the preprocessing of different kinds of input information (Eg visual/audio etc)
-	bool isOutputSubnet;	//output subnets are a special case - they do not require linking of their output neurons with a front layer (firstFrontNeuronConnectionContainer)
+	bool isOutputSubnet;	//output subnets are a special case - they do not require linking of their output neurons with a front layer (firstFrontANNneuronConnectionContainer)
 
 #endif
 };
 
 
-void fillInNeuronIDProperties(Neuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
+void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
 
 
-void copyNeuronKeyProperties(Neuron* neuronToUpdate, Neuron* neuronToCopy);
+void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
 
-void averageNeuronKeyProperties(Neuron* neuronToUpdate, Neuron* neuronToCopy);
+void averageNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
 
 #endif
 
