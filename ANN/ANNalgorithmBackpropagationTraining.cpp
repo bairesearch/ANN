@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a1b 28-April-2016
+ * Project Version: 4a2a 29-April-2016
  * Comments:
  *
  *******************************************************************************/
@@ -104,7 +104,7 @@ void trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneu
 	float finalError;
 	for(int e=0;e < numEpochs;e++)
 	{
-		cout << "Neural Net Training Epoch: " << e << endl;
+		//cout << "Neural Net Training Epoch: " << e << endl;
 
 		ANNexperience* currentExperience = firstExperienceInDataSet;
 
@@ -195,8 +195,8 @@ void trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneu
 	#endif
 
 
-	//cout << "Final training accuracy for e epochs (e det. from 10 fold cross validation) = " << (1.0F-finalError)*100.0F << "%" <<endl;
-	cout << "Final averaged testing accuracy for e epochs (e from 10 fold cross validation) = " << (1.0F-(sumingTestingError/(double)numberOfExperiences))*100.0F << "%" <<endl;
+	//cout << "Final training accuracy for e epochs = " << (1.0F-finalError)*100.0F << "%" <<endl;
+	cout << "Final averaged testing accuracy for e epochs = " << (1.0F-(sumingTestingError/(double)numberOfExperiences))*100.0F << "%" <<endl;
 	#ifdef DEBUG_ANN_VERIFY_REAL_LIFE_ACCURACY_DIAGNOSTICS_CUTOFF
 	cout << "experiencesIncorrectlyDiagnosed = " << experiencesIncorrectlyDiagnosed << endl;
 	cout << "Final Real Life accuracy [OLD] (based upon number of experiences correctly diagnosed) = " << (1.0F-((double)experiencesIncorrectlyDiagnosed/(double)numberOfExperiences))*100.0F << "%" <<endl;

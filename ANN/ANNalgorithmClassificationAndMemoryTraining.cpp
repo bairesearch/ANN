@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationAndMemoryTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a1b 28-April-2016
+ * Project Version: 4a2a 29-April-2016
  * Comments:
  *
  *******************************************************************************/
@@ -51,14 +51,15 @@ void trainNeuralNetworkClassificationAndMemorySimple(ANNneuron* firstInputNeuron
 	Y output neurons
 	*/
 	
+	#ifndef ANN_ALGORITHM_BACKPROPAGATION
 	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
-
+	#endif
+	
 	int numberOfExperiencesTrain = 0; 
 	int numberOfExperiencesTest = 0; 
-		
+			
 	//training
-	ANNexperience* currentExperience;
-	ANNexperience* currentExperienceInFold = firstExperienceInDataSet;
+	ANNexperience* currentExperience = firstExperienceInDataSet;
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
 		resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperience);
@@ -70,18 +71,17 @@ void trainNeuralNetworkClassificationAndMemorySimple(ANNneuron* firstInputNeuron
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTrain++;
 	}
-
-
+	
 	//testing	
 	double testingMemoryResultSum = 0.0;
 	//creates and stores copy of the trained neural network
 	storeNeuralNetworkMemoryTrace(firstInputNeuron);
 	//from start of test segment -> end of test segment
-	currentExperienceInFold = firstExperienceInDataSet;
+	currentExperience = firstExperienceInDataSet;
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
 		restoreNeuralNetworkWithStoredMemoryTrace(firstInputNeuron);
-		resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperienceInFold);
+		resetInputs(firstInputNeuron, numberOfInputNeurons, currentExperience);
 		string testingClassificationResult = "";	//NOT USED
 		double testingMemoryResult = 0.0;
 		ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &testingClassificationResult, &testingMemoryResult);
@@ -89,7 +89,7 @@ void trainNeuralNetworkClassificationAndMemorySimple(ANNneuron* firstInputNeuron
 		#ifdef ANN_DEBUG
 		//cout << "current testingMemoryResult = " << testingMemoryResult << endl;
 		#endif
-		currentExperienceInFold = currentExperienceInFold->next;
+		currentExperience = currentExperience->next;
 		numberOfExperiencesTest++;
 	}
 
@@ -112,7 +112,9 @@ void trainNeuralNetworkClassificationAndMemory(ANNneuron* firstInputNeuron, ANNn
 	Y output neurons
 	*/
 	
+	#ifndef ANN_ALGORITHM_BACKPROPAGATION
 	resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(firstInputNeuron);
+	#endif
 	
 	for(int foldNum=0; foldNum < maxFolds; foldNum++)
 	{
