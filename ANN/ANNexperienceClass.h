@@ -23,7 +23,7 @@
  * File Name: ANNexperienceClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c4c 03-December-2012
+ * Project Version: 3c5a 15-December-2012
  * Comments:
  *
  *******************************************************************************/
