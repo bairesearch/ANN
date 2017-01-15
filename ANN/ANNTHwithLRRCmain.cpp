@@ -23,7 +23,7 @@
  * File Name: ANNTHwithLRRCmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c5b 15-December-2012
+ * Project Version: 3c5c 21-December-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
