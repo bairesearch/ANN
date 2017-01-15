@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a8b 07-June-2016
+ * Project Version: 4a9a 07-June-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -193,11 +193,11 @@ bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwo
 
 
 
-void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool display, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
+void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool displayInOpenGL, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
 {
 	bool result = true;
 
-	if(display)
+	if(displayInOpenGL)
 	{
 		initiateOpenGL(width, height, 0, 0, false);
 	}
@@ -209,7 +209,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 	char* outputFileNameTALcharstar = const_cast<char*>(outputTALFileName.c_str());
 
 	//now output the network to vector graphics file
-	if(useOutputLDRFile || display || allowRaytrace)
+	if(useOutputLDRFile || useOutputSVGFile || displayInOpenGL || allowRaytrace)
 	{
 		//now output the vector graphics file to image file via ray tracer
 
@@ -224,13 +224,14 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 
 		int numSpritesAdded = 0;
 
-		if(!ANNcreateNeuralNetworkReferenceLists(outputFileNameLDRcharstar, initialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
+		if(!ANNcreateNeuralNetworkReferenceLists(outputFileNameLDRcharstar, initialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile, useOutputLDRFile))
 		{
 			result = false;
 		}
 
 		if(useOutputLDRFile)
 		{
+			cout << "LDR graphics file name = " << outputLDRFileName << endl;
 			if(!ANNcreateNeuralNetworkSceneFilesFromReferenceLists(outputFileNameLDRcharstar, addSprites, initialReference, numSpritesAdded))
 			{
 				result = false;
@@ -239,6 +240,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 
 		if(useOutputSVGFile)
 		{
+			cout << "SVG graphics file name = " << outputSVGFileName << endl;
 			if(!writeSVGfile(outputFileNameSVGcharstar, firstTagInSVGFile))
 			{
 				result = false;
@@ -249,7 +251,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 		char* charstarsceneFileNameForRayTracing;
 		charstarsceneFileNameForRayTracing = outputFileNameLDRcharstar;
 
-		if(display || allowRaytrace)
+		if(displayInOpenGL || allowRaytrace)
 		{
 			// OLD; if using RT, do not ray trace sprites as the RT raytracer is not optimised - use povray instead
 			// NEW; use ANNrules.xml to remove sprites for RT speed
@@ -302,7 +304,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 						LDreference* initialReference = new LDreference();
 
 						int numSpritesAdded = 0;
-						if(!ANNcreateNeuralNetworkReferenceLists(outputFileNameLDRcharstar, initialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
+						if(!ANNcreateNeuralNetworkReferenceLists(outputFileNameLDRcharstar, initialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile, useOutputLDRFile))
 						{
 							result = false;
 						}
@@ -352,7 +354,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 				#endif
 			}
 
-			if(display)
+			if(displayInOpenGL)
 			{
 				char* topLevelSceneFileNameCollapsed = "sceneCollapsedForOpenGLDisplay.ldr";
 				write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFileForRayTracing);
@@ -378,6 +380,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 				if(useOutputPPMFile)
 				{
+					cout << "PPM graphics file name = " << outputPPMFileName << endl;
 					generatePixmapFromRGBmap(displayFileNamePPMcharstar, width, height, rgbMap);
 				}
 				#endif
@@ -385,7 +388,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 		}
 	}
 
-	if(display)
+	if(displayInOpenGL)
 	{
 		exitOpenGL();
 	}
