@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a10d 07-June-2016
+ * Project Version: 4a11a 09-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -98,7 +98,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 
 		//OLD: YET TO DO: for stages 1->3; update ideal values
 		
-		int createIntermediaryNeuronsStage = 1;
+		int createIntermediaryNeuronsStage = ANN_ALGORITHM_CLASSIFICATION_NETWORK_STAGE_1;
 		currentNeuron = firstInputNeuron;
 		while(currentNeuron->nextNeuron != NULL)
 		{	
@@ -143,7 +143,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 				
 		if(!foundCategoryNeuronsThatUseAllInputs)
 		{
-			createIntermediaryNeuronsStage = 2;
+			createIntermediaryNeuronsStage = ANN_ALGORITHM_CLASSIFICATION_NETWORK_STAGE_2;
 			ANNneuron* currentNeuron = firstInputNeuron;
 			while(currentNeuron->nextNeuron != NULL)
 			{	
@@ -172,7 +172,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 				
 		if(!foundCategoryNeuronsThatUseAllInputs)
 		{
-			createIntermediaryNeuronsStage = 3;
+			createIntermediaryNeuronsStage = ANN_ALGORITHM_CLASSIFICATION_NETWORK_STAGE_3;
 			ANNneuron* currentNeuron = firstInputNeuron;
 			while(currentNeuron->nextNeuron != NULL)
 			{	
