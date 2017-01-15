@@ -26,7 +26,7 @@
  * File Name: ANNANNneuronConnectionClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3b 02-May-2016
+ * Project Version: 4a3c 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -49,7 +49,7 @@ ANNneuronConnection::ANNneuronConnection(void)
 	#endif
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	idealValue = 0.0;	//this value must be initialised explicity
-	numberOfTimesConnectionHasBeenAccessedOrConnectionStrength = 1;
+	//numberOfTimesConnectionHasBeenAccessedOrConnectionStrength = 1;
 	#endif
 	
 	frontNeuron = NULL;

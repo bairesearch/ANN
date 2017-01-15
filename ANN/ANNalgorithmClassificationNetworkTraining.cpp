@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3b 02-May-2016
+ * Project Version: 4a3c 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -234,6 +234,7 @@ void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron)
 						connectionIter3 = inputNeuron->frontANNneuronConnectionList.remove(connectionIter3);
 					}
 				}
+				delete currentANNneuronConnection2;
 			}
 			delete frontNeuron;	
 		}
@@ -362,7 +363,7 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 					{
 						connectNeurons(experienceClassificationTopLevelCategoryNeuron, intermediaryCategoryNeuron);	
 						#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
-						intermediaryCategoryNeuron->memoryTrace = frontNeuron->memoryTrace;
+						intermediaryCategoryNeuron->memoryTrace = frontNeuron->memoryTrace + 1; //CHECKTHIS
 						neuronUsageList.insert(pair<int, ANNneuron*>(intermediaryCategoryNeuron->memoryTrace, intermediaryCategoryNeuron));
 						#endif
 				
@@ -387,10 +388,18 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 	}
 }
 
+/*
 void updateConnectionIdealValue(ANNneuronConnection* connection)
 {
-	connection->idealValue = connection->idealValue + connection->backNeuron->output/(connection->numberOfTimesConnectionHasBeenAccessedOrConnectionStrength);
+	connection->idealValue = connection->idealValue + (connection->backNeuron->output - connection->idealValue)/(connection->numberOfTimesConnectionHasBeenAccessedOrConnectionStrength);
 	connection->numberOfTimesConnectionHasBeenAccessedOrConnectionStrength = connection->numberOfTimesConnectionHasBeenAccessedOrConnectionStrength + 1;
+}
+*/
+
+void updateConnectionIdealValue(ANNneuronConnection* connection)
+{
+	connection->idealValue = connection->idealValue + (connection->backNeuron->output - connection->idealValue)/(connection->frontNeuron->memoryTrace); //nb this will evaluate to output if ideal value is 0 and memory trace is 1
+	//connection->frontNeuron->memoryTrace = connection->frontNeuron->memoryTrace + 1;	//this is done in findCategoriesForExperience
 }
 
 
