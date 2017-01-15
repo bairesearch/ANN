@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a5a 06-June-2016
+ * Project Version: 4a6a 06-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -37,6 +37,10 @@
 #include "ANNalgorithmClassificationNetworkTraining.h"
 #include "ANNalgorithmClassificationNetworkUpdate.h"
 #include "ANNdata.h"
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
+#include "ANNdisplay.h"
+#include "SHAREDvars.h"
+#endif
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
@@ -301,6 +305,33 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		{
 			checkRobustnessOfIdealValues(currentNeuron);
 			currentNeuron = currentNeuron->nextNeuron;
+		}
+		#endif
+
+		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
+		bool addSprites = true;
+		bool allowRaytrace = false;
+		bool display = false;		//true
+		bool useOutputLDRFile = true;
+		bool useOutputPPMFile = false;	//true
+		bool useOutputSVGFile = true;
+		string indexString = convertIntToString(experienceNum);
+		string frameFileNameBase = "neuralNetFrame" + indexString;
+		string outputLDRFileName = frameFileNameBase + ".ldr";
+		string outputSVGFileName = frameFileNameBase + ".svg";
+		string outputPPMFileName = frameFileNameBase + ".ppm";
+		string outputPPMFileNameRaytraced = ""; 
+		string outputTALFileName = "";
+		int rasterImageWidth = 1024;
+		int rasterImageHeight = 768;
+		cout << "frameFileNameBase = " << frameFileNameBase << endl;
+		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, display, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
+		
+		
+		if(experienceNum == 3)
+		{
+			cout << "ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK debug: exiting early" << endl;
+			exit(0);
 		}
 		#endif
 

@@ -26,7 +26,7 @@
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 4a5a 06-June-2016
+ * Project Version: 4a6a 06-June-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -244,6 +244,10 @@ bool ANNcreateNeuralNetworkReferenceLists(string sceneFileName, LDreference* ini
 
 	ANNsearchNeuralNetworkAndCreateReferences(firstNeuronInNetwork, initialReference, &eyeCoords, numSpritesAdded, sceneFileName, false, NULL, addSprites, writeSVG, currentTagSVG);
 
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	ANNsearchNeuralNetworkAndCreateReferencesReset(firstNeuronInNetwork);
+	#endif
+		
 	return result;
 }
 
@@ -420,6 +424,33 @@ LDreference* ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* firstNeuronInL
 	return currentListReference;
 
 }
+
+
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+void ANNsearchNeuralNetworkAndCreateReferencesReset(ANNneuron* firstNeuronInLayer)
+{	
+	ANNneuron* currentNeuron = firstNeuronInLayer;
+	while(currentNeuron->nextNeuron != NULL)
+	{		
+		if(currentNeuron->printed)
+		{
+			currentNeuron->printed = false;
+			if(currentNeuron->hasFrontLayer)
+			{
+				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
+				{
+					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
+					ANNsearchNeuralNetworkAndCreateReferencesReset(currentANNneuronConnection->frontNeuron);
+				}
+			}
+		}
+		
+		currentNeuron = currentNeuron->nextNeuron;
+	}
+
+}
+#endif
+
 
 
 
