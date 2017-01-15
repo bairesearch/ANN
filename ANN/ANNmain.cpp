@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a6b 06-June-2016
+ * Project Version: 4a7a 07-June-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -44,7 +44,7 @@
 #endif
 #include "ANNparser.h"
 #include "ANNxmlConversion.h"
-#include "ANNsprite.h"
+#include "ANNdraw.h"
 #include "ANNdisplay.h"
 
 #include "ANNdata.h"
@@ -371,7 +371,7 @@ int main(int argc,char* *argv)
 		}
 		if (argumentExists(argc,argv,"-version"))
 		{
-			cout << "Project Version: 3c4b 01-December-2012" << endl;
+			cout << "Project Version: 4a7a 07-June-2016" << endl;
 			exit(1);
 		}
 	}

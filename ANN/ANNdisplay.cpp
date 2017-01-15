@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a6b 06-June-2016
+ * Project Version: 4a7a 07-June-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -42,7 +42,7 @@
 #include "ANNalgorithmClassificationNetworkTraining.h"
 #endif
 #include "ANNxmlConversion.h"
-#include "ANNsprite.h"
+#include "ANNdraw.h"
 #include "ANNalgorithmBackpropagationUpdate.h"
 #include "LDparser.h"
 #include "LDreferenceManipulation.h"
