@@ -20,23 +20,21 @@
  
 /*******************************************************************************
  *
- * File Name: ANNBiologicalConstructs.h
+ * File Name: ANNparser.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3c3a 16-November-2012
- * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
+ * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
-#ifndef HEADER_ANN_BIOLOGICAL_CONSTRUCTS
-#define HEADER_ANN_BIOLOGICAL_CONSTRUCTS
+#ifndef HEADER_ANN_PARSER
+#define HEADER_ANN_PARSER
 
-#define NUMBER_OF_HORIZONTAL_PIXELS_ANNTH (1000)
-#define NUMBER_OF_VERTICAL_PIXELS_ANNTH (1000)
+//#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
 
-#define NUMBER_OF_OBJECT_RECOGNITION_HORIZONTAL_PIXELS_ANNTH (200)
-#define NUMBER_OF_OBJECT_RECOGNITION_VERTICAL_PIXELS_ANNTH (200)
 
-void formNeuralNetworkBiologicalConstructs();
+
+void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile);
 
 #endif

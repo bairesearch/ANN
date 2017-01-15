@@ -20,7 +20,7 @@
  
 /*******************************************************************************
  *
- * File Name: ANNParser.h
+ * File Name: ANNdata.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3c3a 16-November-2012
@@ -28,13 +28,21 @@
  *
  *******************************************************************************/
 
-#ifndef HEADER_ANN_PARSER
-#define HEADER_ANN_PARSER
 
-//#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
+#include "ANNexperienceClass.h"
+
+#ifndef HEADER_ANN_DATA
+#define HEADER_ANN_DATA
 
 
 
-void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile);
+
+
+//for specific Thyroid data {215lines, 6 columns - comma delimited}
+
+extern long numInputNeurons;
+extern long numOutputNeurons;
+extern long numExperiences;
+extern Experience * firstExperienceInDataSet;
 
 #endif

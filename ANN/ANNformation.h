@@ -20,7 +20,7 @@
  
 /*******************************************************************************
  *
- * File Name: ANNFormation.h
+ * File Name: ANNformation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3c3a 16-November-2012
@@ -48,9 +48,9 @@
 #define DEFAULT_USE_SUBNET_DEPENDENT_NUMLAYERS_ANNTH (false)					//a boolean value which determines whether or not the number of layers generated for a subnet of level x with a given number of input and output neurons is dependent upon the subnet level x
 
 	//subnet divergence parameters
-#define LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING (1)									//see ANNFormation.cpp for diagramatic description
-#define LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_THEN_CONVERGING (2)					//see ANNFormation.cpp for diagramatic description
-#define LAYER_DIVERGENCE_TYPE_NONLINEAR_DIVERGING_THEN_CONVERGING (3)				//see ANNFormation.cpp for diagramatic description
+#define LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING (1)									//see ANNformation.cpp for diagramatic description
+#define LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_THEN_CONVERGING (2)					//see ANNformation.cpp for diagramatic description
+#define LAYER_DIVERGENCE_TYPE_NONLINEAR_DIVERGING_THEN_CONVERGING (3)				//see ANNformation.cpp for diagramatic description
 #define LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING (4)
 #define LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D (5)
 #define LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS (6)
@@ -69,10 +69,10 @@ NeuronContainer * formNeuralNetWithOptimisedProperties(NeuronContainer * firstIn
 	#ifdef ANN_ADVANCED
 	NeuronContainer * formAdvancedNeuralNetwork(NeuronContainer * firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, bool useSubnetDependentNumberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons);
 	#endif
-		NeuronContainer * formNondistinctLayeredNeuralNetwork(NeuronContainer * firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons);
+		NeuronContainer * formNonDistinctLayeredNeuralNetwork(NeuronContainer * firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons);
 			void createInputLayerInNeuralNetwork(NeuronContainer * firstInputNeuronInNetwork, long numberOfInputNeurons);
 			void createInputLayerInNeuralNetwork2D(NeuronContainer * firstInputNeuronInNetwork, long numberOfInputNeurons);
-			NeuronContainer * fillNondistinctHiddenLayer(NeuronContainer * firstNeuronInCurrentLayer, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfNeuronsInCurrentLayer, long currentNumberOfLayers, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long currentNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, NeuronContainer * firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons);
+			NeuronContainer * fillNonDistinctHiddenLayer(NeuronContainer * firstNeuronInCurrentLayer, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfNeuronsInCurrentLayer, long currentNumberOfLayers, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long currentNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, NeuronContainer * firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons);
 				void createNewFrontLayer(NeuronContainer * firstNeuronInCurrentLayer, NeuronContainer * firstNeuronInNewFrontLayer, long numberOfNeuronsInNewFrontLayer, long currentNumberOfLayers, long numberOfLayers);
 				void linkNewFrontLayerWithPreviousLayers(NeuronContainer * firstNeuronInCurrentLayer, NeuronContainer * firstNeuronInNewFrontLayer, double probabilityNeuronConnectionWithPreviousLayerNeuron, NeuronContainer * firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons, long numberOfInputNeurons, long numberOfOutputNeurons, long currentNumberOfLayers);
 				void linkNewFrontLayerWithPreviousLayers2D(NeuronContainer * firstNeuronInCurrentLayer, NeuronContainer * firstNeuronInNewFrontLayer, double probabilityNeuronConnectionWithPreviousLayerNeuron, NeuronContainer * firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons, long numberOfInputNeurons, long numberOfOutputNeurons, long currentNumberOfLayers, long numberOfLayers, long numberOfNeuronsInCurrentLayer, long numberOfNeuronsInNewFrontLayer, int layerDivergenceType);
@@ -83,7 +83,7 @@ NeuronContainer * formNeuralNetWithOptimisedProperties(NeuronContainer * firstIn
 long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfNeuronsInCurrentLayer, long currentNumberOfLayers, long numberOfLayers, double meanLayerDivergenceFactor, int layerDivergenceType);
 
 
-double calculateDistanceBetween2Points(double positionXOfUnit1, double positionXOfUnit2, double positionYOfUnit1, double positionYOfUnit2);
+double calculateDistanceBetween2Points(double xPositionOfUnit1, double xPositionOfUnit2, double yPositionOfUnit1, double yPositionOfUnit2);
 
 
 

@@ -40,7 +40,7 @@
 
 #define ANN_ADVANCED
 //#define ANN_DEBUG
-//#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS	//must also be defined in ANNParser.cpp
+//#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS	//must also be defined in ANNparser.cpp
 #ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
 	#define ANN_DEBUG
 #endif
@@ -57,7 +57,7 @@ class Neuron
 public:
 
 	Neuron(void);
-	Neuron(long IDInit, long orderIDInit, long layerIDInit, long subnetIDInit);
+	Neuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
 	~Neuron(void);
 
 	long id;
@@ -113,7 +113,7 @@ class NeuronContainer
 public:
 
 	NeuronContainer(void);
-	NeuronContainer(long IDInit, long orderIDInit, long layerIDInit, long subnetIDInit);
+	NeuronContainer(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
 	~NeuronContainer(void);
 
 	Neuron * neuron;
@@ -157,7 +157,7 @@ public:
 
 
 
-void fillInNeuronIDProperties(Neuron * neuronToUpdate, long IDInit, long orderIDInit, long layerIDInit, long subnetIDInit);
+void fillInNeuronIDProperties(Neuron * neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
 
 
 void copyNeuronKeyProperties(Neuron * neuronToUpdate, Neuron * neuronToCopy);

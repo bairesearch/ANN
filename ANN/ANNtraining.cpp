@@ -20,7 +20,7 @@
  
 /*******************************************************************************
  *
- * File Name: ANNTraining.cpp
+ * File Name: ANNtraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3c3a 16-November-2012
@@ -43,11 +43,11 @@ using namespace std;
 
 #include "ANNglobalDefs.h"
 #include "ANNneuronClass.h"
-#include "ANNTraining.h"
-#include "ANNUpdateAlgorithm.h"
-#include "ANNFormation.h"
-#include "ANNParser.h"
-#include "ANNData.h"
+#include "ANNtraining.h"
+#include "ANNupdateAlgorithm.h"
+#include "ANNformation.h"
+#include "ANNparser.h"
+#include "ANNdata.h"
 
 
 
@@ -592,9 +592,9 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 
 
 #ifdef TEMP_OUTPUT_HIGH_ERROR_EXPERIENCES
-	ofstream experienceDataSetOFStreamObject("highErrorExperiences.data");
-	addExperiencesToOFStream(&experienceDataSetOFStreamObject, firstExperienceInHighErrorExperienceList);
-	experienceDataSetOFStreamObject.close();
+	ofstream experienceDataSetOfStreamObject("highErrorExperiences.data");
+	addExperiencesToOFStream(&experienceDataSetOfStreamObject, firstExperienceInHighErrorExperienceList);
+	experienceDataSetOfStreamObject.close();
 #endif
 
 	//cout << "Final training accuracy for e epochs (e det. from 10 fold cross validation) = " << (1.0F-finalError)*100.0F << "%" <<endl;

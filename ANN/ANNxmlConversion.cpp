@@ -20,7 +20,7 @@
  
 /*******************************************************************************
  *
- * File Name: ANNXMLconversion.c
+ * File Name: ANNxmlConversion.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3c3a 16-November-2012
@@ -30,7 +30,7 @@
 
 
 
-#include "ANNXMLconversion.h"
+#include "ANNxmlConversion.h"
 
 //this function works and no longer needs to be tested
 #ifdef NN_XML_DEBUG
@@ -38,15 +38,15 @@ bool testReadNetXMLFile()
 {
 	bool result = true;
 
-	NeuronContainer * firstInputNeuronInNetwork = new NeuronContainer();	//the firstInputNeuronInNetwork object must be initialised here (in ANNXMLconversion.cpp scope). if it is initialised in another .cpp it will be come corrupted,
+	NeuronContainer * firstInputNeuronInNetwork = new NeuronContainer();	//the firstInputNeuronInNetwork object must be initialised here (in ANNxmlConversion.cpp scope). if it is initialised in another .cpp it will be come corrupted,
 
-	if(!readNetXMLFile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
+	if(!readNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
 	#define TEMP_NET_XML_FILE_NAME1 "tempnet1.xml"
-	if(!writeNetXMLFile(TEMP_NET_XML_FILE_NAME1, firstInputNeuronInNetwork))
+	if(!writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
@@ -57,19 +57,19 @@ bool testReadNetXMLFile2(NeuronContainer * firstInputNeuronInNetwork)
 {
 	bool result = true;
 
-	if(!writeNetXMLFile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
+	if(!writeNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
 	NeuronContainer * tempFirstInputNeuronInNetwork = new NeuronContainer();
-	if(!readNetXMLFile(NET_XML_FILE_NAME, tempFirstInputNeuronInNetwork))
+	if(!readNetXMLfile(NET_XML_FILE_NAME, tempFirstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
 	#define TEMP_NET_XML_FILE_NAME1 "tempnet1.xml"
-	if(!writeNetXMLFile(TEMP_NET_XML_FILE_NAME1, tempFirstInputNeuronInNetwork))
+	if(!writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, tempFirstInputNeuronInNetwork))
 	{
 		result = false;
 	}
@@ -78,11 +78,11 @@ bool testReadNetXMLFile2(NeuronContainer * firstInputNeuronInNetwork)
 
 #endif
 
-NeuronContainer * readNetXMLFileAndRecordFormationVariables(string xmlFileName, NeuronContainer * firstInputNeuronInNetwork, long * numberOfInputNeurons, long * numberOfOutputNeurons)
+NeuronContainer * readNetXMLfileAndRecordFormationVariables(string xmlFileName, NeuronContainer * firstInputNeuronInNetwork, long * numberOfInputNeurons, long * numberOfOutputNeurons)
 {
 	NeuronContainer * firstOutputNeuronInNetwork;
 
-	readNetXMLFile(xmlFileName, firstInputNeuronInNetwork);
+	readNetXMLfile(xmlFileName, firstInputNeuronInNetwork);
 
 	firstOutputNeuronInNetwork = recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons);
 
@@ -134,13 +134,13 @@ NeuronContainer * recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(NeuronC
 }
 
 
-bool readNetXMLFile(string xmlFileName, NeuronContainer * firstInputNeuronInNetwork)
+bool readNetXMLfile(string xmlFileName, NeuronContainer * firstInputNeuronInNetwork)
 {
 	bool result = true;
 
- 	XMLParserTag * firstTagInXMLFile = new XMLParserTag();	//the firstTagInXMLFile object must be initialised here (in ANNXMLconversion.cpp scope). if it is initialised in XMLParserClass.cpp else it will be come corrupted,
+ 	XMLparserTag * firstTagInXMLFile = new XMLparserTag();	//the firstTagInXMLFile object must be initialised here (in ANNxmlConversion.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
 
- 	if(!readXMLFile(xmlFileName, firstTagInXMLFile))
+ 	if(!readXMLfile(xmlFileName, firstTagInXMLFile))
  	{
 		result = false;
 	}
@@ -157,36 +157,36 @@ bool readNetXMLFile(string xmlFileName, NeuronContainer * firstInputNeuronInNetw
 	return result;
 }
 
-bool writeNetXMLFile(string xmlFileName, NeuronContainer * firstInputNeuronInNetwork)
+bool writeNetXMLfile(string xmlFileName, NeuronContainer * firstInputNeuronInNetwork)
 {
 	bool result = true;
 
- 	XMLParserTag * firstTagInXMLFile = new XMLParserTag();	//the firstTagInXMLFile object must be initialised here (in ANNXMLconversion.cpp scope). if it is initialised in XMLParserClass.cpp else it will be come corrupted,
+ 	XMLparserTag * firstTagInXMLFile = new XMLparserTag();	//the firstTagInXMLFile object must be initialised here (in ANNxmlConversion.cpp scope). if it is initialised in XMLparserClass.cpp else it will be come corrupted,
 
-	XMLParserTag * currentTagL0 = firstTagInXMLFile;
+	XMLparserTag * currentTagL0 = firstTagInXMLFile;
 	currentTagL0->name = NET_XML_TAG_network;
-	XMLParserTag * newTag0 = new XMLParserTag();	//had to add a null tag
+	XMLparserTag * newTag0 = new XMLparserTag();	//had to add a null tag
 	currentTagL0->nextTag = newTag0;
 
-	XMLParserTag * firstTagL1 = new XMLParserTag();
+	XMLparserTag * firstTagL1 = new XMLparserTag();
 	currentTagL0->firstLowerLevelTag = firstTagL1;
-	XMLParserTag * currentTagL1 = currentTagL0->firstLowerLevelTag;
-	XMLParserTag * newTag1 = new XMLParserTag();	//had to add a null tag
+	XMLparserTag * currentTagL1 = currentTagL0->firstLowerLevelTag;
+	XMLparserTag * newTag1 = new XMLparserTag();	//had to add a null tag
 	currentTagL1->nextTag = newTag1;
 
 	currentTagL1->name = NET_XML_TAG_subnet;
-	XMLParserTag * firstTagL2 = new XMLParserTag();
+	XMLparserTag * firstTagL2 = new XMLparserTag();
 	currentTagL1->firstLowerLevelTag = firstTagL2;
-	XMLParserTag * currentTagL2 = currentTagL1->firstLowerLevelTag;
-	XMLParserTag * newTag2 = new XMLParserTag();	//had to add a null tag
+	XMLparserTag * currentTagL2 = currentTagL1->firstLowerLevelTag;
+	XMLparserTag * newTag2 = new XMLparserTag();	//had to add a null tag
 	currentTagL2->nextTag = newTag2;
 
-	if(!generateXMLTagListBasedUponSubnet(currentTagL1->firstLowerLevelTag, firstInputNeuronInNetwork))
+	if(!generateXMLtagListBasedUponSubnet(currentTagL1->firstLowerLevelTag, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
- 	if(!writeXMLFile(xmlFileName, firstTagInXMLFile))
+ 	if(!writeXMLfile(xmlFileName, firstTagInXMLFile))
  	{
 		result = false;
 	}
@@ -197,11 +197,11 @@ bool writeNetXMLFile(string xmlFileName, NeuronContainer * firstInputNeuronInNet
 }
 
 
-bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronContainer * firstNeuronContainerInSubnet)
+bool generateXMLtagListBasedUponSubnet(XMLparserTag * firstTagInSubnet, NeuronContainer * firstNeuronContainerInSubnet)
 {
 	bool result = true;
 
-	XMLParserTag * currentTagL0 = firstTagInSubnet;
+	XMLparserTag * currentTagL0 = firstTagInSubnet;
 	NeuronContainer * currentNeuron = firstNeuronContainerInSubnet;
 
 	bool stillMoreLayers = true;
@@ -212,13 +212,13 @@ bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronCo
 		NeuronContainer * firstNeuronInLayer = currentNeuron;
 
 		currentTagL0->name = NET_XML_TAG_layer;
-		XMLParserTag * newTag0 = new XMLParserTag();	//had to add a null tag
+		XMLparserTag * newTag0 = new XMLparserTag();	//had to add a null tag
 		currentTagL0->nextTag = newTag0;
 
-		XMLParserTag * firstTagL1 = new XMLParserTag();
+		XMLparserTag * firstTagL1 = new XMLparserTag();
 		currentTagL0->firstLowerLevelTag = firstTagL1;
-		XMLParserTag * currentTagL1 = currentTagL0->firstLowerLevelTag;
-		XMLParserTag * newTag1 = new XMLParserTag();	//had to add a null tag
+		XMLparserTag * currentTagL1 = currentTagL0->firstLowerLevelTag;
+		XMLparserTag * newTag1 = new XMLparserTag();	//had to add a null tag
 		currentTagL1->nextTag = newTag1;
 
 		while(currentNeuron->nextNeuronContainer != NULL)
@@ -227,9 +227,9 @@ bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronCo
 
 			//generate neuron connection tag
 			currentTagL1->name = NET_XML_TAG_neuronContainer;
-			XMLParserTag * firstTagL2 = new XMLParserTag();
+			XMLparserTag * firstTagL2 = new XMLparserTag();
 			currentTagL1->firstLowerLevelTag = firstTagL2;
-			XMLParserTag * currentTagL2 = currentTagL1->firstLowerLevelTag;
+			XMLparserTag * currentTagL2 = currentTagL1->firstLowerLevelTag;
 
 			//generate neuron tag
 			currentTagL2->name = NET_XML_TAG_neuron;
@@ -337,7 +337,7 @@ bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronCo
 			}
 		#endif
 
-			XMLParserTag * newTag = new XMLParserTag();
+			XMLparserTag * newTag = new XMLparserTag();
 			currentTagL2->nextTag = newTag;
 			currentTagL2 = currentTagL2->nextTag;
 
@@ -345,9 +345,9 @@ bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronCo
 			if(currentNeuron -> firstFrontNeuronConnectionContainer -> nextNeuronConnectionContainer != NULL)
 			{
 				currentTagL2->name = NET_XML_TAG_forwardNeuronConnectionsList;
-				XMLParserTag * firstTagL3 = new XMLParserTag();
+				XMLparserTag * firstTagL3 = new XMLparserTag();
 				currentTagL2->firstLowerLevelTag = firstTagL3;
-				XMLParserTag * currentTagL3 = currentTagL2->firstLowerLevelTag;
+				XMLparserTag * currentTagL3 = currentTagL2->firstLowerLevelTag;
 				NeuronConnectionContainer * currentNeuronConnectionContainer = currentNeuron->firstFrontNeuronConnectionContainer;
 				while(currentNeuronConnectionContainer -> nextNeuronConnectionContainer != NULL)
 				{
@@ -374,13 +374,13 @@ bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronCo
 					//currentAttribute = currentAttribute->nextAttribute;
 				#endif
 
-					XMLParserTag * newTag = new XMLParserTag();
+					XMLparserTag * newTag = new XMLparserTag();
 					currentTagL3->nextTag = newTag;
 					currentTagL3 = currentTagL3->nextTag;
 
 					currentNeuronConnectionContainer = currentNeuronConnectionContainer -> nextNeuronConnectionContainer;
 				}
-				XMLParserTag * newTag = new XMLParserTag();
+				XMLparserTag * newTag = new XMLparserTag();
 				currentTagL2->nextTag = newTag;
 			}
 
@@ -392,20 +392,20 @@ bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronCo
 			{
 				currentTagL2->name = NET_XML_TAG_subnet;
 
-				XMLParserTag * newTag1 = new XMLParserTag();
+				XMLparserTag * newTag1 = new XMLparserTag();
 				currentTagL2->firstLowerLevelTag = newTag1;
-				if(!generateXMLTagListBasedUponSubnet(currentTagL2->firstLowerLevelTag, currentNeuron->firstNeuronContainerInBackLayerOfSubnet))
+				if(!generateXMLtagListBasedUponSubnet(currentTagL2->firstLowerLevelTag, currentNeuron->firstNeuronContainerInBackLayerOfSubnet))
 				{
 					result = false;
 				}
 
-				XMLParserTag * newTag = new XMLParserTag();
+				XMLparserTag * newTag = new XMLparserTag();
 				currentTagL2->nextTag = newTag;
 				//currentTagL2 = currentTagL2->nextTag;
 			}
 		#endif
 
-			XMLParserTag * newTag2 = new XMLParserTag();
+			XMLparserTag * newTag2 = new XMLparserTag();
 			currentTagL1->nextTag = newTag2;
 			currentTagL1 = currentTagL1->nextTag;
 
@@ -421,7 +421,7 @@ bool generateXMLTagListBasedUponSubnet(XMLParserTag * firstTagInSubnet, NeuronCo
 			stillMoreLayers = false;
 		}
 
-		XMLParserTag * newTag = new XMLParserTag();
+		XMLparserTag * newTag = new XMLparserTag();
 		currentTagL0->nextTag = newTag;
 		currentTagL0 = currentTagL0->nextTag;
 	}
@@ -513,14 +513,14 @@ bool linkLayerXNeuronsBasedUponFrontNeuronConnectionContainerListNeuronIDs(Neuro
 }
 
 
-NeuronContainer * findNeuronContainer(NeuronContainer * firstNeuronContainerInLayer, long neuronIDToFind, bool * result)
+NeuronContainer * findNeuronContainer(NeuronContainer * firstNeuronContainerInLayer, long neuronIDtoFind, bool * result)
 {
 	NeuronContainer * foundNeuronContainer = NULL;
 
 	NeuronContainer * currentNeuron = firstNeuronContainerInLayer;
 	while(currentNeuron->nextNeuronContainer != NULL)
 	{
-		if(currentNeuron->neuron->id == neuronIDToFind)
+		if(currentNeuron->neuron->id == neuronIDtoFind)
 		{
 			//cout << "currentNeuron->neuron->id  = " << currentNeuron->neuron->id << endl;
 			*result = true;
@@ -531,7 +531,7 @@ NeuronContainer * findNeuronContainer(NeuronContainer * firstNeuronContainerInLa
 		{
 			bool tempResult = false;
 			NeuronContainer * tempFoundNeuronContainer;
-			tempFoundNeuronContainer = findNeuronContainer(currentNeuron->firstNeuronContainerInBackLayerOfSubnet, neuronIDToFind, &tempResult);
+			tempFoundNeuronContainer = findNeuronContainer(currentNeuron->firstNeuronContainerInBackLayerOfSubnet, neuronIDtoFind, &tempResult);
 			if(tempResult)
 			{
 				*result = true;
@@ -546,7 +546,7 @@ NeuronContainer * findNeuronContainer(NeuronContainer * firstNeuronContainerInLa
 	{
 		bool tempResult = false;
 		NeuronContainer * tempFoundNeuronContainer;
-		tempFoundNeuronContainer = findNeuronContainer(firstNeuronContainerInLayer->firstNeuronInFrontLayer, neuronIDToFind, &tempResult);
+		tempFoundNeuronContainer = findNeuronContainer(firstNeuronContainerInLayer->firstNeuronInFrontLayer, neuronIDtoFind, &tempResult);
 		if(tempResult)
 		{
 			*result = true;
@@ -559,11 +559,11 @@ NeuronContainer * findNeuronContainer(NeuronContainer * firstNeuronContainerInLa
 
 
 //Top Level
-bool parseNetTag(XMLParserTag * firstTagInNetwork, NeuronContainer * currentNeuron)
+bool parseNetTag(XMLparserTag * firstTagInNetwork, NeuronContainer * currentNeuron)
 {
 	bool result = true;
 
-	XMLParserTag * currentTagUpdatedL1 = firstTagInNetwork;
+	XMLparserTag * currentTagUpdatedL1 = firstTagInNetwork;
 
 	if(currentTagUpdatedL1->name == NET_XML_TAG_network)
 	{
@@ -579,10 +579,10 @@ bool parseNetTag(XMLParserTag * firstTagInNetwork, NeuronContainer * currentNeur
 	{
 		if(currentTagUpdatedL1->name == NET_XML_TAG_iodescriptions)
 		{
-			XMLParserTag * currentTagUpdatedL2 = currentTagUpdatedL1->firstLowerLevelTag;
+			XMLparserTag * currentTagUpdatedL2 = currentTagUpdatedL1->firstLowerLevelTag;
 			if(currentTagUpdatedL2->name == NET_XML_TAG_inputNeurons)
 			{
-				XMLParserTag * currentTagUpdatedL3 = currentTagUpdatedL2->firstLowerLevelTag;
+				XMLparserTag * currentTagUpdatedL3 = currentTagUpdatedL2->firstLowerLevelTag;
 				while(currentTagUpdatedL3->nextTag != NULL)
 				{
 					if(currentTagUpdatedL3->name == NET_XML_TAG_description)
@@ -604,7 +604,7 @@ bool parseNetTag(XMLParserTag * firstTagInNetwork, NeuronContainer * currentNeur
 			currentTagUpdatedL2=currentTagUpdatedL2->nextTag;
 			if(currentTagUpdatedL2->name == NET_XML_TAG_outputNeurons)
 			{
-				XMLParserTag * currentTagUpdatedL3 = currentTagUpdatedL2->firstLowerLevelTag;
+				XMLparserTag * currentTagUpdatedL3 = currentTagUpdatedL2->firstLowerLevelTag;
 				while(currentTagUpdatedL3->nextTag != NULL)
 				{
 					if(currentTagUpdatedL3->name == NET_XML_TAG_description)
@@ -626,8 +626,8 @@ bool parseNetTag(XMLParserTag * firstTagInNetwork, NeuronContainer * currentNeur
 		}
 		if(currentTagUpdatedL1->name == NET_XML_TAG_subnet)
 		{
-			long wrongAndNotUsedIDCounter = 1;
-			if(!parseSubnetTag(currentTagUpdatedL1->firstLowerLevelTag, currentNeuron, 1, &wrongAndNotUsedIDCounter, 1))
+			long wrongAndNotUsedIDcounter = 1;
+			if(!parseSubnetTag(currentTagUpdatedL1->firstLowerLevelTag, currentNeuron, 1, &wrongAndNotUsedIDcounter, 1))
 			{
 				result = false;
 			}
@@ -641,13 +641,13 @@ bool parseNetTag(XMLParserTag * firstTagInNetwork, NeuronContainer * currentNeur
 	return result;
 }
 
-bool parseSubnetTag(XMLParserTag * firstTagInSubnet, NeuronContainer * firstNeuronInSubnet, long layerIDCounter, long * wrongAndNotUsedIDCounter, long subnetIDCounter)
+bool parseSubnetTag(XMLparserTag * firstTagInSubnet, NeuronContainer * firstNeuronInSubnet, long layerIDcounter, long * wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
 	NeuronContainer * currentNeuron = firstNeuronInSubnet;
 
-	XMLParserTag * currentTag = firstTagInSubnet;
+	XMLparserTag * currentTag = firstTagInSubnet;
 
 	NeuronContainer * recordOfFirstNeuronInPreviousLayer;	//to stop an additional layer being added
 
@@ -655,7 +655,7 @@ bool parseSubnetTag(XMLParserTag * firstTagInSubnet, NeuronContainer * firstNeur
 	{
 		if(currentTag->name == NET_XML_TAG_layer)
 		{
-			if(!parseLayerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDCounter++, 1, wrongAndNotUsedIDCounter, subnetIDCounter))
+			if(!parseLayerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter++, 1, wrongAndNotUsedIDcounter, subnetIDcounter))
 			{
 				result = false;
 			}
@@ -678,22 +678,22 @@ bool parseSubnetTag(XMLParserTag * firstTagInSubnet, NeuronContainer * firstNeur
 	return result;
 }
 
-bool parseLayerTag(XMLParserTag * firstTagInLayer, NeuronContainer * firstNeuronInLayer, long layerIDCounter, long orderIDCounter, long * wrongAndNotUsedIDCounter, long subnetIDCounter)
+bool parseLayerTag(XMLparserTag * firstTagInLayer, NeuronContainer * firstNeuronInLayer, long layerIDcounter, long orderIDcounter, long * wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
-	XMLParserTag * currentTag = firstTagInLayer;
+	XMLparserTag * currentTag = firstTagInLayer;
 	NeuronContainer * currentNeuron = firstNeuronInLayer;
 
 	while(currentTag->nextTag != NULL)
 	{
 		if(currentTag->name == NET_XML_TAG_neuronContainer)
 		{
-			if(!parseNeuronContainerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDCounter, orderIDCounter++, wrongAndNotUsedIDCounter, subnetIDCounter))
+			if(!parseNeuronContainerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter, orderIDcounter++, wrongAndNotUsedIDcounter, subnetIDcounter))
 			{
 				result = false;
 			}
-			*wrongAndNotUsedIDCounter = *wrongAndNotUsedIDCounter + 1;
+			*wrongAndNotUsedIDcounter = *wrongAndNotUsedIDcounter + 1;
 
 			NeuronContainer * newNeuron = new NeuronContainer();
 			currentNeuron->nextNeuronContainer = newNeuron;
@@ -709,15 +709,15 @@ bool parseLayerTag(XMLParserTag * firstTagInLayer, NeuronContainer * firstNeuron
 }
 
 
-bool parseNeuronContainerTag(XMLParserTag * firstTagInNeuronContainer, NeuronContainer * currentNeuron, long layerIDCounter, long orderIDCounter, long * wrongAndNotUsedIDCounter, long subnetIDCounter)
+bool parseNeuronContainerTag(XMLparserTag * firstTagInNeuronContainer, NeuronContainer * currentNeuron, long layerIDcounter, long orderIDcounter, long * wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
-	XMLParserTag * currentTag = firstTagInNeuronContainer;
+	XMLparserTag * currentTag = firstTagInNeuronContainer;
 
 	if(currentTag->name == NET_XML_TAG_neuron)
 	{
-		if(!parseNeuronTag(currentTag, currentNeuron, layerIDCounter, orderIDCounter, wrongAndNotUsedIDCounter, subnetIDCounter))
+		if(!parseNeuronTag(currentTag, currentNeuron, layerIDcounter, orderIDcounter, wrongAndNotUsedIDcounter, subnetIDcounter))
 		{
 			result = false;
 		}
@@ -747,7 +747,7 @@ bool parseNeuronContainerTag(XMLParserTag * firstTagInNeuronContainer, NeuronCon
 	{
 		NeuronContainer * newNeuron = new NeuronContainer();
 		currentNeuron->firstNeuronContainerInBackLayerOfSubnet = newNeuron;
-		if(!parseSubnetTag(currentTag->firstLowerLevelTag, currentNeuron->firstNeuronContainerInBackLayerOfSubnet, 1, wrongAndNotUsedIDCounter, (subnetIDCounter+1)))
+		if(!parseSubnetTag(currentTag->firstLowerLevelTag, currentNeuron->firstNeuronContainerInBackLayerOfSubnet, 1, wrongAndNotUsedIDcounter, (subnetIDcounter+1)))
 		{
 			result = false;
 		}
@@ -765,11 +765,11 @@ bool parseNeuronContainerTag(XMLParserTag * firstTagInNeuronContainer, NeuronCon
 
 
 
-bool parseForwardNeuronConnectionsListTag(XMLParserTag * firstTagInForwardNeuronConnectionsList, NeuronContainer * currentNeuron)
+bool parseForwardNeuronConnectionsListTag(XMLparserTag * firstTagInForwardNeuronConnectionsList, NeuronContainer * currentNeuron)
 {
 	bool result = true;
 
-	XMLParserTag * currentTag = firstTagInForwardNeuronConnectionsList;
+	XMLparserTag * currentTag = firstTagInForwardNeuronConnectionsList;
 	NeuronConnectionContainer * currentNeuronConnectionContainer = currentNeuron->firstFrontNeuronConnectionContainer;
 
 	while(currentTag->nextTag != NULL)
@@ -796,7 +796,7 @@ bool parseForwardNeuronConnectionsListTag(XMLParserTag * firstTagInForwardNeuron
 }
 
 
-bool parseForwardNeuronConnectionTag(XMLParserTag * currentTag, NeuronConnectionContainer * currentNeuronConnectionContainer)
+bool parseForwardNeuronConnectionTag(XMLparserTag * currentTag, NeuronConnectionContainer * currentNeuronConnectionContainer)
 {
 	bool result = true;
 
@@ -842,7 +842,7 @@ bool parseForwardNeuronConnectionTag(XMLParserTag * currentTag, NeuronConnection
 
 
 
-bool parseNeuronTag(XMLParserTag * currentTag, NeuronContainer * currentNeuron, long layerIDCounter, long orderIDCounter, long * wrongAndNotUsedIDCounter, long subnetIDCounter)
+bool parseNeuronTag(XMLparserTag * currentTag, NeuronContainer * currentNeuron, long layerIDcounter, long orderIDcounter, long * wrongAndNotUsedIDcounter, long subnetIDcounter)
 {
 	bool result = true;
 
@@ -868,7 +868,7 @@ bool parseNeuronTag(XMLParserTag * currentTag, NeuronContainer * currentNeuron, 
 		if(currentAttribute->name == NET_XML_ATTRIBUTE_id)
 		{
 			long attributeValue = atof(currentAttribute->value.c_str());
-			//always use XML file's neuron id as this has been generated in a different order than wrongAndNotUsedIDCounter
+			//always use XML file's neuron id as this has been generated in a different order than wrongAndNotUsedIDcounter
 			//#ifndef DO_NOT_REGENERATE_NEURON_IDS_WHEN_PARSING_NET_XML
 
 			currentNeuron->neuron->id = attributeValue;
@@ -878,9 +878,9 @@ bool parseNeuronTag(XMLParserTag * currentTag, NeuronContainer * currentNeuron, 
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_orderID)
 		{
 			long attributeValue = atof(currentAttribute->value.c_str());
-			if(attributeValue != orderIDCounter)
+			if(attributeValue != orderIDcounter)
 			{
-				cout << "parseNeuronTag error: attributeValue != orderIDCounter, attributeValue = " << attributeValue << ", orderIDCounter = " << subnetIDCounter << endl;
+				cout << "parseNeuronTag error: attributeValue != orderIDcounter, attributeValue = " << attributeValue << ", orderIDcounter = " << subnetIDcounter << endl;
 				result = false;
 			}
 			currentNeuron->neuron->orderID = attributeValue;
@@ -889,9 +889,9 @@ bool parseNeuronTag(XMLParserTag * currentTag, NeuronContainer * currentNeuron, 
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_layerID)
 		{
 			long attributeValue = atof(currentAttribute->value.c_str());
-			if(attributeValue != layerIDCounter)
+			if(attributeValue != layerIDcounter)
 			{
-				cout << "parseNeuronTag error: attributeValue != layerIDCounter, attributeValue = " << attributeValue << ", layerIDCounter = " << subnetIDCounter << endl;
+				cout << "parseNeuronTag error: attributeValue != layerIDcounter, attributeValue = " << attributeValue << ", layerIDcounter = " << subnetIDcounter << endl;
 				result = false;
 			}
 			currentNeuron->neuron->layerID = attributeValue;
@@ -900,9 +900,9 @@ bool parseNeuronTag(XMLParserTag * currentTag, NeuronContainer * currentNeuron, 
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_subnetID)
 		{
 			long attributeValue = atof(currentAttribute->value.c_str());
-			if(attributeValue != subnetIDCounter)
+			if(attributeValue != subnetIDcounter)
 			{
-				cout << "parseNeuronTag error: attributeValue != subnetIDCounter, attributeValue = " << attributeValue << ", subnetIDCounter = " << subnetIDCounter << endl;
+				cout << "parseNeuronTag error: attributeValue != subnetIDcounter, attributeValue = " << attributeValue << ", subnetIDcounter = " << subnetIDcounter << endl;
 				result = false;
 			}
 			currentNeuron->neuron->subnetID = attributeValue;
@@ -973,15 +973,15 @@ bool parseNeuronTag(XMLParserTag * currentTag, NeuronContainer * currentNeuron, 
 #else
 	if(!orderIDFound)
 	{
-		currentNeuron->neuron->orderID = orderIDCounter;
+		currentNeuron->neuron->orderID = orderIDcounter;
 	}
 	if(!layerIDFound)
 	{
-		currentNeuron->neuron->layerID = layerIDCounter;
+		currentNeuron->neuron->layerID = layerIDcounter;
 	}
 	if(!subnetIDFound)
 	{
-		currentNeuron->neuron->subnetID = subnetIDCounter;
+		currentNeuron->neuron->subnetID = subnetIDcounter;
 	}
 #endif
 

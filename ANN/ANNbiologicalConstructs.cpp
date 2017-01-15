@@ -20,7 +20,7 @@
  
 /*******************************************************************************
  *
- * File Name: ANNBiologicalConstructs.cpp
+ * File Name: ANNbiologicalConstructs.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3c3a 16-November-2012
@@ -41,10 +41,10 @@
 using namespace std;
 
 
-#include "ANNFormation.h"
-#include "ANNTraining.h"
+#include "ANNformation.h"
+#include "ANNtraining.h"
 
-#include "ANNBiologicalConstructs.h"
+#include "ANNbiologicalConstructs.h"
 
 
 //pseudo code only

@@ -58,12 +58,12 @@ int main(int argc,char **argv);
 
 bool mainUI();
 
-bool loadANetworkFromXML();
-bool loadAnExperienceDataFile();
-bool createANetwork();
-bool trainANetwork(bool advancedTraining);
-bool outputANetworkToXML();
-bool outputANetworkAsVectorGraphics();
+bool loadNetworkFromXML();
+bool loadExperienceDataFile();
+bool createNetwork();
+bool trainNetwork(bool advancedTraining);
+bool outputNetworkToXML();
+bool outputNetworkAsVectorGraphics();
 
 
 #endif

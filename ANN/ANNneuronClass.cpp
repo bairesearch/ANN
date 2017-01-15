@@ -149,9 +149,9 @@ NeuronContainer::NeuronContainer(void)
 
 }
 
-NeuronContainer::NeuronContainer(long IDInit, long orderIDInit, long layerIDInit, long subnetIDInit)
+NeuronContainer::NeuronContainer(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
 {
-	neuron = new Neuron(IDInit, orderIDInit, layerIDInit, subnetIDInit);
+	neuron = new Neuron(IDinit, orderIDinit, layerIDinit, subnetIDinit);
 
 	nextNeuronContainer = NULL;
 	//previousNeuronContainer = NULL;
@@ -257,12 +257,12 @@ Neuron::Neuron(void)
 	//zPosRel = 0;		//this value must be initialised explicity
 }
 
-Neuron::Neuron(long IDInit, long orderIDInit, long layerIDInit, long subnetIDInit)
+Neuron::Neuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
 {
-	id = IDInit;
-	orderID = orderIDInit;
-	layerID = layerIDInit;
-	subnetID = subnetIDInit;
+	id = IDinit;
+	orderID = orderIDinit;
+	layerID = layerIDinit;
+	subnetID = subnetIDinit;
 
 	//bias = 0;		 //this value must be initialised explicity
 	//storedBias = 0; 	//this value must be initialised explicity
@@ -285,12 +285,12 @@ Neuron::~Neuron(void)
 
 
 
-void fillInNeuronIDProperties(Neuron * neuronToUpdate, long IDInit, long orderIDInit, long layerIDInit, long subnetIDInit)
+void fillInNeuronIDProperties(Neuron * neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
 {
-	neuronToUpdate->id = IDInit;
-	neuronToUpdate->orderID = orderIDInit;
-	neuronToUpdate->layerID = layerIDInit;
-	neuronToUpdate->subnetID = subnetIDInit;
+	neuronToUpdate->id = IDinit;
+	neuronToUpdate->orderID = orderIDinit;
+	neuronToUpdate->layerID = layerIDinit;
+	neuronToUpdate->subnetID = subnetIDinit;
 }
 
 

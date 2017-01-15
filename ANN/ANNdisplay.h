@@ -37,9 +37,9 @@
 
 
 #ifdef USE_RT
-void generateExperienceWith2DRGBMap(unsigned char * rgbMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision);
-void generateExperienceWith2DMap(double * lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, Experience * currentExperience, long objectDecision);
-void generateExperienceWith2DBooleanMap(bool * booleanMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision);
+void generateExperienceWith2DrgbMap(unsigned char * rgbMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision);
+void generateExperienceWith2Dmap(double * lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, Experience * currentExperience, long objectDecision);
+void generateExperienceWith2DbooleanMap(bool * booleanMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision);
 #endif
 
 

@@ -198,33 +198,33 @@ void fillInANNSpriteExternVariables()
 		SPRITE_TEXTUAL_INCLUDE_INFO = false;
 	}
 
-	fillInLDSpriteExternVariables();
+	fillInLDspriteExternVariables();
 }
 
 
 /*top level sprite routines - required for independent LRRCsprite.cpp calculations*/
 
 
-bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(char* sceneFileNameWithoutSprites, char* sceneFileNameWithSprites, NeuronContainer * firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLParserTag ** currentTag)
+bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(char* sceneFileNameWithoutSprites, char* sceneFileNameWithSprites, NeuronContainer * firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
-	Reference * nonspriteListInitialReference = new Reference();
+	Reference * nonSpriteListInitialReference = new Reference();
 	Reference * spriteListInitialReference = new Reference();
 
 	int numSpritesAdded = 0;
 
-	if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(sceneFileNameWithSprites, nonspriteListInitialReference, spriteListInitialReference, firstNeuronInNetwork, addSprites, &numSpritesAdded, writeSVG, currentTag))
+	if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(sceneFileNameWithSprites, nonSpriteListInitialReference, spriteListInitialReference, firstNeuronInNetwork, addSprites, &numSpritesAdded, writeSVG, currentTag))
 	{
 		result = false;
 	}
 
-	if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(sceneFileNameWithoutSprites, sceneFileNameWithSprites, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
+	if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(sceneFileNameWithoutSprites, sceneFileNameWithSprites, addSprites, nonSpriteListInitialReference, spriteListInitialReference, numSpritesAdded))
 	{
 		result = false;
 	}
 
-	delete nonspriteListInitialReference;
+	delete nonSpriteListInitialReference;
 	delete spriteListInitialReference;
 
 	return result;
@@ -232,7 +232,7 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(char* sceneFileNameWi
 
 
 
-bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(char* sceneFileNameWithSprites, Reference * nonspriteListInitialReference, Reference * spriteListInitialReference, NeuronContainer * firstNeuronInNetwork, bool addSprites, int * numSpritesAdded, bool writeSVG, XMLParserTag ** currentTag)
+bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(char* sceneFileNameWithSprites, Reference * nonSpriteListInitialReference, Reference * spriteListInitialReference, NeuronContainer * firstNeuronInNetwork, bool addSprites, int * numSpritesAdded, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -242,17 +242,17 @@ bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(char* sceneFileNa
 	eyeCoords.y = 0.0;
 	eyeCoords.z = 0.0;
 
-	ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(firstNeuronInNetwork, spriteListInitialReference, nonspriteListInitialReference, &eyeCoords, numSpritesAdded, &numnonSpritesAdded, sceneFileNameWithSprites, false, NULL, addSprites, writeSVG, currentTag);
+	ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(firstNeuronInNetwork, spriteListInitialReference, nonSpriteListInitialReference, &eyeCoords, numSpritesAdded, &numnonSpritesAdded, sceneFileNameWithSprites, false, NULL, addSprites, writeSVG, currentTag);
 
 	return result;
 }
 
 
-bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(char* sceneFileNameWithoutSprites, char* sceneFileNameWithSprites, bool addSprites, Reference * nonspriteListInitialReference, Reference * spriteListInitialReference, int numSpritesAdded)
+bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(char* sceneFileNameWithoutSprites, char* sceneFileNameWithSprites, bool addSprites, Reference * nonSpriteListInitialReference, Reference * spriteListInitialReference, int numSpritesAdded)
 {
 	bool result = true;
 
-	writeReferencesToFile(sceneFileNameWithoutSprites, nonspriteListInitialReference);
+	writeReferencesToFile(sceneFileNameWithoutSprites, nonSpriteListInitialReference);
 
 	if(addSprites)
 	{
@@ -268,7 +268,7 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(cha
 
 
 
-Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(NeuronContainer * firstNeuronContainerInLayer, Reference * spriteListInitialReference, Reference * currentNonSpriteListReference, vec * eyeCoords, int * numSpritesAdded, int * numnonSpritesAdded, char* sceneFileNameWithSprites, bool isSubnet, vec * positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLParserTag ** currentTag)
+Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(NeuronContainer * firstNeuronContainerInLayer, Reference * spriteListInitialReference, Reference * currentNonSpriteListReference, vec * eyeCoords, int * numSpritesAdded, int * numnonSpritesAdded, char* sceneFileNameWithSprites, bool isSubnet, vec * positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag ** currentTag)
 {
 	Reference * updatedNonSpriteListReference = currentNonSpriteListReference;
 
@@ -455,7 +455,7 @@ Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(NeuronCo
 
 /*medium level sprite routines - these can be used by LRRCsprite.cpp top level routines or by LRRCgame.cpp routines*/
 
-bool ANNfillNeuronDisplayReference(Reference * currentNeuronDispayReference, Neuron * neuron, bool hasSubnetNeuron, vec * positionOfsubnetNeuron, bool writeSVG, XMLParserTag ** currentTag)
+bool ANNfillNeuronDisplayReference(Reference * currentNeuronDispayReference, Neuron * neuron, bool hasSubnetNeuron, vec * positionOfsubnetNeuron, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -465,7 +465,7 @@ bool ANNfillNeuronDisplayReference(Reference * currentNeuronDispayReference, Neu
 
 	createIdentityMatrix(&currentDeformationMatrix);
 	scaleMatrix(&currentDeformationMatrix, (NEURON_SPRITE_SCALE_FACTOR/((neuron->subnetID)*2.0)*(SPRITE_SUBMODEL_RANGE_SCALE_FACTOR*LDRAW_UNITS_PER_CM)));		//	scaleMatrix(&currentDeformationMatrix, ((neuronContainer->neuron->bias)*(SPRITE_SUBMODEL_RANGE_SCALE_FACTOR*LDRAW_UNITS_PER_CM)));
-	copyMatrix2IntoMatrix1(&(currentNeuronDispayReference->deformationMatrix), &(currentDeformationMatrix));
+	copyMatrixTwoIntoMatrixOne(&(currentNeuronDispayReference->deformationMatrix), &(currentDeformationMatrix));
 
 	currentNeuronDispayReference->type = REFERENCE_TYPE_SUBMODEL;
 
@@ -542,7 +542,7 @@ bool ANNfillNeuronDisplayReference(Reference * currentNeuronDispayReference, Neu
 		positionSVG.x = currentNeuronDispayReference->relativePosition.x*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;		//scaleFactor	//ANN_DRAW_BASICENTITY_NODE_WIDTH/2
 		positionSVG.y = currentNeuronDispayReference->relativePosition.y*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;
 		positionSVG.z = ANN_OUTPUT_Z_POSITION_NODES;
-		writeSVGBox(currentTag, &positionSVG, width, height, currentNeuronDispayReference->colour, 0.0, true);
+		writeSVGbox(currentTag, &positionSVG, width, height, currentNeuronDispayReference->colour, 0.0, true);
 
 	}
 
@@ -550,7 +550,7 @@ bool ANNfillNeuronDisplayReference(Reference * currentNeuronDispayReference, Neu
 }
 
 //currently this function just adds a plain line between neuron1 and neuron2, in the future it could be more complex
-bool ANNfillNeuronConnectionDisplayReference(Reference * currentNeuronDispayReference, Reference * backNeuronReference, Reference * forwardNeuronReference, NeuronConnection * neuronConnection, bool writeSVG, XMLParserTag ** currentTag)
+bool ANNfillNeuronConnectionDisplayReference(Reference * currentNeuronDispayReference, Reference * backNeuronReference, Reference * forwardNeuronReference, NeuronConnection * neuronConnection, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -611,7 +611,7 @@ bool ANNfillNeuronConnectionDisplayReference(Reference * currentNeuronDispayRefe
 		position2SVG.y = currentNeuronDispayReference->vertex2relativePosition.y * ANN_SVG_SCALE_FACTOR;
 		position2SVG.z = ANN_OUTPUT_Z_POSITION_CONNECTIONS;
 
-		writeSVGLine(currentTag, &position1SVG, &position2SVG, currentNeuronDispayReference->colour);
+		writeSVGline(currentTag, &position1SVG, &position2SVG, currentNeuronDispayReference->colour);
 	}
 
 	return result;
@@ -621,7 +621,7 @@ bool ANNfillNeuronConnectionDisplayReference(Reference * currentNeuronDispayRefe
 
 
 
-bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Reference * neuronReference, NeuronConnectionContainer * neuronConnectionContainer, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, char * sceneFileName, Reference * backNeuronReference, Reference * forwardNeuronReference, bool writeSVG, XMLParserTag ** currentTag)
+bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Reference * neuronReference, NeuronConnectionContainer * neuronConnectionContainer, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, char * sceneFileName, Reference * backNeuronReference, Reference * forwardNeuronReference, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -682,7 +682,7 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 }
 
 
-bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neuronReference, NeuronContainer * neuron, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, char * sceneFileName, bool writeSVG, XMLParserTag ** currentTag)
+bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neuronReference, NeuronContainer * neuron, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, char * sceneFileName, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -723,7 +723,7 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 				positionSVG.x = neuronReference->relativePosition.x*ANN_SVG_SCALE_FACTOR - ANN_SVG_NEURON_SIZE/2;
 				positionSVG.y = neuronReference->relativePosition.y*ANN_SVG_SCALE_FACTOR - (numberOfLines+1)*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE + lineIndex*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE;
 				positionSVG.z = ANN_OUTPUT_Z_POSITION_TEXT;
-				writeSVGText(currentTag, stringCurrentLine, &positionSVG, ANN_SVG_TEXT_SCALE_FACTOR, DAT_FILE_COLOUR_BLACK);
+				writeSVGtext(currentTag, stringCurrentLine, &positionSVG, ANN_SVG_TEXT_SCALE_FACTOR, DAT_FILE_COLOUR_BLACK);
 
 				stringCurrentLine = "";
 				stringCurrentLineIndex = 0;

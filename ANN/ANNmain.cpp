@@ -42,14 +42,14 @@ using namespace std;
 
 #include "ANNmain.h"
 
-#include "ANNFormation.h"
-#include "ANNTraining.h"
-#include "ANNParser.h"
-#include "ANNXMLconversion.h"
+#include "ANNformation.h"
+#include "ANNtraining.h"
+#include "ANNparser.h"
+#include "ANNxmlConversion.h"
 #include "ANNsprite.h"
 #include "ANNdisplay.h"
 
-#include "ANNData.h"
+#include "ANNdata.h"
 
 #include "LDsvg.h"
 #include "LDsprite.h"
@@ -196,139 +196,139 @@ int main(int argc,char **argv)
 
 	//basic execution flow outline; if no dataset or xml input file is specified, just form network - do not train network
 
-	if ((exists_argument(argc,argv,"-idata")) || (exists_argument(argc,argv,"-ixml")) || (exists_argument(argc,argv,"-oxml")) || (exists_argument(argc,argv,"-oldr")) || (exists_argument(argc,argv,"-oldr2")) || (exists_argument(argc,argv,"-osvg")) || (exists_argument(argc,argv,"-oppm")) || (exists_argument(argc,argv,"-oppm2")) || (exists_argument(argc,argv,"-oall")) || (exists_argument(argc,argv,"-ui")))
+	if ((argumentExists(argc,argv,"-idata")) || (argumentExists(argc,argv,"-ixml")) || (argumentExists(argc,argv,"-oxml")) || (argumentExists(argc,argv,"-oldr")) || (argumentExists(argc,argv,"-oldr2")) || (argumentExists(argc,argv,"-osvg")) || (argumentExists(argc,argv,"-oppm")) || (argumentExists(argc,argv,"-oppm2")) || (argumentExists(argc,argv,"-oall")) || (argumentExists(argc,argv,"-ui")))
 	{
-		if(exists_argument(argc,argv,"-idata"))
+		if(argumentExists(argc,argv,"-idata"))
 		{
-			inputDatasetFileName=get_char_argument(argc,argv,"-idata");
+			inputDatasetFileName=getCharArgument(argc,argv,"-idata");
 			//train = true;
 			useInputDatasetFile = true;
 		}
 
-		if (exists_argument(argc,argv,"-layers"))
-		numberOfLayers=get_float_argument(argc,argv,"-layers");
+		if (argumentExists(argc,argv,"-layers"))
+		numberOfLayers=getFloatArgument(argc,argv,"-layers");
 
-		if (exists_argument(argc,argv,"-ineurons"))
-		numberOfInputNeurons=get_float_argument(argc,argv,"-ineurons");
+		if (argumentExists(argc,argv,"-ineurons"))
+		numberOfInputNeurons=getFloatArgument(argc,argv,"-ineurons");
 
-		if (exists_argument(argc,argv,"-oneurons"))
-		numberOfOutputNeurons=get_float_argument(argc,argv,"-oneurons");
+		if (argumentExists(argc,argv,"-oneurons"))
+		numberOfOutputNeurons=getFloatArgument(argc,argv,"-oneurons");
 
-		if (exists_argument(argc,argv,"-divtype"))
-		layerDivergenceType=get_float_argument(argc,argv,"-divtype");
+		if (argumentExists(argc,argv,"-divtype"))
+		layerDivergenceType=getFloatArgument(argc,argv,"-divtype");
 
-		if (exists_argument(argc,argv,"-divfactor"))
-		meanLayerDivergenceFactor=get_float_argument(argc,argv,"-divfactor");
+		if (argumentExists(argc,argv,"-divfactor"))
+		meanLayerDivergenceFactor=getFloatArgument(argc,argv,"-divfactor");
 
-		if (exists_argument(argc,argv,"-con"))
-		probabilityNeuronConnectionWithPreviousLayerNeuron=get_float_argument(argc,argv,"-con");
+		if (argumentExists(argc,argv,"-con"))
+		probabilityNeuronConnectionWithPreviousLayerNeuron=getFloatArgument(argc,argv,"-con");
 
-		if (exists_argument(argc,argv,"-conall"))
-		probabilityNeuronConnectionWithAllPreviousLayersNeurons=get_float_argument(argc,argv,"-conall");
+		if (argumentExists(argc,argv,"-conall"))
+		probabilityNeuronConnectionWithAllPreviousLayersNeurons=getFloatArgument(argc,argv,"-conall");
 
-		if (exists_argument(argc,argv,"-usesubnets"))
+		if (argumentExists(argc,argv,"-usesubnets"))
 		useSubnets = true;
 
-		if (exists_argument(argc,argv,"-numsubnets"))
-		maxNumRecursiveSubnets=get_float_argument(argc,argv,"-numsubnets");
+		if (argumentExists(argc,argv,"-numsubnets"))
+		maxNumRecursiveSubnets=getFloatArgument(argc,argv,"-numsubnets");
 
-		if (exists_argument(argc,argv,"-probsubnet"))
-		probabilityOfSubnetCreation=get_float_argument(argc,argv,"-probsubnet");
+		if (argumentExists(argc,argv,"-probsubnet"))
+		probabilityOfSubnetCreation=getFloatArgument(argc,argv,"-probsubnet");
 
-		if (exists_argument(argc,argv,"-subnetdepl"))
+		if (argumentExists(argc,argv,"-subnetdepl"))
 		useSubnetDependentNumberOfLayers = true;
 
-		if (exists_argument(argc,argv,"-epochs"))
+		if (argumentExists(argc,argv,"-epochs"))
 		{
-			numEpochs=get_float_argument(argc,argv,"-epochs");
+			numEpochs=getFloatArgument(argc,argv,"-epochs");
 			usePresetNumberOfEpochs = true;
 		}
 
-		if (exists_argument(argc,argv,"-maxepochs"))
-		maxNumEpochs=get_float_argument(argc,argv,"-maxepochs");
+		if (argumentExists(argc,argv,"-maxepochs"))
+		maxNumEpochs=getFloatArgument(argc,argv,"-maxepochs");
 
-		if (exists_argument(argc,argv,"-maxFolds"))
-		maxFolds=get_float_argument(argc,argv,"-maxFolds");
-
-
-
-		if (exists_argument(argc,argv,"-numsubnets"))
-		maxNumRecursiveSubnets=get_float_argument(argc,argv,"-numsubnets");
-
-		if (exists_argument(argc,argv,"-numsubnets"))
-		maxNumRecursiveSubnets=get_float_argument(argc,argv,"-numsubnets");
+		if (argumentExists(argc,argv,"-maxFolds"))
+		maxFolds=getFloatArgument(argc,argv,"-maxFolds");
 
 
-		if(exists_argument(argc,argv,"-ixml"))
+
+		if (argumentExists(argc,argv,"-numsubnets"))
+		maxNumRecursiveSubnets=getFloatArgument(argc,argv,"-numsubnets");
+
+		if (argumentExists(argc,argv,"-numsubnets"))
+		maxNumRecursiveSubnets=getFloatArgument(argc,argv,"-numsubnets");
+
+
+		if(argumentExists(argc,argv,"-ixml"))
 		{
-			inputXMLFileName=get_char_argument(argc,argv,"-ixml");
+			inputXMLFileName=getCharArgument(argc,argv,"-ixml");
 			//train = true;
 			useInputXMLFile = true;
 		}
 
-		if(exists_argument(argc,argv,"-oxml"))
+		if(argumentExists(argc,argv,"-oxml"))
 		{
-			outputXMLFileName=get_char_argument(argc,argv,"-oxml");
+			outputXMLFileName=getCharArgument(argc,argv,"-oxml");
 			useOutputXMLFile = true;
 		}
 
-		if(exists_argument(argc,argv,"-oldr"))
+		if(argumentExists(argc,argv,"-oldr"))
 		{
-			outputLDRFileNameWithoutSprites=get_char_argument(argc,argv,"-oldr");
+			outputLDRFileNameWithoutSprites=getCharArgument(argc,argv,"-oldr");
 			useOutputLDRFileWithoutSprites = true;
 			printOutput = true;
 		}
 
-		if(exists_argument(argc,argv,"-oldr2"))
+		if(argumentExists(argc,argv,"-oldr2"))
 		{
-			outputLDRFileNameWithSprites=get_char_argument(argc,argv,"-oldr2");
+			outputLDRFileNameWithSprites=getCharArgument(argc,argv,"-oldr2");
 			useOutputLDRFileWithSprites = true;
 			printOutput = true;
 		}
 
-		if(exists_argument(argc,argv,"-osvg"))
+		if(argumentExists(argc,argv,"-osvg"))
 		{
-			outputSVGFileName=get_char_argument(argc,argv,"-osvg");
+			outputSVGFileName=getCharArgument(argc,argv,"-osvg");
 			useOutputSVGFile = true;
 			printOutput = true;
 		}
 
-		if(exists_argument(argc,argv,"-oppm"))
+		if(argumentExists(argc,argv,"-oppm"))
 		{
-			outputPPMFileName=get_char_argument(argc,argv,"-oppm");
+			outputPPMFileName=getCharArgument(argc,argv,"-oppm");
 			useOutputPPMFile = true;
 			printOutput = true;
 		}
 
-		if(exists_argument(argc,argv,"-oppm2"))
+		if(argumentExists(argc,argv,"-oppm2"))
 		{
-			outputPPMFileNameRaytraced=get_char_argument(argc,argv,"-oppm2");
+			outputPPMFileNameRaytraced=getCharArgument(argc,argv,"-oppm2");
 			useOutputPPMFileRaytraced = true;
 			printOutput = true;
 		}
 
-		if(exists_argument(argc,argv,"-oall"))
+		if(argumentExists(argc,argv,"-oall"))
 		{
-			outputAllFileName=get_char_argument(argc,argv,"-oall");
+			outputAllFileName=getCharArgument(argc,argv,"-oall");
 			useOutputAllFile = true;
 			printOutput = true;
 		}
 
-		if (exists_argument(argc,argv,"-notshow"))
+		if (argumentExists(argc,argv,"-notshow"))
 		{
 			displayInOpenGLAndOutputScreenshot = false;
 		}
 
-		if (exists_argument(argc,argv,"-width"))
-		rasterImageWidth=get_float_argument(argc,argv,"-width");
+		if (argumentExists(argc,argv,"-width"))
+		rasterImageWidth=getFloatArgument(argc,argv,"-width");
 
-		if (exists_argument(argc,argv,"-height"))
-		rasterImageHeight=get_float_argument(argc,argv,"-height");
+		if (argumentExists(argc,argv,"-height"))
+		rasterImageHeight=getFloatArgument(argc,argv,"-height");
 
-		if(exists_argument(argc,argv,"-train"))
+		if(argumentExists(argc,argv,"-train"))
 		{
 			int trainInt;
-			trainInt=get_float_argument(argc,argv,"-train");
+			trainInt=getFloatArgument(argc,argv,"-train");
 			trainIfUseInputDatasetFile = (bool)trainInt;
 		}
 
@@ -339,25 +339,25 @@ int main(int argc,char **argv)
 		::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, currentFolder);
 		#endif
 
-		if (exists_argument(argc,argv,"-workingfolder"))
+		if (argumentExists(argc,argv,"-workingfolder"))
 		{
-			workingFolderCharStar=get_char_argument(argc,argv,"-workingfolder");
+			workingFolderCharStar=getCharArgument(argc,argv,"-workingfolder");
 		}
 		else
 		{
 			workingFolderCharStar = currentFolder;
 		}
-		if (exists_argument(argc,argv,"-exefolder"))
+		if (argumentExists(argc,argv,"-exefolder"))
 		{
-			exeFolderCharStar=get_char_argument(argc,argv,"-exefolder");
+			exeFolderCharStar=getCharArgument(argc,argv,"-exefolder");
 		}
 		else
 		{
 			exeFolderCharStar = currentFolder;
 		}
-		if (exists_argument(argc,argv,"-tempfolder"))
+		if (argumentExists(argc,argv,"-tempfolder"))
 		{
-			tempFolderCharStar=get_char_argument(argc,argv,"-tempfolder");
+			tempFolderCharStar=getCharArgument(argc,argv,"-tempfolder");
 		}
 		else
 		{
@@ -370,11 +370,11 @@ int main(int argc,char **argv)
 		::SetCurrentDirectory(workingFolderCharStar);
 		#endif
 
-		if (exists_argument(argc,argv,"-ui"))
+		if (argumentExists(argc,argv,"-ui"))
 		{
 			mainUI();
 		}
-		if (exists_argument(argc,argv,"-version"))
+		if (argumentExists(argc,argv,"-version"))
 		{
 			cout << "Project Version: 3c3a 16-November-2012" << endl;
 			exit(1);
@@ -450,7 +450,7 @@ int main(int argc,char **argv)
 
 		string xmlFileName = inputXMLFileName;
 
-		firstOutputNeuronInNetwork = readNetXMLFileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
+		firstOutputNeuronInNetwork = readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
 		//check  number of input and number of output neurons
 
 		numberOfInputNeurons = numberOfInputNeuronsLoaded;
@@ -532,7 +532,7 @@ int main(int argc,char **argv)
 	}
 
 
-	if(!parseANNRulesXMLFile())
+	if(!parseANNrulesXMLfile())
 	{
 		result = false;
 	}
@@ -560,7 +560,7 @@ int main(int argc,char **argv)
 	{
 		cout << "xml file name = " << outputXMLFileName << endl;
 
-		if(!writeNetXMLFile(outputXMLFileName, firstInputNeuronInNetwork))
+		if(!writeNetXMLfile(outputXMLFileName, firstInputNeuronInNetwork))
 		{
 			result = false;
 		}
@@ -571,7 +571,7 @@ int main(int argc,char **argv)
 
 
 
-bool loadANetworkFromXML()
+bool loadNetworkFromXML()
 {
 	bool result = true;
 
@@ -583,7 +583,7 @@ bool loadANetworkFromXML()
 
 	string xmlFileName = NET_XML_FILE_NAME;
 
-	firstOutputNeuronInNetwork = readNetXMLFileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
+	firstOutputNeuronInNetwork = readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
 	//check  number of input and number of output neurons
 
 	numberOfInputNeurons = numberOfInputNeuronsLoaded;
@@ -594,7 +594,7 @@ bool loadANetworkFromXML()
 	return result;
 }
 
-bool createANetwork()
+bool createNetwork()
 {
 	bool result = true;
 
@@ -745,7 +745,7 @@ bool createANetwork()
 
 
 
-bool loadAnExperienceDataFile()
+bool loadExperienceDataFile()
 {
 	bool result = true;
 
@@ -796,14 +796,14 @@ bool loadAnExperienceDataFile()
 }
 
 
-bool trainANetwork(bool advancedTraining)
+bool trainNetwork(bool advancedTraining)
 {
 	bool result = true;
 
 
 	if(!loadedExperienceDataset)
 	{
-		if(!loadAnExperienceDataFile())
+		if(!loadExperienceDataFile())
 		{
 			result = false;
 		}
@@ -832,7 +832,7 @@ bool trainANetwork(bool advancedTraining)
 
 }
 
-bool outputANetworkToXML()
+bool outputNetworkToXML()
 {
 	bool result = true;
 
@@ -840,7 +840,7 @@ bool outputANetworkToXML()
 
 	if(formedNetwork)
 	{
-		if(!writeNetXMLFile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
+		if(!writeNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
 		{
 			result = false;
 		}
@@ -854,7 +854,7 @@ bool outputANetworkToXML()
 
 
 
-bool outputANetworkAsVectorGraphics()
+bool outputNetworkAsVectorGraphics()
 {
 	bool result = true;
 
@@ -864,11 +864,11 @@ bool outputANetworkAsVectorGraphics()
 		cout << "vector graphics file name with sprites = " << NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES << endl;
 		cout << "vector graphics file svg = " << NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME << endl;
 
-		XMLParserTag * firstTagInSVGFile = new XMLParserTag();
+		XMLparserTag * firstTagInSVGFile = new XMLparserTag();
 		
 		ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITHOUT_SPRITES, NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES, firstInputNeuronInNetwork, true, true, &firstTagInSVGFile);
 
-		if(!writeSVGFile(NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME, firstTagInSVGFile))
+		if(!writeSVGfile(NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME, firstTagInSVGFile))
 		{
 			result = false;
 		}
@@ -925,31 +925,31 @@ bool mainUI()
 		answerAsInt = long(atof(answerAsString.c_str()));
 		if(answerAsInt == 1)
 		{
-			loadANetworkFromXML();
+			loadNetworkFromXML();
 		}
 		else if(answerAsInt == 2)
 		{
-			createANetwork();
+			createNetwork();
 		}
 		else if(answerAsInt == 3)
 		{
-			loadAnExperienceDataFile();
+			loadExperienceDataFile();
 		}
 		else if(answerAsInt == 4)
 		{
-			trainANetwork(true);
+			trainNetwork(true);
 		}
 		else if(answerAsInt == 8)
 		{
-			trainANetwork(false);
+			trainNetwork(false);
 		}
 		else if(answerAsInt == 5)
 		{
-			outputANetworkToXML();
+			outputNetworkToXML();
 		}
 		else if(answerAsInt == 6)
 		{
-			outputANetworkAsVectorGraphics();
+			outputNetworkAsVectorGraphics();
 		}
 		#ifdef USE_LRRC
 		else if(answerAsInt == 7)

@@ -175,17 +175,17 @@ void printExperiences(Experience * firstExperienceInList)
 	}
 }
 
-void addExperiencesToOFStream(ofstream * experienceDataSetOFStreamObject, Experience * firstExperienceInList)
+void addExperiencesToOFStream(ofstream * experienceDataSetOfStreamObject, Experience * firstExperienceInList)
 {
 	Experience * currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		addExperienceToOFStream(experienceDataSetOFStreamObject, currentExperience);
+		addExperienceToOFStream(experienceDataSetOfStreamObject, currentExperience);
 		currentExperience = currentExperience->next;
 	}
 }
 
-void addExperienceToOFStream(ofstream * experienceDataSetOFStreamObject, Experience * experience)
+void addExperienceToOFStream(ofstream * experienceDataSetOfStreamObject, Experience * experience)
 {
 	char tempString[MAX_EXPERIENCE_SIGNIFICANT_BITS];
 
@@ -193,9 +193,9 @@ void addExperienceToOFStream(ofstream * experienceDataSetOFStreamObject, Experie
 	string tempStringPlusPlus = tempString;
 	for(int i = 0; i<(int)(tempStringPlusPlus.length());i++)
 	{
-		experienceDataSetOFStreamObject->put(tempString[i]);
+		experienceDataSetOfStreamObject->put(tempString[i]);
 	}
-	experienceDataSetOFStreamObject->put(CHAR_COMMA);
+	experienceDataSetOfStreamObject->put(CHAR_COMMA);
 
 	ExperienceInput * currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
@@ -204,13 +204,13 @@ void addExperienceToOFStream(ofstream * experienceDataSetOFStreamObject, Experie
 		string tempStringPlusPlus = tempString;
 		for(int i = 0; i<(int)(tempStringPlusPlus.length());i++)
 		{
-			experienceDataSetOFStreamObject->put(tempString[i]);
+			experienceDataSetOfStreamObject->put(tempString[i]);
 		}
-		experienceDataSetOFStreamObject->put(CHAR_COMMA);
+		experienceDataSetOfStreamObject->put(CHAR_COMMA);
 		currentExperienceInput = currentExperienceInput->next;
 	}
 
-	experienceDataSetOFStreamObject->put(CHAR_NEWLINE);
+	experienceDataSetOfStreamObject->put(CHAR_NEWLINE);
 }
 
 

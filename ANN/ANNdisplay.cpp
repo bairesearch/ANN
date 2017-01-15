@@ -29,11 +29,11 @@
  *******************************************************************************/
 
 #include "ANNdisplay.h"
-#include "ANNFormation.h"
-#include "ANNTraining.h"
-#include "ANNXMLconversion.h"
+#include "ANNformation.h"
+#include "ANNtraining.h"
+#include "ANNxmlConversion.h"
 #include "ANNsprite.h"
-#include "ANNUpdateAlgorithm.h"
+#include "ANNupdateAlgorithm.h"
 #include "LDparser.h"
 #include "LDreferenceManipulation.h"
 #include "LDsvg.h"
@@ -50,7 +50,7 @@
 
 #ifdef USE_RT
 
-void generateExperienceWith2DRGBMap(unsigned char * rgbMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision)
+void generateExperienceWith2DrgbMap(unsigned char * rgbMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
 	ExperienceInput * currentExperienceInput = currentExperience->firstExperienceInput;
@@ -74,7 +74,7 @@ void generateExperienceWith2DRGBMap(unsigned char * rgbMap, int imageWidth, int 
 }
 
 
-void generateExperienceWith2DMap(double * lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, Experience * currentExperience, long objectDecision)
+void generateExperienceWith2Dmap(double * lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, Experience * currentExperience, long objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
 	ExperienceInput * currentExperienceInput = currentExperience->firstExperienceInput;
@@ -95,7 +95,7 @@ void generateExperienceWith2DMap(double * lumOrContrastOrDepthMap, int imageWidt
 	}
 }
 
-void generateExperienceWith2DBooleanMap(bool * booleanMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision)
+void generateExperienceWith2DbooleanMap(bool * booleanMap, int imageWidth, int imageHeight, Experience * currentExperience, long objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
 	ExperienceInput * currentExperienceInput = currentExperience->firstExperienceInput;
@@ -145,7 +145,7 @@ bool trainAndOutputNeuralNetworkWithFileNames(NeuronContainer * firstInputNeuron
 
 
 #ifndef USE_OR
-	if(!writeNetXMLFile(*XMLNNSceneFileName, firstInputNeuronInNetwork))
+	if(!writeNetXMLfile(*XMLNNSceneFileName, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
@@ -189,24 +189,24 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 	{
 		//now output the vector graphics file to image file via ray tracer
 
-		XMLParserTag * firstTagInSVGFile = new XMLParserTag();
-		XMLParserTag * currentTagInSVGFile = firstTagInSVGFile;
+		XMLparserTag * firstTagInSVGFile = new XMLparserTag();
+		XMLparserTag * currentTagInSVGFile = firstTagInSVGFile;
 		
 		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, &currentTagInSVGFile);
 
-		Reference * nonspriteListInitialReference = new Reference();
+		Reference * nonSpriteListInitialReference = new Reference();
 		Reference * spriteListInitialReference = new Reference();
 
 		int numSpritesAdded = 0;
 
-		if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
+		if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonSpriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
 		{
 			result = false;
 		}
 
 		if(useOutputLDRFile)
 		{
-			if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
+			if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonSpriteListInitialReference, spriteListInitialReference, numSpritesAdded))
 			{
 				result = false;
 			}
@@ -214,7 +214,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 
 		if(useOutputSVGFile)
 		{
-			if(!writeSVGFile(outputFileNameSVGcharstar, firstTagInSVGFile))
+			if(!writeSVGfile(outputFileNameSVGcharstar, firstTagInSVGFile))
 			{
 				result = false;
 			}
@@ -252,22 +252,22 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 
-					view_info vi;
-					vi.imgwidth = width;
-					vi.imgheight = height;
+					ViewInfo vi;
+					vi.imageWidth = width;
+					vi.imageHeight = height;
 					vi.eye.x = TAL_FILE_HEADER_DEFAULT_EYE_X;
 					vi.eye.y = TAL_FILE_HEADER_DEFAULT_EYE_Y;
 					vi.eye.z = TAL_FILE_HEADER_DEFAULT_EYE_Z;
-					vi.viewat.x = TAL_FILE_HEADER_DEFAULT_VIEWAT_X;
-					vi.viewat.y = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;
-					vi.viewat.z = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;
-					vi.viewup.x = TAL_FILE_HEADER_DEFAULT_VIEWUP_X;
-					vi.viewup.y = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;
-					vi.viewup.z = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;
-					vi.viewwidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
-					vi.viewheight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
+					vi.viewAt.x = TAL_FILE_HEADER_DEFAULT_VIEWAT_X;
+					vi.viewAt.y = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;
+					vi.viewAt.z = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;
+					vi.viewUp.x = TAL_FILE_HEADER_DEFAULT_VIEWUP_X;
+					vi.viewUp.y = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;
+					vi.viewUp.z = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;
+					vi.viewWidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
+					vi.viewHeight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
 
-					vi.focal_length = TAL_FILE_HEADER_DEFAULT_FOCAL;
+					vi.focalLength = TAL_FILE_HEADER_DEFAULT_FOCAL;
 
 					if(!write2DReferenceListCollapsedTo1DToFileRayTraceFormat(outputFileNameTALcharstar, initialReferenceInSceneFileForRayTracing, true, &vi, false, NULL, NULL))
 					{
@@ -282,16 +282,16 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 					#ifdef TH_USE_POVRAY_FOR_NEURAL_NETWORK_VEC_GRAPHICS	//NOT YET TEST;
 
 
-						Reference * nonspriteListInitialReference = new Reference();
+						Reference * nonSpriteListInitialReference = new Reference();
 						Reference * spriteListInitialReference = new Reference();
 
 						int numSpritesAdded = 0;
-						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
+						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonSpriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
 						{
 							result = false;
 						}
 
-						if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
+						if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonSpriteListInitialReference, spriteListInitialReference, numSpritesAdded))
 						{
 							result = false;
 						}
@@ -299,7 +299,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 						char * charstarsceneFileNameForRayTracing;
 						if(addSprites)
 						{
-							if(!joinReferenceLists(nonspriteListInitialReference, spriteListInitialReference))
+							if(!joinReferenceLists(nonSpriteListInitialReference, spriteListInitialReference))
 							{
 								result = false;
 							}
@@ -326,7 +326,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 						system(povrayCommand.c_str());
 
 
-						delete nonspriteListInitialReference;
+						delete nonSpriteListInitialReference;
 						delete spriteListInitialReference;
 
 					#else
@@ -339,12 +339,12 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 			if(display)
 			{
 				char * topLevelSceneFileNameCollapsed = "sceneCollapsedForOpenGLDisplay.ldr";
-				write2DReferenceListCollapsedTo1DToFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFileForRayTracing);
+				write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFileForRayTracing);
 
 				unsigned char * rgbMap = new unsigned char[width*height*RGB_NUM];
 
-				//setViewPort2DOrtho(-100.0, 2000.0, -100.0, 2000.0);
-				setViewPort3DOrtho(0.0, 5.0, 5.0, 0.0, 2.0, -2.0);
+				//setViewPort2Dortho(-100.0, 2000.0, -100.0, 2000.0);
+				setViewPort3Dortho(0.0, 5.0, 5.0, 0.0, 2.0, -2.0);
 
 				//now reparse file
 				Reference * initialReferenceInCollapsedSceneFile = new Reference();
@@ -355,14 +355,14 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 					exit(0);
 				}
 
-				drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);
-				drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);
+				drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);
+				drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);
 					//due to opengl code bug, need to execute this function twice.
 
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 				if(useOutputPPMFile)
 				{
-					generatePixmapFromRGBMap(displayFileNamePPMcharstar, width, height, rgbMap);
+					generatePixmapFromRGBmap(displayFileNamePPMcharstar, width, height, rgbMap);
 				}
 				#endif
 			}
@@ -372,16 +372,16 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 
 void writeExperienceListToFile(char * fileName, Experience * firstExperienceInList)
 {
-	ofstream experienceDataSetOFStreamObject(fileName);
+	ofstream experienceDataSetOfStreamObject(fileName);
 
 	Experience * currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		addExperienceToOFStream(&experienceDataSetOFStreamObject, currentExperience);
+		addExperienceToOFStream(&experienceDataSetOfStreamObject, currentExperience);
 		currentExperience = currentExperience->next;
 	}
 
-	experienceDataSetOFStreamObject.close();
+	experienceDataSetOfStreamObject.close();
 }
 
 

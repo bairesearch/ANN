@@ -172,8 +172,8 @@ long countNumberOfExperiences(Experience * firstExperienceInList);
 void printExperienceInputs(Experience * experience);
 void printExperiences(Experience * firstExperienceInList);
 
-void addExperiencesToOFStream(ofstream * experienceDataSetOFStreamObject, Experience * firstExperienceInList);
-	void addExperienceToOFStream(ofstream * experienceDataSetOFStreamObject, Experience * experience);
+void addExperiencesToOFStream(ofstream * experienceDataSetOfStreamObject, Experience * firstExperienceInList);
+	void addExperienceToOFStream(ofstream * experienceDataSetOfStreamObject, Experience * experience);
 
 double normaliseExperienceInput(double currentInputValue, double maxInputValue);
 
