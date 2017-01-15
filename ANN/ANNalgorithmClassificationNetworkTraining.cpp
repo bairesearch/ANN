@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a12a 10-June-2016
+ * Project Version: 4a12b 10-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -344,6 +344,15 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		}
 		#endif
 
+		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6
+		currentNeuron = firstInputNeuron;
+		while(currentNeuron->nextNeuron != NULL)
+		{
+			checkMinNumberOfInputNeurons(currentNeuron);
+			currentNeuron = currentNeuron->nextNeuron;
+		}
+		#endif
+		
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTrain++;
 	}
@@ -429,6 +438,42 @@ void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron)
 	}
 }
 #endif
+
+#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6
+void checkMinNumberOfInputNeurons(ANNneuron* categoryNeuron)
+{		
+	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
+	{
+		ANNneuronConnection* currentANNneuronConnection = *frontConnectionIter;
+		ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
+
+		int numberOfBackConnections = frontNeuron->backANNneuronConnectionList.size();
+		if(numberOfBackConnections < 2)
+		{
+			cout << "ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6b: checkMinNumberOfInputNeurons{} error: (numberOfBackConnections < 2)" << endl;
+			cout << "numberOfBackConnections = " << numberOfBackConnections << endl;
+			exit(0);
+		}
+		bool anyBackConnectionsHaveGreaterYvaluesThanCurrentNeuron = false;
+		for(vector<ANNneuronConnection*>::iterator backConnectionIter = frontNeuron->backANNneuronConnectionList.begin(); backConnectionIter != frontNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
+		{
+			ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
+			ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
+			if(backNeuron->yPosRelFrac > frontNeuron->yPosRelFrac)
+			{
+				anyBackConnectionsHaveGreaterYvaluesThanCurrentNeuron = true;
+				cout << "ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6b: (backNeuron->yPosRelFrac > frontNeuron->yPosRelFrac)" << endl;
+				cout << "frontNeuron->yPosRelFrac = " << frontNeuron->yPosRelFrac << ", x = " << frontNeuron->xPosRelFrac << endl;
+				cout << "backNeuron->yPosRelFrac = " << backNeuron->yPosRelFrac << ", x = " << backNeuron->xPosRelFrac << endl;
+				exit(0);	
+			}
+		}
+		
+		checkMinNumberOfInputNeurons(frontNeuron);
+	}
+}
+#endif
+
 
 
 
@@ -838,9 +883,14 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 											cout << "numberOfBackMatchesNew = " << numberOfBackMatchesNew << endl;
 											exit(0);
 										}
+										if(numberOfBackMatchesNew < 2)
+										{
+											cout << "error: (numberOfBackMatchesNew < 2)" << endl;
+											exit(0);
+										}
 
-										frontNeuronBackNeuronXposAvg = frontNeuronBackNeuronXposAvg/numberOfBackMatches;
-										frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg/numberOfBackMatches;
+										frontNeuronBackNeuronXposAvg = frontNeuronBackNeuronXposAvg/numberOfBackMatchesNew;
+										frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg/numberOfBackMatchesNew;
 
 										ANNneuronConnection* connection1 = connectNeurons(intermediaryCategoryNeuron, frontNeuron);
 
@@ -891,6 +941,23 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 										{
 											cout << "trainNeuralNetworkClassificationSimple{} error; intermediary neuron is connected to all inputs" << endl;
 											exit(0);	
+										}
+										#endif
+										
+										#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6		
+										bool anyBackConnectionsHaveGreaterYvaluesThanCurrentNeuron = false;
+										for(vector<ANNneuronConnection*>::iterator backConnectionIter = intermediaryCategoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != intermediaryCategoryNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
+										{
+											ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
+											ANNneuron* intermediaryNeuronBackNeuron = currentANNneuronConnection->backNeuron;
+											if(intermediaryNeuronBackNeuron->yPosRelFrac > intermediaryCategoryNeuron->yPosRelFrac)
+											{
+												anyBackConnectionsHaveGreaterYvaluesThanCurrentNeuron = true;
+												cout << "ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6a: (intermediaryNeuronBackNeuron->yPosRelFrac > intermediaryCategoryNeuron->yPosRelFrac)" << endl;
+												cout << "intermediaryCategoryNeuron->yPosRelFrac = " << frontNeuron->yPosRelFrac << ", x = " << intermediaryCategoryNeuron->xPosRelFrac << endl;
+												cout << "intermediaryNeuronBackNeuron->yPosRelFrac = " << intermediaryNeuronBackNeuron->yPosRelFrac << ", x = " << intermediaryNeuronBackNeuron->xPosRelFrac << endl;
+												exit(0);	
+											}
 										}
 										#endif
 

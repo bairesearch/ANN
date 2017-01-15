@@ -26,7 +26,7 @@
  * File Name: ANNglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a12a 10-June-2016
+ * Project Version: 4a12b 10-June-2016
  * Description: ANN specific global definitions
  *
  * Usage Examples:
@@ -74,6 +74,7 @@
 	//#define ANN_ALGORITHM_CLASSIFICATION_NETWORK_CALCULATE_OUTPUT_AS_TOTAL_RATHER_THAN_AVERAGE	//disabled ANN4a3t
 	//#define ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING	//ANN4a3t temporarily enabled, disabled ANN4a11b
 	//#define ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS	//added ANN4a11bTEMP2
+	//#define ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6	//4a12b
 	//#define ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK5	//4a3u
 	//#define ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK4	//4a3u
 	//#define ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK3	//4a3t
