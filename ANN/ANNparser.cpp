@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a10c 07-June-2016
+ * Project Version: 4a10d 07-June-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -336,21 +336,34 @@ void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 
 		ANNexperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 
+		#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
+		cout << currentExperienceInDataSet->classTargetValue << " ";
+		#endif
 		for(int j=1;j<maxCols;j++)
 		{
 			currentExperienceInputInExperience->inputValue = normalisedInputData[i*maxCols + j];
 				//currentExperienceInputInExperience->inputValue = (normalisedInputData[i*maxCols + j]*2.0 - 1.0) - allows negative input values
 			//cout << "currentExperienceInputInExperience->inputValue = " << currentExperienceInputInExperience->inputValue  << endl;
-			
+			#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
+			cout << currentExperienceInputInExperience->inputValue << " ";
+			#endif
+		
 			ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 			currentExperienceInputInExperience->next = newExperienceInput;
 			currentExperienceInputInExperience = currentExperienceInputInExperience->next;
 		}
+		#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
+		cout << endl;
+		#endif
 
 		ANNexperience* newExperience = new ANNexperience();
 		currentExperienceInDataSet->next = newExperience;
 		currentExperienceInDataSet = currentExperienceInDataSet->next;
 	}
+	
+	#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
+	exit(0);
+	#endif
 
 	//delete inputData;
 	delete normalisedInputDataTemp;
