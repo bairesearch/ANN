@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3d 02-May-2016
+ * Project Version: 4a3e 02-May-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -135,10 +135,16 @@ int main(int argc,char* *argv)
 	bool useInputDatasetFile = false;
 	string inputDatasetFileName = "dataset.data";
 
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	long numberOfInputNeurons = 0;	//need to be generated based upon dataset or xml input file
+	long numberOfOutputNeurons = 0;	//dynamically generated while creating classification net
+	double numberOfLayers = 0;	//NOTUSED	
+	#else
 	long numberOfInputNeurons = 5;	//need to be generated based upon dataset or xml input file
 	long numberOfOutputNeurons = 3;	//need to be generated based upon dataset or xml input file
 	double numberOfLayers = 3;
-
+	#endif
+	
 	int layerDivergenceType = LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING;
 	double meanLayerDivergenceFactor = DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR;
 	double probabilityANNneuronConnectionWithPreviousLayerNeuron = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH;
