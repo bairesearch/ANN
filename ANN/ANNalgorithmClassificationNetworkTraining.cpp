@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3k 02-May-2016
+ * Project Version: 4a3l 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -93,7 +93,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 
 		//YET TO DO: for stages 1->3; update ideal values
 		
-		//createIntermediaryNeuronsStage 1
+		int createIntermediaryNeuronsStage = 1;
 		currentNeuron = firstInputNeuron;
 		while(currentNeuron->nextNeuron != NULL)
 		{	
@@ -103,7 +103,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 				cout <<"\t\tcreateIntermediaryNeuronsStage = 1" << endl;
 				#endif
 				vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
-				findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, 1);
+				findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 				
 				//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 				foundCategoryNeuronsThatUseAllInputs = true;
@@ -118,9 +118,9 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 			currentNeuron = currentNeuron->nextNeuron;
 		}
 				
-		//createIntermediaryNeuronsStage 2
 		if(!foundCategoryNeuronsThatUseAllInputs)
 		{
+			createIntermediaryNeuronsStage = 2;
 			ANNneuron* currentNeuron = firstInputNeuron;
 			bool foundCategoryNeuronsThatUseAllInputs = false;
 			while(currentNeuron->nextNeuron != NULL)
@@ -132,7 +132,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 					#endif
 				
 					vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
-					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, 2);
+					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 					foundCategoryNeuronsThatUseAllInputs = true;
@@ -148,9 +148,9 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 			}
 		}
 				
-		//createIntermediaryNeuronsStage 3
 		if(!foundCategoryNeuronsThatUseAllInputs)
 		{
+			createIntermediaryNeuronsStage = 3;
 			ANNneuron* currentNeuron = firstInputNeuron;
 			bool foundCategoryNeuronsThatUseAllInputs = false;
 			while(currentNeuron->nextNeuron != NULL)
@@ -162,7 +162,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 					#endif
 					
 					vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
-					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, 3);
+					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 					
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 					foundCategoryNeuronsThatUseAllInputs = true;
@@ -183,7 +183,6 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		if(!foundCategoryNeuronsThatUseAllInputs)
 		{
 			//link experienceClassificationTopLevelCategoryNeuron and set idealValues
-			
 			ANNneuron* currentNeuron = firstInputNeuron;
 			while(currentNeuron->nextNeuron != NULL)
 			{	
@@ -208,17 +207,9 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 			alreadyAddedOutputNeuronToList = true;
 		}
 		#else
-		ANNneuron* currentOutputNeuron = *firstOutputNeuron;
-		if(*firstOutputNeuron != NULL)
+		if(createIntermediaryNeuronsStage == 1)
 		{
-			while(currentOutputNeuron->nextNeuron != NULL)
-			{
-				if(currentOutputNeuron == experienceClassificationTopLevelCategoryNeuron)
-				{
-					alreadyAddedOutputNeuronToList = true;
-				}
-				currentOutputNeuron = currentOutputNeuron->nextNeuron;
-			}
+			alreadyAddedOutputNeuronToList = true;
 		}
 		#endif
 		if(!alreadyAddedOutputNeuronToList)
