@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 4a7b 07-June-2016
+ * Project Version: 4a8a 07-June-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -515,36 +515,36 @@ bool ANNfillNeuronDisplayReference(LDreference* currentNeuronDispayReference, AN
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(neuron->memoryTrace > 1000)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
 	}
 	else if(neuron->memoryTrace > 100)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
 	}
 	else if(neuron->memoryTrace > 25)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
 	}
 	else if(neuron->memoryTrace > 10)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_GREEN;
 	}
 	else if(neuron->memoryTrace > 4)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_GREEN;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_CYAN;
 	}
 	else if(neuron->memoryTrace > 2)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_CYAN;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_BLUE;
 	}
 	else if(neuron->memoryTrace > 1)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_BLUE;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_PURPLE;
 	}
 	else
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_PURPLE;
-	}	
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+	}
 	#else
 	if(neuron->bias < (-3.0))
 	{
@@ -648,17 +648,13 @@ bool ANNfillANNneuronConnectionDisplayReference(LDreference* currentNeuronDispay
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(ANNneuronConnection->idealValue > 1.0)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
 	}
 	if(ANNneuronConnection->idealValue > 0.8)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
-	}
-	else if(ANNneuronConnection->idealValue > 0.6)
-	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
 	}
-	else if(ANNneuronConnection->idealValue > 0.5)
+	else if(ANNneuronConnection->idealValue > 0.6)
 	{
 		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
 	}
