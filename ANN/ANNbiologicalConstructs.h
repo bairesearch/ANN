@@ -26,7 +26,7 @@
  * File Name: ANNbiologicalConstructs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3q 02-May-2016
+ * Project Version: 4a3r 02-May-2016
  * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
  *
  *******************************************************************************/

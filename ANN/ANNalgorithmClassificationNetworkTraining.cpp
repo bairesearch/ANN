@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3q 02-May-2016
+ * Project Version: 4a3r 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -83,6 +83,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		
 		ANNneuron* experienceClassificationTopLevelCategoryNeuron = new ANNneuron();
 		experienceClassificationTopLevelCategoryNeuron->nextNeuron = new ANNneuron();	//class architecture required to create a blank neuron
+		experienceClassificationTopLevelCategoryNeuron->topLevelCategoryNeuron = true;
 		experienceClassificationTopLevelCategoryNeuron->xPosRelFrac = (*numberOfOutputNeurons);
 		experienceClassificationTopLevelCategoryNeuron->yPosRelFrac = ANN_ALGORITHM_CLASSIFICATION_NETWORK_NETWORK_DISPLAY_HEIGHT;
 		experienceClassificationTopLevelCategoryNeuron->hasBackLayer = true;
@@ -637,13 +638,8 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 		
 		ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 		ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
-		if(backNeuron == categoryNeuron)
-		{
-			cout << "findCategoriesForExperience{} error: (backNeuron == categoryNeuron)" << endl;
-			exit(0);
-		}
 		
-		if(findCategoriesForExperience(currentANNneuronConnection->backNeuron, inputValuesCategoryFound))
+		if(findCategoriesForExperience(backNeuron, inputValuesCategoryFound))
 		{
 			backNeuron->inputNeuronMatchTemp = true;
 			totalDiff = totalDiff + calculateDiff(currentANNneuronConnection->idealValue, backNeuron->output);
@@ -676,18 +672,18 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 				{
 					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 					ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
-					int numberOfInputNeuronInputValues = backNeuron->backANNneuronConnectionList.size();
-					if(numberOfInputNeuronInputValues == 0)
+					if(backNeuron->inputNeuron)
 					{
 						//network input neuron detected
-						(*inputValuesCategoryFound)[backNeuron->orderID] = true;
+						(*inputValuesCategoryFound)[backNeuron->orderID - 1] = true;
 					}
 				}
 				
-				//double averageOutput = totalOutput/numberOfCategoryInputValues;
-				//categoryNeuron->output = averageOutput;
+				/*
+				double averageOutput = totalOutput/numberOfCategoryInputValues;
+				categoryNeuron->output = averageOutput;
+				*/
 				categoryNeuron->output = totalOutput;	//using totalOutput provides greater information resolution than averageOutput
-				
 				
 				//if(createIntermediaryNeuronsStage == 1)	//prevent updating memory trace too often
 				//{
