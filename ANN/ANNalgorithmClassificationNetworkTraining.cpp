@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a11a 09-June-2016
+ * Project Version: 4a11b 09-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -817,7 +817,7 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 
 										ANNneuronConnection* connection1 = connectNeurons(intermediaryCategoryNeuron, frontNeuron);
 
-										updateConnectionIdealValuesParent(frontNeuron);	//added 4a3t
+										//updateConnectionIdealValuesParent(frontNeuron);	//added 4a3t, removed 4a11b
 
 										intermediaryCategoryNeuron->intermediaryNeuronCreatedThisRound = true;
 										intermediaryCategoryNeuron->xPosRelFrac = (frontNeuronBackNeuronXposAvg + frontNeuron->xPosRelFrac)/2.0;
@@ -826,6 +826,9 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 										//cout << "intermediaryCategoryNeuron->yPosRelFrac = " << intermediaryCategoryNeuron->yPosRelFrac << endl;
 
 										ANNneuronConnection* connection2 = connectNeurons(intermediaryCategoryNeuron, *experienceClassificationneuronTypeTopLevelCategory);
+
+										intermediaryCategoryNeuron->backNeuronMatchTemp = true;
+										updateConnectionIdealValuesChildren(intermediaryCategoryNeuron);	//added 4a11b
 
 
 										#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK5
@@ -1224,8 +1227,28 @@ void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron)
 	{
 		ANNneuronConnection* currentANNneuronConnection = *frontConnectionIter;
 		ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
+		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
+		updateConnectionIdealValueNoUpdating(currentANNneuronConnection);
+		#else
 		updateConnectionIdealValue(currentANNneuronConnection);
+		#endif
 		updateConnectionIdealValuesParent(frontNeuron);
+	}
+}
+
+void updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron)
+{
+	if(categoryNeuron->backNeuronMatchTemp)
+	{
+		for(vector<ANNneuronConnection*>::iterator backConnectionIter = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != categoryNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
+		{
+			ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
+			ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
+			
+			updateConnectionIdealValuesChildren(backNeuron);
+		}
+		
+		updateConnectionIdealValuesParent(categoryNeuron);
 	}
 }
 
@@ -1235,17 +1258,7 @@ void updateConnectionIdealValue(ANNneuronConnection* connection)
 	//test without network updates;
 	//if(connection->idealValue == 0)
 	//{
-		if(connection->backNeuron->neuronTypeInput)
-		{
-			if(connection->idealValue == 0)
-			{
-				connection->idealValue = connection->backNeuron->output;
-			}
-		}
-		else
-		{
-			connection->idealValue = calculateIdealOutputValue(connection->backNeuron);
-		}
+		updateConnectionIdealValueNoUpdating(connection);
 	//}
 	#else
 	if(connection->backNeuron->neuronTypeInput)
@@ -1260,6 +1273,21 @@ void updateConnectionIdealValue(ANNneuronConnection* connection)
 	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK1
 	cout << "connection->idealValue = " << connection->idealValue << endl;
 	#endif
+}
+
+void updateConnectionIdealValueNoUpdating(ANNneuronConnection* connection)
+{	
+	if(connection->backNeuron->neuronTypeInput)
+	{
+		if(connection->idealValue == 0)
+		{
+			connection->idealValue = connection->backNeuron->output;
+		}
+	}
+	else
+	{
+		connection->idealValue = calculateIdealOutputValue(connection->backNeuron);
+	}
 }
 
 double calculateIdealOutputValue(ANNneuron* categoryNeuron)

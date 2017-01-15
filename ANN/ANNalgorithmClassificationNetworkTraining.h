@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a11a 09-June-2016
+ * Project Version: 4a11b 09-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -51,7 +51,9 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level);
 		ANNneuronConnection* connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron);
 		void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron);
+		void updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron);
 		void updateConnectionIdealValue(ANNneuronConnection* connection);
+		void updateConnectionIdealValueNoUpdating(ANNneuronConnection* connection);
 		double calculateIdealOutputValue(ANNneuron* categoryNeuron);
 		double calculateOutput(double totalOutput, double numberOfCategoryInputValues);
 		double calculateDiff(double idealValue, double value);
