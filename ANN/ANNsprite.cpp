@@ -26,7 +26,7 @@
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -787,14 +787,14 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 	spriteColourArray[7] = SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR;
 
 
-	char tempString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
+	string tempString = "";
 	//char* tempString = new char[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
 	/*Unit Name Information*/
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO)
 	{
-		sprintf(tempString, "%d", neuron->id);
+		tempString = convertIntToString(neuron->id);
 		if(SPRITE_TEXTUAL_INCLUDE_NEURON_EXTRA_SECONDARY_INFO)
 		{
 			#ifdef ANN_DEBUG
@@ -828,7 +828,7 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		sprintf(tempString, "%d", neuron->orderID);
+		tempString = convertIntToString(neuron->orderID);
 		*spriteTextString = *spriteTextString + "orderID = " + tempString;
 	}
 
@@ -836,7 +836,7 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		sprintf(tempString, "%d", neuron->layerID);
+		tempString = convertIntToString(neuron->layerID);
 		*spriteTextString = *spriteTextString + "layerID = " + tempString;
 	}
 
@@ -844,7 +844,7 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		sprintf(tempString, "%d", neuron->subnetID);
+		tempString = convertIntToString(neuron->subnetID);
 		*spriteTextString = *spriteTextString + "subnetID = " + tempString;
 	}
 
@@ -852,7 +852,7 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		sprintf(tempString, "%0.2f", neuron->bias);
+		tempString = convertDoubleToString(neuron->bias, "%0.2f");
 		*spriteTextString = *spriteTextString + "bias = " + tempString;
 	}
 
@@ -860,21 +860,21 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		sprintf(tempString, "%0.2f", neuron->output);
+		tempString = convertDoubleToString(neuron->output, "%0.2f");
 		*spriteTextString = *spriteTextString + "output = " + tempString;
 	}
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		sprintf(tempString, "%0.2f", neuron->classTarget);
+		tempString = convertDoubleToString(neuron->classTarget, "%0.2f");
 		*spriteTextString = *spriteTextString + "classTarget = " + tempString;
 	}
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		sprintf(tempString, "%0.2f", neuron->error);
+		tempString = convertDoubleToString(neuron->error, "%0.2f");
 		*spriteTextString = *spriteTextString + "error = " + tempString;
 	}
 
@@ -895,12 +895,11 @@ void ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneuronConnection* 
 	spriteColourArray[2] = SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR;
 	spriteColourArray[3] = SPRITE_TEXTUAL_INCLUDE_ANNneuronConnection_WEIGHT_COLOUR;
 
-	char tempString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
-	//char* tempString = new char[DAT_FILE_DATA_VALUE_MAX_LENGTH];
+	string tempString = "";
 
 	/*Unit Name Information*/
 
-	sprintf(tempString, "%0.2f", ANNneuronConnection->weight);
+	tempString = convertDoubleToString(ANNneuronConnection->weight, "%0.2f");
 	*spriteTextString = "\n\n" +* spriteTextString + "w = " + tempString;
 
 	#ifdef ANN_DEBUG

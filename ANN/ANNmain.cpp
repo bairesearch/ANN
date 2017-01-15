@@ -26,7 +26,7 @@
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -605,12 +605,12 @@ bool createNetwork()
 	{
 		cout <<	"\nEnter the number of input neurons (2, 3, 4, 5 [Default], ... etc):\n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(atof(answerAsString.c_str()));
+		answerAsInt = long(convertStringToDouble(answerAsString));
 		numberOfInputNeurons = answerAsInt;
 
 		cout <<	"\nEnter the number of output neurons (2, 3 [Default], 4, 5, ... etc):\n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(atof(answerAsString.c_str()));
+		answerAsInt = long(convertStringToDouble(answerAsString));
 		numberOfOutputNeurons = answerAsInt;
 
 		numberOfInputAndOutputNeuronsSelected = true;
@@ -619,7 +619,7 @@ bool createNetwork()
 
 	cout <<	"\nEnter the number of top level Layers (2, 3 [Default], ... etc):\n\n>> ";
 	cin >> answerAsString;
-	answerAsInt = long(atof(answerAsString.c_str()));
+	answerAsInt = long(convertStringToDouble(answerAsString));
 	numberOfLayers = answerAsInt;
 	if(numberOfLayers < 2)
 	{
@@ -636,12 +636,12 @@ bool createNetwork()
 		//non subnet/ANN specific parameters....
 		cout <<	"\nEnter layer divergence type [Default = " << LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING << "]:\n\t1 (LINEAR_CONVERGING), \n\t2 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_THEN_CONVERGING),\n\t3 (LAYER_DIVERGENCE_TYPE_NONLINEAR_DIVERGING_THEN_CONVERGING),\n\t4 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING),\n\t5 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D),\n\t6 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS). \n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(atof(answerAsString.c_str()));
+		answerAsInt = long(convertStringToDouble(answerAsString));
 		layerDivergenceType = answerAsInt;
 
 		cout <<	"\nEnter the mean layer divergence factor [Default = " << DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR << "]:\n\n>> ";
 		cin >> answerAsString;
-		answerAsDouble = atof(answerAsString.c_str());
+		answerAsDouble = convertStringToDouble(answerAsString);
 		meanLayerDivergenceFactor = answerAsDouble;
 
 		#ifdef ANN_DEBUG
@@ -650,13 +650,13 @@ bool createNetwork()
 
 		cout <<	"\nEnter the probability of neuron having a connection with a previous layer neuron [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;
-		answerAsDouble = atof(answerAsString.c_str());
+		answerAsDouble = convertStringToDouble(answerAsString);
 		probabilityANNneuronConnectionWithPreviousLayerNeuron = answerAsDouble;
 
 
 		cout <<	"\nEnter the probability of a neuron having a direct link with all previous layers neurons [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;
-		answerAsDouble = atof(answerAsString.c_str());
+		answerAsDouble = convertStringToDouble(answerAsString);
 		probabilityANNneuronConnectionWithAllPreviousLayersNeurons = answerAsDouble;
 
 
@@ -669,12 +669,12 @@ bool createNetwork()
 		{
 			cout <<	"\nEnter the maximum number of subnet layers you wish to create (1,2,3,4,5,... etc) [Default = " << DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH << "]:\n\n>> ";
 			cin >> answerAsString;
-			answerAsInt = long(atof(answerAsString.c_str()));
+			answerAsInt = long(convertStringToDouble(answerAsString));
 			maxNumRecursiveSubnets = answerAsInt;
 
 			cout <<	"\nEnter the probability of subnet creation [Default = " << DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH << "]:\n\n>> ";
 			cin >> answerAsString;
-			answerAsDouble = atof(answerAsString.c_str());
+			answerAsDouble = convertStringToDouble(answerAsString);
 			probabilityOfSubnetCreation = answerAsDouble;
 
 			cout <<	"\nDo you wish to use subnet dependant number of layers? (y/n). [Default = n]:\n\n>> ";
@@ -907,7 +907,7 @@ bool mainUI()
 		cout <<	"Enter Answer (0,1,2,3... etc):\n\n>> ";
 
 		cin >> answerAsString;
-		answerAsInt = long(atof(answerAsString.c_str()));
+		answerAsInt = long(convertStringToDouble(answerAsString));
 		if(answerAsInt == 1)
 		{
 			loadNetworkFromXML();

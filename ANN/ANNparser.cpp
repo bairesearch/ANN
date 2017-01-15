@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -35,7 +35,7 @@
 #include "ANNdata.h"
 #include "ANNparser.h"
 #include "ANNexperienceClass.h"
-
+#include "SHAREDvars.h"
 
 #define EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH 1000	//max num experiences in dataset
 #define EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH 101 	//max num input neurons +1
@@ -92,7 +92,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		{
 			case CHAR_NEWLINE:
 			{
-				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString.c_str());
+				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = convertStringToDouble(currentNumberString);
 				currentNumberString = "";
 
 					#ifdef ANN_DEBUG
@@ -110,7 +110,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 			}
 			case CHAR_COMMA:
 			{
-				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString.c_str());
+				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = convertStringToDouble(currentNumberString);
 				currentNumberString = "";
 				currentColumn++;
 				break;

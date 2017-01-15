@@ -26,7 +26,7 @@
  * File Name: ANNexperienceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  * Comments:
  *
  *******************************************************************************/
@@ -172,11 +172,9 @@ void addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, ANNexpe
 
 void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, ANNexperience* experience)
 {
-	char tempString[MAX_EXPERIENCE_SIGNIFICANT_BITS];
-
-	sprintf(tempString, "%d", experience->classTargetValue);
-	string tempStringPlusPlus = tempString;
-	for(int i = 0; i<(int)(tempStringPlusPlus.length());i++)
+	string tempString = convertIntToString(experience->classTargetValue);
+	//experienceDataSetOfStreamObject->write(tempString);
+	for(int i = 0; i<(int)(tempString.length());i++)
 	{
 		experienceDataSetOfStreamObject->put(tempString[i]);
 	}
@@ -185,11 +183,11 @@ void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, ANNexper
 	ANNexperienceInput* currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
 	{
-		sprintf(tempString, "%0.6f",  currentExperienceInput->inputValue);
-		string tempStringPlusPlus = tempString;
-		for(int i = 0; i<(int)(tempStringPlusPlus.length());i++)
+		string tempString2 = convertDoubleToString(currentExperienceInput->inputValue, "%0.6f");
+		//experienceDataSetOfStreamObject->write(tempString2);
+		for(int i = 0; i<(int)(tempString2.length());i++)
 		{
-			experienceDataSetOfStreamObject->put(tempString[i]);
+			experienceDataSetOfStreamObject->put(tempString2[i]);
 		}
 		experienceDataSetOfStreamObject->put(CHAR_COMMA);
 		currentExperienceInput = currentExperienceInput->next;

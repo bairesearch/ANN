@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f3a 10-July-2015
+ * Project Version: 3f4a 11-July-2015
  * Comments
  *
  *******************************************************************************/
@@ -34,6 +34,7 @@
 
 
 #include "ANNxmlConversion.h"
+#include "SHAREDvars.h"
 
 //this function works and no longer needs to be tested
 #ifdef NN_XML_DEBUG
@@ -225,8 +226,6 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 
 		while(currentNeuron->nextNeuron != NULL)
 		{
-			char tempString[MAX_ATTRIBUTE_VALUE_SIZE];
-
 			//generate neuron container tag
 			currentTagL1->name = NET_XML_TAG_neuronContainer;
 			XMLparserTag* firstTagL2 = new XMLparserTag();
@@ -239,73 +238,41 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 			XMLParserAttribute* currentAttribute = currentTagL2->firstAttribute;
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_id;
-			sprintf(tempString, "%d", (currentNeuron->id));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute1 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute1;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertIntToString((currentNeuron->id));
+			currentAttribute = createNewAttribute(currentAttribute);
 
 		#ifndef DO_NOT_STORE_NET_XML_NEURON_ID_PARAMETERS
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_layerID;
-			sprintf(tempString, "%d", (currentNeuron->layerID));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute2 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute2;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertIntToString((currentNeuron->layerID));
+			currentAttribute = createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_orderID;
-			sprintf(tempString, "%d", (currentNeuron->orderID));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute3 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute3;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertIntToString((currentNeuron->orderID));
+			currentAttribute = createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_subnetID;
-			sprintf(tempString, "%d", (currentNeuron->subnetID));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute4 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute4;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertIntToString((currentNeuron->subnetID));
+			currentAttribute = createNewAttribute(currentAttribute);
 		#endif
 
 		#ifndef DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_bias;
-			sprintf(tempString, "%0.6f", (currentNeuron->bias));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute5 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute5;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertDoubleToString((currentNeuron->bias), "%0.6f");
+			currentAttribute = createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_output;
-			sprintf(tempString, "%0.6f", (currentNeuron->output));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute6 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute6;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertDoubleToString((currentNeuron->output), "%0.6f");
+			currentAttribute = createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_classTarget;
-			sprintf(tempString, "%0.6f", (currentNeuron->classTarget));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute7 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute7;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertDoubleToString((currentNeuron->classTarget), "%0.6f");
+			currentAttribute = createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_error;
-			sprintf(tempString, "%0.6f", (currentNeuron->error));
-			currentAttribute->value = tempString;
-
-			XMLParserAttribute* newAttribute8 = new XMLParserAttribute();
-			currentAttribute->nextAttribute = newAttribute8;
-			currentAttribute = currentAttribute->nextAttribute;
+			currentAttribute->value = convertDoubleToString((currentNeuron->error), "%0.6f");
+			currentAttribute = createNewAttribute(currentAttribute);
 		#endif
 
 		#ifndef DO_NOT_STORE_NET_XML_NEURON_SPATIAL_COORD_PARAMETERS
@@ -314,28 +281,16 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 			{
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_xPosRel;
-				sprintf(tempString, "%d", (currentNeuron->xPosRel));
-				currentAttribute->value = tempString;
-
-				XMLParserAttribute* newAttribute9 = new XMLParserAttribute();
-				currentAttribute->nextAttribute = newAttribute9;
-				currentAttribute = currentAttribute->nextAttribute;
+				currentAttribute->value = convertIntToString((currentNeuron->xPosRel));
+				currentAttribute = createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRel;
-				sprintf(tempString, "%d", (currentNeuron->yPosRel));
-				currentAttribute->value = tempString;
-
-				XMLParserAttribute* newAttribute10 = new XMLParserAttribute();
-				currentAttribute->nextAttribute = newAttribute10;
-				currentAttribute = currentAttribute->nextAttribute;
+				currentAttribute->value = convertIntToString((currentNeuron->yPosRel));
+				currentAttribute = createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRel;
-				sprintf(tempString, "%d", (currentNeuron->zPosRel));
-				currentAttribute->value = tempString;
-
-				XMLParserAttribute* newAttribute11 = new XMLParserAttribute();
-				currentAttribute->nextAttribute = newAttribute11;
-				//currentAttribute = currentAttribute->nextAttribute;
+				currentAttribute->value = convertIntToString((currentNeuron->zPosRel));
+				currentAttribute = createNewAttribute(currentAttribute);
 			}
 		#endif
 
@@ -361,21 +316,13 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 					XMLParserAttribute* currentAttribute = currentTagL3->firstAttribute;
 
 					currentAttribute->name = NET_XML_ATTRIBUTE_neuronID;
-					sprintf(tempString, "%d", (currentANNneuronConnection->frontNeuron->id));
-					currentAttribute->value = tempString;
-
-					XMLParserAttribute* newAttribute1 = new XMLParserAttribute();
-					currentAttribute->nextAttribute = newAttribute1;
-					currentAttribute = currentAttribute->nextAttribute;
+					currentAttribute->value = convertIntToString((currentANNneuronConnection->frontNeuron->id));
+					currentAttribute = createNewAttribute(currentAttribute);
 
 				#ifndef DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
 					currentAttribute->name = NET_XML_ATTRIBUTE_weight;
-					sprintf(tempString, "%0.6f", (currentANNneuronConnection->weight));
-					currentAttribute->value = tempString;
-
-					XMLParserAttribute* newAttribute2 = new XMLParserAttribute();
-					currentAttribute->nextAttribute = newAttribute2;
-					//currentAttribute = currentAttribute->nextAttribute;
+					currentAttribute->value = convertDoubleToString((currentANNneuronConnection->weight), "%0.6f");
+					currentAttribute = createNewAttribute(currentAttribute);
 				#endif
 
 					XMLparserTag* newTag = new XMLparserTag();
@@ -803,12 +750,12 @@ bool parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConne
 	{
 		if(currentAttribute->name == NET_XML_ATTRIBUTE_neuronID)
 		{
-			currentANNneuronConnection->frontNeuronID = atof(currentAttribute->value.c_str());		//temporary variable used to link neuron connections at a later stage
+			currentANNneuronConnection->frontNeuronID = convertStringToDouble(currentAttribute->value);		//temporary variable used to link neuron connections at a later stage
 			neuronIDFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_weight)
 		{
-			currentANNneuronConnection->weight = atof(currentAttribute->value.c_str());
+			currentANNneuronConnection->weight = convertStringToDouble(currentAttribute->value);
 			weightFound = true;
 		}
 
@@ -861,7 +808,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 	{
 		if(currentAttribute->name == NET_XML_ATTRIBUTE_id)
 		{
-			long attributeValue = atof(currentAttribute->value.c_str());
+			long attributeValue = convertStringToDouble(currentAttribute->value);
 			//always use XML file's neuron id as this has been generated in a different order than wrongAndNotUsedIDcounter
 			//#ifndef DO_NOT_REGENERATE_NEURON_IDS_WHEN_PARSING_NET_XML
 
@@ -871,7 +818,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_orderID)
 		{
-			long attributeValue = atof(currentAttribute->value.c_str());
+			long attributeValue = convertStringToDouble(currentAttribute->value);
 			if(attributeValue != orderIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != orderIDcounter, attributeValue = " << attributeValue << ", orderIDcounter = " << subnetIDcounter << endl;
@@ -882,7 +829,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_layerID)
 		{
-			long attributeValue = atof(currentAttribute->value.c_str());
+			long attributeValue = convertStringToDouble(currentAttribute->value);
 			if(attributeValue != layerIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != layerIDcounter, attributeValue = " << attributeValue << ", layerIDcounter = " << subnetIDcounter << endl;
@@ -893,7 +840,7 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_subnetID)
 		{
-			long attributeValue = atof(currentAttribute->value.c_str());
+			long attributeValue = convertStringToDouble(currentAttribute->value);
 			if(attributeValue != subnetIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != subnetIDcounter, attributeValue = " << attributeValue << ", subnetIDcounter = " << subnetIDcounter << endl;
@@ -904,44 +851,44 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_bias)
 		{
-			double attributeValue = atof(currentAttribute->value.c_str());
+			double attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->bias = attributeValue;
 			biasFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_output)
 		{
-			double attributeValue = atof(currentAttribute->value.c_str());
+			double attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->output = attributeValue;
 			outputFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_classTarget)
 		{
-			double attributeValue = atof(currentAttribute->value.c_str());
+			double attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->classTarget = attributeValue;
 			classTargetFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_error)
 		{
-			double attributeValue = atof(currentAttribute->value.c_str());
+			double attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->error = attributeValue;
 			errorFound = true;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_xPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet = true;
-			long attributeValue = atof(currentAttribute->value.c_str());
+			long attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->xPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_yPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet = true;
-			long attributeValue = atof(currentAttribute->value.c_str());
+			long attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->yPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_zPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet = true;
-			long attributeValue = atof(currentAttribute->value.c_str());
+			long attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRel = attributeValue;
 		}
 		else
