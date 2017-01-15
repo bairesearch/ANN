@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a11b 09-June-2016
+ * Project Version: 4a12a 10-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -334,6 +334,15 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		}
 		*/
 		#endif
+		
+		#ifndef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
+		currentNeuron = firstInputNeuron;
+		while(currentNeuron->nextNeuron != NULL)
+		{
+			resetBackNeuronMatchTemp(currentNeuron);
+			currentNeuron = currentNeuron->nextNeuron;
+		}
+		#endif
 
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTrain++;
@@ -377,6 +386,24 @@ void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron)
 		resetIntermediaryNeuronCreatedThisRoundFlag(frontNeuron);
 	}
 }
+
+#ifndef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
+void resetBackNeuronMatchTemp(ANNneuron* categoryNeuron)
+{	
+	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
+	{
+		ANNneuronConnection* currentANNneuronConnection = *frontConnectionIter;
+		ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
+		
+		if(frontNeuron->backNeuronMatchTemp)
+		{
+			frontNeuron->backNeuronMatchTemp = false;
+			resetBackNeuronMatchTemp(frontNeuron);
+		}
+	}
+}	
+#endif
+		
 
 #ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK3
 void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron)
@@ -1227,10 +1254,18 @@ void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron)
 	{
 		ANNneuronConnection* currentANNneuronConnection = *frontConnectionIter;
 		ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
-		#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
-		updateConnectionIdealValueNoUpdating(currentANNneuronConnection);
-		#else
-		updateConnectionIdealValue(currentANNneuronConnection);
+		#ifndef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
+		if(frontNeuron->backNeuronMatchTemp)
+		{
+			frontNeuron->backNeuronMatchTemp = false;
+			updateConnectionIdealValue(currentANNneuronConnection);
+		}
+		else
+		{
+		#endif
+			updateConnectionIdealValueNoUpdating(currentANNneuronConnection);
+		#ifndef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
+		}
 		#endif
 		updateConnectionIdealValuesParent(frontNeuron);
 	}
