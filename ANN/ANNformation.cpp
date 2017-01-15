@@ -26,7 +26,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3c 02-May-2016
+ * Project Version: 4a3d 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -45,7 +45,7 @@ static long subnetIDcounter;
 /************************************************************ Form Neural Network Routines* *****************************************************/
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-void formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons)
+void formNeuralNetworkInputLayer(ANNneuron* firstInputNeuronInNetwork, int numberOfInputNeurons)
 {
 	//initiate Input Layer in Neural Network
 	IDCounter = 1;

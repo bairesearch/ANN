@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3c 02-May-2016
+ * Project Version: 4a3d 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -40,9 +40,9 @@
 #include "ANNneuronConnectionClass.h"
 #include "ANNexperienceClass.h"
 
-#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
-void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, int numberOfInputNeurons, int* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
+void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
 	void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron);
 	#endif
@@ -50,7 +50,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound);
 		void updateConnectionIdealValue(ANNneuronConnection* connection);
 		ANNneuronConnection* connectNeurons(ANNneuron* parentNeuron, ANNneuron* childNeuron);
-		bool calculateDiff(double idealValue, double value);
+		double calculateDiff(double idealValue, double value);
 		double calculateSum(double value);
 
 #endif

@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3c 02-May-2016
+ * Project Version: 4a3d 02-May-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -38,6 +38,9 @@
 #include "ANNalgorithmBackpropagationTraining.h"
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 #include "ANNalgorithmMemoryNetworkTraining.h"
+#endif
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+#include "ANNalgorithmClassificationNetworkTraining.h"
 #endif
 #include "ANNparser.h"
 #include "ANNxmlConversion.h"
@@ -517,7 +520,7 @@ int main(int argc,char* *argv)
 				trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
 				#endif
 				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);	
+				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
 			}
 			else
@@ -529,7 +532,7 @@ int main(int argc,char* *argv)
 				trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
 				#endif
 				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);				
+				trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);				
 				#endif
 			}
 		}
@@ -593,6 +596,7 @@ bool loadNetworkFromXML()
 	return result;
 }
 
+#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 bool createNetwork()
 {
 	bool result = true;
@@ -736,7 +740,7 @@ bool createNetwork()
 
 	return result;
 }
-
+#endif
 
 
 
@@ -819,7 +823,7 @@ bool trainNetwork(bool advancedTraining)
 			trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);			
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);				
+			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);				
 			#endif
 		}
 		else
@@ -832,7 +836,7 @@ bool trainNetwork(bool advancedTraining)
 			trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);			
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);					
+			trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);					
 			#endif
 		}
 	}

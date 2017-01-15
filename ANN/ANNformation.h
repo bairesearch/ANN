@@ -26,7 +26,7 @@
  * File Name: ANNformation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3c 02-May-2016
+ * Project Version: 4a3d 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -73,7 +73,7 @@
 #define BASIC_NUMBER_OF_HIDDEN_NEURONS_HEURISTIC_ANNTH (1.0F)	//only used for backwards compatability
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-void formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons)
+void formNeuralNetworkInputLayer(ANNneuron* firstInputNeuronInNetwork, int numberOfInputNeurons);
 #else
 void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfHiddenNeurons, long numberOfOutputNeurons);
 ANNneuron* formNeuralNetWithOptimisedProperties(ANNneuron* firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers);
