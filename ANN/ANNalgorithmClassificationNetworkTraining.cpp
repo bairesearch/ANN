@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3n 02-May-2016
+ * Project Version: 4a3o 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -102,14 +102,14 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 				#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
 				cout <<"\t\tcreateIntermediaryNeuronsStage = 1" << endl;
 				#endif
-				vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
+				//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
 				findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 				
 				//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 				foundCategoryNeuronsThatUseAllInputs = true;
-				for(vector<bool>::iterator inputValuesCategoryFoundTempIter = inputValuesCategoryFoundTemp.begin(); inputValuesCategoryFoundTempIter != inputValuesCategoryFoundTemp.end(); inputValuesCategoryFoundTempIter++)
+				for(vector<bool>::iterator inputValuesCategoryFoundIter = inputValuesCategoryFound.begin(); inputValuesCategoryFoundIter != inputValuesCategoryFound.end(); inputValuesCategoryFoundIter++)
 				{
-					if(*inputValuesCategoryFoundTempIter == false)
+					if(*inputValuesCategoryFoundIter == false)
 					{
 						foundCategoryNeuronsThatUseAllInputs = false;
 					}
@@ -131,14 +131,14 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 					cout <<"\t\tcreateIntermediaryNeuronsStage = 2" << endl;
 					#endif
 				
-					vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
+					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
 					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 					foundCategoryNeuronsThatUseAllInputs = true;
-					for(vector<bool>::iterator inputValuesCategoryFoundTempIter = inputValuesCategoryFoundTemp.begin(); inputValuesCategoryFoundTempIter != inputValuesCategoryFoundTemp.end(); inputValuesCategoryFoundTempIter++)
+					for(vector<bool>::iterator inputValuesCategoryFoundIter = inputValuesCategoryFound.begin(); inputValuesCategoryFoundIter != inputValuesCategoryFound.end(); inputValuesCategoryFoundIter++)
 					{
-						if(*inputValuesCategoryFoundTempIter == false)
+						if(*inputValuesCategoryFoundIter == false)
 						{
 							foundCategoryNeuronsThatUseAllInputs = false;
 						}
@@ -161,14 +161,14 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 					cout <<"\t\tcreateIntermediaryNeuronsStage = 3" << endl;
 					#endif
 					
-					vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
+					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size(), false);
 					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationTopLevelCategoryNeuron, createIntermediaryNeuronsStage);
 					
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 					foundCategoryNeuronsThatUseAllInputs = true;
-					for(vector<bool>::iterator inputValuesCategoryFoundTempIter = inputValuesCategoryFoundTemp.begin(); inputValuesCategoryFoundTempIter != inputValuesCategoryFoundTemp.end(); inputValuesCategoryFoundTempIter++)
+					for(vector<bool>::iterator inputValuesCategoryFoundIter = inputValuesCategoryFound.begin(); inputValuesCategoryFoundIter != inputValuesCategoryFound.end(); inputValuesCategoryFoundIter++)
 					{
-						if(*inputValuesCategoryFoundTempIter == false)
+						if(*inputValuesCategoryFoundIter == false)
 						{
 							foundCategoryNeuronsThatUseAllInputs = false;
 						}
@@ -184,17 +184,22 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		{
 			//link experienceClassificationTopLevelCategoryNeuron and set idealValues
 			ANNneuron* currentNeuron = firstInputNeuron;
+			int i = 0;
 			while(currentNeuron->nextNeuron != NULL)
 			{	
-				ANNneuronConnection* connection = connectNeurons(experienceClassificationTopLevelCategoryNeuron, currentNeuron);
-				#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
-				if(experienceClassificationTopLevelCategoryNeuron == currentNeuron)
+				if(inputValuesCategoryFound[i] == false)
 				{
-					cout << "trainNeuralNetworkClassificationSimple{} error: (experienceClassificationTopLevelCategoryNeuron == currentNeuron)" << endl;
-					exit(0);
+					ANNneuronConnection* connection = connectNeurons(experienceClassificationTopLevelCategoryNeuron, currentNeuron);
+					#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
+					if(experienceClassificationTopLevelCategoryNeuron == currentNeuron)
+					{
+						cout << "trainNeuralNetworkClassificationSimple{} error: (experienceClassificationTopLevelCategoryNeuron == currentNeuron)" << endl;
+						exit(0);
+					}
+					#endif
+					connection->idealValue = currentNeuron->output;
 				}
-				#endif
-				connection->idealValue = currentNeuron->output;
+				i++;
 				currentNeuron = currentNeuron->nextNeuron;
 			}
 		}
