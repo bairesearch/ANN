@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a12b 10-June-2016
+ * Project Version: 4a13a 14-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -44,17 +44,21 @@
 
 void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
 	void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron);
-	#ifndef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_DISABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
+	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
 	void resetBackNeuronMatchTemp(ANNneuron* categoryNeuron);
 	#endif
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
 	void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
 	#endif
+	void deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
+	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
+	void mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
+	#endif
 	void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage);
 		bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level);
 		ANNneuronConnection* connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron);
-		void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron);
-		void updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron);
+		void updateConnectionIdealValuesParent(ANNneuron* categoryNeuron, bool updateIdealValues);
+		void updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron, bool updateIdealValues);
 		void updateConnectionIdealValue(ANNneuronConnection* connection);
 		void updateConnectionIdealValueNoUpdating(ANNneuronConnection* connection);
 		double calculateIdealOutputValue(ANNneuron* categoryNeuron);
