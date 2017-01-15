@@ -26,7 +26,7 @@
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -303,7 +303,7 @@ LDreference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(ANNneur
 		{
 			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->backANNneuronConnectionList.begin(); connectionIter != currentNeuron->backANNneuronConnectionList.end(); connectionIter++)
 			{
-				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 				//regenerate reference properties for a neuron display reference in the previous layer (which is connected to the current neuron)
 
@@ -342,7 +342,7 @@ LDreference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(ANNneur
 
 			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->backANNneuronConnectionList.begin(); connectionIter != currentNeuron->backANNneuronConnectionList.end(); connectionIter++)
 			{
-				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 				//regenerate reference properties for a neuron display reference in the previous layer (which is connected to the current neuron)
 
@@ -371,7 +371,7 @@ LDreference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(ANNneur
 
 			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 			{
-				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 				//regenerate reference properties for a neuron display reference in the previous layer (which is connected to the current neuron)
 
 				LDreference currentNeuronReferenceOnNextLayer;
@@ -803,13 +803,13 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 			if(neuron->id == 1)
 			{
 				//test spritetext kernelling;
-				*spriteTextString =* spriteTextString + "0123456789 10ABCDEFGHIJKLMNOPQRSTUVQXYZ .=-+ ID = " + tempString;
+				*spriteTextString = *spriteTextString + "0123456789 10ABCDEFGHIJKLMNOPQRSTUVQXYZ .=-+ ID = " + tempString;
 			}
 			else
 			{
 			*/
 			#endif
-			*spriteTextString =* spriteTextString + "ID = " + tempString;
+			*spriteTextString = *spriteTextString + "ID = " + tempString;
 
 			#ifdef ANN_DEBUG
 			/*
@@ -820,62 +820,62 @@ void ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, string* spriteT
 		}
 		else
 		{
-			*spriteTextString =* spriteTextString + "        " + tempString;
+			*spriteTextString = *spriteTextString + "        " + tempString;
 		}
 	}
 
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO)
 	{
-		*spriteTextString =* spriteTextString + '\n';
+		*spriteTextString = *spriteTextString + '\n';
 		sprintf(tempString, "%d", neuron->orderID);
-		*spriteTextString =* spriteTextString + "orderID = " + tempString;
+		*spriteTextString = *spriteTextString + "orderID = " + tempString;
 	}
 
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO)
 	{
-		*spriteTextString =* spriteTextString + '\n';
+		*spriteTextString = *spriteTextString + '\n';
 		sprintf(tempString, "%d", neuron->layerID);
-		*spriteTextString =* spriteTextString + "layerID = " + tempString;
+		*spriteTextString = *spriteTextString + "layerID = " + tempString;
 	}
 
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO)
 	{
-		*spriteTextString =* spriteTextString + '\n';
+		*spriteTextString = *spriteTextString + '\n';
 		sprintf(tempString, "%d", neuron->subnetID);
-		*spriteTextString =* spriteTextString + "subnetID = " + tempString;
+		*spriteTextString = *spriteTextString + "subnetID = " + tempString;
 	}
 
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO)
 	{
-		*spriteTextString =* spriteTextString + '\n';
+		*spriteTextString = *spriteTextString + '\n';
 		sprintf(tempString, "%0.2f", neuron->bias);
-		*spriteTextString =* spriteTextString + "bias = " + tempString;
+		*spriteTextString = *spriteTextString + "bias = " + tempString;
 	}
 
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO)
 	{
-		*spriteTextString =* spriteTextString + '\n';
+		*spriteTextString = *spriteTextString + '\n';
 		sprintf(tempString, "%0.2f", neuron->output);
-		*spriteTextString =* spriteTextString + "output = " + tempString;
+		*spriteTextString = *spriteTextString + "output = " + tempString;
 	}
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO)
 	{
-		*spriteTextString =* spriteTextString + '\n';
+		*spriteTextString = *spriteTextString + '\n';
 		sprintf(tempString, "%0.2f", neuron->classTarget);
-		*spriteTextString =* spriteTextString + "classTarget = " + tempString;
+		*spriteTextString = *spriteTextString + "classTarget = " + tempString;
 	}
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO)
 	{
-		*spriteTextString =* spriteTextString + '\n';
+		*spriteTextString = *spriteTextString + '\n';
 		sprintf(tempString, "%0.2f", neuron->error);
-		*spriteTextString =* spriteTextString + "error = " + tempString;
+		*spriteTextString = *spriteTextString + "error = " + tempString;
 	}
 
 	#ifdef ANN_DEBUG

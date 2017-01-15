@@ -26,7 +26,7 @@
  * File Name: ANNupdateAlgorithm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -269,7 +269,7 @@ void adjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed
 	float netI = 0.0;
 	for(vector<ANNneuronConnection*>::iterator connectionIter = neuronBeingAccessed->backANNneuronConnectionList.begin(); connectionIter != neuronBeingAccessed->backANNneuronConnectionList.end(); connectionIter++)
 	{
-		ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+		ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 		#ifdef ANN_DEBUG
 		//cout << "currentANNneuronConnection->backNeuron->output = " << currentANNneuronConnection->backNeuron->output << endl;
 		#endif
@@ -493,7 +493,7 @@ void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed)
 
 	for(vector<ANNneuronConnection*>::iterator connectionIter = neuronBeingAccessed->frontANNneuronConnectionList.begin(); connectionIter != neuronBeingAccessed->frontANNneuronConnectionList.end(); connectionIter++)
 	{
-		ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+		ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 		//numberOfChickens++;
 
@@ -535,7 +535,7 @@ void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed)
 
 	for(vector<ANNneuronConnection*>::iterator connectionIter = neuronBeingAccessed->backANNneuronConnectionList.begin(); connectionIter != neuronBeingAccessed->backANNneuronConnectionList.end(); connectionIter++)
 	{
-		ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+		ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 		float weightChange;
 		weightChange = MU* neuronBeingAccessed->error* currentANNneuronConnection->backNeuron->output;

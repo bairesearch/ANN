@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  * Comments
  *
  *******************************************************************************/
@@ -353,7 +353,7 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 
 				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 				{
-					ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 					//generate NET_XML_TAG_forwardANNneuronConnection tag and attributes
 					currentTagL3->name = NET_XML_TAG_forwardANNneuronConnection;
@@ -442,7 +442,7 @@ bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* 
 		for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 		{
 			//cout << "linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs:" << endl;
-			ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+			ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 			bool tempResult = false;
 
@@ -691,7 +691,7 @@ bool parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer,
 			{
 				result = false;
 			}
-			*wrongAndNotUsedIDcounter =* wrongAndNotUsedIDcounter + 1;
+			*wrongAndNotUsedIDcounter = *wrongAndNotUsedIDcounter + 1;
 
 			ANNneuron* newNeuron = new ANNneuron();
 			currentNeuron->nextNeuron = newNeuron;

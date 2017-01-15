@@ -26,7 +26,7 @@
  * File Name: ANNtraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7c 27-January-2015
+ * Project Version: 3e7d 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -660,7 +660,7 @@ void storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed)
 		{
 			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuronReference->frontANNneuronConnectionList.begin(); connectionIter != currentNeuronReference->frontANNneuronConnectionList.end(); connectionIter++)
 			{
-				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 				currentANNneuronConnection->storedWeight = currentANNneuronConnection->weight;
 
@@ -729,7 +729,7 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed
 
 			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuronReference->frontANNneuronConnectionList.begin(); connectionIter != currentNeuronReference->frontANNneuronConnectionList.end(); connectionIter++)
 			{
-				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 				currentANNneuronConnection->weight = currentANNneuronConnection->storedWeight;
 
@@ -818,7 +818,7 @@ void resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)
 		{
 			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuronReference->frontANNneuronConnectionList.begin(); connectionIter != currentNeuronReference->frontANNneuronConnectionList.end(); connectionIter++)
 			{
-				ANNneuronConnection* currentANNneuronConnection =* connectionIter;
+				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
 				currentANNneuronConnection->weight = (double(rand()* 1.0F)/(double(RAND_MAX)+0.0F));
