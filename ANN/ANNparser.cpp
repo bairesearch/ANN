@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h9b 09-December-2015
+ * Project Version: 3h14a 11-December-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -37,23 +37,11 @@
 #include "ANNexperienceClass.h"
 #include "SHAREDvars.h"
 
-#define EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH 1000	//max num experiences in dataset
-#define EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH 101 	//max num input neurons +1
-
-#define MAX_CHARACTERS_ANNTH 5 //max characters of some input data. includes '\0' at end of a string
-
-#define	NUM_OUTPUT_NEURONS_ANNTH 3
-#define	NUM_INPUT_NEURONS_ANNTH 5
-
-
-#define	SOME_REALLY_SMALL_FLOAT 0.0F
-#define	SOME_REALLY_LARGE_FLOAT 500.0F
 
 
 
 
-
-void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
+void ANNparseDataFile(string nameOfExperiencesDataSetFile)
 {
 	float* inputData = new float[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH];
 

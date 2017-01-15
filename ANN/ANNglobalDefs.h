@@ -26,7 +26,7 @@
  * File Name: ANNglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h9b 09-December-2015
+ * Project Version: 3h14a 11-December-2015
  * Description: ANN specific global definitions
  *
  * Usage Examples:
@@ -56,6 +56,8 @@
 
 #include "SHAREDglobalDefs.h"
 
+
+//#define ANN_DEBUG_PARSER
 
 #ifdef USE_RT
 	#define TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS

@@ -26,7 +26,7 @@
  * File Name: ANNtraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3h9b 09-December-2015
+ * Project Version: 3h14a 11-December-2015
  * Comments:
  *
  *******************************************************************************/
@@ -295,17 +295,17 @@ void trainNeuralNetwork(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuro
 
 		bool overFittingData = false;
 
-		long numberOfFirstExperienceInFoldTrainPartA = 0;
-		long numberOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
+		long indexOfFirstExperienceInFoldTrainPartA = 0;
+		long indexOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
 		ANNexperience* firstExperienceInFoldTrainPartA = firstExperienceInDataSet;
 
-		long numberOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
-		long numberOfLastExperienceInFoldTrainPartB = numberOfExperiences;
-		ANNexperience* firstExperienceInFoldTrainPartB = findExperience(firstExperienceInDataSet, numberOfFirstExperienceInFoldTrainPartB);
+		long indexOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
+		long indexOfLastExperienceInFoldTrainPartB = numberOfExperiences;
+		ANNexperience* firstExperienceInFoldTrainPartB = findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTrainPartB);
 
-		long numberOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
-		long numberOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
-		ANNexperience* firstExperienceInFoldTestPart = findExperience(firstExperienceInDataSet, numberOfFirstExperienceInFoldTestPart);
+		long indexOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
+		long indexOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
+		ANNexperience* firstExperienceInFoldTestPart = findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTestPart);
 
 		//training
 		while((currentAverageTestingError > acceptableError) && (numEpochs < maxEpochs) && !overFittingData)	//CHANGED FROM training to averagedTesting BY RBB 17 sept 08
@@ -320,7 +320,7 @@ void trainNeuralNetwork(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuro
 
 			currentExperienceInFold = firstExperienceInFoldTrainPartA;
 
-			for(int experienceNum = numberOfFirstExperienceInFoldTrainPartA; experienceNum < numberOfLastExperienceInFoldTrainPartA; experienceNum++)
+			for(int experienceNum = indexOfFirstExperienceInFoldTrainPartA; experienceNum < indexOfLastExperienceInFoldTrainPartA; experienceNum++)
 			{
 				//sets inputData into ANN
 				//(NB normalisedInputData[experienceNum][0] is target class
@@ -342,7 +342,7 @@ void trainNeuralNetwork(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuro
 
 			currentExperienceInFold = firstExperienceInFoldTrainPartB;
 
-			for(int experienceNum = numberOfFirstExperienceInFoldTrainPartB; experienceNum<numberOfLastExperienceInFoldTrainPartB; experienceNum++)
+			for(int experienceNum = indexOfFirstExperienceInFoldTrainPartB; experienceNum<indexOfLastExperienceInFoldTrainPartB; experienceNum++)
 			{
 				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
 
@@ -375,7 +375,7 @@ void trainNeuralNetwork(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuro
 
 			currentExperienceInFold = firstExperienceInFoldTestPart;
 
-			for(int experienceNum = numberOfFirstExperienceInFoldTestPart; experienceNum < numberOfLastExperienceInFoldTestPart; experienceNum++)
+			for(int experienceNum = indexOfFirstExperienceInFoldTestPart; experienceNum < indexOfLastExperienceInFoldTestPart; experienceNum++)
 			{
 				restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
