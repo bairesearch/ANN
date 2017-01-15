@@ -26,7 +26,7 @@
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f4a 11-July-2015
+ * Project Version: 3f5a 21-July-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -109,7 +109,7 @@ static char errmessage[] = "Usage:  OpenANN.exe [options]"
 "\n\t-height [int]     : raster graphics height in pixels (def: 480)"
 "\n"
 "\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
-"\n\t-exefolder [string]     : exe directory name for executables OpenANN.exe and (def: same as exe)"
+"\n\t-exefolder [string]     : exe directory name for executables; OpenANN.exe (def: same as exe)"
 "\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-ui               : loads text user interface upon execution (def: no)"
