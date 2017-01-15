@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a10b 07-June-2016
+ * Project Version: 4a10c 07-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -326,11 +326,13 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		int rasterImageHeight = 768;
 		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 		
+		/*
 		if(experienceNum == 3)
 		{
 			cout << "ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK debug: exiting early" << endl;
 			exit(0);
 		}
+		*/
 		#endif
 
 		currentExperience = currentExperience->next;
@@ -350,7 +352,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 	ANNneuron* currentNeuron = firstInputNeuron;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		pruneNetorkBasedOnRarelyUsedNeurons(currentNeuron);
+		pruneNetorkBasedOnRarelyUsedNeurons(currentNeuron, firstOutputNeuron);
 		currentNeuron = currentNeuron->nextNeuron;
 	}	
 	#endif
@@ -404,18 +406,15 @@ void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron)
 
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
-void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron)
+void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
 {
 	for(vector<ANNneuronConnection*>::iterator connectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); connectionIter != categoryNeuron->frontANNneuronConnectionList.end(); )
 	{
 		ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 		ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
-		
-		//cout << "af0" << endl;
-		
+				
 		if(frontNeuron->memoryTrace < ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_MINIMUM_MEMORY_TRACE_TO_RETAIN_CATEGORY_NEURON)
 		{
-			//cout << "af1" << endl;
 			cout << "pruneNetorkBasedOnRarelyUsedNeurons{}: pruning neuron" << endl;
 			
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_OPTIMISE
@@ -426,20 +425,17 @@ void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron)
 			}
 			#endif
 			
-			
-			//CHECKTHIS:
 			for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->backANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->backANNneuronConnectionList.end(); connectionIter2++)
 			{
 				ANNneuronConnection* currentANNneuronConnection2 = *connectionIter2;
-				ANNneuron* backNeuron = currentANNneuronConnection2->backNeuron;
-				if(backNeuron != categoryNeuron)
+				ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection2->backNeuron;
+				if(frontNeuronBackNeuron != categoryNeuron)	//prevent deleting currentANNneuronConnection (do this later)
 				{
-					//cout << "af2" << endl;
-					for(vector<ANNneuronConnection*>::iterator connectionIter3 = backNeuron->frontANNneuronConnectionList.begin(); connectionIter3 != backNeuron->frontANNneuronConnectionList.end(); )
+					for(vector<ANNneuronConnection*>::iterator connectionIter3 = frontNeuronBackNeuron->frontANNneuronConnectionList.begin(); connectionIter3 != frontNeuronBackNeuron->frontANNneuronConnectionList.end(); )
 					{
 						if(*connectionIter3 == *connectionIter2)
 						{
-							connectionIter3 = backNeuron->frontANNneuronConnectionList.erase(connectionIter3);
+							connectionIter3 = frontNeuronBackNeuron->frontANNneuronConnectionList.erase(connectionIter3);
 						}
 						else
 						{
@@ -447,34 +443,63 @@ void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron)
 						}
 					}
 				}				
-				//delete currentANNneuronConnection2;	//NOT POSSIBLE as it will erase frontNeuron
 			}
 			
-			
-			//cout << "af3" << endl;
-			
+			for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->frontANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->frontANNneuronConnectionList.end(); connectionIter2++)
+			{
+				ANNneuronConnection* currentANNneuronConnection2 = *connectionIter2;
+				ANNneuron* frontNeuronFrontNeuron = currentANNneuronConnection2->frontNeuron;
+
+				for(vector<ANNneuronConnection*>::iterator connectionIter3 = frontNeuronFrontNeuron->backANNneuronConnectionList.begin(); connectionIter3 != frontNeuronFrontNeuron->backANNneuronConnectionList.end(); )
+				{
+					if(*connectionIter3 == *connectionIter2)
+					{
+						connectionIter3 = frontNeuronFrontNeuron->backANNneuronConnectionList.erase(connectionIter3);
+					}
+					else
+					{
+						connectionIter3++;
+					}
+				}
+			}
+						
 			connectionIter = categoryNeuron->frontANNneuronConnectionList.erase(connectionIter);
-			
-			//cout << "af3b" << endl;
-			//delete currentANNneuronConnection;	//CREATES BUG
-			
-			//delete frontNeuron;	//REDUNDANT (see ANNneuronConnection::~ANNneuronConnection)
-			//cout << "af4" << endl;
+					
+			if(frontNeuron->neuronTypeTopLevelCategory)
+			{
+				//remove frontNeuron from outputNeuron list
+				ANNneuron* currentOutputNeuron = *firstOutputNeuron;
+				ANNneuron* previousOutputNeuron = NULL;
+				while(currentOutputNeuron->nextNeuron != NULL)
+				{
+					if(currentOutputNeuron == frontNeuron)
+					{
+						if(previousOutputNeuron == NULL)
+						{
+							*firstOutputNeuron = currentOutputNeuron->nextNeuron;
+						}
+						else
+						{
+							previousOutputNeuron->nextNeuron = currentOutputNeuron->nextNeuron;
+						}
+					}
+					else
+					{
+						previousOutputNeuron = currentOutputNeuron;
+					}
+					currentOutputNeuron = currentOutputNeuron->nextNeuron;
+				}
+			}
+	
+			delete frontNeuron;
 
 		}
 		else
 		{
-			//cout << "af5" << endl;
-			pruneNetorkBasedOnRarelyUsedNeurons(frontNeuron);
-			//cout << "af6" << endl;
+			pruneNetorkBasedOnRarelyUsedNeurons(frontNeuron, firstOutputNeuron);
 			connectionIter++;
 		}
-		
-		//cout << "af7" << endl;
-
 	}
-	
-	//cout << "af7" << endl;
 }
 #endif
 
@@ -562,8 +587,8 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 						if(numberOfInputMatches >= numberOfInputMatchesMaxAbove)	//added 4a3p
 						{
 							//assume that front neuron must have back neurons
-								//if(frontNeuron->backANNneuronConnectionList.size() >= ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_MINIMUM_MEMORY_TRACE_TO_RETAIN_CATEGORY_NEURON)
-							if(numberOfBackMatches >= ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_MINIMUM_MEMORY_TRACE_TO_RETAIN_CATEGORY_NEURON)
+								//if(frontNeuron->backANNneuronConnectionList.size() >= ANN_ALGORITHM_CLASSIFICATION_NETWORK_MINIMUM_NUMBER_INPUTS_FOR_CATEGORY_NEURON)
+							if(numberOfBackMatches >= ANN_ALGORITHM_CLASSIFICATION_NETWORK_MINIMUM_NUMBER_INPUTS_FOR_CATEGORY_NEURON)
 							{
 								bool passedRound = false;
 
