@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a8a 07-June-2016
+ * Project Version: 4a8b 07-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -326,7 +326,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		int rasterImageHeight = 768;
 		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, display, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 		
-		if(experienceNum == 3)
+		if(experienceNum == 1)
 		{
 			cout << "ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK debug: exiting early" << endl;
 			exit(0);
@@ -737,6 +737,11 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 											ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection->backNeuron;
 											if(frontNeuronBackNeuron->backNeuronMatchTemp)
 											{
+												if(frontNeuronBackNeuron->neuronTypeInput)
+												{
+													inputValuesCategoryFoundTemp[frontNeuronBackNeuron->orderID - 1] = true;	//added ANN4a8b - when creating an intermediary neuron, prevent direct connections being added between input neurons and the new experience neuron
+												}
+												
 												frontNeuronBackNeuronXposAvg = frontNeuronBackNeuronXposAvg + frontNeuronBackNeuron->xPosRelFrac;
 												frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg + frontNeuronBackNeuron->yPosRelFrac;
 
@@ -764,7 +769,23 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 										intermediaryCategoryNeuron->output = calculateOutput(intermediaryCategoryNeuronTotalOutput, intermediaryCategoryNeuronNumInputConnections);
 										frontNeuron->output = calculateOutput(frontNeuronTotalOutputNew, frontNeuronNumInputConnectionsNew);
 										//NOTREQUIRED: set output of experienceClassificationneuronTypeTopLevelCategory
-
+										
+										/*
+										//DEBUG:
+										int numberInputsFoundTemp = 0;
+										for(vector<bool>::iterator inputValuesCategoryFoundTempIter = inputValuesCategoryFoundTemp.begin(); inputValuesCategoryFoundTempIter != inputValuesCategoryFoundTemp.end(); inputValuesCategoryFoundTempIter++)
+										{
+											if(*inputValuesCategoryFoundTempIter)
+											{
+												numberInputsFoundTemp++;
+											}
+										}
+										cout << "numberOfInputMatches = " << numberOfInputMatches << endl;
+										cout << "numberInputsFoundTemp = " << numberInputsFoundTemp << endl;
+										//exit(0);
+										*/
+										
+									
 										if(!foundAtLeastOneBackMismatch)
 										{
 											cout << "error: = !foundAtLeastOneBackMismatch" << endl;
