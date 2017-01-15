@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1b 14-January-2017
+ * Project Version: 3j1c 14-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -62,7 +62,7 @@ bool formedNetwork;
 
 
 
-static char errmessage[] = "Usage:  OpenANN.exe [options]"
+static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t,where options are any of the following"
 "\n"
 "\n\t-idata [string]   : neural network experience data set file"
@@ -105,7 +105,7 @@ static char errmessage[] = "Usage:  OpenANN.exe [options]"
 "\n\t-height [int]     : raster graphics height in pixels (def: 480)"
 "\n"
 "\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
-"\n\t-exefolder [string]     : exe directory name for executables; OpenANN.exe (def: same as exe)"
+"\n\t-exefolder [string]     : exe directory name for executables; ANN.exe (def: same as exe)"
 "\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-ui               : loads text user interface upon execution (def: no)"
@@ -394,7 +394,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3j1b 14-January-2017" << endl;
+			cout << "Project Version: 3j1c 14-January-2017" << endl;
 			exit(1);
 		}
 	}

@@ -26,7 +26,7 @@
  * File Name: ANNdraw.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1b 14-January-2017
+ * Project Version: 3j1c 14-January-2017
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -60,8 +60,8 @@
 //#define ANN_SVG_SPRITE_TEXT_MAX_NUMBER_LINES (10)
 #define ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE (10)
 
-#define ANN_SPRITE_HEADER_NAME "\n0 Start OpenANN.exe Sprites\n"
-#define ANN_SPRITE_TRAILER_NAME "0 End OpenANN.exe Sprites\n"
+#define ANN_SPRITE_HEADER_NAME "\n0 Start ANN.exe Sprites\n"
+#define ANN_SPRITE_TRAILER_NAME "0 End ANN.exe Sprites\n"
 #define ANN_SPRITE_HEADER_NUM_LINES (2)
 #define ANN_SPRITE_TRAILER_NUM_LINES (1)
 #define ANN_SPRITE_HEADER_LENGTH 25

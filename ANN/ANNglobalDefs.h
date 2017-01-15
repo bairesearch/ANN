@@ -26,27 +26,27 @@
  * File Name: ANNglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1b 14-January-2017
+ * Project Version: 3j1c 14-January-2017
  * Description: ANN specific global definitions
  *
  * Usage Examples:
  *
- * OpenANNwithRT.exe -idata new-thyroid.data -oxml neuralNet.xml -oldr neuralNetWithoutSprites.ldr -oldr2 neuralNetWithSprites.ldr -oppm neuralNet.ppm
- * OpenANNwithRT.exe -idata new-thyroid.data -oall neuralNet
- * OpenANNwithRT.exe -ixml neuralNet.xml -oall neuralNet
- * OpenANNwithRT.exe -idata new-thyroid.data -layers 5 -ineurons 5 -oneurons 3 -divtype 2 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 10 oneurons 5 -oall neuralNet -notshow
- * OpenANNwithRT.exe -layers 5 -ineurons 10 oneurons 5 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 1 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 2 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 3 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 4 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 16 -oneurons 4 -divtype 6 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 5 -oneurons 3 -divtype 1 -usesubnets -numsubnets 2 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 5 -oneurons 3 -divtype 1 -usesubnets -numsubnets 3 -oall neuralNet
- * OpenANNwithRT.exe -layers 5 -ineurons 8 -oneurons 4 -divtype 1 -usesubnets -numsubnets 2 -oall neuralNet
- * OpenANNwithRT.exe -layers 4 -ineurons 8 oneurons 4 -oall neuralNet
- * OpenANNwithRT.exe -ui
+ * ANNwithRT.exe -idata new-thyroid.data -oxml neuralNet.xml -oldr neuralNetWithoutSprites.ldr -oldr2 neuralNetWithSprites.ldr -oppm neuralNet.ppm
+ * ANNwithRT.exe -idata new-thyroid.data -oall neuralNet
+ * ANNwithRT.exe -ixml neuralNet.xml -oall neuralNet
+ * ANNwithRT.exe -idata new-thyroid.data -layers 5 -ineurons 5 -oneurons 3 -divtype 2 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 10 oneurons 5 -oall neuralNet -notshow
+ * ANNwithRT.exe -layers 5 -ineurons 10 oneurons 5 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 1 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 2 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 3 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 10 -oneurons 5 -divtype 4 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 16 -oneurons 4 -divtype 6 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 5 -oneurons 3 -divtype 1 -usesubnets -numsubnets 2 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 5 -oneurons 3 -divtype 1 -usesubnets -numsubnets 3 -oall neuralNet
+ * ANNwithRT.exe -layers 5 -ineurons 8 -oneurons 4 -divtype 1 -usesubnets -numsubnets 2 -oall neuralNet
+ * ANNwithRT.exe -layers 4 -ineurons 8 oneurons 4 -oall neuralNet
+ * ANNwithRT.exe -ui
  *
  *******************************************************************************/
 
