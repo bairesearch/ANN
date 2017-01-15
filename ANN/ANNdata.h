@@ -26,7 +26,7 @@
  * File Name: ANNdata.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7e 27-January-2015
+ * Project Version: 3e7f 27-January-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
