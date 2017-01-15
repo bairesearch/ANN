@@ -23,7 +23,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3a13a 28-September-2012
+ * Project Version: 3c1a 11-October-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -189,21 +189,17 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 	{
 		//now output the vector graphics file to image file via ray tracer
 
-		ofstream * writeFileObject;
-		if(useOutputSVGFile)
-		{
-			writeFileObject = new ofstream(outputFileNameSVGcharstar);
-			writeSVGHeader(writeFileObject);
-		}
-
-		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, writeFileObject);
+		XMLParserTag * firstTagInSVGFile = new XMLParserTag();
+		XMLParserTag * currentTagInSVGFile = firstTagInSVGFile;
+		
+		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, &currentTagInSVGFile);
 
 		Reference * nonspriteListInitialReference = new Reference();
 		Reference * spriteListInitialReference = new Reference();
 
 		int numSpritesAdded = 0;
 
-		if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, writeFileObject))
+		if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
 		{
 			result = false;
 		}
@@ -218,9 +214,11 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 
 		if(useOutputSVGFile)
 		{
-			writeSVGFooter(writeFileObject);
-			writeFileObject->close();
-			delete writeFileObject;
+			if(!writeSVGFile(outputFileNameSVGcharstar, firstTagInSVGFile))
+			{
+				result = false;
+			}
+			delete firstTagInSVGFile;
 		}
 
 		char * charstarsceneFileNameForRayTracing;
@@ -288,7 +286,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 						Reference * spriteListInitialReference = new Reference();
 
 						int numSpritesAdded = 0;
-						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, writeFileObject))
+						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, firstTagInSVGFile))
 						{
 							result = false;
 						}

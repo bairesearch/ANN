@@ -23,7 +23,7 @@
  * File Name: ANNTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3a13a 28-September-2012
+ * Project Version: 3c1a 11-October-2012
  * Comments:
  *
  *******************************************************************************/
