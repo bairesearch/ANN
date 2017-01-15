@@ -23,7 +23,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3c1a 11-October-2012
+ * Project Version: 3c2a 19-October-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -286,7 +286,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 						Reference * spriteListInitialReference = new Reference();
 
 						int numSpritesAdded = 0;
-						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, firstTagInSVGFile))
+						if(!ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(outputFileNameLDRwithSpritescharstar, nonspriteListInitialReference, spriteListInitialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile))
 						{
 							result = false;
 						}
