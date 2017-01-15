@@ -26,7 +26,7 @@
  * File Name: ANNupdateAlgorithm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f7d 16-August-2015
+ * Project Version: 3f7e 16-August-2015
  * Comments:
  *
  *******************************************************************************/
