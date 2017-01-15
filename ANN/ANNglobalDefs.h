@@ -26,7 +26,7 @@
  * File Name: ANNglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3f7c 16-August-2015
+ * Project Version: 3f7d 16-August-2015
  * Description: ANN specific global definitions
  *
  * Usage Examples:
