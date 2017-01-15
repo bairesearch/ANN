@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e3a 01-September-2014
+ * Project Version: 3e3b 01-September-2014
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -371,6 +371,11 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(Neuron * firstInputNeuronInN
 			}
 		}
 	}
+	
+	if(display)
+	{
+		exitOpenGL();
+	}	
 }
 
 void writeExperienceListToFile(char * fileName, Experience * firstExperienceInList)
