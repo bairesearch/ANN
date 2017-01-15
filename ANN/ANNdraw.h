@@ -26,7 +26,7 @@
  * File Name: ANNdraw.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 4a7a 07-June-2016
+ * Project Version: 4a7b 07-June-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -86,10 +86,8 @@
 #define SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR_NAME "SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR"
 #define SPRITE_SUBMODEL_RANGE_SCALE_FACTOR_NAME "SPRITE_SUBMODEL_RANGE_SCALE_FACTOR"		//this value is now multiplied by LDRAW_UNITS_PER_CM
 
-
 #define SPRITE_TEXTUAL_INCLUDE_DESCRIPTION_TEXT
-#define SPRITE_TEXTUAL_MAX_NUM_OF_LINES (8) /*defence level, LD attack level, CC attack level, movement level*/
-
+#define SPRITE_TEXTUAL_MAX_NUM_OF_LINES (8)
 
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO_NAME "SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO"
 #define SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO_NAME "SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO"

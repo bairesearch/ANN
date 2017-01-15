@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 4a7a 07-June-2016
+ * Project Version: 4a7b 07-June-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -769,8 +769,10 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(ANNneuron* neuro
 
 	//generate sprite reference name
 	string spriteReferenceFileName = LDcreateSpriteReferenceName(*numSpritesAdded, sceneFileName);
+	#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 	cout << "spriteReferenceFileName = " << spriteReferenceFileName << endl;
-
+	#endif
+	
 	//writeReferencesToFile
 	if(!writeReferencesToFile(spriteReferenceFileName, spriteSubmodelInitialReference))
 	{
@@ -819,7 +821,9 @@ bool ANNdetermineSpriteInfoForANNneuronConnectionAndAddSpriteToSpriteRefList(ANN
 
 	//generate sprite reference name
 	string spriteReferenceFileName = LDcreateSpriteReferenceName(*numSpritesAdded, sceneFileName);
+	#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 	cout << "spriteReferenceFileName = " << spriteReferenceFileName << endl;
+	#endif
 	
 	//writeReferencesToFile
 	if(!writeReferencesToFile(spriteReferenceFileName, spriteSubmodelInitialReference))
@@ -894,8 +898,18 @@ void writeSpriteTextToSVG(string* spriteTextString, bool writeSVG, XMLparserTag*
 		{
 			if((spriteTextString->at(i) == CHAR_NEWLINE) || (i == spriteTextString->length()-1))
 			{
-				string stringCurrentLine = spriteTextString->substr(i-stringCurrentLineIndex, stringCurrentLineIndex);
-
+				string stringCurrentLine = "";
+				if(spriteTextString->at(i) == CHAR_NEWLINE)
+				{
+					stringCurrentLine = spriteTextString->substr(i-stringCurrentLineIndex, stringCurrentLineIndex);
+				}
+				else
+				{
+					stringCurrentLine = spriteTextString->substr(i-stringCurrentLineIndex, stringCurrentLineIndex+1);
+				}
+				//cout << "*spriteTextString = " << *spriteTextString << endl;
+				//cout << "stringCurrentLine = " << stringCurrentLine << endl;
+				
 				vec positionSVG;
 				positionSVG.x = referencePosition->x*ANN_SVG_SCALE_FACTOR - ANN_SVG_NEURON_SIZE/2;
 				positionSVG.y = referencePosition->y*ANN_SVG_SCALE_FACTOR - (numberOfLines)*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE + lineIndex*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE;

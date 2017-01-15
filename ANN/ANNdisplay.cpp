@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a7a 07-June-2016
+ * Project Version: 4a7b 07-June-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -213,6 +213,10 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronI
 	{
 		//now output the vector graphics file to image file via ray tracer
 
+		#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
+		cout << "referenceFileName = " << outputLDRFileName << endl;
+		#endif
+		
 		XMLparserTag* firstTagInSVGFile = new XMLparserTag();
 		XMLparserTag* currentTagInSVGFile = firstTagInSVGFile;
 
