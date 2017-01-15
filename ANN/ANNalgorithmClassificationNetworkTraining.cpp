@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a13a 14-June-2016
+ * Project Version: 4a13b 14-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -535,7 +535,8 @@ void deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron**
 					connectionIter3++;
 				}
 			}
-		}				
+		}
+		updateConnectionIdealValuesParent(frontNeuronBackNeuron, false);				
 	}
 
 	for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->frontANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->frontANNneuronConnectionList.end(); connectionIter2++)
@@ -649,8 +650,6 @@ void mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuro
 				
 				deleteNeuron(frontNeuron2, categoryNeuron, firstOutputNeuron);
 				connectionIter2 = categoryNeuron->frontANNneuronConnectionList.erase(connectionIter2);
-				
-				updateConnectionIdealValuesParent(categoryNeuron, false);	//added 4a11b
 			}
 			else
 			{
