@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3m 02-May-2016
+ * Project Version: 4a3n 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -436,13 +436,34 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 							{
 								if(createIntermediaryNeuronsStage == 2)
 								{
-									#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
-									cout << "\t\tvd" << endl;
-									#endif
-									//add the partially (input) satisfactory category neuron to experienceClassificationTopLevelCategoryNeuron
-									ANNneuronConnection* connection = connectNeurons(*experienceClassificationTopLevelCategoryNeuron, frontNeuron);
-									updateConnectionIdealValue(connection);
-									//DOING: set output
+									if(frontNeuron->intermediaryNeuron)
+									{
+										#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK
+										cout << "\t\tvd" << endl;
+										#endif
+										//add the partially (input) satisfactory category neuron to experienceClassificationTopLevelCategoryNeuron
+										bool alreadyConnectedNeurons = false;
+										for(vector<ANNneuronConnection*>::iterator backConnectionIter = (*experienceClassificationTopLevelCategoryNeuron)->backANNneuronConnectionList.begin(); backConnectionIter != (*experienceClassificationTopLevelCategoryNeuron)->backANNneuronConnectionList.end(); backConnectionIter++)
+										{
+											ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
+											ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
+											if(backNeuron == frontNeuron)
+											{
+												cout << "numberOfInputMatches = " << numberOfInputMatches << endl;
+												alreadyConnectedNeurons = true;
+											}
+										}
+										if(!alreadyConnectedNeurons)
+										{
+											ANNneuronConnection* connection = connectNeurons(*experienceClassificationTopLevelCategoryNeuron, frontNeuron);
+											updateConnectionIdealValue(connection);
+											//DOING: set output
+										}
+									}
+									else
+									{
+										cout << "findCategoriesForExperienceWrapper{} error:  findCategoriesForExperience && !categoryNeuronUsesAllInputs && (createIntermediaryNeuronsStage == 2) && !(frontNeuron->intermediaryNeuron)" << endl;
+									}
 								}
 							}	
 
@@ -494,6 +515,7 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 								ANNneuron* intermediaryCategoryNeuron = new ANNneuron();
 								intermediaryCategoryNeuron->nextNeuron = new ANNneuron();	//class architecture required to create a blank neuron
 								intermediaryCategoryNeuron->id = IDCounter;
+								intermediaryCategoryNeuron->intermediaryNeuron = true;
 								IDCounter++;
 								intermediaryCategoryNeuron->hasFrontLayer = true;
 								intermediaryCategoryNeuron->hasBackLayer = true;
