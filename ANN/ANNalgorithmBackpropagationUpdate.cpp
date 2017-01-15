@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNalgorithmBackpropagationUpdate.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -63,7 +63,7 @@ double ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* f
 	return calculateErrorOfBackPropPass(firstOutputNeuronInNetwork);
 }
 
-double calculateErrorOfBackPropPass(ANNneuron* firstOutputNeuronInNetwork)
+double calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork)
 {
 	/*
 
@@ -77,7 +77,7 @@ double calculateErrorOfBackPropPass(ANNneuron* firstOutputNeuronInNetwork)
 
 	double total2xError = 0.0;
 
-	ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
+	const ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
 	while(currentNeuron->nextNeuron != NULL)
 	{
 		#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_4
@@ -315,7 +315,7 @@ float calculateOValue(float netValue)
 
 
 //preconditions - assumes neuronBeingAccessed has a back neuron references. (ie neuronBeingAccessed->firstBackNeuronReference != NULL)
-void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer, bool isSubnet)
+void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, const int isOutputLayer, const bool isSubnet)
 {
 	#ifdef ANN_DEBUG
 	cout << "\nstatic void backPropogationBackwardPassStep{ANNneuron* neuronBeingAccessed, int isOutputLayer}" << endl;
@@ -555,7 +555,7 @@ void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed)
 
 #ifdef ANN_SUBNETS
 
-void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, bool frontOrBack)
+void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, const bool frontOrBack)
 {
 	ANNneuron* currentNeuronToCopy = firstNeuronInListToCopy;
 
@@ -574,7 +574,7 @@ void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronC
 	}
 }
 
-void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, bool frontOrBack)
+void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, const bool frontOrBack)
 {
 	ANNneuron* currentNeuronToUpdate = firstNeuronInListToUpdate;
 	vector<ANNneuronConnection*>::iterator ANNneuronConnectionListToCopyIter = ANNneuronConnectionListToCopy->begin();

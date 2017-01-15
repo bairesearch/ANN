@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNmain.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -128,7 +128,7 @@ static char errmessage[] = "Usage:  OpenANN.exe [options]"
 "\n\tas .xml and .ldr "
 "\n";
 
-int main(int argc,char* *argv)
+int main(const int argc,const char* *argv)
 {
 	srand( (unsigned)time(NULL) );	//seeds randomness
 
@@ -406,7 +406,7 @@ int main(int argc,char* *argv)
 		}
 		if(argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3i19e 15-December-2016" << endl;
+			cout << "Project Version: 3j1a 14-January-2017" << endl;
 			exit(1);
 		}
 	}
@@ -834,7 +834,7 @@ bool loadExperienceDataFile()
 }
 
 
-bool trainNetwork(bool advancedTraining)
+bool trainNetwork(const bool advancedTraining)
 {
 	bool result = true;
 

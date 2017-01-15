@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNalgorithmBackpropagationUpdate.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -46,14 +46,14 @@ extern bool debugPrintNNOutputs;
 
 #ifdef ANN_ALGORITHM_BACKPROPAGATION
 double ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork);
-	double calculateErrorOfBackPropPass(ANNneuron* firstOutputNeuronInNetwork);
+	double calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork);
 	void calculateErrorOfOutputNeurons(ANNneuron* firstOutputNeuronInNetwork);
 #endif
 	void backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed);
 		void backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed);
 			float calculateOValue(float netValue);
 #ifdef ANN_ALGORITHM_BACKPROPAGATION
-	void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer, bool isSubnet);
+	void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, const int isOutputLayer, const bool isSubnet);
 		void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed);
 		void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed);
 		void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed);
@@ -61,8 +61,8 @@ double ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* f
 #endif
 
 #ifdef ANN_SUBNETS
-void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, bool frontOrBack);
-void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, bool frontOrBack);
+void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, const bool frontOrBack);
+void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, const bool frontOrBack);
 #endif
 
 

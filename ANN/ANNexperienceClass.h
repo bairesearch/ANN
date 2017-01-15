@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNexperienceClass.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -154,16 +154,16 @@ public:
 };
 
 void copyExperiences(ANNexperience* newExperience, ANNexperience* experienceToCopy);
-ANNexperience* findExperience(ANNexperience* firstExperienceInDataSet, long experienceNumToFind);
-long countNumberOfExperienceInputs(ANNexperience* experience);
-long countNumberOfExperiences(ANNexperience* firstExperienceInList);
+ANNexperience* findExperience(ANNexperience* firstExperienceInDataSet, const long experienceNumToFind);
+long countNumberOfExperienceInputs(const ANNexperience* experience);
+long countNumberOfExperiences(const ANNexperience* firstExperienceInList);
 
 
-void printExperienceInputs(ANNexperience* experience);
-void printExperiences(ANNexperience* firstExperienceInList);
+void printExperienceInputs(const ANNexperience* experience);
+void printExperiences(const ANNexperience* firstExperienceInList);
 
-void addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, ANNexperience* firstExperienceInList);
-	void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, ANNexperience* experience);
+void addExperiencesToOFStream(ofstream* experienceDataSetOfStreamObject, const ANNexperience* firstExperienceInList);
+	void addExperienceToOFStream(ofstream* experienceDataSetOfStreamObject, const ANNexperience* experience);
 
 double normaliseExperienceInput(double currentInputValue, double maxInputValue);
 

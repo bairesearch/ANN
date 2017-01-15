@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNmain.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -58,7 +58,7 @@
 
 
 
-int main(int argc,char* *argv);
+int main(const int argc,const char* *argv);
 
 bool mainUI();
 
@@ -67,7 +67,7 @@ bool loadExperienceDataFile();
 #ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 bool createNetwork();
 #endif
-bool trainNetwork(bool advancedTraining);
+bool trainNetwork(const bool advancedTraining);
 bool outputNetworkToXML();
 bool outputNetworkAsVectorGraphics();
 

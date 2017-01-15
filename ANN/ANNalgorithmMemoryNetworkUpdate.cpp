@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNalgorithmMemoryNetworkUpdate.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i19e 15-December-2016
+ * Project Version: 3j1a 14-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -38,7 +38,7 @@
 
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
-double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult)
+double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult)
 {
 	#ifdef ANN_DEBUG
 	cout << "\ndouble ANNbackPropogationPass{ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork}" << endl;
@@ -54,11 +54,11 @@ double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNn
 
 }
 
-void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult)
+void calculateBinaryOutputCode(const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult)
 {
 	//NB trainingClassificationResult = binaryOutputCode
 
-	ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
+	const ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
 	int outputNeuronIndex = 0;
 	while(currentNeuron->nextNeuron != NULL)
 	{
@@ -80,7 +80,7 @@ void calculateBinaryOutputCode(ANNneuron* firstOutputNeuronInNetwork, string* tr
 	#endif
 }
 
-bool isNeuronOutputFire(ANNneuron* currentNeuron)
+bool isNeuronOutputFire(const ANNneuron* currentNeuron)
 {
 	bool neuronOutputFire = false;
 	if(currentNeuron->output > ANN_ALGORITHM_MEMORY_NETWORK_OUTPUT_NEURON_FIRE_TRESHOLD_FOR_CLASSIFICATION_BIT)
