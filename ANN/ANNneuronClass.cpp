@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3e 02-May-2016
+ * Project Version: 4a3f 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -54,11 +54,16 @@ ANNneuron::ANNneuron(void)
 	memoryTrace = 1;
 	#endif
 	
-	spatialCoordinatesSet = 0;
-	xPosRel = 0;		//this value must be initialised explicity
-	yPosRel = 0;		//this value must be initialised explicity
-	zPosRel = 0;		//this value must be initialised explicity
-
+	spatialCoordinatesSet2D = false;
+	xPosRel = 0;
+	yPosRel = 0;
+	zPosRel = 0;
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	spatialCoordinatesSetClassification = false;
+	xPosRelFrac = 0.0;
+	yPosRelFrac = 0.0;
+	#endif
+	
 	nextNeuron = NULL;
 
 	hasFrontLayer = false;
@@ -94,11 +99,16 @@ ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subne
 	memoryTrace = 1;
 	#endif
 	
-	spatialCoordinatesSet = 0;
+	spatialCoordinatesSet2D = false;
 	xPosRel = 0;	      //this value must be initialised explicity
 	yPosRel = 0;	      //this value must be initialised explicity
 	zPosRel = 0;	      //this value must be initialised explicity
-
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	spatialCoordinatesSetClassification = false;
+	xPosRelFrac = 0.0;
+	yPosRelFrac = 0.0;
+	#endif	
+	
 	nextNeuron = NULL;
 
 	hasFrontLayer = false;

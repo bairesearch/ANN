@@ -26,7 +26,7 @@
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 4a3e 02-May-2016
+ * Project Version: 4a3f 02-May-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -333,7 +333,7 @@ LDreference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(ANNneur
 		}
 
 
-	#ifdef ANN_SUBNETS
+		#ifdef ANN_SUBNETS
 		if(currentNeuron->isSubnet)
 		{
 			//create back layer of subnet 1-1 connections for display only
@@ -396,15 +396,27 @@ LDreference* ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(ANNneur
 
 			updatedNonSpriteListReference = ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(currentNeuron->firstNeuronInBackLayerOfSubnet, spriteListInitialReference, updatedNonSpriteListReference, eyeCoords, numSpritesAdded, numnonSpritesAdded, sceneFileNameWithSprites, (true|isSubnet), &(currentNeuronReferenceOnLayer->relativePosition), addSprites, writeSVG, currentTag);
 		}
-	#endif
+		#endif
 
+		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		if(currentNeuron->hasFrontLayer)
+		{
+			for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
+			{
+				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
+				updatedNonSpriteListReference = ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(currentANNneuronConnection->frontNeuron, spriteListInitialReference, updatedNonSpriteListReference, eyeCoords, numSpritesAdded, numnonSpritesAdded, sceneFileNameWithSprites, isSubnet, positionOfSubnetNeuron, addSprites, writeSVG, currentTag);
+			}
+		}
+		#endif
 
 		currentNeuron = currentNeuron->nextNeuron;
 	}
+	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
 		updatedNonSpriteListReference = ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(firstNeuronInLayer->firstNeuronInFrontLayer, spriteListInitialReference, updatedNonSpriteListReference, eyeCoords, numSpritesAdded, numnonSpritesAdded, sceneFileNameWithSprites, isSubnet, positionOfSubnetNeuron, addSprites, writeSVG, currentTag);
 	}
+	#endif
 
 	return updatedNonSpriteListReference;
 
@@ -515,12 +527,20 @@ bool ANNfillNeuronDisplayReference(LDreference* currentNeuronDispayReference, AN
 	}
 	else
 	{
-		if(neuron->spatialCoordinatesSet)
+		if(neuron->spatialCoordinatesSet2D)
 		{
 			currentNeuronDispayReference->relativePosition.x = (double)(neuron->xPosRel);
 			currentNeuronDispayReference->relativePosition.y = (double)(neuron->layerID);
 			currentNeuronDispayReference->relativePosition.z = (double)(neuron->yPosRel);
 		}
+		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		else if(neuron->spatialCoordinatesSetClassification)
+		{
+			currentNeuronDispayReference->relativePosition.x = (neuron->xPosRelFrac);
+			currentNeuronDispayReference->relativePosition.y = (neuron->yPosRelFrac);
+			currentNeuronDispayReference->relativePosition.z = (double)(neuron->subnetID);	//0		
+		}
+		#endif
 		else
 		{
 			currentNeuronDispayReference->relativePosition.x = (double)(neuron->orderID);

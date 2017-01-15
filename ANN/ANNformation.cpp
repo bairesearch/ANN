@@ -26,7 +26,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3e 02-May-2016
+ * Project Version: 4a3f 02-May-2016
  * Comments:
  *
  *******************************************************************************/
@@ -56,6 +56,10 @@ void formNeuralNetworkInputLayer(ANNneuron* firstInputNeuronInNetwork, int numbe
 	for(long i = 0; i < numberOfInputNeurons; i++)
 	{
 		fillInNeuronIDProperties(currentNeuron, IDCounter, orderIDcounter, layerIDcounter, subnetIDcounter);
+
+		currentNeuron->spatialCoordinatesSetClassification = true;
+		currentNeuron->xPosRelFrac = (double)IDCounter;
+		currentNeuron->yPosRelFrac = (double)layerIDcounter;
 
 		currentNeuron->hasFrontLayer = true;
 
@@ -399,7 +403,7 @@ void createInputLayerInNeuralNetwork2D(ANNneuron* firstInputNeuronInNetwork, lon
 	{
 		fillInNeuronIDProperties(currentNeuron, IDCounter, orderIDcounter, layerIDcounter, subnetIDcounter);
 
-		currentNeuron->spatialCoordinatesSet = true;
+		currentNeuron->spatialCoordinatesSet2D = true;
 		currentNeuron->xPosRel = xPosRel;
 		currentNeuron->yPosRel = yPosRel;
 
@@ -618,7 +622,7 @@ void linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNeuronInCurrentLayer,
 			bool spatialCondition2D = false;
 			if((layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS))
 			{
-				currentNeuronL2->spatialCoordinatesSet = true;
+				currentNeuronL2->spatialCoordinatesSet2D = true;
 				currentNeuronL2->xPosRel = xPosRelL2;
 				currentNeuronL2->yPosRel = yPosRelL2;
 

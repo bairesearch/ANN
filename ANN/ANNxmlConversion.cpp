@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3e 02-May-2016
+ * Project Version: 4a3f 02-May-2016
  * Comments
  *
  *******************************************************************************/
@@ -277,7 +277,7 @@ bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron
 
 		#ifndef DO_NOT_STORE_NET_XML_NEURON_SPATIAL_COORD_PARAMETERS
 
-			if(currentNeuron->spatialCoordinatesSet)
+			if(currentNeuron->spatialCoordinatesSet2D)
 			{
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_xPosRel;
@@ -875,19 +875,19 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_xPosRel)
 		{
-			currentNeuron->spatialCoordinatesSet = true;
+			currentNeuron->spatialCoordinatesSet2D = true;
 			long attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->xPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_yPosRel)
 		{
-			currentNeuron->spatialCoordinatesSet = true;
+			currentNeuron->spatialCoordinatesSet2D = true;
 			long attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->yPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_zPosRel)
 		{
-			currentNeuron->spatialCoordinatesSet = true;
+			currentNeuron->spatialCoordinatesSet2D = true;
 			long attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRel = attributeValue;
 		}
