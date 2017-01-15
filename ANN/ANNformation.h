@@ -26,16 +26,17 @@
  * File Name: ANNformation.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  * Comments:
  *
  *******************************************************************************/
+
 
 #ifndef HEADER_ANN_FORMATION
 #define HEADER_ANN_FORMATION
 
 #include "ANNneuronClass.h"
-#include "ANNANNneuronConnectionClass.h"
+#include "ANNneuronConnectionClass.h"
 
 	//probability of subnet creation parameters
 #define DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH (0.6)				//60% probability of a neuron object being a subnet (assuming the neuron object can be made into a subnet - it has a front layer and a back layer)

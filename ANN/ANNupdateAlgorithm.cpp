@@ -26,25 +26,14 @@
  * File Name: ANNupdateAlgorithm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  * Comments:
  *
  *******************************************************************************/
 
+
 #include "ANNupdateAlgorithm.h"
 #include "ANNneuronClass.h"
-
-#include <ctime>
-#include <cstdlib>	//for random number generation
-#include <cmath>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <string.h>
-#include <iostream>
-#include <fstream>
-using namespace std;
 
 #define	MU 0.1F
 

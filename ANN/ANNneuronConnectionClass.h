@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNANNneuronConnectionClass.h
+ * File Name: ANNneuronConnectionClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -39,6 +39,8 @@
 
 #ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
 #define HEADER_ANN_NEURON_CONNECTION_CLASS
+
+#include "SHAREDglobalDefs.h"
 
 class ANNneuron;
 

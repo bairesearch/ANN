@@ -26,16 +26,17 @@
  * File Name: ANNupdateAlgorithm.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e7b 27-January-2015
+ * Project Version: 3e7c 27-January-2015
  * Comments:
  *
  *******************************************************************************/
+
 
 #ifndef HEADER_ANN_UPDATE_ALGORITHM
 #define HEADER_ANN_UPDATE_ALGORITHM
 
 #include "ANNneuronClass.h"
-#include "ANNANNneuronConnectionClass.h"
+#include "ANNneuronConnectionClass.h"
 
 #include "ANNglobalDefs.h"
 #ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_4
