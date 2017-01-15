@@ -3,7 +3,7 @@
  * File Name: ANNdisplay.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2010 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a5g 01-Nov-2011
+ * Project Version: 3a6a 20-Mar-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
