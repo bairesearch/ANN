@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a1a 28-April-2016
+ * Project Version: 4a1b 28-April-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -492,6 +492,8 @@ int main(int argc,char* *argv)
 		cout << "use Subnet Dependent Number Of Layers = " << useSubnetDependentNumberOfLayers << endl;
 		cout << "Max Number Recursive Subnets = " << maxNumRecursiveSubnets <<endl;
 		cout << "Number Of top level Layers = " << numberOfLayers << endl;
+		cout << "number Of Input Neurons = " << numberOfInputNeurons << endl;
+		cout << "number Of Output Neurons = " << numberOfOutputNeurons << endl;
 
 	}
 
