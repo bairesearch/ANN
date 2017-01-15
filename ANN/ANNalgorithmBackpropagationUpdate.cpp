@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a14a 16-June-2016
+ * Project Version: 4a14b 16-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -35,7 +35,6 @@
 #include "ANNalgorithmBackpropagationUpdate.h"
 #include "ANNneuronClass.h"
 
-#define	MU 0.1F
 
 
 int dataSetNum;
@@ -527,7 +526,7 @@ void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed)
 	#endif
 
 	double biasChange;
-	biasChange = MU* neuronBeingAccessed->error* 1.0;	//BIASES ARE WEIGHTED WIANNTH INPUT 1
+	biasChange = MU* neuronBeingAccessed->error* 1.0;	//BIASES ARE WEIGHTED WITH INPUT 1
 	neuronBeingAccessed->bias = neuronBeingAccessed->bias + biasChange;
 
 	#ifdef ANN_DEBUG

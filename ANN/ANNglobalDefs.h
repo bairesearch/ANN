@@ -26,7 +26,7 @@
  * File Name: ANNglobalsDefs.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a14a 16-June-2016
+ * Project Version: 4a14b 16-June-2016
  * Description: ANN specific global definitions
  *
  * Usage Examples:
@@ -113,6 +113,10 @@
 	#endif
 #else
 	#define ANN_ALGORITHM_BACKPROPAGATION
+#endif
+
+#ifdef ANN_ALGORITHM_BACKPROPAGATION
+	#define	MU 0.1F		//backpropagation learning rate
 #endif
 
 
