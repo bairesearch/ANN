@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -74,9 +74,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	float * inputData = new float[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH];
 
 
-	char currentNumberString[MAX_CHARACTERS_ANNTH] = "";
-
-	currentNumberString[0] = '\0';
+	string currentNumberString = "";
 
 	/* Data file layout
 
@@ -110,8 +108,8 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		{
 			case CHAR_NEWLINE:
 			{
-				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString);
-				currentNumberString[0] = '\0';
+				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString.c_str());
+				currentNumberString = "";
 
 					#ifdef ANN_DEBUG
 					//cout << "DEBUG: inputData[" << currentRow << "][" << currentColumn << "] = " << inputData[currentRow][currentColumn] << endl;
@@ -128,17 +126,14 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 			}
 			case CHAR_COMMA:
 			{
-				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString);
-				currentNumberString[0] = '\0';
+				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString.c_str());
+				currentNumberString = "";
 				currentColumn++;
 				break;
 			}
 			default:
 			{
-				char characterString[2];
-				characterString[0] = c;
-				characterString[1] = '\0';
-				strcat(currentNumberString, characterString);
+				currentNumberString = currentNumberString + c;
 				break;
 			}
 		}

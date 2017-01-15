@@ -26,7 +26,7 @@
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3e2d 29-August-2014
+ * Project Version: 3e3a 01-September-2014
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -208,7 +208,7 @@ void fillInANNSpriteExternVariables()
 /*top level sprite routines - required for independent LRRCsprite.cpp calculations*/
 
 
-bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(char* sceneFileNameWithoutSprites, char* sceneFileNameWithSprites, Neuron * firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag ** currentTag)
+bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, Neuron * firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -235,7 +235,7 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(char* sceneFileNameWi
 
 
 
-bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(char* sceneFileNameWithSprites, Reference * nonSpriteListInitialReference, Reference * spriteListInitialReference, Neuron * firstNeuronInNetwork, bool addSprites, int * numSpritesAdded, bool writeSVG, XMLparserTag ** currentTag)
+bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(string sceneFileNameWithSprites, Reference * nonSpriteListInitialReference, Reference * spriteListInitialReference, Neuron * firstNeuronInNetwork, bool addSprites, int * numSpritesAdded, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -251,7 +251,7 @@ bool ANNcreateNeuralNetworkReferenceListsWithAndWithoutSprites(char* sceneFileNa
 }
 
 
-bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(char* sceneFileNameWithoutSprites, char* sceneFileNameWithSprites, bool addSprites, Reference * nonSpriteListInitialReference, Reference * spriteListInitialReference, int numSpritesAdded)
+bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(string sceneFileNameWithoutSprites, string sceneFileNameWithSprites, bool addSprites, Reference * nonSpriteListInitialReference, Reference * spriteListInitialReference, int numSpritesAdded)
 {
 	bool result = true;
 
@@ -271,7 +271,7 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(cha
 
 
 
-Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron * firstNeuronInLayer, Reference * spriteListInitialReference, Reference * currentNonSpriteListReference, vec * eyeCoords, int * numSpritesAdded, int * numnonSpritesAdded, char* sceneFileNameWithSprites, bool isSubnet, vec * positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag ** currentTag)
+Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(Neuron * firstNeuronInLayer, Reference * spriteListInitialReference, Reference * currentNonSpriteListReference, vec * eyeCoords, int * numSpritesAdded, int * numnonSpritesAdded, string sceneFileNameWithSprites, bool isSubnet, vec * positionOfSubnetNeuron, bool addSprites, bool writeSVG, XMLparserTag ** currentTag)
 {
 	Reference * updatedNonSpriteListReference = currentNonSpriteListReference;
 
@@ -622,7 +622,7 @@ bool ANNfillNeuronConnectionDisplayReference(Reference * currentNeuronDispayRefe
 
 
 
-bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Reference * neuronReference, NeuronConnection * neuronConnection, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, char * sceneFileName, Reference * backNeuronReference, Reference * forwardNeuronReference, bool writeSVG, XMLparserTag ** currentTag)
+bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Reference * neuronReference, NeuronConnection * neuronConnection, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, string sceneFileName, Reference * backNeuronReference, Reference * forwardNeuronReference, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -631,25 +631,21 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 	Reference * spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
 
 	//create textual sprite info:
-	string * spriteTextString = new string();
+	string spriteTextString = "";
 
 	int spriteNumberOfLines;
 	spriteNumberOfLines = SPRITE_TEXTUAL_MAX_NUM_OF_LINES;
-	int * spriteColourArray = new int[spriteNumberOfLines];
-	ANNgenerateTextualNeuronConnectionSpriteInfoString(neuronConnection, spriteTextString, spriteColourArray);
+	int spriteColourArray[spriteNumberOfLines];
+	ANNgenerateTextualNeuronConnectionSpriteInfoString(neuronConnection, &spriteTextString, spriteColourArray);
 
 	int numSpritesAddedTemp = 0;
 	spriteSubmodelCurrentReference = LDaddTextualSpriteInfoStringToReferenceList(NULL, spriteTextString, spriteColourArray, spriteSubmodelCurrentReference, spriteNumberOfLines, &numSpritesAddedTemp, true);
 	//CHECK THIS: Add svg text here
-	delete spriteTextString;
-	delete spriteColourArray;
 
 	*numSpritesAdded = (*numSpritesAdded + 1);
 
 	//generate sprite reference name
-	char * spriteReferenceFileName = new char[DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX];
-
-	LDcreateSpriteReferenceName(spriteReferenceFileName, *numSpritesAdded, sceneFileName);
+	string spriteReferenceFileName = LDcreateSpriteReferenceName(*numSpritesAdded, sceneFileName);
 	cout << "spriteReferenceFileName = " << spriteReferenceFileName << endl;
 
 #ifdef CPLUSPLUSERRORCORRECTION3
@@ -677,13 +673,11 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 		result = false;
 	}
 
-	delete spriteReferenceFileName;
-
 	return result;
 }
 
 
-bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neuronReference, Neuron * neuron, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, char * sceneFileName, bool writeSVG, XMLparserTag ** currentTag)
+bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neuronReference, Neuron * neuron, Reference * spriteListInitialReference, vec * eyeCoords, int * numSpritesAdded, string sceneFileName, bool writeSVG, XMLparserTag ** currentTag)
 {
 	bool result = true;
 
@@ -692,19 +686,19 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 	Reference * spriteSubmodelCurrentReference = spriteSubmodelInitialReference;
 
 	//create textual sprite info:
-	string * spriteTextString = new string();
+	string spriteTextString = "";
 
 	int spriteNumberOfLines;
 	spriteNumberOfLines = SPRITE_TEXTUAL_MAX_NUM_OF_LINES;
-	int * spriteColourArray = new int[spriteNumberOfLines];
-	ANNgenerateTextualNeuronSpriteInfoString(neuron, spriteTextString, spriteColourArray);
+	int spriteColourArray[spriteNumberOfLines];
+	ANNgenerateTextualNeuronSpriteInfoString(neuron, &spriteTextString, spriteColourArray);
 
 	if(writeSVG)
 	{
 		int numberOfLines = 0;
-		for(int i=0; i < spriteTextString->length(); i++)
+		for(int i=0; i < spriteTextString.length(); i++)
 		{
-			if(spriteTextString->at(i) == CHAR_NEWLINE)
+			if(spriteTextString.at(i) == CHAR_NEWLINE)
 			{
 				numberOfLines++;
 			}
@@ -714,11 +708,11 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 		int stringCurrentLineIndex = 0;
 		int lineIndex = 0;
 
-		for(int i=0; i < spriteTextString->length(); i++)
+		for(int i=0; i < spriteTextString.length(); i++)
 		{
-			if(spriteTextString->at(i) == CHAR_NEWLINE)
+			if(spriteTextString.at(i) == CHAR_NEWLINE)
 			{
-				string stringCurrentLine = spriteTextString->substr(i-stringCurrentLineIndex, stringCurrentLineIndex);
+				string stringCurrentLine = spriteTextString.substr(i-stringCurrentLineIndex, stringCurrentLineIndex);
 
 				vec positionSVG;
 				positionSVG.x = neuronReference->relativePosition.x*ANN_SVG_SCALE_FACTOR - ANN_SVG_NEURON_SIZE/2;
@@ -743,13 +737,8 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 
 	*numSpritesAdded = (*numSpritesAdded + 1);
 
-	delete spriteTextString;
-	delete spriteColourArray;
-
 	//generate sprite reference name
-	char * spriteReferenceFileName = new char[DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX];
-
-	LDcreateSpriteReferenceName(spriteReferenceFileName, *numSpritesAdded, sceneFileName);
+	string spriteReferenceFileName = LDcreateSpriteReferenceName(*numSpritesAdded, sceneFileName);
 	cout << "spriteReferenceFileName = " << spriteReferenceFileName << endl;
 
 #ifdef CPLUSPLUSERRORCORRECTION3
@@ -771,8 +760,6 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 	{
 		result = false;
 	}
-
-	delete spriteReferenceFileName;
 
 	return result;
 }
@@ -800,14 +787,13 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	spriteColourArray[7] = SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR;
 
 
-	char * tempString = new char[DAT_FILE_DATA_VALUE_MAX_LENGTH*CPLUSPLUSERRORCORRECTION1];		//for some reason tempString must be very large or else the heap will get corrupted
+	char tempString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 	//char * tempString = new char[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
 	/*Unit Name Information*/
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO)
 	{
-		tempString[0] = '\0';
 		sprintf(tempString, "%d", neuron->id);
 		if(SPRITE_TEXTUAL_INCLUDE_NEURON_EXTRA_SECONDARY_INFO)
 		{
@@ -842,7 +828,6 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString[0] = '\0';
 		sprintf(tempString, "%d", neuron->orderID);
 		*spriteTextString = *spriteTextString + "orderID = " + tempString;
 	}
@@ -851,7 +836,6 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString[0] = '\0';
 		sprintf(tempString, "%d", neuron->layerID);
 		*spriteTextString = *spriteTextString + "layerID = " + tempString;
 	}
@@ -860,7 +844,6 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString[0] = '\0';
 		sprintf(tempString, "%d", neuron->subnetID);
 		*spriteTextString = *spriteTextString + "subnetID = " + tempString;
 	}
@@ -869,7 +852,6 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString[0] = '\0';
 		sprintf(tempString, "%0.2f", neuron->bias);
 		*spriteTextString = *spriteTextString + "bias = " + tempString;
 	}
@@ -878,7 +860,6 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString[0] = '\0';
 		sprintf(tempString, "%0.2f", neuron->output);
 		*spriteTextString = *spriteTextString + "output = " + tempString;
 	}
@@ -886,7 +867,6 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString[0] = '\0';
 		sprintf(tempString, "%0.2f", neuron->classTarget);
 		*spriteTextString = *spriteTextString + "classTarget = " + tempString;
 	}
@@ -894,12 +874,9 @@ void ANNgenerateTextualNeuronSpriteInfoString(Neuron * neuron, string * spriteTe
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString[0] = '\0';
 		sprintf(tempString, "%0.2f", neuron->error);
 		*spriteTextString = *spriteTextString + "error = " + tempString;
 	}
-
-	delete tempString;
 
 	#ifdef ANN_DEBUG
 	//cout << "*spriteTextString = \n" << *spriteTextString << "\n\n" << endl;
@@ -918,16 +895,13 @@ void ANNgenerateTextualNeuronConnectionSpriteInfoString(NeuronConnection * neuro
 	spriteColourArray[2] = SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR;
 	spriteColourArray[3] = SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR;
 
-	char * tempString = new char[DAT_FILE_DATA_VALUE_MAX_LENGTH*CPLUSPLUSERRORCORRECTION1];		//for some reason tempString must be very large or else the heap will get corrupted
+	char tempString[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 	//char * tempString = new char[DAT_FILE_DATA_VALUE_MAX_LENGTH];
 
 	/*Unit Name Information*/
 
-	tempString[0] = '\0';
 	sprintf(tempString, "%0.2f", neuronConnection->weight);
 	*spriteTextString = "\n\n" + *spriteTextString + "w = " + tempString;
-
-	delete tempString;
 
 	#ifdef ANN_DEBUG
 	//cout << "*spriteTextString = \n" << *spriteTextString << "\n\n" << endl;
