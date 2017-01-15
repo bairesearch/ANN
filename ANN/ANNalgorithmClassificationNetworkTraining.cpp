@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a10a 07-June-2016
+ * Project Version: 4a10b 07-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -311,9 +311,9 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
 		bool addSprites = true;
 		bool allowRaytrace = false;
-		bool display = false;		//true
-		bool useOutputLDRFile = true;
-		bool useOutputPPMFile = false;	//true
+		bool displayInOpenGL = false;
+		bool useOutputLDRFile = false;
+		bool useOutputPPMFile = false;
 		bool useOutputSVGFile = true;
 		string indexString = convertIntToString(experienceNum);
 		string frameFileNameBase = "neuralNetFrame" + indexString;
@@ -324,7 +324,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		string outputTALFileName = "";
 		int rasterImageWidth = 1024;
 		int rasterImageHeight = 768;
-		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, display, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
+		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 		
 		if(experienceNum == 3)
 		{
