@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i16a 27-August-2016
+ * Project Version: 3i17a 20-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -53,7 +53,7 @@ bool debugPrintNNOutputs;
 double ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork)
 {
 	#ifdef ANN_DEBUG
-	cout << "\ndouble ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork)" << endl;
+	cout << "\ndouble ANNbackPropogationPass{ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork}" << endl;
 	#endif
 
 	backPropogationForwardPassStep(firstInputNeuronInNetwork);
@@ -146,7 +146,7 @@ void calculateErrorOfOutputNeurons(ANNneuron* firstOutputNeuronInNetwork)
 void backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void backPropogationForwardPassStep{ANNneuron* neuronBeingAccessed}" << endl;
 	cout << "ANNneuron ID = " << neuronBeingAccessed->id << endl;
 	cout << "ANNneuron ID Order = " << neuronBeingAccessed->orderID << endl;
 	cout << "ANNneuron ID Layer = " << neuronBeingAccessed->layerID << endl;
@@ -225,7 +225,7 @@ void backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed)
 void backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons{ANNneuron* neuronBeingAccessed}" << endl;
 	cout << "\nNeuron Output Value Adjusted" << endl;
 	cout << "ANNneuron ID = " << neuronBeingAccessed->id << endl;
 	cout << "ANNneuron ID Order = " << neuronBeingAccessed->orderID << endl;
@@ -318,7 +318,7 @@ float calculateOValue(float netValue)
 void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer, bool isSubnet)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, int isOutputLayer)" << endl;
+	cout << "\nstatic void backPropogationBackwardPassStep{ANNneuron* neuronBeingAccessed, int isOutputLayer}" << endl;
 	cout << "neuronBeingAccessed ID = " << neuronBeingAccessed->id << endl;
 	cout << "neuronBeingAccessed ID Order = " << neuronBeingAccessed->orderID << endl;
 	cout << "neuronBeingAccessed ID Layer = " << neuronBeingAccessed->layerID << endl;
@@ -429,7 +429,7 @@ void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, int isOutpu
 void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateOutputErrorOfOutputNeuron{ANNneuron* neuronBeingAccessed}" << endl;
 	#endif
 
 	double outputError = (neuronBeingAccessed->classTarget - neuronBeingAccessed->output)* neuronBeingAccessed->output* (1.0 - neuronBeingAccessed->output);
@@ -450,7 +450,7 @@ void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed)
 void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateOutputErrorOfNonoutputNeuron{ANNneuron* neuronBeingAccessed}" << endl;
 	#endif
 
 	#ifdef ANN_DEBUG
@@ -492,7 +492,7 @@ void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed)
 void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateNewBackConnectionWeightsOfNeuron{ANNneuron* neuronBeingAccessed}" << endl;
 	#endif
 
 	#ifdef ANN_DEBUG
@@ -524,7 +524,7 @@ void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed)
 void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void calculateNewBiasOfNeuron{ANNneuron* neuronBeingAccessed}" << endl;
 	#endif
 
 	double biasChange;

@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i16a 27-August-2016
+ * Project Version: 3i17a 20-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -38,7 +38,7 @@
 #include "ANNalgorithmClassificationNetworkUpdate.h"
 #include "ANNdata.h"
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
-#include "ANNdisplay.h"
+//#include "ANNdisplay.h"
 #endif
 #include "SHAREDvars.h"
 
@@ -311,6 +311,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		#endif
 
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
+		/*
 		bool addSprites = true;
 		bool allowRaytrace = false;
 		bool displayInOpenGL = false;
@@ -327,7 +328,7 @@ void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneur
 		int rasterImageWidth = 1024;
 		int rasterImageHeight = 768;
 		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
-		
+		*/
 		/*
 		if(experienceNum == 3)
 		{

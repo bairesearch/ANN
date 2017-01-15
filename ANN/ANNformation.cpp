@@ -26,7 +26,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i16a 27-August-2016
+ * Project Version: 3i17a 20-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -282,7 +282,7 @@ ANNneuron* formNeuralNetWithOptimisedProperties(ANNneuron* firstInputNeuronInNet
 ANNneuron* formNeuralNet(ANNneuron* firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron* formNeuralNet()\n" << endl;
+	cout << "\nNeuron* formNeuralNet{}\n" << endl;
 	#endif
 
 	ANNneuron* firstOutputNeuronInNetwork;
@@ -302,7 +302,7 @@ ANNneuron* formNeuralNet(ANNneuron* firstInputNeuron, long numberOfInputNeurons,
 ANNneuron* formAdvancedNeuralNetwork(ANNneuron* firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, bool useSubnetDependentNumberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron* formAdvancedNeuralNetwork()\n" << endl;
+	cout << "\nNeuron* formAdvancedNeuralNetwork{}\n" << endl;
 	#endif
 
 	double subnetNumberOfLayersModifier = ((numberOfInputNeurons+numberOfOutputNeurons)/2)* numberOfLayers;		//or numberOfLayers = subnetNumberOfLayersModifier / averageNumberOfInputOutputNeurons
@@ -318,7 +318,7 @@ ANNneuron* formAdvancedNeuralNetwork(ANNneuron* firstInputNeuron, long numberOfI
 ANNneuron* formNonDistinctLayeredNeuralNetwork(ANNneuron* firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron* formNonDistinctLayeredNeuralNetwork()\n" << endl;
+	cout << "\nNeuron* formNonDistinctLayeredNeuralNetwork{}\n" << endl;
 	#endif
 
 	ANNneuron* firstOutputNeuronInNetwork;
@@ -898,7 +898,7 @@ void linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNeuronInCurrentLayer,
 ANNneuron* fillNonDistinctHiddenLayer(ANNneuron* firstNeuronInCurrentLayer, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfNeuronsInCurrentLayer, long currentNumberOfLayers, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long currentNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityANNneuronConnectionWithPreviousLayerNeuron, ANNneuron* firstInputNeuronInSubnet, double probabilityANNneuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron* fillNonDistinctHiddenLayer()\n" << endl;
+	cout << "\nNeuron* fillNonDistinctHiddenLayer{}\n" << endl;
 	#endif
 
 	subnetIDcounter = currentNumberOfRecursiveSubnets;
@@ -1140,7 +1140,7 @@ long calcNumberOfLayersInSubnet(long numberOfInputNeurons, long numberOfOutputNe
 	}
 
 	#ifdef ANN_DEBUG
-	cout << "\nlong calcNumberOfLayersInSubnet()\n" << endl;
+	cout << "\nlong calcNumberOfLayersInSubnet{}\n" << endl;
 	cout << "numberOfInputNeurons = " << numberOfInputNeurons << endl;
 	cout << "numberOfOutputNeurons = " << numberOfOutputNeurons << endl;
 	cout << "currentNumberOfRecursiveSubnets = " << currentNumberOfRecursiveSubnets << endl;
@@ -1159,7 +1159,7 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 	long numberOfNeuronsInNewFrontLayer;
 
 	#ifdef ANN_DEBUG
-	cout << "\nlong calculateNumberOfNeuronsInNewFrontLayer()\n" << endl;
+	cout << "\nlong calculateNumberOfNeuronsInNewFrontLayer{}\n" << endl;
 	cout << "currentNumberOfLayers = " << currentNumberOfLayers << endl;
 	cout << "numberOfLayers = " << numberOfLayers << endl;
 	cout << "numberOfInputNeurons = " << numberOfInputNeurons << endl;

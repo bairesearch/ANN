@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3i16a 27-August-2016
+ * Project Version: 3i17a 20-September-2016
  * Comments:
  *
  *******************************************************************************/
@@ -41,7 +41,7 @@
 double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult)
 {
 	#ifdef ANN_DEBUG
-	cout << "\ndouble ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork)" << endl;
+	cout << "\ndouble ANNbackPropogationPass{ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork}" << endl;
 	#endif
 
 	//classification routine
@@ -93,7 +93,7 @@ bool isNeuronOutputFire(ANNneuron* currentNeuron)
 void memoryTraceForwardPassStep(ANNneuron* neuronBeingAccessed, double* trainingMemoryResult)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nstatic void memoryTraceForwardPassStep(ANNneuron* neuronBeingAccessed)" << endl;
+	cout << "\nstatic void memoryTraceForwardPassStep{ANNneuron* neuronBeingAccessed}" << endl;
 	cout << "ANNneuron ID = " << neuronBeingAccessed->id << endl;
 	cout << "ANNneuron ID Order = " << neuronBeingAccessed->orderID << endl;
 	cout << "ANNneuron ID Layer = " << neuronBeingAccessed->layerID << endl;
