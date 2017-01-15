@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNparser.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -71,7 +71,7 @@ using namespace std;
 
 void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 {
-	float * inputData = new float[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH];
+	float* inputData = new float[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH];
 
 
 	string currentNumberString = "";
@@ -168,15 +168,15 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 
 
 	//now normalise data;
-	float * normalisedInputDataTemp = new float[maxRows * maxCols];
-	bool * normalisedInputDataTempFilled = new bool[maxRows];
-	float * normalisedInputData = new float[maxRows * maxCols];
+	float* normalisedInputDataTemp = new float[maxRows* maxCols];
+	bool* normalisedInputDataTempFilled = new bool[maxRows];
+	float* normalisedInputData = new float[maxRows* maxCols];
 
 
 	//1. calculate max/min values
 
-	float * min = new float[maxCols];
-	float * max = new float[maxCols];
+	float* min = new float[maxCols];
+	float* max = new float[maxCols];
 	//float maxMin[EXPERIENCE_DATASET_MAX_NUM_COL_ANNTH][2];
 		//stores maximum [0] and minimum [1] value for each type of inputData
 
@@ -282,7 +282,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 			index = 0;
 		}
 	#else
-		int res = (int) (float(rand() * float(maxRows))/(float(RAND_MAX)+1.0));
+		int res = (int) (float(rand()* float(maxRows))/(float(RAND_MAX)+1.0));
 	#endif
 
 		if(normalisedInputDataTempFilled[res] == false)
@@ -351,7 +351,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 
 
 	firstExperienceInDataSet = new Experience();
-	Experience * currentExperienceInDataSet = firstExperienceInDataSet;
+	Experience* currentExperienceInDataSet = firstExperienceInDataSet;
 
 	for(int i=0;i<maxRows;i++)
 	{
@@ -361,19 +361,19 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		//cout << "currentExperienceInDataSet->classTargetValue = " << currentExperienceInDataSet->classTargetValue << endl;
 		#endif
 
-		ExperienceInput * currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
+		ExperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 
 		for(int j=1;j<maxCols;j++)
 		{
 			currentExperienceInputInExperience->inputValue = normalisedInputData[i*maxCols + j];
 				//currentExperienceInputInExperience->inputValue = (normalisedInputData[i*maxCols + j]*2.0 - 1.0) - allows negative input values
 
-			ExperienceInput * newExperienceInput = new ExperienceInput();
+			ExperienceInput* newExperienceInput = new ExperienceInput();
 			currentExperienceInputInExperience->next = newExperienceInput;
 			currentExperienceInputInExperience = currentExperienceInputInExperience->next;
 		}
 
-		Experience * newExperience = new Experience();
+		Experience* newExperience = new Experience();
 		currentExperienceInDataSet->next = newExperience;
 		currentExperienceInDataSet = currentExperienceInDataSet->next;
 	}

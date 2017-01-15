@@ -24,16 +24,16 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronClass.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Comments:
  *
  *******************************************************************************/
 
 #include "ANNneuronClass.h"
 
-/************************************************************ Neural Network Class Definitions ******************************************************/
+/************************************************************ Neural Network Class Definitions* *****************************************************/
 
 #include <ctime>
 #include <cstdlib>	//for random number generation
@@ -133,7 +133,7 @@ Neuron::~Neuron(void)
 			#ifdef GIA_FREE_MEMORY_DEBUG
 			//cout << "deleting: frontNeuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
 			#endif
-			delete *connectionIter;
+			delete* connectionIter;
 		}
 	}
 
@@ -145,7 +145,7 @@ Neuron::~Neuron(void)
 			#ifdef GIA_FREE_MEMORY_DEBUG
 			//cout << "deleting: backNeuronConnectionList connection: " << (*connectionIter)->frontNeuronID << endl;
 			#endif
-			delete *connectionIter;
+			delete* connectionIter;
 		}
 	}
 	*/
@@ -177,7 +177,7 @@ Neuron::~Neuron(void)
 
 
 
-void fillInNeuronIDProperties(Neuron * neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
+void fillInNeuronIDProperties(Neuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
 {
 	neuronToUpdate->id = IDinit;
 	neuronToUpdate->orderID = orderIDinit;
@@ -186,7 +186,7 @@ void fillInNeuronIDProperties(Neuron * neuronToUpdate, long IDinit, long orderID
 }
 
 
-void copyNeuronKeyProperties(Neuron * neuronToUpdate, Neuron * neuronToCopy)
+void copyNeuronKeyProperties(Neuron* neuronToUpdate, Neuron* neuronToCopy)
 {
 	neuronToUpdate->bias = neuronToCopy->bias;
 	neuronToUpdate->storedBias = neuronToCopy->storedBias;
@@ -195,7 +195,7 @@ void copyNeuronKeyProperties(Neuron * neuronToUpdate, Neuron * neuronToCopy)
 	neuronToUpdate->error = neuronToCopy->error;
 }
 
-void averageNeuronKeyProperties(Neuron * neuronToUpdate, Neuron * neuronToCopy)
+void averageNeuronKeyProperties(Neuron* neuronToUpdate, Neuron* neuronToCopy)
 {
 	neuronToUpdate->bias = (neuronToUpdate->bias + neuronToCopy->bias)/2.0;
 	neuronToUpdate->storedBias = (neuronToUpdate->storedBias + neuronToCopy->storedBias)/2.0;
@@ -205,6 +205,6 @@ void averageNeuronKeyProperties(Neuron * neuronToUpdate, Neuron * neuronToCopy)
 }
 
 
-/************************************************************ End Neural Network Class Definitions **************************************************/
+/************************************************************ End Neural Network Class Definitions* *************************************************/
 
 

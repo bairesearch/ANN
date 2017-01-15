@@ -24,16 +24,16 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronConnectionClass.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Comments:
  *
  *******************************************************************************/
 
 #include "ANNneuronConnectionClass.h"
 
-/************************************************************ Neural Network Class Definitions ******************************************************/
+/************************************************************ Neural Network Class Definitions* *****************************************************/
 
 #include <ctime>
 #include <cstdlib>	//for random number generation
@@ -80,6 +80,6 @@ NeuronConnection::~NeuronConnection(void)
 	//do not delete neurons in this destructor
 }
 
-/************************************************************ End Neural Network Class Definitions **************************************************/
+/************************************************************ End Neural Network Class Definitions* *************************************************/
 
 

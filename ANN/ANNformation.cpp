@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNformation.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -54,11 +54,11 @@ static long orderIDcounter;
 static long layerIDcounter;
 static long subnetIDcounter;
 
-/************************************************************ Form Neural Network Routines ******************************************************/
+/************************************************************ Form Neural Network Routines* *****************************************************/
 
 /*forms a 3 layered net similar to that used in original c project*/
 //assumes firstInputNeuron and firstOutputNeuron have already been filled
-void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, long numberOfInputNeurons, long numberOfHiddenNeurons, long numberOfOutputNeurons)
+void formSimpleNeuralNet(Neuron* firstInputNeuron, Neuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfHiddenNeurons, long numberOfOutputNeurons)
 {
 	/*NB simple neural network heursitc;
 	number of hidden neurons = average of input and output neurons
@@ -66,7 +66,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 
 	/*Create all Neurons in Simply Layered Net*/
 
-	Neuron * firstHiddenNeuron = new Neuron();
+	Neuron* firstHiddenNeuron = new Neuron();
 
 
 	//initiate Input Layer in Neural Network
@@ -75,7 +75,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 	orderIDcounter = 1;
 	layerIDcounter = 1;
 	subnetIDcounter = 1;
-	Neuron * currentNeuron = firstInputNeuron;
+	Neuron* currentNeuron = firstInputNeuron;
 	for(long i = 0; i < numberOfInputNeurons; i++)
 	{
 		fillInNeuronIDProperties(currentNeuron, IDCounter, orderIDcounter, layerIDcounter, subnetIDcounter);
@@ -83,7 +83,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 		currentNeuron->firstNeuronInFrontLayer = firstHiddenNeuron;
 		currentNeuron->hasFrontLayer = true;
 
-		Neuron * newNeuron = new Neuron();
+		Neuron* newNeuron = new Neuron();
 		currentNeuron->nextNeuron = newNeuron;
 		currentNeuron = currentNeuron->nextNeuron;
 
@@ -104,7 +104,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 		currentNeuron->hasFrontLayer = true;
 		currentNeuron->hasBackLayer = true;
 
-		Neuron * newNeuron = new Neuron();
+		Neuron* newNeuron = new Neuron();
 		currentNeuron->nextNeuron = newNeuron;
 		currentNeuron = currentNeuron->nextNeuron;
 
@@ -122,7 +122,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 		currentNeuron->firstNeuronInBackLayer = firstHiddenNeuron;
 		currentNeuron->hasBackLayer = true;
 
-		Neuron * newNeuron = new Neuron();
+		Neuron* newNeuron = new Neuron();
 		currentNeuron->nextNeuron = newNeuron;
 		currentNeuron = currentNeuron->nextNeuron;
 
@@ -133,8 +133,8 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 	/*Link all Neurons in Simply Layered Net - fill firstFrontNeuronConnectionContainer and BackNeuronReferences for all neurons*/
 
 
-	Neuron * currentNeuronL1;
-	Neuron * currentNeuronL2;
+	Neuron* currentNeuronL1;
+	Neuron* currentNeuronL2;
 
 
 	//Link ALL input and hidden layer neurons neurons (fill in firstFrontNeuronConnectionContainer/BackNeuronReferences list for all relevant neurons)
@@ -148,7 +148,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 
 		for(long j = 0; j < numberOfHiddenNeurons; j++)
 		{
-			NeuronConnection * newNeuronConnection = new NeuronConnection();
+			NeuronConnection* newNeuronConnection = new NeuronConnection();
 			newNeuronConnection->backNeuron = currentNeuronL1;
 			newNeuronConnection->frontNeuron = currentNeuronL2;
 			currentNeuronL1->frontNeuronConnectionList.push_back(newNeuronConnection);
@@ -171,7 +171,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 
 		for(long j = 0; j < numberOfOutputNeurons; j++)
 		{
-			NeuronConnection * newNeuronConnection = new NeuronConnection();
+			NeuronConnection* newNeuronConnection = new NeuronConnection();
 
 			newNeuronConnection->backNeuron = currentNeuronL1;
 			newNeuronConnection->frontNeuron = currentNeuronL2;
@@ -202,7 +202,7 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 
 
 
-/************************************************************ End Form Neural Network Routines ******************************************************/
+/************************************************************ End Form Neural Network Routines* *****************************************************/
 
 
 
@@ -223,12 +223,12 @@ void formSimpleNeuralNet(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, 
 
 
 
-/************************************************************ Form Advanced Neural Network Routines ******************************************************/
+/************************************************************ Form Advanced Neural Network Routines* *****************************************************/
 
 
-Neuron * formNeuralNetWithOptimisedProperties(Neuron * firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers)
+Neuron* formNeuralNetWithOptimisedProperties(Neuron* firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers)
 {
-	Neuron * firstOutputNeuronInNetwork;
+	Neuron* firstOutputNeuronInNetwork;
 
 	int layerDivergenceType;
 	double meanLayerDivergenceFactor;
@@ -258,13 +258,13 @@ Neuron * formNeuralNetWithOptimisedProperties(Neuron * firstInputNeuronInNetwork
 	return firstOutputNeuronInNetwork;
 }
 
-Neuron * formNeuralNet(Neuron * firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
+Neuron* formNeuralNet(Neuron* firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron * formNeuralNet()\n" << endl;
+	cout << "\nNeuron* formNeuralNet()\n" << endl;
 	#endif
 
-	Neuron * firstOutputNeuronInNetwork;
+	Neuron* firstOutputNeuronInNetwork;
 
 	double probabilityOfSubnetCreation = 0.0;	/*no divergence = no ANN*/
 	long maxNumberOfRecursiveSubnets = 0;		/*no recursive subnets = no ANN*/
@@ -278,15 +278,15 @@ Neuron * formNeuralNet(Neuron * firstInputNeuron, long numberOfInputNeurons, lon
 
 
 #ifdef ANN_ADVANCED
-Neuron * formAdvancedNeuralNetwork(Neuron * firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, bool useSubnetDependentNumberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
+Neuron* formAdvancedNeuralNetwork(Neuron* firstInputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, bool useSubnetDependentNumberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long numberOfLayers, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron * formAdvancedNeuralNetwork()\n" << endl;
+	cout << "\nNeuron* formAdvancedNeuralNetwork()\n" << endl;
 	#endif
 
-	double subnetNumberOfLayersModifier = ((numberOfInputNeurons+numberOfOutputNeurons)/2) * numberOfLayers;		//or numberOfLayers = subnetNumberOfLayersModifier / averageNumberOfInputOutputNeurons
+	double subnetNumberOfLayersModifier = ((numberOfInputNeurons+numberOfOutputNeurons)/2)* numberOfLayers;		//or numberOfLayers = subnetNumberOfLayersModifier / averageNumberOfInputOutputNeurons
 
-	Neuron * firstOutputNeuronInNetwork;
+	Neuron* firstOutputNeuronInNetwork;
 
 	firstOutputNeuronInNetwork = formNonDistinctLayeredNeuralNetwork(firstInputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityNeuronConnectionWithPreviousLayerNeuron, probabilityNeuronConnectionWithAllPreviousLayersNeurons);
 
@@ -294,13 +294,13 @@ Neuron * formAdvancedNeuralNetwork(Neuron * firstInputNeuron, long numberOfInput
 }
 #endif
 
-Neuron * formNonDistinctLayeredNeuralNetwork(Neuron * firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
+Neuron* formNonDistinctLayeredNeuralNetwork(Neuron* firstInputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron * formNonDistinctLayeredNeuralNetwork()\n" << endl;
+	cout << "\nNeuron* formNonDistinctLayeredNeuralNetwork()\n" << endl;
 	#endif
 
-	Neuron * firstOutputNeuronInNetwork;
+	Neuron* firstOutputNeuronInNetwork;
 
 	if((layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING_SQUARE2D))
 	{
@@ -342,7 +342,7 @@ Neuron * formNonDistinctLayeredNeuralNetwork(Neuron * firstInputNeuronInNetwork,
 
 
 
-void createInputLayerInNeuralNetwork(Neuron * firstInputNeuronInNetwork, long numberOfInputNeurons)
+void createInputLayerInNeuralNetwork(Neuron* firstInputNeuronInNetwork, long numberOfInputNeurons)
 {
 	IDCounter = 1;	//	IDCounter = DEFAULT_FIRST_INPUT_NEURON_ID+1;
 	orderIDcounter = 1;
@@ -350,13 +350,13 @@ void createInputLayerInNeuralNetwork(Neuron * firstInputNeuronInNetwork, long nu
 	subnetIDcounter = 1;
 
 	//initiate Input Layer in Neural Network
-	Neuron * currentNeuron = firstInputNeuronInNetwork;
+	Neuron* currentNeuron = firstInputNeuronInNetwork;
 
 	for(long i = 0; i < numberOfInputNeurons; i++)
 	{
 		fillInNeuronIDProperties(currentNeuron, IDCounter, orderIDcounter, layerIDcounter, subnetIDcounter);
 
-		Neuron * newNeuron = new Neuron();
+		Neuron* newNeuron = new Neuron();
 		currentNeuron->nextNeuron = newNeuron;
 		currentNeuron = currentNeuron->nextNeuron;
 
@@ -365,7 +365,7 @@ void createInputLayerInNeuralNetwork(Neuron * firstInputNeuronInNetwork, long nu
 	}
 }
 
-void createInputLayerInNeuralNetwork2D(Neuron * firstInputNeuronInNetwork, long numberOfInputNeurons)
+void createInputLayerInNeuralNetwork2D(Neuron* firstInputNeuronInNetwork, long numberOfInputNeurons)
 {
 	IDCounter = 1;	//	IDCounter = DEFAULT_FIRST_INPUT_NEURON_ID+1;
 	orderIDcounter = 1;
@@ -373,7 +373,7 @@ void createInputLayerInNeuralNetwork2D(Neuron * firstInputNeuronInNetwork, long 
 	subnetIDcounter = 1;
 
 	//initiate Input Layer in Neural Network
-	Neuron * currentNeuron = firstInputNeuronInNetwork;
+	Neuron* currentNeuron = firstInputNeuronInNetwork;
 
 	long xPosRel = 0;
 	long yPosRel = 0;
@@ -386,7 +386,7 @@ void createInputLayerInNeuralNetwork2D(Neuron * firstInputNeuronInNetwork, long 
 		currentNeuron->xPosRel = xPosRel;
 		currentNeuron->yPosRel = yPosRel;
 
-		Neuron * newNeuron = new Neuron();
+		Neuron* newNeuron = new Neuron();
 		currentNeuron->nextNeuron = newNeuron;
 		currentNeuron = currentNeuron->nextNeuron;
 
@@ -403,12 +403,12 @@ void createInputLayerInNeuralNetwork2D(Neuron * firstInputNeuronInNetwork, long 
 }
 
 
-void createNewFrontLayer(Neuron * firstNeuronInCurrentLayer, Neuron * firstNeuronInNewFrontLayer, long numberOfNeuronsInNewFrontLayer, long currentNumberOfLayers, long numberOfLayers)
+void createNewFrontLayer(Neuron* firstNeuronInCurrentLayer, Neuron* firstNeuronInNewFrontLayer, long numberOfNeuronsInNewFrontLayer, long currentNumberOfLayers, long numberOfLayers)
 {
 	layerIDcounter = currentNumberOfLayers+1;
 	orderIDcounter=1;
 
-	Neuron * currentNeuron = firstNeuronInNewFrontLayer;
+	Neuron* currentNeuron = firstNeuronInNewFrontLayer;
 	//fill in network description variables for new front layer (CHECK ANNTHIS - this is incomplete)
 	for(long i=0; i<numberOfNeuronsInNewFrontLayer; i++)
 	{
@@ -420,7 +420,7 @@ void createNewFrontLayer(Neuron * firstNeuronInCurrentLayer, Neuron * firstNeuro
 			currentNeuron->hasFrontLayer = true;	//CHECK ANNTHIS - need to update ANNupdateAlgorithm.cpp accordingly
 		}
 
-		Neuron * newNeuron = new Neuron();
+		Neuron* newNeuron = new Neuron();
 		currentNeuron->nextNeuron = newNeuron;
 		currentNeuron = currentNeuron->nextNeuron;
 
@@ -441,13 +441,13 @@ void createNewFrontLayer(Neuron * firstNeuronInCurrentLayer, Neuron * firstNeuro
 	}
 }
 
-void linkNewFrontLayerWithPreviousLayers(Neuron * firstNeuronInCurrentLayer, Neuron * firstNeuronInNewFrontLayer, double probabilityNeuronConnectionWithPreviousLayerNeuron, Neuron * firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons, long numberOfInputNeurons, long numberOfOutputNeurons, long currentNumberOfLayers)
+void linkNewFrontLayerWithPreviousLayers(Neuron* firstNeuronInCurrentLayer, Neuron* firstNeuronInNewFrontLayer, double probabilityNeuronConnectionWithPreviousLayerNeuron, Neuron* firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons, long numberOfInputNeurons, long numberOfOutputNeurons, long currentNumberOfLayers)
 {
 	//Modify associations/links based upon layers of intermediate/hidden neurons
 	//if probabilityNeuronConnectionWithPreviousLayerNeuron is 1.0, link ALL current/back and front layer neurons neurons (fill in firstFrontNeuronConnectionContainer/BackNeuronReferences list for all relevant neurons)
 
-	Neuron * currentNeuronL1;
-	Neuron * currentNeuronL2;
+	Neuron* currentNeuronL1;
+	Neuron* currentNeuronL2;
 
 	currentNeuronL1 = firstNeuronInCurrentLayer;
 	currentNeuronL2 = firstNeuronInNewFrontLayer;
@@ -467,7 +467,7 @@ void linkNewFrontLayerWithPreviousLayers(Neuron * firstNeuronInCurrentLayer, Neu
 
 			if(randomNumberBetween0And1 < probabilityNeuronConnectionWithPreviousLayerNeuron)
 			{
-				NeuronConnection * newNeuronConnection = new NeuronConnection();
+				NeuronConnection* newNeuronConnection = new NeuronConnection();
 
 				newNeuronConnection->backNeuron = currentNeuronL1;
 				newNeuronConnection->frontNeuron = currentNeuronL2;
@@ -484,7 +484,7 @@ void linkNewFrontLayerWithPreviousLayers(Neuron * firstNeuronInCurrentLayer, Neu
 	}
 
 
-	Neuron * firstNeuronInPreviousLayerX = firstInputNeuronInSubnet;
+	Neuron* firstNeuronInPreviousLayerX = firstInputNeuronInSubnet;
 		//firstNeuronInPreviousLayerX = currentNeuronL1
 
 	long tempCurrentEffectiveNeuronsOnLayer = numberOfInputNeurons;
@@ -494,8 +494,8 @@ void linkNewFrontLayerWithPreviousLayers(Neuron * firstNeuronInCurrentLayer, Neu
 		//tempCurrentNumNeuronsOnNewLayer = (tempCurrentEffectiveNeuronsOnLayer*meanLayerDivergenceFactor);
 		//tempCurrentEffectiveNeuronsOnNewLayer = tempCurrentEffectiveNeuronsOnNewLayer + tempCurrentNumNeuronsOnNewLayer;
 
-		Neuron * currentNeuronL1 = firstNeuronInPreviousLayerX;
-		Neuron * currentNeuronL2 = firstNeuronInNewFrontLayer;
+		Neuron* currentNeuronL1 = firstNeuronInPreviousLayerX;
+		Neuron* currentNeuronL2 = firstNeuronInNewFrontLayer;
 
 		while(currentNeuronL1->nextNeuron != NULL)
 		{
@@ -511,7 +511,7 @@ void linkNewFrontLayerWithPreviousLayers(Neuron * firstNeuronInCurrentLayer, Neu
 				if(randomNumberBetween0And1 < probabilityNeuronConnectionWithAllPreviousLayersNeurons)
 				{//add connections to previous layers
 
-					NeuronConnection * newNeuronConnection = new NeuronConnection();
+					NeuronConnection* newNeuronConnection = new NeuronConnection();
 
 					newNeuronConnection->backNeuron = currentNeuronL1;
 					newNeuronConnection->frontNeuron = currentNeuronL2;
@@ -541,13 +541,13 @@ double calculateDistanceBetween2Points(double xPositionOfUnit1, double xPosition
 
 
 
-void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, Neuron * firstNeuronInNewFrontLayer, double probabilityNeuronConnectionWithPreviousLayerNeuron, Neuron * firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons, long numberOfInputNeurons, long numberOfOutputNeurons, long currentNumberOfLayers, long numberOfLayers, long numberOfNeuronsInCurrentLayer, long numberOfNeuronsInNewFrontLayer, int layerDivergenceType)
+void linkNewFrontLayerWithPreviousLayers2D(Neuron* firstNeuronInCurrentLayer, Neuron* firstNeuronInNewFrontLayer, double probabilityNeuronConnectionWithPreviousLayerNeuron, Neuron* firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons, long numberOfInputNeurons, long numberOfOutputNeurons, long currentNumberOfLayers, long numberOfLayers, long numberOfNeuronsInCurrentLayer, long numberOfNeuronsInNewFrontLayer, int layerDivergenceType)
 {
 	//Modify associations/links based upon layers of intermediate/hidden neurons
 	//if probabilityNeuronConnectionWithPreviousLayerNeuron is 1.0, link ALL current/back and front layer neurons neurons (fill in firstFrontNeuronConnectionContainer/BackNeuronReferences list for all relevant neurons)
 
-	Neuron * currentNeuronL1;
-	Neuron * currentNeuronL2;
+	Neuron* currentNeuronL1;
+	Neuron* currentNeuronL2;
 
 	currentNeuronL1 = firstNeuronInCurrentLayer;
 	currentNeuronL2 = firstNeuronInNewFrontLayer;
@@ -600,8 +600,8 @@ void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, N
 				currentNeuronL2->xPosRel = xPosRelL2;
 				currentNeuronL2->yPosRel = yPosRelL2;
 
-				double xPosRelL1CorrespondingToL2 = xPosRelL2 * (sqrt((double)numberOfNeuronsInCurrentLayer)/sqrt((double)numberOfNeuronsInNewFrontLayer));
-				double yPosRelL1CorrespondingToL2 = yPosRelL2 * (sqrt((double)numberOfNeuronsInCurrentLayer)/sqrt((double)numberOfNeuronsInNewFrontLayer));
+				double xPosRelL1CorrespondingToL2 = xPosRelL2* (sqrt((double)numberOfNeuronsInCurrentLayer)/sqrt((double)numberOfNeuronsInNewFrontLayer));
+				double yPosRelL1CorrespondingToL2 = yPosRelL2* (sqrt((double)numberOfNeuronsInCurrentLayer)/sqrt((double)numberOfNeuronsInNewFrontLayer));
 				double maxDistanceBetweenTwoPointsIn2DMapL1 = sqrt(pow(sqrt(double(numberOfNeuronsInCurrentLayer)), 2) + pow(sqrt(double(numberOfNeuronsInCurrentLayer)), 2));
 
 				if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D)
@@ -683,7 +683,7 @@ void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, N
 
 				if(randomNumberBetween0And1 < probabilityNeuronConnectionWithPreviousLayerNeuron)
 				{
-					NeuronConnection * newNeuronConnection = new NeuronConnection();
+					NeuronConnection* newNeuronConnection = new NeuronConnection();
 
 					newNeuronConnection->backNeuron = currentNeuronL1;
 					newNeuronConnection->frontNeuron = currentNeuronL2;
@@ -713,14 +713,14 @@ void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, N
 	}
 
 
-	Neuron * firstNeuronInPreviousLayerX = firstInputNeuronInSubnet;
+	Neuron* firstNeuronInPreviousLayerX = firstInputNeuronInSubnet;
 
 	long tempCurrentEffectiveNeuronsOnLayer = numberOfInputNeurons;
 	long tempCurrentNumNeuronsOnLayer = numberOfInputNeurons;
 	for(long tempLayerIndex = 0; tempLayerIndex < currentNumberOfLayers; tempLayerIndex++)
 	{
 		//count num neurons in layer L1;
-		Neuron * currentNeuronL1 = firstNeuronInPreviousLayerX;
+		Neuron* currentNeuronL1 = firstNeuronInPreviousLayerX;
 		long numberOfNeuronsInL1 = 0;
 		while(currentNeuronL1->nextNeuron != NULL)
 		{
@@ -729,7 +729,7 @@ void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, N
 		}
 
 		currentNeuronL1 = firstNeuronInPreviousLayerX;
-		Neuron * currentNeuronL2 = firstNeuronInNewFrontLayer;
+		Neuron* currentNeuronL2 = firstNeuronInNewFrontLayer;
 		while(currentNeuronL1->nextNeuron != NULL)
 		{
 			currentNeuronL2 = firstNeuronInNewFrontLayer;
@@ -744,8 +744,8 @@ void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, N
 					long yPosRelL1 = currentNeuronL1->yPosRel;
 					long xPosRelL2 = currentNeuronL2->xPosRel;
 					long yPosRelL2 = currentNeuronL2->yPosRel;
-					double xPosRelL1CorrespondingToL2 = xPosRelL2 * (sqrt(double(numberOfNeuronsInL1))/sqrt(double(numberOfNeuronsInNewFrontLayer)));
-					double yPosRelL1CorrespondingToL2 = yPosRelL2 * (sqrt(double(numberOfNeuronsInL1))/sqrt(double(numberOfNeuronsInNewFrontLayer)));
+					double xPosRelL1CorrespondingToL2 = xPosRelL2* (sqrt(double(numberOfNeuronsInL1))/sqrt(double(numberOfNeuronsInNewFrontLayer)));
+					double yPosRelL1CorrespondingToL2 = yPosRelL2* (sqrt(double(numberOfNeuronsInL1))/sqrt(double(numberOfNeuronsInNewFrontLayer)));
 					double maxDistanceBetweenTwoPointsIn2DMapL1 = sqrt(pow(sqrt(double(numberOfNeuronsInL1)), 2) + pow(sqrt(double(numberOfNeuronsInL1)), 2));
 
 					if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D)
@@ -826,7 +826,7 @@ void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, N
 					if(randomNumberBetween0And1 < probabilityNeuronConnectionWithAllPreviousLayersNeurons)
 					{//add connections to previous layers
 
-						NeuronConnection * newNeuronConnection = new NeuronConnection();
+						NeuronConnection* newNeuronConnection = new NeuronConnection();
 
 						newNeuronConnection->backNeuron = currentNeuronL1;
 						newNeuronConnection->frontNeuron = currentNeuronL2;
@@ -864,15 +864,15 @@ void linkNewFrontLayerWithPreviousLayers2D(Neuron * firstNeuronInCurrentLayer, N
 
 
 
-Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfNeuronsInCurrentLayer, long currentNumberOfLayers, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long currentNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, Neuron * firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
+Neuron* fillNonDistinctHiddenLayer(Neuron* firstNeuronInCurrentLayer, long numberOfInputNeurons, long numberOfOutputNeurons, long numberOfNeuronsInCurrentLayer, long currentNumberOfLayers, long numberOfLayers, double probabilityOfSubnetCreation, long maxNumberOfRecursiveSubnets, long currentNumberOfRecursiveSubnets, bool useSubnetDependentNumberOfLayers, double subnetNumberOfLayersModifier, int layerDivergenceType, double meanLayerDivergenceFactor, double probabilityNeuronConnectionWithPreviousLayerNeuron, Neuron* firstInputNeuronInSubnet, double probabilityNeuronConnectionWithAllPreviousLayersNeurons)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nNeuron * fillNonDistinctHiddenLayer()\n" << endl;
+	cout << "\nNeuron* fillNonDistinctHiddenLayer()\n" << endl;
 	#endif
 
 	subnetIDcounter = currentNumberOfRecursiveSubnets;
 
-	Neuron * firstOutputNeuronInNetwork;
+	Neuron* firstOutputNeuronInNetwork;
 
 	//Create neurons for the new front layer
 
@@ -882,7 +882,7 @@ Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long num
 	cout << "numberOfNeuronsInNewFrontLayer = " << numberOfNeuronsInNewFrontLayer << endl;
 	#endif
 
-	Neuron * firstNeuronInNewFrontLayer = new Neuron();
+	Neuron* firstNeuronInNewFrontLayer = new Neuron();
 
 	createNewFrontLayer(firstNeuronInCurrentLayer, firstNeuronInNewFrontLayer, numberOfNeuronsInNewFrontLayer, currentNumberOfLayers, numberOfLayers);
 
@@ -898,11 +898,11 @@ Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long num
 
 #ifdef ANN_ADVANCED
 
-	Neuron * currentNeuronL1 = firstNeuronInCurrentLayer;
+	Neuron* currentNeuronL1 = firstNeuronInCurrentLayer;
 	while(currentNeuronL1->nextNeuron != NULL)
 	{
 		//create a subnet if necessary
-		//Neuron * currentNeuronL1 = currentNeuronL1;		//define the neuron which will become a subnet
+		//Neuron* currentNeuronL1 = currentNeuronL1;		//define the neuron which will become a subnet
 
 
 		if(currentNeuronL1->hasBackLayer)	//can only create a subnet if the neuron candidate has a back layer
@@ -934,7 +934,7 @@ Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long num
 					{//only create a subnet if the difference in the number of neurons between the front and the back layers is at least 2
 					#endif
 
-						Neuron * tempNeuron;
+						Neuron* tempNeuron;
 
 						long numNeuronsInBackLayerOfSubnet = 0;
 						long numNeuronsInFrontLayerOfSubnet = 0;
@@ -954,8 +954,8 @@ Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long num
 						orderIDcounter=1;
 						layerIDcounter=1;
 						subnetIDcounter = currentNumberOfRecursiveSubnets+1;
-						Neuron * firstNeuronInBackLayerOfSubnet = new Neuron();
-						Neuron * currentNeuronInBackLayerOfSubnet = firstNeuronInBackLayerOfSubnet;
+						Neuron* firstNeuronInBackLayerOfSubnet = new Neuron();
+						Neuron* currentNeuronInBackLayerOfSubnet = firstNeuronInBackLayerOfSubnet;
 
 						tempNeuron = currentNeuronL1->firstNeuronInBackLayer;
 						while(tempNeuron->nextNeuron != NULL)
@@ -968,7 +968,7 @@ Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long num
 							currentNeuronInBackLayerOfSubnet->hasBackLayer = false;	//CHECK ANNTHIS - need to update ANNupdateAlgorithm.cpp accordingly
 							currentNeuronInBackLayerOfSubnet->hasFrontLayer = true;
 
-							Neuron * newNeuron = new Neuron();
+							Neuron* newNeuron = new Neuron();
 							currentNeuronInBackLayerOfSubnet->nextNeuron = newNeuron;
 							currentNeuronInBackLayerOfSubnet = currentNeuronInBackLayerOfSubnet->nextNeuron;
 
@@ -981,7 +981,7 @@ Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long num
 						currentNeuronL1->isSubnet = true;
 						currentNeuronL1->firstNeuronInBackLayerOfSubnet = firstNeuronInBackLayerOfSubnet;
 
-						Neuron * firstNeuronInFrontLayerOfSubnet;
+						Neuron* firstNeuronInFrontLayerOfSubnet;
 						long numberOfHiddenLayersInSubnet = calcNumberOfLayersInSubnet(numNeuronsInBackLayerOfSubnet, numNeuronsInFrontLayerOfSubnet, currentNumberOfRecursiveSubnets, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier);
 						#define NONLINEARDIVERGENCEFACTOR (1)
 
@@ -1042,7 +1042,7 @@ Neuron * fillNonDistinctHiddenLayer(Neuron * firstNeuronInCurrentLayer, long num
 }
 
 
-/************************************************************ End Form Advanced Neural Network Routines ******************************************************/
+/************************************************************ End Form Advanced Neural Network Routines* *****************************************************/
 
 
 
@@ -1072,29 +1072,29 @@ long calcNumberOfLayersInSubnet(long numberOfInputNeurons, long numberOfOutputNe
 	{
 		if(numberOfInputNeurons > numberOfOutputNeurons)
 		{
-			numberOfLayersInSubnet = (long)((double)(numberOfInputNeurons - numberOfOutputNeurons) * subnetNumberOfLayersModifier) + 1;
+			numberOfLayersInSubnet = (long)((double)(numberOfInputNeurons - numberOfOutputNeurons)* subnetNumberOfLayersModifier) + 1;
 		}
 		else
 		{
-			numberOfLayersInSubnet = (long)((double)(numberOfOutputNeurons - numberOfInputNeurons) * subnetNumberOfLayersModifier) + 1;
+			numberOfLayersInSubnet = (long)((double)(numberOfOutputNeurons - numberOfInputNeurons)* subnetNumberOfLayersModifier) + 1;
 		}
 	}
 	else
 	{
 		if(numberOfInputNeurons > numberOfOutputNeurons)
 		{
-			numberOfLayersInSubnet = (long)((double)(numberOfInputNeurons - numberOfOutputNeurons) * subnetNumberOfLayersModifier * ((double)currentNumberOfRecursiveSubnets/(double)maxNumberOfRecursiveSubnets)) + 1;
+			numberOfLayersInSubnet = (long)((double)(numberOfInputNeurons - numberOfOutputNeurons)* subnetNumberOfLayersModifier* ((double)currentNumberOfRecursiveSubnets/(double)maxNumberOfRecursiveSubnets)) + 1;
 		}
 		else
 		{
-			numberOfLayersInSubnet = (long)((double)(numberOfOutputNeurons - numberOfInputNeurons) * subnetNumberOfLayersModifier * ((double)currentNumberOfRecursiveSubnets/(double)maxNumberOfRecursiveSubnets)) + 1;
+			numberOfLayersInSubnet = (long)((double)(numberOfOutputNeurons - numberOfInputNeurons)* subnetNumberOfLayersModifier* ((double)currentNumberOfRecursiveSubnets/(double)maxNumberOfRecursiveSubnets)) + 1;
 		}
 	}
 #else
 
 	if(useSubnetDependentNumberOfLayers == true)
 	{
-		numberOfLayersInSubnet = subnetNumberOfLayersModifier/((numberOfInputNeurons+numberOfOutputNeurons)/2) * (currentNumberOfRecursiveSubnets/maxNumberOfRecursiveSubnets);
+		numberOfLayersInSubnet = subnetNumberOfLayersModifier/((numberOfInputNeurons+numberOfOutputNeurons)/2)* (currentNumberOfRecursiveSubnets/maxNumberOfRecursiveSubnets);
 	}
 	else
 	{
@@ -1143,12 +1143,12 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 
 		if(numberOfInputNeurons > numberOfOutputNeurons)
 		{
-			currentNumberBasicNeuronVariation = -long(double(numberOfInputNeurons - numberOfOutputNeurons) * (double(currentNumberOfLayers)/double(numberOfLayers-1)));
+			currentNumberBasicNeuronVariation = -long(double(numberOfInputNeurons - numberOfOutputNeurons)* (double(currentNumberOfLayers)/double(numberOfLayers-1)));
 
 		}
 		else
 		{
-			currentNumberBasicNeuronVariation = long(double(numberOfOutputNeurons - numberOfInputNeurons) * (double(currentNumberOfLayers)/double(numberOfLayers-1)));
+			currentNumberBasicNeuronVariation = long(double(numberOfOutputNeurons - numberOfInputNeurons)* (double(currentNumberOfLayers)/double(numberOfLayers-1)));
 
 		}
 
@@ -1163,11 +1163,11 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 			{
 				if(currentNumberOfLayers < (numberOfLayers/2))
 				{
-					currentNumberDivergenceNeurons = numberOfInputNeurons * meanLayerDivergenceFactor * currentNumberOfLayers;
+					currentNumberDivergenceNeurons = numberOfInputNeurons* meanLayerDivergenceFactor* currentNumberOfLayers;
 				}
 				else
 				{
-					currentNumberDivergenceNeurons = (numberOfInputNeurons * meanLayerDivergenceFactor * (numberOfLayers/2)) - (numberOfInputNeurons * meanLayerDivergenceFactor * (currentNumberOfLayers-(numberOfLayers/2)));
+					currentNumberDivergenceNeurons = (numberOfInputNeurons* meanLayerDivergenceFactor* (numberOfLayers/2)) - (numberOfInputNeurons* meanLayerDivergenceFactor* (currentNumberOfLayers-(numberOfLayers/2)));
 				}
 			}
 			else if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_NONLINEAR_DIVERGING_THEN_CONVERGING)
@@ -1175,11 +1175,11 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 
 				if(currentNumberOfLayers < (numberOfLayers/2))
 				{
-					currentNumberDivergenceNeurons = numberOfInputNeurons * meanLayerDivergenceFactor * advancedDivergenceFactor(currentNumberOfLayers, numberOfLayers) * currentNumberOfLayers;
+					currentNumberDivergenceNeurons = numberOfInputNeurons* meanLayerDivergenceFactor* advancedDivergenceFactor(currentNumberOfLayers, numberOfLayers)* currentNumberOfLayers;
 				}
 				else
 				{
-					currentNumberDivergenceNeurons = numberOfInputNeurons * meanLayerDivergenceFactor * advancedDivergenceFactor((numberOfLayers - currentNumberOfLayers), numberOfLayers) * currentNumberOfLayers;
+					currentNumberDivergenceNeurons = numberOfInputNeurons* meanLayerDivergenceFactor* advancedDivergenceFactor((numberOfLayers - currentNumberOfLayers), numberOfLayers)* currentNumberOfLayers;
 				}
 			}
 
@@ -1206,7 +1206,7 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 			}
 			else if((layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS))
 			{
-				numberOfNeuronsInNewFrontLayer = pow((sqrt(double(numberOfNeuronsInCurrentLayer)) * meanLayerDivergenceFactor), 2.0);
+				numberOfNeuronsInNewFrontLayer = pow((sqrt(double(numberOfNeuronsInCurrentLayer))* meanLayerDivergenceFactor), 2.0);
 						//assumes square 2D array
 			}
 			else
@@ -1228,11 +1228,11 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 
 			if(numberOfInputNeurons > numberOfOutputNeurons)
 			{
-				currentNumberBasicNeuronVariation = -long(double(numberOfInputNeurons - numberOfOutputNeurons) * (double(currentNumberOfLayers)/double(numberOfLayers-1)));
+				currentNumberBasicNeuronVariation = -long(double(numberOfInputNeurons - numberOfOutputNeurons)* (double(currentNumberOfLayers)/double(numberOfLayers-1)));
 			}
 			else
 			{
-				currentNumberBasicNeuronVariation = long(double(numberOfOutputNeurons - numberOfInputNeurons) * (double(currentNumberOfLayers)/double(numberOfLayers-1)));
+				currentNumberBasicNeuronVariation = long(double(numberOfOutputNeurons - numberOfInputNeurons)* (double(currentNumberOfLayers)/double(numberOfLayers-1)));
 			}
 
 			numberOfNeuronsInNewFrontLayer = numberOfInputNeurons + currentNumberBasicNeuronVariation;
@@ -1249,7 +1249,7 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 	cout << "numberOfNeuronsInNewFrontLayer = " << numberOfNeuronsInNewFrontLayer << endl;
 	#endif
 
-		//LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING NB static Divergence Rate: assuming convergence not divergence, each hidden layer has one less neuron, numberOfNeuronsInNewFrontLayer = numberOfInputNeurons - long(double(numberOfInputNeurons - numberOfOutputNeurons) * (double(currentNumberOfLayers)/double(numberOfLayers-1)));
+		//LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING NB static Divergence Rate: assuming convergence not divergence, each hidden layer has one less neuron, numberOfNeuronsInNewFrontLayer = numberOfInputNeurons - long(double(numberOfInputNeurons - numberOfOutputNeurons)* (double(currentNumberOfLayers)/double(numberOfLayers-1)));
 		//LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_THEN_CONVERGING NB meanLayerDivergenceFactor is less than 1 always; Eg 0.1 or 10% more neurons than input layer per layer
 
 	return numberOfNeuronsInNewFrontLayer;
@@ -1327,7 +1327,7 @@ long calculateNumberOfNeuronsInNewFrontLayer(long numberOfInputNeurons, long num
 	depending upon function f this could implies a ~ diamond shapped (non-linearily increasing/decreasing) resulting neural net
 	another possibility is that f(currentNumberOfLayers) could be rand()
 
-   */
+  */
 }
 
 

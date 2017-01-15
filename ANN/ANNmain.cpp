@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNmain.c
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -67,8 +67,8 @@ using namespace std;
 #endif
 
 
-Neuron * firstInputNeuronInNetwork;
-Neuron * firstOutputNeuronInNetwork;
+Neuron* firstInputNeuronInNetwork;
+Neuron* firstOutputNeuronInNetwork;
 
 long numberOfInputNeurons;
 long numberOfOutputNeurons;
@@ -131,14 +131,14 @@ static char errmessage[] = "Usage:  OpenANN.exe [options]"
 "\n\tas .xml and .ldr "
 "\n";
 
-int main(int argc,char **argv)
+int main(int argc,char* *argv)
 {
 	srand( (unsigned)time(NULL) );	//seeds randomness
 
 	bool result = true;
 
 	bool useInputDatasetFile = false;
-	char * inputDatasetFileName = new char[100];
+	char* inputDatasetFileName = new char[100];
 	strcpy(inputDatasetFileName, "dataset.data");
 
 	long numberOfInputNeurons = 5;	//need to be generated based upon dataset or xml input file
@@ -594,7 +594,7 @@ bool createNetwork()
 
 	#ifdef ANN_DEBUG
 	cout << "************************************************************************************" << endl;
-	cout << "******** DEBUG preprocessor definition enabled... tracing execution path...  *******" << endl;
+	cout << "******** DEBUG preprocessor definition enabled... tracing execution path... * ******" << endl;
 	cout << "************************************************************************************" << endl;
 	#endif
 

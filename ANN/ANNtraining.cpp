@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNtraining.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Comments:
  *
  *******************************************************************************/
@@ -60,11 +60,11 @@ using namespace std;
 
 
 
-/************************************************************ Train Neural Network Routines ******************************************************/
+/************************************************************ Train Neural Network Routines* *****************************************************/
 
 
 
-double calculateExperienceErrorForHypotheticalDecision(Neuron * firstInputNeuronInNetwork, Neuron * firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * experience)
+double calculateExperienceErrorForHypotheticalDecision(Neuron* firstInputNeuronInNetwork, Neuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, Experience* experience)
 {
 	double experienceBackPropagationPassError;
 
@@ -97,9 +97,9 @@ double calculateExperienceErrorForHypotheticalDecision(Neuron * firstInputNeuron
 
 
 //DO NOT USE THIS; must use trainNeuralNetwork/trainNeuralNetworkSimple instead!
-void feedNeuralNetworkWithASetOfExperiences(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, Experience * firstExperienceInList)
+void feedNeuralNetworkWithASetOfExperiences(Neuron* firstInputNeuron, Neuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, Experience* firstExperienceInList)
 {
-	Experience * currentExperience = firstExperienceInList;
+	Experience* currentExperience = firstExperienceInList;
 
 	while(currentExperience->next != NULL)
 	{
@@ -113,7 +113,7 @@ void feedNeuralNetworkWithASetOfExperiences(Neuron * firstInputNeuron, Neuron * 
 }
 
 
-void trainNeuralNetworkSimple(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, Experience * firstExperienceInDataSet, long numberOfExperiences)
+void trainNeuralNetworkSimple(Neuron* firstInputNeuron, Neuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, Experience* firstExperienceInDataSet, long numberOfExperiences)
 {
 	cout << "\n*****************************************************" << endl;
 	cout << "Number of Input Neurons = " << numberOfInputNeurons << endl;
@@ -128,7 +128,7 @@ void trainNeuralNetworkSimple(Neuron * firstInputNeuron, Neuron * firstOutputNeu
 	{
 		cout << "Neural Net Training Epoch: " << e << endl;
 
-		Experience * currentExperience = firstExperienceInDataSet;
+		Experience* currentExperience = firstExperienceInDataSet;
 
 		//from start of dataSet -> end of dataSet
 		for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
@@ -149,7 +149,7 @@ void trainNeuralNetworkSimple(Neuron * firstInputNeuron, Neuron * firstOutputNeu
 
 
 	//Added by RBB; now test the network across all examples and calculate the average error
-	Experience * currentExperience = firstExperienceInDataSet;
+	Experience* currentExperience = firstExperienceInDataSet;
 	float  sumingTestingError = 0.0F;
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
@@ -231,7 +231,7 @@ void trainNeuralNetworkSimple(Neuron * firstInputNeuron, Neuron * firstOutputNeu
 
 
 
-void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, Experience * firstExperienceInDataSet, long numberOfExperiences, int maxEpochs)
+void trainNeuralNetwork(Neuron* firstInputNeuron, Neuron* firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, Experience* firstExperienceInDataSet, long numberOfExperiences, int maxEpochs)
 {
 	/*
 	network structure
@@ -265,9 +265,9 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 	float totalTrainingError = 0;
 	float totalTrainingEpochs = 0;
 
-	float * trainingEpochsNumberArray = new float[maxFolds];
-	float * trainingErrorArray = new float[maxFolds];
-	float * testingErrorArray = new float[maxFolds];
+	float* trainingEpochsNumberArray = new float[maxFolds];
+	float* trainingErrorArray = new float[maxFolds];
+	float* testingErrorArray = new float[maxFolds];
 
 	for(foldNum=0; foldNum < maxFolds; foldNum++)
 	{
@@ -293,9 +293,9 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 
 		#ifdef ANN_DEBUG
 		/*
-		cout << "q = int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))" << endl;
-		cout << "q = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds)) << endl;
-		cout << "q+int(float(numberOfExperiences)/float(maxFolds)) = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)) << endl;
+		cout << "q = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))" << endl;
+		cout << "q = " << int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)) << endl;
+		cout << "q+int(float(numberOfExperiences)/float(maxFolds)) = " << int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)) << endl;
 		*/
 		#endif
 
@@ -308,16 +308,16 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 		bool overFittingData = false;
 
 		long numberOfFirstExperienceInFoldTrainPartA = 0;
-		long numberOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences) * float(foldNum)/float(maxFolds));
-		Experience * firstExperienceInFoldTrainPartA = firstExperienceInDataSet;
+		long numberOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
+		Experience* firstExperienceInFoldTrainPartA = firstExperienceInDataSet;
 
-		long numberOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
+		long numberOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
 		long numberOfLastExperienceInFoldTrainPartB = numberOfExperiences;
-		Experience * firstExperienceInFoldTrainPartB = findExperience(firstExperienceInDataSet, numberOfFirstExperienceInFoldTrainPartB);
+		Experience* firstExperienceInFoldTrainPartB = findExperience(firstExperienceInDataSet, numberOfFirstExperienceInFoldTrainPartB);
 
-		long numberOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences) * float(foldNum)/float(maxFolds)));
-		long numberOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
-		Experience * firstExperienceInFoldTestPart = findExperience(firstExperienceInDataSet, numberOfFirstExperienceInFoldTestPart);
+		long numberOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
+		long numberOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
+		Experience* firstExperienceInFoldTestPart = findExperience(firstExperienceInDataSet, numberOfFirstExperienceInFoldTestPart);
 
 		//training
 		while((currentAverageTestingError > acceptableError) && (numEpochs < maxEpochs) && !overFittingData)	//CHANGED FROM training to averagedTesting BY RBB 17 sept 08
@@ -325,10 +325,10 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 			//from start of dataSet -> beginning of test segment
 
 			#ifdef ANN_DEBUG
-			//cout << "int(float(numberOfExperiences) * float(foldNum)/float(maxFolds)) = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds));
+			//cout << "int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)) = " << int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
 			#endif
 
-			Experience * currentExperienceInFold;
+			Experience* currentExperienceInFold;
 
 			currentExperienceInFold = firstExperienceInFoldTrainPartA;
 
@@ -479,7 +479,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 
 	//time feedback (used to calculate the optimum number of hidden neurons
 	/*
-	struct tm *myTime;
+	struct tm* myTime;
 	time_t myClock = time(NULL);
 	char buf[BUFSIZ];
 	myTime = localtime(&myClock);
@@ -507,7 +507,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 	float finalError;
 	for(int e=0;e < averageTotalTrainingEpochs;e++)
 	{
-		Experience * currentExperience = firstExperienceInDataSet;
+		Experience* currentExperience = firstExperienceInDataSet;
 
 		//from start of dataSet -> end of dataSet
 		for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
@@ -529,14 +529,14 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 
 
 #ifdef TEMP_OUTPUT_HIGH_ERROR_EXPERIENCES
-	Experience * firstExperienceInHighErrorExperienceList = new Experience();
-	Experience * currentExperienceInHighErrorExperienceList = firstExperienceInHighErrorExperienceList;
+	Experience* firstExperienceInHighErrorExperienceList = new Experience();
+	Experience* currentExperienceInHighErrorExperienceList = firstExperienceInHighErrorExperienceList;
 #endif
 
 	long experiencesIncorrectlyDiagnosed = 0;
 
 	//Added by RBB; now test the network across all examples and calculate the average error
-	Experience * currentExperience = firstExperienceInDataSet;
+	Experience* currentExperience = firstExperienceInDataSet;
 	float  sumingTestingError = 0.0F;
 	long numberOfExperiencesContributingTowardsFinalTestingError = 0;
 
@@ -567,7 +567,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 		#ifdef TEMP_OUTPUT_HIGH_ERROR_EXPERIENCES
 			else
 			{
-				Experience * newExperience = new Experience();
+				Experience* newExperience = new Experience();
 				copyExperiences(currentExperienceInHighErrorExperienceList, currentExperience);
 				currentExperienceInHighErrorExperienceList->next = newExperience;
 				currentExperienceInHighErrorExperienceList = currentExperienceInHighErrorExperienceList->next;
@@ -610,7 +610,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 
 
 
-/************************************************************ End Neural Network Routines ******************************************************/
+/************************************************************ End Neural Network Routines* *****************************************************/
 
 
 
@@ -638,16 +638,16 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 
 
 
-/************************************************************ Store/Record Neural Network weights and biases Routines ******************************************************/
+/************************************************************ Store/Record Neural Network weights and biases Routines* *****************************************************/
 
 
-void storeNeuralNetworkBiasAndWeights(Neuron * neuronBeingAccessed)
+void storeNeuralNetworkBiasAndWeights(Neuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid storeNeuralNetworkBiasAndWeights(Neuron * neuronBeingAccessed)" << endl;
+	cout << "\nvoid storeNeuralNetworkBiasAndWeights(Neuron* neuronBeingAccessed)" << endl;
 	#endif
 
-	Neuron * currentNeuronReference = neuronBeingAccessed;
+	Neuron* currentNeuronReference = neuronBeingAccessed;
 
 	while(currentNeuronReference->nextNeuron != NULL)
 	{
@@ -672,7 +672,7 @@ void storeNeuralNetworkBiasAndWeights(Neuron * neuronBeingAccessed)
 		{
 			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuronReference->frontNeuronConnectionList.begin(); connectionIter != currentNeuronReference->frontNeuronConnectionList.end(); connectionIter++)
 			{
-				NeuronConnection * currentNeuronConnection = *connectionIter;
+				NeuronConnection* currentNeuronConnection =* connectionIter;
 
 				currentNeuronConnection->storedWeight = currentNeuronConnection->weight;
 
@@ -700,21 +700,21 @@ void storeNeuralNetworkBiasAndWeights(Neuron * neuronBeingAccessed)
 }
 
 
-/************************************************************ End Store/Record Neural Network weights and biases Routines **************************************************/
+/************************************************************ End Store/Record Neural Network weights and biases Routines* *************************************************/
 
 
 
 
-/************************************************************ Restore Neural Network with previously recorded weights and biases Routines ******************************************************/
+/************************************************************ Restore Neural Network with previously recorded weights and biases Routines* *****************************************************/
 
 
-void restoreNeuralNetworkWithStoredBiasAndWeights(Neuron * neuronBeingAccessed)
+void restoreNeuralNetworkWithStoredBiasAndWeights(Neuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid restoreNeuralNetworkWithStoredBiasAndWeights(Neuron * neuronBeingAccessed)" << endl;
+	cout << "\nvoid restoreNeuralNetworkWithStoredBiasAndWeights(Neuron* neuronBeingAccessed)" << endl;
 	#endif
 
-	Neuron * currentNeuronReference = neuronBeingAccessed;
+	Neuron* currentNeuronReference = neuronBeingAccessed;
 
 	while(currentNeuronReference->nextNeuron != NULL)
 	{
@@ -741,7 +741,7 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(Neuron * neuronBeingAccessed)
 
 			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuronReference->frontNeuronConnectionList.begin(); connectionIter != currentNeuronReference->frontNeuronConnectionList.end(); connectionIter++)
 			{
-				NeuronConnection * currentNeuronConnection = *connectionIter;
+				NeuronConnection* currentNeuronConnection =* connectionIter;
 
 				currentNeuronConnection->weight = currentNeuronConnection->storedWeight;
 
@@ -771,20 +771,20 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(Neuron * neuronBeingAccessed)
 
 
 
-/************************************************************ End Restore Neural Network with previously recorded weights and biases Routines **************************************************/
+/************************************************************ End Restore Neural Network with previously recorded weights and biases Routines* *************************************************/
 
 
 
 
-/************************************************************ Reset Neural Network with random biases and weights Routines ******************************************************/
+/************************************************************ Reset Neural Network with random biases and weights Routines* *****************************************************/
 
-void resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)
+void resetNeuralNetworkWithRandomBiasAndWeights(Neuron* neuronBeingAccessed)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)" << endl;
+	cout << "\nvoid resetNeuralNetworkWithRandomBiasAndWeights(Neuron* neuronBeingAccessed)" << endl;
 	#endif
 
-	Neuron * currentNeuronReference = neuronBeingAccessed;
+	Neuron* currentNeuronReference = neuronBeingAccessed;
 
 	while(currentNeuronReference->nextNeuron != NULL)
 	{
@@ -799,21 +799,21 @@ void resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)
 		if(neuronBeingAccessed->hasBackLayer)	//input layer does not have biases [CHECK ANNTHIS; NB in ANN, an input layer to a subnet may have a bias, however regardless of this, resetNeuralNetworkWithRandomBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
 			#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
-			currentNeuronReference->bias = (double(rand() * 1.0F)/(double(RAND_MAX)+0.0F));
+			currentNeuronReference->bias = (double(rand()* 1.0F)/(double(RAND_MAX)+0.0F));
 			#else
 			#ifdef TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS
-			currentNeuronReference->bias = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_BIAS_MULT;
+			currentNeuronReference->bias = ((double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_BIAS_MULT;
 			#else
 			#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_BIASES
 			currentNeuronReference->bias = 0.5;
 			#else
 			#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-			currentNeuronReference->bias = (double(777 * 2.0F)/(double(RAND_MAX)))-1.0F;
+			currentNeuronReference->bias = (double(777* 2.0F)/(double(RAND_MAX)))-1.0F;
 			#else
 			#ifdef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
-			currentNeuronReference->bias = (double(rand() * 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
+			currentNeuronReference->bias = (double(rand()* 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
 			#else
-			currentNeuronReference->bias = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;
+			currentNeuronReference->bias = (double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F;
 			#endif
 			//cout << "currentNeuronReference->bias = " << currentNeuronReference->bias << endl;
 			#endif
@@ -830,24 +830,24 @@ void resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)
 		{
 			for(vector<NeuronConnection*>::iterator connectionIter = currentNeuronReference->frontNeuronConnectionList.begin(); connectionIter != currentNeuronReference->frontNeuronConnectionList.end(); connectionIter++)
 			{
-				NeuronConnection * currentNeuronConnection = *connectionIter;
+				NeuronConnection* currentNeuronConnection =* connectionIter;
 
 				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
-				currentNeuronConnection->weight = (double(rand() * 1.0F)/(double(RAND_MAX)+0.0F));
+				currentNeuronConnection->weight = (double(rand()* 1.0F)/(double(RAND_MAX)+0.0F));
 				#else
 				#ifdef TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS
-				currentNeuronConnection->weight = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_WEIGHT_MULT;
+				currentNeuronConnection->weight = ((double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_WEIGHT_MULT;
 				#else
 				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_WEIGHTS
 				currentNeuronConnection->weight = -0.1;
 				#else
 				#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-				currentNeuronConnection->weight = (double(888 * 2.0F)/(double(RAND_MAX)))-1.0F;
+				currentNeuronConnection->weight = (double(888* 2.0F)/(double(RAND_MAX)))-1.0F;
 				#else
 				#ifdef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
-				currentNeuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
+				currentNeuronConnection->weight = (double(rand()* 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
 				#else
-				currentNeuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;
+				currentNeuronConnection->weight = (double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F;
 				#endif
 				#endif
 				#endif
@@ -880,24 +880,24 @@ void resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)
 }
 
 
-/************************************************************ End Reset Neural Network with random biases and weights Routines **************************************************/
+/************************************************************ End Reset Neural Network with random biases and weights Routines* *************************************************/
 
 
 
 
 
-/************************************************************ Reset Input/ClassTarget Neurons Neural Network Routines ******************************************************/
-void resetInputsAndClassTargets(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * currentExperienceInDataSet)
+/************************************************************ Reset Input/ClassTarget Neurons Neural Network Routines* *****************************************************/
+void resetInputsAndClassTargets(Neuron* firstInputNeuron, Neuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, Experience* currentExperienceInDataSet)
 {
 	#ifdef ANN_DEBUG
-	cout << "\nvoid resetInputsAndClassTargets(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, int testSegment)" << endl;
+	cout << "\nvoid resetInputsAndClassTargets(Neuron* firstInputNeuron, Neuron* firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, int testSegment)" << endl;
 	#endif
 
 	//sets inputData into ANN
 	//(NB normalisedInputData[i][0] is target class
 
-	Neuron * currentNeuronReference = firstInputNeuron;
-	ExperienceInput * currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
+	Neuron* currentNeuronReference = firstInputNeuron;
+	ExperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 	for(long i = 0; i < numberOfInputNeurons; i++)
 	{
 		#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_2
@@ -927,7 +927,7 @@ void resetInputsAndClassTargets(Neuron * firstInputNeuron, Neuron * firstOutputN
 
 }
 
-/************************************************************ End Reset Input/ClassTarget Neurons Neural Network Routines ******************************************************/
+/************************************************************ End Reset Input/ClassTarget Neurons Neural Network Routines* *****************************************************/
 
 
 

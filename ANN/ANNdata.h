@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNdata.h
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2015 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3e6a 07-September-2014
+ * Project Version: 3e7a 27-January-2015
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -46,6 +46,6 @@
 extern long numInputNeurons;
 extern long numOutputNeurons;
 extern long numExperiences;
-extern Experience * firstExperienceInDataSet;
+extern Experience* firstExperienceInDataSet;
 
 #endif
