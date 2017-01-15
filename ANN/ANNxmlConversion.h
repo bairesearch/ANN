@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a9a 07-June-2016
+ * Project Version: 4a10a 07-June-2016
  * Comments
  *
  *******************************************************************************/
@@ -85,6 +85,7 @@
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 #define NET_XML_ATTRIBUTE_xPosRelFrac ((string)"xPosRelFrac")
 #define NET_XML_ATTRIBUTE_yPosRelFrac ((string)"yPosRelFrac")
+#define NET_XML_ATTRIBUTE_zPosRelFrac ((string)"zPosRelFrac")
 #endif
 #define NET_XML_ATTRIBUTE_neuronID ((string)"neuronID")
 #define NET_XML_ATTRIBUTE_weight ((string)"weight")

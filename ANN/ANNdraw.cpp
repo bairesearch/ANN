@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 4a9a 07-June-2016
+ * Project Version: 4a10a 07-June-2016
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -607,7 +607,7 @@ bool ANNfillNeuronDisplayReference(LDreference* currentNeuronDispayReference, AN
 			//cout << "neuron->yPosRelFrac = " << neuron->yPosRelFrac << endl;
 			currentNeuronDispayReference->relativePosition.x = (neuron->xPosRelFrac);
 			currentNeuronDispayReference->relativePosition.y = (neuron->yPosRelFrac);
-			currentNeuronDispayReference->relativePosition.z = (double)(neuron->subnetID);	//0		
+			currentNeuronDispayReference->relativePosition.z = (neuron->zPosRelFrac);
 		}
 		#endif
 		else

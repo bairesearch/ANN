@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a9a 07-June-2016
+ * Project Version: 4a10a 07-June-2016
  * Comments:
  *
  *******************************************************************************/
@@ -737,11 +737,6 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 											ANNneuron* frontNeuronBackNeuron = currentANNneuronConnection->backNeuron;
 											if(frontNeuronBackNeuron->backNeuronMatchTemp)
 											{
-												if(frontNeuronBackNeuron->neuronTypeInput)
-												{
-													inputValuesCategoryFoundTemp[frontNeuronBackNeuron->orderID - 1] = true;	//added ANN4a8b - when creating an intermediary neuron, prevent direct connections being added between input neurons and the new experience neuron
-												}
-												
 												frontNeuronBackNeuronXposAvg = frontNeuronBackNeuronXposAvg + frontNeuronBackNeuron->xPosRelFrac;
 												frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg + frontNeuronBackNeuron->yPosRelFrac;
 
@@ -755,7 +750,6 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 
 												numberOfBackMatchesNew++;
 												intermediaryCategoryNeuronNumInputConnections++;
-
 											}
 											else
 											{	
@@ -917,7 +911,6 @@ void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>*
 									{
 										passedRound = true;
 									}
-
 								}
 
 								if(passedRound)
@@ -1145,6 +1138,7 @@ bool findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputV
 				if(currentDiff < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)
 				{
 					backNeuron->backNeuronMatchTemp = true;	
+					(*inputValuesCategoryFound)[backNeuron->orderID - 1] = true;	//added ANN4a9b (changed ANN4a8b implementation) - when creating an intermediary neuron, prevent direct connections being added between input neurons and the new experience neuron
 				}
 				else
 				{

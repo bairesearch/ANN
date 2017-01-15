@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a9a 07-June-2016
+ * Project Version: 4a10a 07-June-2016
  * Comments
  *
  *******************************************************************************/
@@ -335,6 +335,10 @@ bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron*
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRelFrac;
 				currentAttribute->value = convertDoubleToString((currentNeuron->yPosRelFrac), "%0.6f");
+				currentAttribute = createNewAttribute(currentAttribute);
+				
+				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRelFrac;
+				currentAttribute->value = convertDoubleToString((currentNeuron->zPosRelFrac), "%0.6f");
 				currentAttribute = createNewAttribute(currentAttribute);
 			}
 			#endif
@@ -985,6 +989,12 @@ bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long lay
 			currentNeuron->spatialCoordinatesSetClassification = true;
 			double attributeValue = convertStringToDouble(currentAttribute->value);
 			currentNeuron->yPosRelFrac = attributeValue;
+		}
+		else if(currentAttribute->name == NET_XML_ATTRIBUTE_zPosRelFrac)
+		{
+			currentNeuron->spatialCoordinatesSetClassification = true;
+			double attributeValue = convertStringToDouble(currentAttribute->value);
+			currentNeuron->zPosRelFrac = attributeValue;
 		}
 		#endif	
 		else
