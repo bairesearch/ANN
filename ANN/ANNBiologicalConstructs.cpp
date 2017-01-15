@@ -22,8 +22,8 @@
  *
  * File Name: ANNBiologicalConstructs.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
  *			how to record movement information? (Eg recurrent network required) how to get synthetic network to modify its focus; left, right, in, out towards the objects of most interest?
  *******************************************************************************/
@@ -44,8 +44,6 @@ using namespace std;
 #include "ANNFormation.h"
 #include "ANNTraining.h"
 
-
-//#include "unknownProjectData.h"
 #include "ANNBiologicalConstructs.h"
 
 
@@ -81,7 +79,6 @@ void formVisualNetwork(NeuronContainer * firstNeuronInVisualCortexSubnet)
 
 
 	//NOW.. to form firstNeuronInVisualCortexSubnet, add the formParallaxRecognitionSubnet and the firstNeuronInObjectRecognitionSubnet in parallel (on a single layer) and have their outputs mixed on the next layer?
-
 }
 
 void formParallaxRecognitionSubnet(NeuronContainer * firstNeuronInParallaxRecognitionSubnet, NeuronContainer * firstNeuronInLeftEyeVisualFieldSubnet, NeuronContainer * firstNeuronInRightEyeVisualFieldSubnet, NeuronContainer * firstNeuronInFocusDistanceSubnet)

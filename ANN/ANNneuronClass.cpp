@@ -22,8 +22,8 @@
  *
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments:
  *
  *******************************************************************************/
@@ -52,8 +52,8 @@ using namespace std;
 
 NeuronConnection::NeuronConnection(void)
 {
-	//weight = 0;			//this value must be initialised explicity
-	//storedWeight = 0; //this value must be initialised explicity
+	//weight = 0;		//this value must be initialised explicity
+	//storedWeight = 0; 	//this value must be initialised explicity
 }
 
 NeuronConnection::~NeuronConnection(void)
@@ -94,7 +94,6 @@ NeuronConnectionContainer::NeuronConnectionContainer(Neuron * initialNeuron, Neu
 
 NeuronConnectionContainer::~NeuronConnectionContainer(void)
 {
-
 	if(nextNeuronConnectionContainer != NULL)
 	{
 		delete nextNeuronConnectionContainer;
@@ -104,7 +103,6 @@ NeuronConnectionContainer::~NeuronConnectionContainer(void)
 	{
 		delete neuronConnection;
 	}
-
 
 	//do not delete neurons in this destructor
 }
@@ -137,7 +135,7 @@ NeuronContainer::NeuronContainer(void)
 	currentFrontNeuronConnectionContainer = firstFrontNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
 	currentBackNeuronConnectionContainer = firstBackNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
 
-#ifdef ANN
+#ifdef ANN_ADVANCED
 	isSubnet = false;
 
 	//numNeuronsInBackLayerOfSubnet = 0;
@@ -170,7 +168,7 @@ NeuronContainer::NeuronContainer(long IDInit, long orderIDInit, long layerIDInit
 	currentBackNeuronConnectionContainer = firstBackNeuronConnectionContainer;		//this variable is temporary and is used for neural network Formation only
 
 
-#ifdef ANN
+#ifdef ANN_ADVANCED
 	isSubnet = false;
 
 	//numNeuronsInBackLayerOfSubnet = 0;
@@ -225,47 +223,6 @@ NeuronContainer::~NeuronContainer(void)
 			delete firstNeuronInFrontLayer;
 		}
 	}
-
-
-
-
-	/*OLD:::
-
-	ExperienceInput * currentNeuronConnectionContainer;
-
-	currentNeuronConnectionContainer = firstFrontNeuronConnectionContainer;
-	while(currentNeuronConnectionContainer->next != NULL)
-	{
-		previousNeuronConnectionContainer = currentNeuronConnectionContainer;
-		currentNeuronConnectionContainer = currentNeuronConnectionContainer->next;
-		delete previousNeuronConnectionContainer;
-	}
-
-	currentNeuronConnectionContainer = firstBackNeuronConnectionContainer;
-	while(currentNeuronConnectionContainer->next != NULL)
-	{
-		previousNeuronConnectionContainer = currentNeuronConnectionContainer;
-		currentNeuronConnectionContainer = currentNeuronConnectionContainer->next;
-		delete previousNeuronConnectionContainer;
-	}
-
-	currentNeuronConnectionContainer = firstNeuronContainerInBackLayerOfSubnet;
-	while(currentNeuronConnectionContainer->next != NULL)
-	{
-		previousNeuronConnectionContainer = currentNeuronConnectionContainer;
-		currentNeuronConnectionContainer = currentNeuronConnectionContainer->next;
-		delete previousNeuronConnectionContainer;
-	}
-
-	currentNeuronConnectionContainer = firstNeuronContainerInFrontLayerOfSubnet;
-	while(currentNeuronConnectionContainer->next != NULL)
-	{
-		previousNeuronConnectionContainer = currentNeuronConnectionContainer;
-		currentNeuronConnectionContainer = currentNeuronConnectionContainer->next;
-		delete previousNeuronConnectionContainer;
-	}
-	*/
-
 }
 
 

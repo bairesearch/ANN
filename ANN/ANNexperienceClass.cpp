@@ -22,8 +22,8 @@
  *
  * File Name: ANNexperienceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments:
  *
  *******************************************************************************/
@@ -126,9 +126,6 @@ long countNumberOfExperienceInputs(Experience * experience)
 	ExperienceInput * currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
 	{
-		//TEMP;
-		//cout << "currentExperienceInput->inputValue = " << currentExperienceInput->inputValue << endl;
-
 		numberOfExperienceInputs++;
 		currentExperienceInput = currentExperienceInput->next;
 	}
@@ -143,9 +140,6 @@ long countNumberOfExperiences(Experience * firstExperienceInList)
 	Experience * currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		//TEMP;
-		//cout << "new experience counted" << endl;
-
 		countNumberOfExperienceInputs(currentExperience);
 
 		numberOfExperiences++;
@@ -224,9 +218,6 @@ void addExperienceToOFStream(ofstream * experienceDataSetOFStreamObject, Experie
 
 double normaliseExperienceInput(double currentInputValue, double maxInputValue)
 {
-	//cout << "44" << endl;
-
-
 	double minInputValue = 0.0;
 	if(currentInputValue > maxInputValue)
 	{//deal with redundant situations, eg a single unit has two swords - nb only one part type can be used per unit,  and so the following is a valid correction;
@@ -238,25 +229,12 @@ double normaliseExperienceInput(double currentInputValue, double maxInputValue)
 
 	if(compareDoubles(maxInputValue, minInputValue))
 	{
-		/*
-		cout << "currentInputValue = " << currentInputValue << endl;
-		cout << "minInputValue = " << minInputValue << endl;
-		cout << "maxInputValue = " << maxInputValue << endl;
-		cout << "a" << endl;
-		*/
 		normalisedExperienceInput = currentInputValue;
 	}
 	else
 	{
-		/*
-		cout << "currentInputValue = " << currentInputValue << endl;
-		cout << "minInputValue = " << minInputValue << endl;
-		cout << "maxInputValue = " << maxInputValue << endl;
-		cout << "b" << endl;
-		*/
 		normalisedExperienceInput = ((currentInputValue - minInputValue) / (maxInputValue - minInputValue));
 	}
-	//cout << "normalisedExperienceInput = 55 = " << normalisedExperienceInput << endl;
 
 	return normalisedExperienceInput;
 }

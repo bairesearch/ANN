@@ -22,8 +22,8 @@
  *
  * File Name: ANNTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments:
  *
  *******************************************************************************/
@@ -65,32 +65,21 @@ double calculateExperienceErrorForHypotheticalDecision(NeuronContainer * firstIn
 {
 	double experienceBackPropagationPassError;
 
-	//cout << "here3f" << endl;
-
 	storeNeuralNetworkBiasAndWeights(firstInputNeuronInNetwork);
-
-	//cout << "here3f2" << endl;
 
 	resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
 
-	//cout << "here3f3" << endl;
 	//VERIFICATION METHOD 1;
 	experienceBackPropagationPassError = ANNBackPropogationPass(firstInputNeuronInNetwork, firstOutputNeuronInNetwork);
 
-	//cout << "here3f4" << endl;
 	/*//VERIFICATION METHOD 2;
 	forwardPassStep(firstInputNeuronInNetwork);
-
-	//cout << "here3f" << endl;
 
 	//NB calculate error of output neurons
 	calculateErrorOfOutputNeurons(firstOutputNeuronInNetwork);
 
-	//cout << "here3g" << endl;
 	experienceBackPropagationPassError = calculateErrorOfBackPropPass(firstOutputNeuronInNetwork);
-
 	*/
-
 
 	if(experienceBackPropagationPassError > MAX_ANN_BACK_PROPAGATION_ERROR)
 	{
@@ -98,8 +87,6 @@ double calculateExperienceErrorForHypotheticalDecision(NeuronContainer * firstIn
 	}
 
 	restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuronInNetwork);
-
-	//cout << "here3f5" << endl;
 
 	return experienceBackPropagationPassError;
 }
@@ -113,14 +100,11 @@ void feedNeuralNetworkWithASetOfExperiences(NeuronContainer * firstInputNeuron, 
 
 	while(currentExperience->next != NULL)
 	{
-		//cout << "h222" << endl;
 		resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
-		//cout << "h222b" << endl;
 		double trainingErrorNotUsed;
 		trainingErrorNotUsed = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
-		//cout << "h222c" << endl;
 		currentExperience = currentExperience->next;
 	}
 }
@@ -128,7 +112,6 @@ void feedNeuralNetworkWithASetOfExperiences(NeuronContainer * firstInputNeuron, 
 
 void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int numEpochs, Experience * firstExperienceInDataSet, long numberOfExperiences)
 {
-
 	cout << "\n*****************************************************" << endl;
 	cout << "Number of Input Neurons = " << numberOfInputNeurons << endl;
 	cout << "Number of Output Neurons = " << numberOfOutputNeurons  <<endl;
@@ -140,17 +123,13 @@ void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContaine
 	float finalError;
 	for(int e=0;e < numEpochs;e++)
 	{
-		//if(e%10 == 0)
-		//{
-			cout << "Neural Net Training Epoch: " << e << endl;
-		//}
+		cout << "Neural Net Training Epoch: " << e << endl;
 
 		Experience * currentExperience = firstExperienceInDataSet;
 
 		//from start of dataSet -> end of dataSet
 		for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 		{
-
 			resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 			finalError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
@@ -164,7 +143,6 @@ void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContaine
 	#ifdef DEBUG_ANN_VERIFY_REAL_LIFE_ACCURACY_DIAGNOSTICS_CUTOFF
 	long experiencesIncorrectlyDiagnosed = 0;
 	#endif
-
 
 
 	//Added by RBB; now test the network across all examples and calculate the average error
@@ -193,8 +171,6 @@ void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContaine
 				restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 				float testingErrorOfAlternateOption = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
-
-
 
 				if(testingErrorOfAlternateOption < testingError)
 				{
@@ -254,9 +230,6 @@ void trainNeuralNetworkSimple(NeuronContainer * firstInputNeuron, NeuronContaine
 
 void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, int numberOfInputNeurons, int numberOfOutputNeurons, int maxFolds, Experience * firstExperienceInDataSet, long numberOfExperiences, int maxEpochs)
 {
-
-
-
 	/*
 	network structure
 
@@ -264,7 +237,6 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 	arbitary number hidden layers/subnets with arbitary number hidden neurons with
 	Y output neurons
 	*/
-
 
 	/*
 	currently hard coded specifically for new-thyroid.data/new-thyroid.names test data)
@@ -294,11 +266,8 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 	float * trainingErrorArray = new float[maxFolds];
 	float * testingErrorArray = new float[maxFolds];
 
-
-
 	for(foldNum=0; foldNum < maxFolds; foldNum++)
 	{
-
 		/*
 		assumes Thyroid data is randomly distributed - if its not it should be -
 		and takes the last 1/foldNum (*) number of data sets
@@ -319,16 +288,14 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 
 		float acceptableError = ACCEPTABLE_ERROR_RATE;
 
-
+		#ifdef ANN_DEBUG
 		/*
-		#ifdef DEBUG
 		cout << "q = int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))" << endl;
 		cout << "q = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds)) << endl;
 		cout << "q+int(float(numberOfExperiences)/float(maxFolds)) = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)) << endl;
-		#endif
 		*/
-
-
+		#endif
+		
 		float currentAverageTestingError;
 		currentAverageTestingError = 1.0F;	//ADDED BY RBB 17 sept 08
 
@@ -336,7 +303,6 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 			//it is initalised to a high error value so that ... so that overfitting can be identified
 
 		bool overFittingData = false;
-
 
 		long numberOfFirstExperienceInFoldTrainPartA = 0;
 		long numberOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences) * float(foldNum)/float(maxFolds));
@@ -350,20 +316,14 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 		long numberOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
 		Experience * firstExperienceInFoldTestPart = findExperience(firstExperienceInDataSet, numberOfFirstExperienceInFoldTestPart);
 
-
 		//training
-			//CHANGED FROM training to averagedTesting BY RBB 17 sept 08
-		while((currentAverageTestingError > acceptableError) && (numEpochs < maxEpochs) && !overFittingData)
+		while((currentAverageTestingError > acceptableError) && (numEpochs < maxEpochs) && !overFittingData)	//CHANGED FROM training to averagedTesting BY RBB 17 sept 08
 		{
-			//(*)
 			//from start of dataSet -> beginning of test segment
 
-
-			/*
-			#ifdef DEBUG
-			cout << "int(float(numberOfExperiences) * float(foldNum)/float(maxFolds)) = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds));
+			#ifdef ANN_DEBUG
+			//cout << "int(float(numberOfExperiences) * float(foldNum)/float(maxFolds)) = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds));
 			#endif
-			*/
 
 			Experience * currentExperienceInFold;
 
@@ -371,43 +331,17 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 
 			for(int experienceNum = numberOfFirstExperienceInFoldTrainPartA; experienceNum < numberOfLastExperienceInFoldTrainPartA; experienceNum++)
 			{
-
-				//DEBUGsetDataSetNum(experienceNum);
-
 				//sets inputData into ANN
 				//(NB normalisedInputData[experienceNum][0] is target class
 
-				//basic method in C
-				/*
-				outputs0[0] = normalisedInputData[experienceNum][1];
-				outputs0[1] = normalisedInputData[experienceNum][2];
-				outputs0[2] = normalisedInputData[experienceNum][3];
-				outputs0[3] = normalisedInputData[experienceNum][4];
-				outputs0[4] = normalisedInputData[experienceNum][5];
-
-				classTarget[0] = 0.0F;
-				classTarget[1] = 0.0F;
-				classTarget[2] = 0.0F;
-				classTarget[int(normalisedInputData[experienceNum][0])] = 1.0F;
-				*/
 				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
-
-				//cout << currentExperienceInFold->classTargetValue;
 
 				trainingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
-				//cout << "\t" << trainingError << endl;
-
-				//cout << "current trainingError1 = " << trainingError << endl;
-				/*
-				if(trainingError > 1.0)
-				{
-					cout << "(trainingError2 > 1.0)" << endl;
-					cout << "currentExperienceInFold->classTargetValue = " << currentExperienceInFold->classTargetValue << endl;
-					//printExperiences(currentExperienceInFold);
-				}
-				*/
-
+				#ifdef ANN_DEBUG
+				//cout << currentExperienceInFold->classTargetValue;				
+				//cout << "\t" << "current trainingError 1 = " << trainingError << endl;
+				#endif
 
 				currentExperienceInFold = currentExperienceInFold->next;
 
@@ -415,67 +349,22 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 			//from end of test segment -> end of dataSet
 
 
-
 			currentExperienceInFold = firstExperienceInFoldTrainPartB;
 
 			for(int experienceNum = numberOfFirstExperienceInFoldTrainPartB; experienceNum<numberOfLastExperienceInFoldTrainPartB; experienceNum++)
 			{
-
-
-				//DEBUGsetDataSetNum(experienceNum);
-
-				//basic method in C
-				/*
-				outputs0[0] = normalisedInputData[experienceNum][1];
-				outputs0[1] = normalisedInputData[experienceNum][2];
-				outputs0[2] = normalisedInputData[experienceNum][3];
-				outputs0[3] = normalisedInputData[experienceNum][4];
-				outputs0[4] = normalisedInputData[experienceNum][5];
-
-				classTarget[0] = 0.0F;
-				classTarget[1] = 0.0F;
-				classTarget[2] = 0.0F;
-				classTarget[int(normalisedInputData[experienceNum][0])] = 1.0F;
-				*/
 				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
 
-				//cout << currentExperienceInFold->classTargetValue;
-
-				//trainingError = backPropogate(numberOfHiddenNeurons, outputs0, outputs1, outputs2, weights1, weights2, biases1, biases2, errors1, errors2, classTarget);
 				trainingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
-				//cout << "\t" << trainingError << endl;
-
-				/*
-				#define TEST1
-				#ifdef TEST1
-				cout << "exiting prematurely after first ANNBackPropogationPass ..." << endl;
-				exit(0);
+				#ifdef ANN_DEBUG
+				//cout << currentExperienceInFold->classTargetValue;				
+				//cout << "\t" << "current trainingError 2 = " << trainingError << endl;
 				#endif
-				*/
-
-				//cout << "current trainingError2 = " << trainingError << endl;
-				/*
-				if(trainingError > 1.0)
-				{
-					cout << "(trainingError2 > 1.0)" << endl;
-					cout << "currentExperienceInFold->classTargetValue = " << currentExperienceInFold->classTargetValue << endl;
-					//printExperiences(currentExperienceInFold);
-				}
-				*/
-
 
 				currentExperienceInFold = currentExperienceInFold->next;
 
 			}
-
-			/*
-			#define TEST1
-			#ifdef TEST1
-			cout << "exiting prematurely after first fold training ..." << endl;
-			exit(0);
-			#endif
-			*/
 
 			numEpochs++;
 
@@ -485,27 +374,7 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 
 			//creates and stores copy of the trained neural network
 
-			//basic method in C
-			/*
-			for(int j = 0; j < numberOfInputNeurons*numberOfHiddenNeurons; j++)
-			{
-				weights1Record[j] = weights1[j];
-			}
-			for(int j = 0; j < numberOfHiddenNeurons*numberOfOutputNeurons; j++)
-			{
-				weights2Record[j] = weights2[j];
-			}
-			for(int j = 0; j < numberOfHiddenNeurons; j++)
-			{
-				biases1Record[j] = biases1[j];
-			}
-			for(int j = 0; j < numberOfOutputNeurons; j++)
-			{
-				biases2Record[j] = biases2[j];
-			}
-			*/
 			storeNeuralNetworkBiasAndWeights(firstInputNeuron);
-
 
 			//now determine the number of epochs ep that result in best performance on the respective test partition
 
@@ -513,103 +382,27 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 
 			//from start of test segment -> end of test segment
 
-
 			currentExperienceInFold = firstExperienceInFoldTestPart;
-
 
 			for(int experienceNum = numberOfFirstExperienceInFoldTestPart; experienceNum < numberOfLastExperienceInFoldTestPart; experienceNum++)
 			{
-				//basic method in C
-				/*
-				for(j = 0; j < numberOfInputNeurons*numberOfHiddenNeurons; j++)
-				{
-					 weights1[j] = weights1Record[j];
-				}
-				for(j = 0; j < numberOfHiddenNeurons*numberOfOutputNeurons; j++)
-				{
-					weights2[j] = weights2Record[j];
-				}
-				for(j = 0; j < numberOfHiddenNeurons; j++)
-				{
-					biases1[j] = biases1Record[j];
-				}
-				for(j = 0; j < numberOfOutputNeurons; j++)
-				{
-					biases2[j] = biases2Record[j];
-				}
-				*/
 				restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
-				//basic method in C
-				/*
-				outputs0[0] = normalisedInputData[experienceNum][1];
-				outputs0[1] = normalisedInputData[experienceNum][2];
-				outputs0[2] = normalisedInputData[experienceNum][3];
-				outputs0[3] = normalisedInputData[experienceNum][4];
-				outputs0[4] = normalisedInputData[experienceNum][5];
-
-				classTarget[0] = 0.0F;
-				classTarget[1] = 0.0F;
-				classTarget[2] = 0.0F;
-				classTarget[int(normalisedInputData[experienceNum][0])] = 1.0F;
-				*/
 				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
 
-				//testingError = backPropogate(numberOfHiddenNeurons, outputs0, outputs1, outputs2, weights1, weights2, biases1, biases2, errors1, errors2, classTarget);
 				testingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
 				sumingTestingError = sumingTestingError + testingError;
 
-
+				#ifdef ANN_DEBUG
 				//cout << "current testingError = " << testingError << endl;
-				/*
-				if(testingError > 1.0)
-				{
-					cout << "(testingError > 1.0)" << endl;
-					cout << "currentExperienceInFold->classTargetValue = " << currentExperienceInFold->classTargetValue << endl;
-					//printExperiences(currentExperienceInFold);
-				}
-				*/
-
-
-
-
-				/*
-				if(testingError < 0.005)
-				{
-					cout << "(testingError < 0.005)" << endl;
-					printExperiences(currentExperienceInFold);
-				}
-				*/
-
-
-
+				#endif
+				
 				currentExperienceInFold = currentExperienceInFold->next;
-
 			}
-
 
 			//resets the trained neural network to the stored copy
 
-			//basic method in C
-			/*
-			for(j = 0; j < numberOfInputNeurons*numberOfHiddenNeurons; j++)
-			{
-				 weights1[j] = weights1Record[j];
-			}
-			for(j = 0; j < numberOfHiddenNeurons*numberOfOutputNeurons; j++)
-			{
-				weights2[j] = weights2Record[j];
-			}
-			for(j = 0; j < numberOfHiddenNeurons; j++)
-			{
-				biases1[j] = biases1Record[j];
-			}
-			for(j = 0; j < numberOfOutputNeurons; j++)
-			{
-				biases2[j] = biases2Record[j];
-			}
-			*/
 			restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
 			currentAverageTestingError = sumingTestingError/(float(numberOfExperiences)/float(maxFolds));
@@ -618,7 +411,6 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 			if(currentAverageTestingError > (recordedTestedError+float(ERROR_VARIATION_ALLOWED)))
 			{
 				//Started to overfit data...
-
 
 				#ifdef ANN_USE_MIN_NUM_EPOCHS_BEFORE_DECLARE_OVERFITTING_DATA
 				if(numEpochs > ANN_MIN_NUM_EPOCHS_BEFORE_DECLARE_OVERFITTING_DATA)
@@ -648,15 +440,12 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 			}
 
 			//END OF TESTING FOR TRAINING EPOCH ep
-
-
 		}
 
 		trainingEpochsNumberArray[foldNum] = numEpochs;
 		trainingErrorArray[foldNum] = trainingError;
 		//testingErrorArray[foldNum] = testingError;
 		testingErrorArray[foldNum] = currentAverageTestingError;
-
 
 		cout << "Results for fold number = " << foldNum << endl;
 		cout << "Error on training Set = " << trainingError << endl;
@@ -667,14 +456,11 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 		cout << "Accuracy of Averaged test Set = " << 100.0F*(1.0F- currentAverageTestingError) << "%" << endl;
 		cout << "Number of epochs = " << numEpochs << "\n" << endl;
 
-
 		totalTrainingEpochs = totalTrainingEpochs + numEpochs;
 		totalTrainingError = totalTrainingError + trainingError;
 		//totalTestingError = totalTestingError + testingError;
 		totalTestingError = totalTestingError + currentAverageTestingError;
-
 	}
-
 
 	//calculates and prints out average error;
 
@@ -694,9 +480,10 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 	time_t myClock = time(NULL);
 	char buf[BUFSIZ];
 	myTime = localtime(&myClock);
-	*/
+	#ifdef ANN_DEBUG
 	//cout << "time = " << asctime(myTime) << endl;
-
+	#endif	
+	*/
 
 	cout << "\n*****************************************************" << endl;
 	cout << "Number of Input Neurons = " << numberOfInputNeurons << endl;
@@ -722,29 +509,15 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 		//from start of dataSet -> end of dataSet
 		for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 		{
-
-			//basic method in C
-			/*
-			outputs0[0] = normalisedInputData[experienceNum][1];
-			outputs0[1] = normalisedInputData[experienceNum][2];
-			outputs0[2] = normalisedInputData[experienceNum][3];
-			outputs0[3] = normalisedInputData[experienceNum][4];
-			outputs0[4] = normalisedInputData[experienceNum][5];
-
-			classTarget[0] = 0.0F;
-			classTarget[1] = 0.0F;
-			classTarget[2] = 0.0F;
-			classTarget[int(normalisedInputData[experienceNum][0])] = 1.0F;
-			*/
 			resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
-
-			//cout << currentExperience->classTargetValue;
-
-			//finalError = backPropogate(numberOfHiddenNeurons, outputs0, outputs1, outputs2, weights1, weights2, biases1, biases2, errors1, errors2, classTarget);
+			
 			finalError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
-			//cout << "\t" << finalError << endl;
-
+			#ifdef ANN_DEBUG
+			//cout << currentExperience->classTargetValue;			
+			//cout << "\t finalError = " << finalError << endl;
+			#endif
+			
 			currentExperience = currentExperience->next;
 		}
 	}
@@ -774,11 +547,12 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 
 		resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
-		//cout << currentExperience->classTargetValue;
-
 		float testingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
-		//cout << "\t" << testingError << endl;
+		#ifdef ANN_DEBUG
+		//cout << currentExperience->classTargetValue;
+		//cout << "\t testingError = " << testingError << endl;		
+		#endif
 
 	#ifdef DEBUG_DISREGARD_HIGH_ERROR_EXPERIENCES
 		if(testingError < 0.8)
@@ -808,7 +582,6 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 		}
 
 		currentExperience = currentExperience->next;
-
 	}
 
 	restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
@@ -823,8 +596,6 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 	addExperiencesToOFStream(&experienceDataSetOFStreamObject, firstExperienceInHighErrorExperienceList);
 	experienceDataSetOFStreamObject.close();
 #endif
-
-
 
 	//cout << "Final training accuracy for e epochs (e det. from 10 fold cross validation) = " << (1.0F-finalError)*100.0F << "%" <<endl;
 	cout << "Final averaged testing accuracy for e epochs (e from 10 fold cross validation) = " << (1.0F-(sumingTestingError/(double)numberOfExperiencesContributingTowardsFinalTestingError))*100.0F << "%" <<endl;
@@ -869,7 +640,7 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 
 void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 {
-	#ifdef DEBUG
+	#ifdef ANN_DEBUG
 	cout << "\nvoid storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)" << endl;
 	#endif
 
@@ -877,7 +648,7 @@ void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 
 	while(currentNeuronReference -> nextNeuronContainer != NULL)
 	{
-		#ifdef DEBUG
+		#ifdef ANN_DEBUG
 		cout << "\nA neuron has been selected for recording Bias And front neuron connection Weights" << endl;
 		cout << "NeuronContainer ID = " << currentNeuronReference->neuron->id << endl;
 		cout << "NeuronContainer ID Order = " << currentNeuronReference->neuron->orderID << endl;
@@ -889,7 +660,7 @@ void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 		{
 			currentNeuronReference->neuron->storedBias = currentNeuronReference->neuron->bias;
 
-			#ifdef DEBUG
+			#ifdef ANN_DEBUG
 			cout << "NeuronContainer Bias = " << currentNeuronReference->neuron->bias << endl;			//NB first/input layer biases are irrelevant
 			#endif
 		}
@@ -902,14 +673,14 @@ void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 			{
 				currentNeuronReferenceInFrontLayer->neuronConnection->storedWeight = currentNeuronReferenceInFrontLayer->neuronConnection->weight;
 
-				#ifdef DEBUG
+				#ifdef ANN_DEBUG
 				cout << "Front NeuronContainer Connection Weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;
 				#endif
 
 				currentNeuronReferenceInFrontLayer = currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer;
 			}
 
-		#ifdef ANN
+		#ifdef ANN_ADVANCED
 			if(currentNeuronReference->isSubnet)
 			{
 				storeNeuralNetworkBiasAndWeights(currentNeuronReference->firstNeuronContainerInBackLayerOfSubnet);
@@ -925,28 +696,6 @@ void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 	{
 		storeNeuralNetworkBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
-
-
-	//basic restore neural network with stored biases and weights algorithm in C
-	/*
-	for(int j = 0; j < numberOfInputNeurons*numberOfHiddenNeurons; j++)
-	{
-		weights1Record[j] = weights1[j];
-	}
-	for(int j = 0; j < numberOfHiddenNeurons*numberOfOutputNeurons; j++)
-	{
-		weights2Record[j] = weights2[j];
-	}
-	for(int j = 0; j < numberOfHiddenNeurons; j++)
-	{
-		biases1Record[j] = biases1[j];
-	}
-	for(int j = 0; j < numberOfOutputNeurons; j++)
-	{
-		biases2Record[j] = biases2[j];
-	}
-	*/
-
 }
 
 
@@ -960,7 +709,7 @@ void storeNeuralNetworkBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 
 void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 {
-	#ifdef DEBUG
+	#ifdef ANN_DEBUG
 	cout << "\nvoid restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingAccessed)" << endl;
 	#endif
 
@@ -968,7 +717,7 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingA
 
 	while(currentNeuronReference -> nextNeuronContainer != NULL)
 	{
-		#ifdef DEBUG
+		#ifdef ANN_DEBUG
 		cout << "\nA neuron has been selected for Reseting with previously stored Bias And front neuron connection Weights" << endl;
 		cout << "NeuronContainer ID = " << currentNeuronReference->neuron->id << endl;
 		cout << "NeuronContainer ID Order = " << currentNeuronReference->neuron->orderID << endl;
@@ -980,7 +729,7 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingA
 		{
 			currentNeuronReference->neuron->bias = currentNeuronReference->neuron->storedBias;
 
-			#ifdef DEBUG
+			#ifdef ANN_DEBUG
 			cout << "NeuronContainer Bias = " << currentNeuronReference->neuron->bias << endl;				//NB first/input layer biases are irrelevant
 			#endif
 		}
@@ -988,14 +737,13 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingA
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, restoreNeuralNetworkWithStoredBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
-
 			NeuronConnectionContainer * currentNeuronReferenceInFrontLayer = currentNeuronReference->firstFrontNeuronConnectionContainer;
 
 			while(currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer != NULL)
 			{
 				currentNeuronReferenceInFrontLayer->neuronConnection->weight = currentNeuronReferenceInFrontLayer->neuronConnection->storedWeight;
 
-				#ifdef DEBUG
+				#ifdef ANN_DEBUG
 				cout << "Front NeuronContainer Connection Weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;
 				#endif
 
@@ -1003,8 +751,7 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingA
 
 			}
 
-
-		#ifdef ANN
+		#ifdef ANN_ADVANCED
 			if(currentNeuronReference->isSubnet)
 			{
 				restoreNeuralNetworkWithStoredBiasAndWeights(currentNeuronReference->firstNeuronContainerInBackLayerOfSubnet);
@@ -1021,28 +768,6 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingA
 	{
 		restoreNeuralNetworkWithStoredBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
-
-	//basic restore neural network with stored biases and weights algorithm in C
-	/*
-	//resets the trained neural network to the stored copy
-	for(j = 0; j < numberOfInputNeurons*numberOfHiddenNeurons; j++)
-	{
-		 weights1[j] = weights1Record[j];
-	}
-	for(j = 0; j < numberOfHiddenNeurons*numberOfOutputNeurons; j++)
-	{
-		weights2[j] = weights2Record[j];
-	}
-	for(j = 0; j < numberOfHiddenNeurons; j++)
-	{
-		biases1[j] = biases1Record[j];
-	}
-	for(j = 0; j < numberOfOutputNeurons; j++)
-	{
-		biases2[j] = biases2Record[j];
-	}
-	*/
-
 }
 
 
@@ -1056,7 +781,7 @@ void restoreNeuralNetworkWithStoredBiasAndWeights(NeuronContainer * neuronBeingA
 
 void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAccessed)
 {
-	#ifdef DEBUG
+	#ifdef ANN_DEBUG
 	cout << "\nvoid resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAccessed)" << endl;
 	#endif
 
@@ -1064,7 +789,7 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 
 	while(currentNeuronReference -> nextNeuronContainer != NULL)
 	{
-		#ifdef DEBUG
+		#ifdef ANN_DEBUG
 		cout << "\nA neuron has been selected for Reseting with Random Bias And front neuron connection Weights" << endl;
 		cout << "NeuronContainer ID = " << currentNeuronReference->neuron->id << endl;
 		cout << "NeuronContainer ID Order = " << currentNeuronReference->neuron->orderID << endl;
@@ -1097,15 +822,13 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 			#endif
 			#endif
 
-			#ifdef DEBUG
+			#ifdef ANN_DEBUG
 			cout << "NeuronContainer Bias = " << currentNeuronReference->neuron->bias << endl;
 			#endif
 		}
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, resetNeuralNetworkWithRandomBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
-			//for(long i = 0; i < currentNeuronReference->numFrontNeuronConnections; i++)
-
 			NeuronConnectionContainer * currentNeuronReferenceInFrontLayer = currentNeuronReference->firstFrontNeuronConnectionContainer;
 
 			while(currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer != NULL)
@@ -1131,16 +854,16 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 				#endif
 				#endif
 				#endif
-				//cout << "currentNeuronReferenceInFrontLayer->neuronConnection->weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;
 
-				#ifdef DEBUG
+				#ifdef ANN_DEBUG
+				//cout << "currentNeuronReferenceInFrontLayer->neuronConnection->weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;				
 				cout << "Front NeuronContainer Connection Weight = " << currentNeuronReferenceInFrontLayer->neuronConnection->weight << endl;
 				#endif
 
 				currentNeuronReferenceInFrontLayer = currentNeuronReferenceInFrontLayer->nextNeuronConnectionContainer;
 			}
 
-		#ifdef ANN
+		#ifdef ANN_ADVANCED
 			if(currentNeuronReference->isSubnet)
 			{
 				resetNeuralNetworkWithRandomBiasAndWeights(currentNeuronReference->firstNeuronContainerInBackLayerOfSubnet);
@@ -1149,7 +872,6 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 		}
 
 		currentNeuronReference = currentNeuronReference -> nextNeuronContainer;
-
 	}
 
 
@@ -1158,62 +880,6 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 	{
 		resetNeuralNetworkWithRandomBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
-
-
-	//basic reset neurons with random biases and weights algorithm in C
-	/*
-	int i, j;
-	for(i = 0; i < numberOfInputNeurons; i++)
-	{
-		for(j = 0; j < numberOfHiddenNeurons; j++)
-		{
-				//creates a random float between -1 and 1
-			weights1[i*numberOfHiddenNeurons+j] = (float(rand() * 2.0)/(float(RAND_MAX)+1.0))-1.0;
-			//weights between input and hidden layer
-		}
-	}
-	for(i = 0; i < numberOfHiddenNeurons; i++)
-	{
-		for(j = 0; j < numberOfOutputNeurons; j++)
-		{
-			weights2[i*numberOfOutputNeurons+j] = (float(rand() * 2.0)/(float(RAND_MAX)+1.0))-1.0;
-			//weights between hidden layer and outputlayer
-		}
-	}
-	for(i = 0; i < numberOfHiddenNeurons; i++)
-	{
-		biases1[i] = (float(rand() * 2.0)/(float(RAND_MAX)+1.0))-1.0;
-		//biases of hidden neurons
-	}
-	for(i = 0; i < numberOfOutputNeurons; i++)
-	{
-		biases2[i] = (float(rand() * 2.0)/(float(RAND_MAX)+1.0))-1.0;
-		//biases of output neurons
-	}
-	*/
-
-	/*
-	ARRAYS NOT FILLED/RESET HERE
-
-	//this are over-riden every backpropagation and so they do not have to be initalised;
-
-
-	outputs1[numberOfHiddenNeurons];
-			//outputs values of hiddenLayer
-	outputs2[numberOfOutputNeurons];
-			//outputs values of outputLayer
-	errors1[numberOfHiddenNeurons]
-			//error values of hiddenLayer
-	errors2[numberOfOutputNeurons]
-			//error values of outputLayer
-
-	//these are filled in elsewhere;
-
-	outputs0[numberOfHiddenNeurons];
-			//outputs values of inputLayer
-	classTarget[numberOfOutputNeurons];
-
-	*/
 }
 
 
@@ -1226,22 +892,12 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 /************************************************************ Reset Input/ClassTarget Neurons Neural Network Routines ******************************************************/
 void resetInputsAndClassTargets(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, Experience * currentExperienceInDataSet)
 {
-	#ifdef DEBUG
+	#ifdef ANN_DEBUG
 	cout << "\nvoid resetInputsAndClassTargets(NeuronContainer * firstInputNeuron, NeuronContainer * firstOutputNeuron, long numberOfInputNeurons, long numberOfOutputNeurons, int testSegment)" << endl;
 	#endif
 
 	//sets inputData into ANN
 	//(NB normalisedInputData[i][0] is target class
-
-	//basic method in C
-	/*
-	outputs0[0] = normalisedInputData[i][1];
-	outputs0[1] = normalisedInputData[i][2];
-	outputs0[2] = normalisedInputData[i][3];
-	outputs0[3] = normalisedInputData[i][4];
-	outputs0[4] = normalisedInputData[i][5];
-	*/
-
 
 	NeuronContainer * currentNeuronReference = firstInputNeuron;
 	ExperienceInput * currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
@@ -1254,14 +910,6 @@ void resetInputsAndClassTargets(NeuronContainer * firstInputNeuron, NeuronContai
 		currentNeuronReference = currentNeuronReference->nextNeuronContainer;
 		currentExperienceInputInExperience = currentExperienceInputInExperience->next;
 	}
-
-	//basic method in C
-	/*
-	classTarget[0] = 0.0F;
-	classTarget[1] = 0.0F;
-	classTarget[2] = 0.0F;
-	classTarget[int(normalisedInputData[i][0])] = 1.0F;
-	*/
 
 	currentNeuronReference = firstOutputNeuron;
 	for(long i = 0; i < numberOfOutputNeurons; i++)
@@ -1276,8 +924,8 @@ void resetInputsAndClassTargets(NeuronContainer * firstInputNeuron, NeuronContai
 		currentNeuronReference = currentNeuronReference->nextNeuronContainer;
 	}
 
-#ifdef ANN
-	/*CHECK ANNTHIS: anything required for subnet inputs/outputs???*/
+#ifdef ANN_ADVANCED
+	/*CHECK ANNTHIS: anything required for subnet inputs/outputs?*/
 #endif
 
 }

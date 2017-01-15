@@ -23,11 +23,11 @@
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a12a 31-July-2012
+ * Project Version: 3a13a 28-September-2012
+ * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
 
-/*This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV - see CHECK THIS for missing code]*/
 
 
 
@@ -124,54 +124,43 @@ void fillInANNSpriteExternVariables()
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO << endl;
 		}
 		else if(currentReferenceRulesClass->name == SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO_NAME)
 		{
 			SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO = (bool)((int)(currentReferenceRulesClass->fractionalValue));
-			//cout << "SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO = " << SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO << endl;
 		}
-
 		else
 		{
 
 		}
-
 
 		currentReferenceRulesClass = currentReferenceRulesClass->next;
 	}
@@ -180,13 +169,11 @@ void fillInANNSpriteExternVariables()
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO)
 	{
-		//cout << "here" << endl;
 		SPRITE_TEXTUAL_INCLUDE_NEURON_EXTRA_SECONDARY_INFO = true;
 	}
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_EXTRA_SECONDARY_INFO)
 	{
-		//cout << "here" << endl;
 		SPRITE_TEXTUAL_INCLUDE_NEURON_INFO = true;
 	}
 	else
@@ -196,7 +183,6 @@ void fillInANNSpriteExternVariables()
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO)
 	{
-		//cout << "here" << endl;
 		SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_INFO = true;
 	}
 	else
@@ -205,7 +191,6 @@ void fillInANNSpriteExternVariables()
 	}
 	if(SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_INFO || SPRITE_TEXTUAL_INCLUDE_NEURON_INFO)
 	{
-		//cout << "here" << endl;
 		SPRITE_TEXTUAL_INCLUDE_INFO = true;
 	}
 	else
@@ -271,15 +256,10 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(cha
 
 	if(addSprites)
 	{
-		//if(SPRITE_TEXTUAL_INCLUDE_INFO)
-		//{
-			//cout << "here" << endl;
-
-			if(!addSpriteReferenceListToSceneFile(sceneFileNameWithoutSprites, sceneFileNameWithSprites, spriteListInitialReference, numSpritesAdded))
-			{
-				result = false;
-			}
-		//}
+		if(!addSpriteReferenceListToSceneFile(sceneFileNameWithoutSprites, sceneFileNameWithSprites, spriteListInitialReference, numSpritesAdded))
+		{
+			result = false;
+		}
 	}
 
 	return result;
@@ -288,11 +268,8 @@ bool ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(cha
 
 
 
-//void searchNeuralNetworkAndCreateNonSpriteReferences(NeuronContainer * firstNeuronContainerInLayer, Reference * nonspriteListInitialReference, vec * eyeCoords, int * numnonSpritesAdded, char* sceneFileNameWithSprites)
 Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(NeuronContainer * firstNeuronContainerInLayer, Reference * spriteListInitialReference, Reference * currentNonSpriteListReference, vec * eyeCoords, int * numSpritesAdded, int * numnonSpritesAdded, char* sceneFileNameWithSprites, bool isSubnet, vec * positionOfSubnetNeuron, bool addSprites, bool writeSVG, ofstream * writeFileObject)
 {
-	//cout << "here03" << endl;
-
 	Reference * updatedNonSpriteListReference = currentNonSpriteListReference;
 
 	bool result = true;
@@ -357,7 +334,7 @@ Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(NeuronCo
 
 
 
-	#ifdef ANN
+	#ifdef ANN_ADVANCED
 		if(currentNeuron->isSubnet)
 		{
 			//create back layer of subnet 1-1 connections for display only
@@ -415,8 +392,6 @@ Reference * ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(NeuronCo
 				currentNeuronContainerInFrontLayerOfSubnet=currentNeuronContainerInFrontLayerOfSubnet->nextNeuronContainer;
 				currentNeuronConnectionContainerInFrontLayer = currentNeuronConnectionContainerInFrontLayer -> nextNeuronConnectionContainer;
 			}
-
-			//cout << "here" << endl;
 
 			updatedNonSpriteListReference = ANNsearchNeuralNetworkAndCreateSpriteAndNonSpriteReferences(currentNeuron->firstNeuronContainerInBackLayerOfSubnet, spriteListInitialReference, updatedNonSpriteListReference, eyeCoords, numSpritesAdded, numnonSpritesAdded, sceneFileNameWithSprites, (true|isSubnet), &(currentNeuronReferenceOnLayer->relativePosition), addSprites, writeSVG, writeFileObject);
 		}
@@ -484,25 +459,15 @@ bool ANNfillNeuronDisplayReference(Reference * currentNeuronDispayReference, Neu
 {
 	bool result = true;
 
-
-
-
-
 	mat currentDeformationMatrix;
 
 	//add neuron range info [green ring/sphere/cylinder]
-	//cout << "vv1" << endl;
 
 	createIdentityMatrix(&currentDeformationMatrix);
 	scaleMatrix(&currentDeformationMatrix, (NEURON_SPRITE_SCALE_FACTOR/((neuron->subnetID)*2.0)*(SPRITE_SUBMODEL_RANGE_SCALE_FACTOR*LDRAW_UNITS_PER_CM)));		//	scaleMatrix(&currentDeformationMatrix, ((neuronContainer->neuron->bias)*(SPRITE_SUBMODEL_RANGE_SCALE_FACTOR*LDRAW_UNITS_PER_CM)));
 	copyMatrix2IntoMatrix1(&(currentNeuronDispayReference->deformationMatrix), &(currentDeformationMatrix));
 
-
-
-
 	currentNeuronDispayReference->type = REFERENCE_TYPE_SUBMODEL;
-
-
 
 	if(neuron->bias < (-3.0))
 	{
@@ -632,12 +597,6 @@ bool ANNfillNeuronConnectionDisplayReference(Reference * currentNeuronDispayRefe
 	//currentNeuronDispayReference->colour = DAT_FILE_DEFAULT_COLOUR_EDGELINE;
 
 
-	//else
-	//{
-	//	result = false;
-	//	cout << "error: illegal neuron connection weight. neuronConnectionContainer->neuronConnection->weight = " << neuronConnectionContainer->neuronConnection->weight << endl;
-	//}
-
 	currentNeuronDispayReference->vertex1relativePosition = backNeuronReference->relativePosition;
 	currentNeuronDispayReference->vertex2relativePosition = forwardNeuronReference->relativePosition;
 
@@ -686,21 +645,11 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 
 	*numSpritesAdded = (*numSpritesAdded + 1);
 
-		//cout << "here13" << endl;
-	//CHECK THIS
-	/*
-	spriteSubmodelCurrentReference = addNeuronConnectionSpriteInfoToReferenceList(spriteSubmodelCurrentReference, neuronReference1, neuronReference2, neuronConnectionContainer);
-	*numSpritesAdded = (*numSpritesAdded + 1);
-	*/
-
 	//generate sprite reference name
 	char * spriteReferenceFileName = new char[DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX];
 
 	LDcreateSpriteReferenceName(spriteReferenceFileName, *numSpritesAdded, sceneFileName);
 	cout << "spriteReferenceFileName = " << spriteReferenceFileName << endl;
-
-	//cout << "DEBUG unitBeingSprited = " << unitReference->name << endl;
-
 
 #ifdef CPLUSPLUSERRORCORRECTION3
 	char * CHICKENDEBUG = new char[DAT_FILE_REF_MAX_SIZE*DAT_FILE_MAX_NUM_OF_REFERENCES];
@@ -716,10 +665,6 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 
 	int spriteDefaultColour = SPRITE_DEFAULT_COLOUR;
 
-	//addSpriteReferenceToSpriteListByteArray
-	//if(!ANNaddSpriteToSpriteReferenceList(&(neuronReference->absolutePosition), eyeCoords, spriteListInitialReference, spriteReferenceFileName, spriteDefaultColour))
-
-
 	vec centralPositionOfConnection;
 	centralPositionOfConnection.x = (backNeuronReference->relativePosition.x + forwardNeuronReference->relativePosition.x)/2.0;
 	centralPositionOfConnection.y = (backNeuronReference->relativePosition.y + forwardNeuronReference->relativePosition.y)/2.0;
@@ -732,8 +677,6 @@ bool ANNdetermineSpriteInfoForNeuronConnectionAndAddSpriteToSpriteRefList(Refere
 	}
 
 	delete spriteReferenceFileName;
-
-
 
 	return result;
 }
@@ -802,23 +745,11 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 	delete spriteTextString;
 	delete spriteColourArray;
 
-
-	//CHECK THIS
-	/*
-		//cout << "here13" << endl;
-	spriteSubmodelCurrentReference = addNeuronSpriteBiasInfoToReferenceList(spriteSubmodelCurrentReference, neuron);
-	*numSpritesAdded = (*numSpritesAdded + 1);
-	*/
-
-
 	//generate sprite reference name
 	char * spriteReferenceFileName = new char[DAT_FILE_REF_SUBMODEL_NAME_LENGTH_MAX];
 
 	LDcreateSpriteReferenceName(spriteReferenceFileName, *numSpritesAdded, sceneFileName);
 	cout << "spriteReferenceFileName = " << spriteReferenceFileName << endl;
-
-	//cout << "DEBUG unitBeingSprited = " << unitReference->name << endl;
-
 
 #ifdef CPLUSPLUSERRORCORRECTION3
 	char * CHICKENDEBUG = new char[DAT_FILE_REF_MAX_SIZE*DAT_FILE_MAX_NUM_OF_REFERENCES];
@@ -834,8 +765,6 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 
 	int spriteDefaultColour = SPRITE_DEFAULT_COLOUR;
 
-	//addSpriteReferenceToSpriteListByteArray
-	//if(!ANNaddSpriteToSpriteReferenceList(&(neuronReference->absolutePosition), eyeCoords, spriteListInitialReference, spriteReferenceFileName, spriteDefaultColour))
 	double spriteScaleFactor = (0.00008*(SPRITE_SUBMODEL_RANGE_SCALE_FACTOR*LDRAW_UNITS_PER_CM));
 	if(!LDaddSpriteToSpriteReferenceList(&(neuronReference->relativePosition), eyeCoords, spriteListInitialReference, spriteReferenceFileName, spriteDefaultColour, spriteScaleFactor))
 	{
@@ -854,7 +783,6 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 
 
 
-/*UP TO HERE*/
 
 
 void ANNgenerateTextualNeuronSpriteInfoString(NeuronContainer * neuronContainer, string * spriteTextString, int spriteColourArray[])
@@ -882,7 +810,9 @@ void ANNgenerateTextualNeuronSpriteInfoString(NeuronContainer * neuronContainer,
 		sprintf(tempString, "%d", neuronContainer->neuron->id);
 		if(SPRITE_TEXTUAL_INCLUDE_NEURON_EXTRA_SECONDARY_INFO)
 		{
-			/*DEBUG; text kernel checking;
+			#ifdef ANN_DEBUG
+			/*
+			//text kernel checking;
 			if(neuronContainer->neuron->id == 1)
 			{
 				//test spritetext kernelling;
@@ -891,11 +821,15 @@ void ANNgenerateTextualNeuronSpriteInfoString(NeuronContainer * neuronContainer,
 			else
 			{
 			*/
-				*spriteTextString = *spriteTextString + "ID = " + tempString;
+			#endif
+			*spriteTextString = *spriteTextString + "ID = " + tempString;
 
-			/*DEBUG; text kernel checking;
+			#ifdef ANN_DEBUG
+			/*
+			//text kernel checking;
 			}
 			*/
+			#endif
 		}
 		else
 		{
@@ -964,11 +898,12 @@ void ANNgenerateTextualNeuronSpriteInfoString(NeuronContainer * neuronContainer,
 		*spriteTextString = *spriteTextString + "error = " + tempString;
 	}
 
-	//cout << "DEBUG 1l" << endl;
-
 	delete tempString;
 
-	//cout << "DEBUG: *spriteTextString = \n" << *spriteTextString << "\n\n" << endl;
+	#ifdef ANN_DEBUG
+	//cout << "*spriteTextString = \n" << *spriteTextString << "\n\n" << endl;
+	#endif
+	
 	/*End Start Sprite Text Creation*/
 }
 
@@ -991,13 +926,12 @@ void ANNgenerateTextualNeuronConnectionSpriteInfoString(NeuronConnectionContaine
 	sprintf(tempString, "%0.2f", neuronConnectionContainer->neuronConnection->weight);
 	*spriteTextString = "\n\n" + *spriteTextString + "w = " + tempString;
 
-
-
-	//cout << "DEBUG 1l" << endl;
-
 	delete tempString;
 
-	//cout << "DEBUG: *spriteTextString = \n" << *spriteTextString << "\n\n" << endl;
+	#ifdef ANN_DEBUG
+	//cout << "*spriteTextString = \n" << *spriteTextString << "\n\n" << endl;
+	#endif
+	
 	/*End Start Sprite Text Creation*/
 }
 

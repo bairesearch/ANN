@@ -22,8 +22,8 @@
  *
  * File Name: ANNneuronClass.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments:
  *
  *******************************************************************************/
@@ -38,11 +38,11 @@
 #define HEADER_ANN_NEURON_CLASS
 
 
-#define ANN
-//#define DEBUG
+#define ANN_ADVANCED
+//#define ANN_DEBUG
 //#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS	//must also be defined in ANNParser.cpp
 #ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-	#define DEBUG
+	#define ANN_DEBUG
 #endif
 
 
@@ -136,7 +136,7 @@ public:
 	NeuronConnectionContainer * currentFrontNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
 	NeuronConnectionContainer * currentBackNeuronConnectionContainer;	//this variable is temporary and is used for neural network Formation only
 
-#ifdef ANN
+#ifdef ANN_ADVANCED
 
 	bool isSubnet;	 	//alternative to being a subnet is being a distinct neuron
 

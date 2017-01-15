@@ -22,8 +22,8 @@
  *
  * File Name: ANNData.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -39,15 +39,6 @@
 
 
 //for specific Thyroid data {215lines, 6 columns - comma delimited}
-
-
-/*
-extern float normalisedInputDataTemp[EXPERIENCE_DATASET_NUM_ROWS_ANNTH][EXPERIENCE_DATASET_NUM_COLUMNS_ANNTH];
-extern bool normalisedInputDataTempFilled[EXPERIENCE_DATASET_NUM_ROWS_ANNTH];
-extern float normalisedInputData[EXPERIENCE_DATASET_NUM_ROWS_ANNTH][EXPERIENCE_DATASET_NUM_COLUMNS_ANNTH];
-extern float inputData[EXPERIENCE_DATASET_NUM_ROWS_ANNTH+1][EXPERIENCE_DATASET_NUM_COLUMNS_ANNTH+1];		//max sets of rows/columns+1 so that arrays are not overruritten during parse
-extern char dataFileName[MAX_LENGTH_OF_DATA_FILE_NAME_ANNTH];
-*/
 
 extern long numInputNeurons;
 extern long numOutputNeurons;

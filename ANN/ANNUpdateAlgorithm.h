@@ -22,8 +22,8 @@
  *
  * File Name: ANNUpdateAlgorithm.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments:
  *
  *******************************************************************************/
@@ -52,11 +52,7 @@ double ANNBackPropogationPass(NeuronContainer * firstInputNeuronInNetwork, Neuro
 
 
 
-
-
-
-
-#ifdef ANN
+#ifdef ANN_ADVANCED
 
 void copyNeuronContainerListToNeuronConnectionContainerList(NeuronConnectionContainer * firstNeuronConnectionInListToUpdate, NeuronContainer * firstNeuronInListToCopy);
 void copyNeuronConnectionContainerListToNeuronContainerList(NeuronContainer * firstNeuronInListToUpdate, NeuronConnectionContainer * firstNeuronConnectionInListToCopy);
@@ -67,10 +63,6 @@ void copyNeuronConnectionContainerListToNeuronContainerList(NeuronContainer * fi
 #endif
 
 float calculateOValue(float netValue);
-
-
-void DEBUGsetDataSetNum(int newdataSetNum);
-
 
 #endif
 

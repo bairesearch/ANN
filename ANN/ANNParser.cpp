@@ -22,8 +22,8 @@
  *
  * File Name: ANNParser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -64,32 +64,10 @@ using namespace std;
 
 
 
-/*
-bool doSomething()
-{
-	cout << "doSomething()" <<endl;
 
-	float * normalisedInputDataTemp = new float[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH];
-
-}
-*/
 
 void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 {
-
-
-
-
-	/*
-	float inputData[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH][EXPERIENCE_DATASET_MAX_NUM_COL_ANNTH];		//max sets of rows/columns+1 so that arrays are not overruritten during parse
-
-	float normalisedInputDataTemp[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH][EXPERIENCE_DATASET_MAX_NUM_COL_ANNTH];
-	bool normalisedInputDataTempFilled[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH];
-	float normalisedInputData[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH][EXPERIENCE_DATASET_MAX_NUM_COL_ANNTH];
-	*/
-
-
-
 	float * inputData = new float[EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH];
 
 
@@ -123,9 +101,6 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	int maxRows = 0;
 	int maxCols = 0;
 
-	//cout << "h1" << endl;
-
-	//while ((*textFile).good())
 	while ((textFile).get(c))
 	{
 		switch(c)
@@ -135,7 +110,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = atof(currentNumberString);
 				currentNumberString[0] = '\0';
 
-					#ifdef DEBUG
+					#ifdef ANN_DEBUG
 					//cout << "DEBUG: inputData[" << currentRow << "][" << currentColumn << "] = " << inputData[currentRow][currentColumn] << endl;
 					#endif
 
@@ -172,19 +147,17 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 
 	//initialise shared variables
 	//now calculate the number of input neurons, the number of output neurons, and the number of datasets...
-	/*
-	numInputNeurons = NUM_INPUT_NEURONS_ANNTH;
-	numOutputNeurons = NUM_OUTPUT_NEURONS_ANNTH;
-	maxSetsOfData = maxRows;
-	*/
+	
 	maxRows = currentRow;
 	maxCols = maxCols+1;
 	numInputNeurons = maxCols-1;
 	numExperiences = maxRows;
 
+	#ifdef ANN_DEBUG
 	//cout << "maxRows = " << maxRows << endl;
 	//cout << "maxCols = " << maxCols << endl;
-
+	#endif
+	
 	long maxClassTarget = 0;
 	for(i=0;i<numExperiences;i++)
 	{
@@ -220,7 +193,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	{
 		for(j=0;j<maxCols;j++)
 		{
-			#ifdef DEBUG
+			#ifdef ANN_DEBUG
 			//cout << "DEBUG: inputData[" << i << "][" << j << "] = " << inputData[i][j] << endl;
 			cout << "DEBUG: maxMin[" << j << "][1] = " << maxMin[j][1] << endl;
 			#endif
@@ -235,7 +208,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 			{
 				min[j] = inputData[i*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + j];
 
-				#ifdef DEBUG
+				#ifdef ANN_DEBUG
 				/*
 				if(inputData[i][j] < -100.0F)
 				{
@@ -247,7 +220,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		}
 	}
 
-	#ifdef DEBUG
+	#ifdef ANN_DEBUG
 	for(j=0;j<maxCols;j++)
 	{
 		cout << "Max value of input type (column) = " << j << " = " << max[j] << endl;
@@ -269,7 +242,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 			{
 				normalisedInputData[i*maxCols + j] = ((inputData[i*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + j] - min[j]) / (max[j] - min[j]));
 			}
-			#ifdef DEBUG
+			#ifdef ANN_DEBUG
 			//Testing
 			/*
 			cout << "DEBUG:inputData[i][j] = " << inputData[i][j] << endl;
@@ -310,8 +283,6 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		{
 			index = 0;
 		}
-		//Testing
-		//cout << "res = " << res << endl;
 	#else
 		int res = (int) (float(rand() * float(maxRows))/(float(RAND_MAX)+1.0));
 	#endif
@@ -320,9 +291,6 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		{//fill it
 			for(int j=0;j<maxCols;j++)
 			{
-				//Testing
-				//cout << "cnt = " << cnt << endl;
-
 				normalisedInputDataTemp[res*maxCols + j] = normalisedInputData[cnt*maxCols + j];
 
 			}
@@ -355,17 +323,14 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		for(int j=0;j<maxCols;j++)
 		{
 			normalisedInputData[i*maxCols + j] = normalisedInputDataTemp[i*maxCols + j];
-			#ifdef DEBUG
+			#ifdef ANN_DEBUG
 			cout << "normalisedInputData[" << i << "*maxCols + " << j << "] = " << normalisedInputData[i*maxCols + j] << endl;
 			#endif
 		}
 	}
 
 
-
-
-	#ifdef DEBUG
-
+	#ifdef ANN_DEBUG
 	/*
 	cout << "inputData[i][j] = " << inputData[0][1] << "\n" << endl;
 	cout << "inputData[i][j] = " << inputData[0][2] << "\n" << endl;
@@ -379,14 +344,12 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][4] << "\n" << endl;
 	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][5] << "\n" << endl;
 	*/
-
+	//cout << "normalisedInputData[i*maxCols + j] = " << normalisedInputData[0*maxCols + 0] << "\n" << endl;	
 	#endif
 
-	//cout << "normalisedInputData[i*maxCols + j] = " << normalisedInputData[0*maxCols + 0] << "\n" << endl;
 
 	//new now copy normalisedInputData into experienceClass Linked Lists
 
-	//cout << "here11" << endl;
 
 
 	firstExperienceInDataSet = new Experience();
@@ -396,8 +359,10 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	{
 		currentExperienceInDataSet->classTargetValue = normalisedInputData[i*maxCols + 0] - 1;
 			//+1 added 4 Sept 10 (to ensure class targets start at 0, not 1
+		#ifdef ANN_DEBUG
 		//cout << "currentExperienceInDataSet->classTargetValue = " << currentExperienceInDataSet->classTargetValue << endl;
-
+		#endif
+		
 		ExperienceInput * currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 
 		for(int j=1;j<maxCols;j++)
@@ -415,16 +380,10 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		currentExperienceInDataSet = currentExperienceInDataSet->next;
 	}
 
-	//exit(0);
-
 	//delete inputData;
 	delete normalisedInputDataTemp;
 	delete normalisedInputDataTempFilled;
 	delete normalisedInputData;
 	delete min;
 	delete max;
-
-
-	//cout << "here11" << endl;
-
 }

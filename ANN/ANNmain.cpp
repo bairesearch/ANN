@@ -22,8 +22,8 @@
  *
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -376,7 +376,7 @@ int main(int argc,char **argv)
 		}
 		if (exists_argument(argc,argv,"-version"))
 		{
-			cout << "OpenRT.exe version: 1pXy" << endl;
+			cout << "Project Version: 3a13a 28-September-2012" << endl;
 			exit(1);
 		}
 	}
@@ -471,13 +471,10 @@ int main(int argc,char **argv)
 			string nameOfExperiencesDataSetFile = inputDatasetFileName;
 			cout << "nameOfExperiencesDataSetFile = " << nameOfExperiencesDataSetFile << endl;
 
-			//doSomething();
 			ANNTHparseTestDataFile(nameOfExperiencesDataSetFile);
-			//cout << "h1" << endl;
 
 			numberOfInputNeurons = numInputNeurons;
 			numberOfOutputNeurons = numOutputNeurons;
-
 		}
 		else
 		{
@@ -545,8 +542,6 @@ int main(int argc,char **argv)
 	#else
 	::SetCurrentDirectory(tempFolderCharStar);
 	#endif
-	//cout << "tempFolderCharStar = " << tempFolderCharStar << endl;
-
 
 	if(printOutput)
 	{
@@ -556,8 +551,6 @@ int main(int argc,char **argv)
 		{
 			cout << "vector graphics file name with sprites = " << outputLDRFileNameWithSprites << endl;
 		}
-
-		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputLDRFileNameWithoutSprites, outputLDRFileNameWithSprites, firstInputNeuronInNetwork, useOutputLDRFileWithSprites);
 
 		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, useOutputLDRFileWithSprites, useOutputPPMFileRaytraced, displayInOpenGLAndOutputScreenshot, useOutputLDRFileWithoutSprites, useOutputPPMFile, useOutputSVGFile, outputLDRFileNameWithoutSprites, outputLDRFileNameWithSprites, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 
@@ -608,7 +601,7 @@ bool createANetwork()
 	//Neural Network initialisations
 	firstInputNeuronInNetwork = new NeuronContainer();
 
-	#ifdef DEBUG
+	#ifdef ANN_DEBUG
 	cout << "************************************************************************************" << endl;
 	cout << "******** DEBUG preprocessor definition enabled... tracing execution path...  *******" << endl;
 	cout << "************************************************************************************" << endl;
@@ -668,22 +661,15 @@ bool createANetwork()
 		answerAsInt = long(atof(answerAsString.c_str()));
 		layerDivergenceType = answerAsInt;
 
-		//TEST!
-		/*
-		if((layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS))
-		{
-			numberOfInputNeurons = 16;
-			numberOfOutputNeurons = 16;
-		}
-		*/
-
 		cout <<	"\nEnter the mean layer divergence factor [Default = " << DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR << "]:\n\n>> ";
 		cin >> answerAsString;
 		answerAsDouble = atof(answerAsString.c_str());
 		meanLayerDivergenceFactor = answerAsDouble;
 
-		//cout << "DEBUG:" << meanLayerDivergenceFactor  << endl;
-
+		#ifdef ANN_DEBUG
+		//cout << "meanLayerDivergenceFactor:" << meanLayerDivergenceFactor << endl;
+		#endif
+		
 		cout <<	"\nEnter the probability of neuron having a connection with a previous layer neuron [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;
 		answerAsDouble = atof(answerAsString.c_str());
@@ -740,7 +726,6 @@ bool createANetwork()
 
 
 
-
 	cout << "subnet Divergence Type = " << layerDivergenceType << endl;
 	cout << "mean Subnet Divergence Factor = " << meanLayerDivergenceFactor << endl;
 	cout << "probability Of Neuron Connection Exclusivity = " << probabilityNeuronConnectionWithPreviousLayerNeuron <<endl;
@@ -787,9 +772,7 @@ bool loadAnExperienceDataFile()
 
 	cout << "nameOfExperiencesDataSetFile = " << nameOfExperiencesDataSetFile << endl;
 
-	//doSomething();
 	ANNTHparseTestDataFile(nameOfExperiencesDataSetFile);
-	//cout << "h1" << endl;
 
 	if(numberOfInputAndOutputNeuronsSelected)
 	{

@@ -22,8 +22,8 @@
  *
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
- * Project: Advanced Neural Network (ANN)
- * Project Version: 3a12a 31-July-2012
+ * Project: Artificial Neural Network (ANN)
+ * Project Version: 3a13a 28-September-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -60,9 +60,6 @@ void generateExperienceWith2DRGBMap(unsigned char * rgbMap, int imageWidth, int 
 	{
 		for(int x=0; x<imageWidth; x++)
 		{
-			//cout << "x = " << x << endl;
-			//cout << "y = " << y << endl;
-
 			for(int rgb=0; rgb<RGB_NUM; rgb++)
 			{
 				unsigned char col = getRGBMapValue(x, y, imageWidth, rgb, rgbMap);
@@ -87,9 +84,6 @@ void generateExperienceWith2DMap(double * lumOrContrastOrDepthMap, int imageWidt
 	{
 		for(int x=0; x<imageWidth; x++)
 		{
-			//cout << "x = " << x << endl;
-			//cout << "y = " << y << endl;
-
 			double mapValue = getLumOrContrastOrDepthMapValue(x, y, imageWidth,  lumOrContrastOrDepthMap);
 
 			double normalisedMapValue =  normaliseExperienceInput(mapValue, mapMaxValue);
@@ -111,9 +105,6 @@ void generateExperienceWith2DBooleanMap(bool * booleanMap, int imageWidth, int i
 	{
 		for(int x=0; x<imageWidth; x++)
 		{
-			//cout << "x = " << x << endl;
-			//cout << "y = " << y << endl;
-
 			bool mapValue = getBooleanMapValue(x, y, imageWidth,  booleanMap);
 
 			double normalisedMapValue =  normaliseExperienceInput((double)mapValue, 1.0);
@@ -138,7 +129,6 @@ bool trainAndOutputNeuralNetworkWithFileNames(NeuronContainer * firstInputNeuron
 	cout << "num experiences in list = " << countNumberOfExperiences(firstExperienceInList) << endl;
 
 	long numberOfExperiences = countNumberOfExperiences(firstExperienceInList);
-
 
 	if(useFoldsDuringTraining)
 	{
@@ -169,9 +159,6 @@ bool trainAndOutputNeuralNetworkWithFileNames(NeuronContainer * firstInputNeuron
 	outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, false, true, true, false, vectorGraphicsLDRNNSceneFileName, vectorGraphicsLDRNNSceneFileNameWithSprites, NULL, NULL, raytracedImagePPMNNSceneFileName, vectorGraphicsTALNNSceneFileName, NULL, NULL);
 
 
-	//cout << "H6" << endl;
-
-
 	writeExperienceListToFile(charstarexperienceNNSceneFileName, firstExperienceInList);
 
 #endif
@@ -190,8 +177,6 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 		initiateOpenGL(width, height, 0, 0, false);
 	}
 
-
-
 	char * outputFileNameLDRwithoutSpritescharstar = const_cast<char*>(outputLDRFileNameWithoutSprites.c_str());
 	char * outputFileNameLDRwithSpritescharstar = const_cast<char*>(outputLDRFileNameWithSprites.c_str());
 	char * outputFileNameSVGcharstar = const_cast<char*>(outputSVGFileName.c_str());
@@ -199,14 +184,9 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 	char * outputFileNamePPMrayTracedcharstar = const_cast<char*>(outputPPMFileNameRaytraced.c_str());
 	char * outputFileNameTALcharstar = const_cast<char*>(outputTALFileName.c_str());
 
-
-
-
 	//now output the network to vector graphics file
 	if(useOutputLDRFile || display || allowRaytrace)
 	{
-
-
 		//now output the vector graphics file to image file via ray tracer
 
 		ofstream * writeFileObject;
@@ -257,7 +237,6 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 		if(display || allowRaytrace)
 		{
 			// OLD; if using RT, do not ray trace sprites as the RT raytracer is not optimised - use povray instead
-			//charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
 			// NEW; use ANNrules.xml to remove sprites for RT speed
 
 			//reparse scenefilewithandwithout sprites - to build absolute position information
@@ -363,12 +342,6 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 			{
 				char * topLevelSceneFileNameCollapsed = "sceneCollapsedForOpenGLDisplay.ldr";
 				write2DReferenceListCollapsedTo1DToFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFileForRayTracing);
-				/* method2: why doesnt this work - "invalid dat file for conversion to rgb"
-				char * topLevelSceneFileNameCollapsed = "sceneCollapsedForRaytracing.ldr";
-				write2DReferenceListCollapsedTo1DToFile(topLevelSceneFileNameCollapsed, firstReferenceInPrintList);
-				*/
-
-				//cout << "has" << endl;
 
 				unsigned char * rgbMap = new unsigned char[width*height*RGB_NUM];
 
@@ -396,7 +369,6 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 				#endif
 			}
 		}
-
 	}
 }
 
