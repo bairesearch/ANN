@@ -1,29 +1,29 @@
 /*******************************************************************************
- * 
+ *
  * This file is part of BAIPROJECT.
- * 
+ *
  * BAIPROJECT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License version 3
  * only, as published by the Free Software Foundation.
- * 
+ *
  * BAIPROJECT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License version 3 for more details
  * (a copy is included in the LICENSE file that accompanied this code).
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
  * for a copy of the AGPLv3 License.
- * 
+ *
  *******************************************************************************/
- 
+
 /*******************************************************************************
  *
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3d2b 14-April-2014
+ * Project Version: 3d2c 14-April-2014
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -147,7 +147,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 
 	//initialise shared variables
 	//now calculate the number of input neurons, the number of output neurons, and the number of datasets...
-	
+
 	maxRows = currentRow;
 	maxCols = maxCols+1;
 	numInputNeurons = maxCols-1;
@@ -157,7 +157,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	//cout << "maxRows = " << maxRows << endl;
 	//cout << "maxCols = " << maxCols << endl;
 	#endif
-	
+
 	long maxClassTarget = 0;
 	for(i=0;i<numExperiences;i++)
 	{
@@ -344,7 +344,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][4] << "\n" << endl;
 	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][5] << "\n" << endl;
 	*/
-	//cout << "normalisedInputData[i*maxCols + j] = " << normalisedInputData[0*maxCols + 0] << "\n" << endl;	
+	//cout << "normalisedInputData[i*maxCols + j] = " << normalisedInputData[0*maxCols + 0] << "\n" << endl;
 	#endif
 
 
@@ -362,7 +362,7 @@ void ANNTHparseTestDataFile(string nameOfExperiencesDataSetFile)
 		#ifdef ANN_DEBUG
 		//cout << "currentExperienceInDataSet->classTargetValue = " << currentExperienceInDataSet->classTargetValue << endl;
 		#endif
-		
+
 		ExperienceInput * currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 
 		for(int j=1;j<maxCols;j++)

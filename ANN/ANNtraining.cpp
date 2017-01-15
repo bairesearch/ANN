@@ -1,29 +1,29 @@
 /*******************************************************************************
- * 
+ *
  * This file is part of BAIPROJECT.
- * 
+ *
  * BAIPROJECT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License version 3
  * only, as published by the Free Software Foundation.
- * 
+ *
  * BAIPROJECT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License version 3 for more details
  * (a copy is included in the LICENSE file that accompanied this code).
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
  * for a copy of the AGPLv3 License.
- * 
+ *
  *******************************************************************************/
- 
+
 /*******************************************************************************
  *
  * File Name: ANNtraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2014 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3d2b 14-April-2014
+ * Project Version: 3d2c 14-April-2014
  * Comments:
  *
  *******************************************************************************/
@@ -295,7 +295,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 		cout << "q+int(float(numberOfExperiences)/float(maxFolds)) = " << int(float(numberOfExperiences) * float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)) << endl;
 		*/
 		#endif
-		
+
 		float currentAverageTestingError;
 		currentAverageTestingError = 1.0F;	//ADDED BY RBB 17 sept 08
 
@@ -339,7 +339,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 				trainingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
 				#ifdef ANN_DEBUG
-				//cout << currentExperienceInFold->classTargetValue;				
+				//cout << currentExperienceInFold->classTargetValue;
 				//cout << "\t" << "current trainingError 1 = " << trainingError << endl;
 				#endif
 
@@ -358,7 +358,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 				trainingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
 				#ifdef ANN_DEBUG
-				//cout << currentExperienceInFold->classTargetValue;				
+				//cout << currentExperienceInFold->classTargetValue;
 				//cout << "\t" << "current trainingError 2 = " << trainingError << endl;
 				#endif
 
@@ -397,7 +397,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 				#ifdef ANN_DEBUG
 				//cout << "current testingError = " << testingError << endl;
 				#endif
-				
+
 				currentExperienceInFold = currentExperienceInFold->next;
 			}
 
@@ -482,7 +482,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 	myTime = localtime(&myClock);
 	#ifdef ANN_DEBUG
 	//cout << "time = " << asctime(myTime) << endl;
-	#endif	
+	#endif
 	*/
 
 	cout << "\n*****************************************************" << endl;
@@ -510,14 +510,14 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 		for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 		{
 			resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
-			
+
 			finalError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
 			#ifdef ANN_DEBUG
-			//cout << currentExperience->classTargetValue;			
+			//cout << currentExperience->classTargetValue;
 			//cout << "\t finalError = " << finalError << endl;
 			#endif
-			
+
 			currentExperience = currentExperience->next;
 		}
 	}
@@ -551,7 +551,7 @@ void trainNeuralNetwork(Neuron * firstInputNeuron, Neuron * firstOutputNeuron, i
 
 		#ifdef ANN_DEBUG
 		//cout << currentExperience->classTargetValue;
-		//cout << "\t testingError = " << testingError << endl;		
+		//cout << "\t testingError = " << testingError << endl;
 		#endif
 
 	#ifdef DEBUG_DISREGARD_HIGH_ERROR_EXPERIENCES
@@ -852,7 +852,7 @@ void resetNeuralNetworkWithRandomBiasAndWeights(Neuron * neuronBeingAccessed)
 				#endif
 
 				#ifdef ANN_DEBUG
-				//cout << "currentNeuronConnection->weight = " << currentNeuronConnection->weight << endl;				
+				//cout << "currentNeuronConnection->weight = " << currentNeuronConnection->weight << endl;
 				cout << "Front Neuron Connection Weight = " << currentNeuronConnection->weight << endl;
 				#endif
 			}
