@@ -376,7 +376,7 @@ int main(int argc,char **argv)
 		}
 		if (exists_argument(argc,argv,"-version"))
 		{
-			cout << "Project Version: 3a12a 31-July-2012" << endl;
+			cout << "OpenRT.exe version: 1pXy" << endl;
 			exit(1);
 		}
 	}
