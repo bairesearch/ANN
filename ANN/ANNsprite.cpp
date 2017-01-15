@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: ANNsprite.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  *
  *******************************************************************************/
 
@@ -552,15 +572,15 @@ bool ANNfillNeuronDisplayReference(Reference * currentNeuronDispayReference, Neu
 		//double height = scaleFactor;
 		double width = ANN_SVG_NEURON_SIZE;	//scaleFactor * ANN_SVG_SCALE_FACTOR
 		double height = ANN_SVG_NEURON_SIZE;	//scaleFactor * ANN_SVG_SCALE_FACTOR
-		
+
 		vec positionSVG;
 		positionSVG.x = currentNeuronDispayReference->relativePosition.x*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;		//scaleFactor	//ANN_DRAW_BASICENTITY_NODE_WIDTH/2
-		positionSVG.y = currentNeuronDispayReference->relativePosition.y*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;	
+		positionSVG.y = currentNeuronDispayReference->relativePosition.y*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;
 		positionSVG.z = ANN_OUTPUT_Z_POSITION_NODES;
 		writeSVGBox(writeFileObject, &positionSVG, width, height, currentNeuronDispayReference->colour, 0.0, true);
-	
+
 	}
-	
+
 	return result;
 }
 
@@ -631,10 +651,10 @@ bool ANNfillNeuronConnectionDisplayReference(Reference * currentNeuronDispayRefe
 		position2SVG.x = currentNeuronDispayReference->vertex2relativePosition.x * ANN_SVG_SCALE_FACTOR;
 		position2SVG.y = currentNeuronDispayReference->vertex2relativePosition.y * ANN_SVG_SCALE_FACTOR;
 		position2SVG.z = ANN_OUTPUT_Z_POSITION_CONNECTIONS;
-		
+
 		writeSVGLine(writeFileObject, &position1SVG, &position2SVG, currentNeuronDispayReference->colour);
 	}
-	
+
 	return result;
 }
 
@@ -745,20 +765,20 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 				numberOfLines++;
 			}
 		}
-		
+
 		string stringCurrentLine = "";
 		int stringCurrentLineIndex = 0;
 		int lineIndex = 0;
-						
+
 		for(int i=0; i < spriteTextString->length(); i++)
 		{
 			if(spriteTextString->at(i) == CHAR_NEWLINE)
 			{
 				string stringCurrentLine = spriteTextString->substr(i-stringCurrentLineIndex, stringCurrentLineIndex);
-				
+
 				vec positionSVG;
 				positionSVG.x = neuronReference->relativePosition.x*ANN_SVG_SCALE_FACTOR - ANN_SVG_NEURON_SIZE/2;
-				positionSVG.y = neuronReference->relativePosition.y*ANN_SVG_SCALE_FACTOR - (numberOfLines+1)*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE + lineIndex*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE;	
+				positionSVG.y = neuronReference->relativePosition.y*ANN_SVG_SCALE_FACTOR - (numberOfLines+1)*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE + lineIndex*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE;
 				positionSVG.z = ANN_OUTPUT_Z_POSITION_TEXT;
 				writeSVGText(writeFileObject, stringCurrentLine, &positionSVG, ANN_SVG_TEXT_SCALE_FACTOR, DAT_FILE_COLOUR_BLACK);
 
@@ -772,8 +792,8 @@ bool ANNdetermineSpriteInfoForNeuronAndAddSpriteToSpriteRefList(Reference * neur
 			}
 		}
 	}
-			
-	
+
+
 	int numSpritesAddedTemp = 0;
 	spriteSubmodelCurrentReference = LDaddTextualSpriteInfoStringToReferenceList(NULL, spriteTextString, spriteColourArray, spriteSubmodelCurrentReference, spriteNumberOfLines, &numSpritesAddedTemp, true);
 

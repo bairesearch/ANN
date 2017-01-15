@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: ANNTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  * Comments:
  *
  *******************************************************************************/
@@ -46,11 +66,11 @@ double calculateExperienceErrorForHypotheticalDecision(NeuronContainer * firstIn
 	double experienceBackPropagationPassError;
 
 	//cout << "here3f" << endl;
-	
+
 	storeNeuralNetworkBiasAndWeights(firstInputNeuronInNetwork);
 
 	//cout << "here3f2" << endl;
-	
+
 	resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
 
 	//cout << "here3f3" << endl;
@@ -80,7 +100,7 @@ double calculateExperienceErrorForHypotheticalDecision(NeuronContainer * firstIn
 	restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuronInNetwork);
 
 	//cout << "here3f5" << endl;
-	
+
 	return experienceBackPropagationPassError;
 }
 
@@ -236,7 +256,7 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 {
 
 
-		
+
 	/*
 	network structure
 
@@ -373,9 +393,9 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
 
 				//cout << currentExperienceInFold->classTargetValue;
-				
+
 				trainingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
-				
+
 				//cout << "\t" << trainingError << endl;
 
 				//cout << "current trainingError1 = " << trainingError << endl;
@@ -425,7 +445,7 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 				trainingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
 				//cout << "\t" << trainingError << endl;
-				
+
 				/*
 				#define TEST1
 				#ifdef TEST1
@@ -637,7 +657,7 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 		//testingErrorArray[foldNum] = testingError;
 		testingErrorArray[foldNum] = currentAverageTestingError;
 
-		
+
 		cout << "Results for fold number = " << foldNum << endl;
 		cout << "Error on training Set = " << trainingError << endl;
 		cout << "Accuracy of training Set = " << 100.0F*(1.0F-trainingError) << "%" << endl;
@@ -646,8 +666,8 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 		cout << "Error on Averaged test Set = " <<  currentAverageTestingError << endl;
 		cout << "Accuracy of Averaged test Set = " << 100.0F*(1.0F- currentAverageTestingError) << "%" << endl;
 		cout << "Number of epochs = " << numEpochs << "\n" << endl;
-		
-		
+
+
 		totalTrainingEpochs = totalTrainingEpochs + numEpochs;
 		totalTrainingError = totalTrainingError + trainingError;
 		//totalTestingError = totalTestingError + testingError;
@@ -719,12 +739,12 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 			resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 			//cout << currentExperience->classTargetValue;
-			
+
 			//finalError = backPropogate(numberOfHiddenNeurons, outputs0, outputs1, outputs2, weights1, weights2, biases1, biases2, errors1, errors2, classTarget);
 			finalError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
 			//cout << "\t" << finalError << endl;
-			
+
 			currentExperience = currentExperience->next;
 		}
 	}
@@ -743,11 +763,11 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 	Experience * currentExperience = firstExperienceInDataSet;
 	float  sumingTestingError = 0.0F;
 	long numberOfExperiencesContributingTowardsFinalTestingError = 0;
-	
+
 	#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_4
 	//debugPrintNNOutputs = true;
 	#endif
-		
+
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
 		restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
@@ -755,11 +775,11 @@ void trainNeuralNetwork(NeuronContainer * firstInputNeuron, NeuronContainer * fi
 		resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 		//cout << currentExperience->classTargetValue;
-		
+
 		float testingError = ANNBackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
 		//cout << "\t" << testingError << endl;
-		
+
 	#ifdef DEBUG_DISREGARD_HIGH_ERROR_EXPERIENCES
 		if(testingError < 0.8)
 		{
@@ -1094,7 +1114,7 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(rand() * 1.0F)/(double(RAND_MAX)+0.0F));
 				#else
 				#ifdef TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_WEIGHT_MULT;				
+				currentNeuronReferenceInFrontLayer->neuronConnection->weight = ((double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_WEIGHT_MULT;
 				#else
 				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_WEIGHTS
 				currentNeuronReferenceInFrontLayer->neuronConnection->weight = -0.1;
@@ -1105,7 +1125,7 @@ void resetNeuralNetworkWithRandomBiasAndWeights(NeuronContainer * neuronBeingAcc
 				#ifdef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
 				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
 				#else
-				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;				
+				currentNeuronReferenceInFrontLayer->neuronConnection->weight = (double(rand() * 2.0F)/(double(RAND_MAX)))-1.0F;
 				#endif
 				#endif
 				#endif

@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -169,24 +189,24 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 	{
 		initiateOpenGL(width, height, 0, 0, false);
 	}
-	
-	
-	
-	char * outputFileNameLDRwithoutSpritescharstar = const_cast<char*>(outputLDRFileNameWithoutSprites.c_str());	
+
+
+
+	char * outputFileNameLDRwithoutSpritescharstar = const_cast<char*>(outputLDRFileNameWithoutSprites.c_str());
 	char * outputFileNameLDRwithSpritescharstar = const_cast<char*>(outputLDRFileNameWithSprites.c_str());
 	char * outputFileNameSVGcharstar = const_cast<char*>(outputSVGFileName.c_str());
-	char * displayFileNamePPMcharstar = const_cast<char*>(outputPPMFileName.c_str());	
+	char * displayFileNamePPMcharstar = const_cast<char*>(outputPPMFileName.c_str());
 	char * outputFileNamePPMrayTracedcharstar = const_cast<char*>(outputPPMFileNameRaytraced.c_str());
 	char * outputFileNameTALcharstar = const_cast<char*>(outputTALFileName.c_str());
-	
-	
-	
-	
+
+
+
+
 	//now output the network to vector graphics file
 	if(useOutputLDRFile || display || allowRaytrace)
 	{
-	
-		
+
+
 		//now output the vector graphics file to image file via ray tracer
 
 		ofstream * writeFileObject;
@@ -195,7 +215,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 			writeFileObject = new ofstream(outputFileNameSVGcharstar);
 			writeSVGHeader(writeFileObject);
 		}
-		
+
 		//ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, firstInputNeuronInNetwork, addSprites, writeSVG, writeFileObject);
 
 		Reference * nonspriteListInitialReference = new Reference();
@@ -207,22 +227,22 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 		{
 			result = false;
 		}
-	
+
 		if(useOutputLDRFile)
 		{
 			if(!ANNcreateNeuralNetworkSceneFilesWithAndWithoutSpritesFromReferenceLists(outputFileNameLDRwithoutSpritescharstar, outputFileNameLDRwithSpritescharstar, addSprites, nonspriteListInitialReference, spriteListInitialReference, numSpritesAdded))
 			{
 				result = false;
-			}		
+			}
 		}
-		
+
 		if(useOutputSVGFile)
 		{
 			writeSVGFooter(writeFileObject);
 			writeFileObject->close();
 			delete writeFileObject;
 		}
-		
+
 		char * charstarsceneFileNameForRayTracing;
 
 		if(addSprites)
@@ -233,9 +253,9 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 		{
 			charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
 		}
-		
+
 		if(display || allowRaytrace)
-		{			
+		{
 			// OLD; if using RT, do not ray trace sprites as the RT raytracer is not optimised - use povray instead
 			//charstarsceneFileNameForRayTracing = outputFileNameLDRwithoutSpritescharstar;
 			// NEW; use ANNrules.xml to remove sprites for RT speed
@@ -248,27 +268,27 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 				cout << "The file: " << charstarsceneFileNameForRayTracing << " does not exist in the directory" << endl;
 				result = false;
 			}
-			
+
 			if(allowRaytrace)
 			{
 
-			
+
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 
 					view_info vi;
 					vi.imgwidth = width;
 					vi.imgheight = height;
-					vi.eye.x = TAL_FILE_HEADER_DEFAULT_EYE_X;		
-					vi.eye.y = TAL_FILE_HEADER_DEFAULT_EYE_Y;		
-					vi.eye.z = TAL_FILE_HEADER_DEFAULT_EYE_Z;		
-					vi.viewat.x = TAL_FILE_HEADER_DEFAULT_VIEWAT_X;		
-					vi.viewat.y = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;		
-					vi.viewat.z = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;		
-					vi.viewup.x = TAL_FILE_HEADER_DEFAULT_VIEWUP_X;		
-					vi.viewup.y = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;		
-					vi.viewup.z = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;		
-					vi.viewwidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;		
-					vi.viewheight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;		     								 
+					vi.eye.x = TAL_FILE_HEADER_DEFAULT_EYE_X;
+					vi.eye.y = TAL_FILE_HEADER_DEFAULT_EYE_Y;
+					vi.eye.z = TAL_FILE_HEADER_DEFAULT_EYE_Z;
+					vi.viewat.x = TAL_FILE_HEADER_DEFAULT_VIEWAT_X;
+					vi.viewat.y = TAL_FILE_HEADER_DEFAULT_VIEWAT_Y;
+					vi.viewat.z = TAL_FILE_HEADER_DEFAULT_VIEWAT_Z;
+					vi.viewup.x = TAL_FILE_HEADER_DEFAULT_VIEWUP_X;
+					vi.viewup.y = TAL_FILE_HEADER_DEFAULT_VIEWUP_Y;
+					vi.viewup.z = TAL_FILE_HEADER_DEFAULT_VIEWUP_Z;
+					vi.viewwidth = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_WIDTH;
+					vi.viewheight = TAL_FILE_HEADER_DEFAULT_VIEWSIZE_HEIGHT;
 
 					vi.focal_length = TAL_FILE_HEADER_DEFAULT_FOCAL;
 
@@ -336,7 +356,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 						cout << "Error: no ray tracer enabled" << endl;
 						exit(0);
 					#endif
-				#endif			
+				#endif
 			}
 
 			if(display)
@@ -363,7 +383,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 					cout << "The file: " << topLevelSceneFileNameCollapsed << " does not exist in the directory" << endl;
 					exit(0);
 				}
-					
+
 				drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);
 				drawPrimitivesReferenceListToOpenGLAndCreateRGBMapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);
 					//due to opengl code bug, need to execute this function twice.
@@ -376,7 +396,7 @@ void outputNeuralNetworkToVectorGraphicsAndRaytrace(NeuronContainer * firstInput
 				#endif
 			}
 		}
-				
+
 	}
 }
 

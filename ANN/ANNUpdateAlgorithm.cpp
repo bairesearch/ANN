@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: ANNUpdateAlgorithm.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  * Comments:
  *
  *******************************************************************************/
@@ -67,7 +87,7 @@ double calculateErrorOfBackPropPass(NeuronContainer * firstOutputNeuronInNetwork
 			cout << "currentNeuron->neuron->output = " << currentNeuron->neuron->output << endl;
 		}
 		#endif
-		
+
 		total2xError = total2xError + pow((currentNeuron->neuron->classTarget - currentNeuron->neuron->output), 2.0);
 
 		/*total2xError = total2xError + pow((classTarget[i] - outputs2[i]),2);*/
@@ -85,12 +105,12 @@ double calculateErrorOfBackPropPass(NeuronContainer * firstOutputNeuronInNetwork
 
 		currentNeuron = currentNeuron->nextNeuronContainer;
 	}
-	
+
 	float totalError = 0.5F * total2xError;
 
 	#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_4
 	if(debugPrintNNOutputs)
-	{	
+	{
 		cout << "\ttotal error = " << totalError << "\n" << endl;
 	}
 	#endif
@@ -243,7 +263,7 @@ void forwardPassStep(NeuronContainer * neuronBeingAccessed)
 		currentNeuron = currentNeuron->nextNeuronContainer;
 	}
 	//exit(0);
-	
+
 	//ANN recursion
 	#ifdef ANN
 
@@ -377,7 +397,7 @@ void adjustOutputValueOfANeuronBasedOnBackNeurons(NeuronContainer * neuronBeingA
 		//numberOfChickens++;
 
 		//cout << "currentConnectionContainer->neuron->output = " << currentConnectionContainer->neuron->output << endl;
-		
+
 		netI = netI + (currentConnectionContainer->neuron->output * currentConnectionContainer->neuronConnection->weight);
 		/*netI = netI + (outputs0[j]*weights1[j*numberOfHiddenNeurons+i]);*/
 
@@ -429,7 +449,7 @@ void adjustOutputValueOfANeuronBasedOnBackNeurons(NeuronContainer * neuronBeingA
 	/*netI = netI + biases1[i];*/
 
 	//cout << "netI = " << netI << endl;
-	
+
 	/*DEBUG:
 	if(neuronBeingAccessed->neuron->bias > 100)
 	{
@@ -446,8 +466,8 @@ void adjustOutputValueOfANeuronBasedOnBackNeurons(NeuronContainer * neuronBeingA
 	}
 	*/
 
-	
-	
+
+
 	neuronBeingAccessed->neuron->output = calculateOValue(netI);	//set ("hidden") NeuronContainer output value
 
 	#ifdef DEBUG
@@ -885,7 +905,7 @@ float calculateOValue(float netValue)
 	#else
 	float f = (1.0/(1.0 + float(exp(-netValue))));	//modified 1-6-04
 	#endif
-	
+
 	return f;
 }
 

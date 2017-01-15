@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: ANNTraining.h
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  * Comments:
  *
  *******************************************************************************/
@@ -28,7 +48,7 @@
 
 //#define ERROR_VARIATION_ALLOWED 0.002F	//after original, before 4 sept 10 to below
 //#define ERROR_VARIATION_ALLOWED 0.01F	//1%	//original
-#define ERROR_VARIATION_ALLOWED 0.002F	
+#define ERROR_VARIATION_ALLOWED 0.002F
 
 #define REAL_LIFE_ACCURACY_DIAGNOSTICS_CUTOFF 0.1
 

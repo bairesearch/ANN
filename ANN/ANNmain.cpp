@@ -1,9 +1,29 @@
 /*******************************************************************************
+ * 
+ * This file is part of BAIPROJECT.
+ * 
+ * BAIPROJECT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License version 3
+ * only, as published by the Free Software Foundation.
+ * 
+ * BAIPROJECT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License version 3 for more details
+ * (a copy is included in the LICENSE file that accompanied this code).
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * version 3 along with BAIPROJECT.  If not, see <http://www.gnu.org/licenses/>
+ * for a copy of the AGPLv3 License.
+ * 
+ *******************************************************************************/
+ 
+/*******************************************************************************
  *
  * File Name: ANNmain.c
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2012 Baxter AI (baxterai.com)
  * Project: Advanced Neural Network (ANN)
- * Project Version: 3a8b 14-June-2012
+ * Project Version: 3a11b 09-July-2012
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -39,6 +59,10 @@ using namespace std;
 #include "LRRCgame.h"
 #endif
 
+#ifndef LINUX
+	#include <windows.h>
+#endif
+
 
 NeuronContainer * firstInputNeuronInNetwork;
 NeuronContainer * firstOutputNeuronInNetwork;
@@ -52,7 +76,7 @@ bool formedNetwork;
 
 
 
-static char errmessage[] = "Usage:  ANN.exe [options]"
+static char errmessage[] = "Usage:  OpenANN.exe [options]"
 "\n\t,where options are any of the following"
 "\n"
 "\n\t-idata [string]   : neural network experience data set file"
@@ -93,7 +117,7 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t-height [int]     : raster graphics height in pixels (def: 480)"
 "\n"
 "\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
-"\n\t-exefolder [string]     : exe directory name for executables ANN.exe and (def: same as exe)"
+"\n\t-exefolder [string]     : exe directory name for executables OpenANN.exe and (def: same as exe)"
 "\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-ui               : loads text user interface upon execution (def: no)"
@@ -134,10 +158,10 @@ int main(int argc,char **argv)
 
 	bool useInputXMLFile = false;
 	string inputXMLFileName = "neuralNet.xml";
-	
+
 	bool useOutputXMLFile = false;
 	string outputXMLFileName = "neuralNet.xml";
-	
+
 	bool useOutputLDRFileWithoutSprites = false;
 	string outputLDRFileNameWithoutSprites = "neuralNetWithoutSprites.ldr";
 
@@ -146,23 +170,23 @@ int main(int argc,char **argv)
 
 	bool useOutputSVGFile = false;
 	string outputSVGFileName = "neuralNet.svg";
-		
+
 	bool useOutputPPMFile = false;
 	string outputPPMFileName = "neuralNet.ppm";
-			
+
 	bool useOutputPPMFileRaytraced = false;
 	string outputPPMFileNameRaytraced = "neuralNetRaytraced.ppm";
 	string outputTALFileName = "neuralNet.tal";
-	
+
 	bool useOutputAllFile = false;
 	string outputAllFileName = "neuralNet";
-			
+
 	bool displayInOpenGLAndOutputScreenshot = true;
 	bool printOutput = false;
 
 	int rasterImageWidth = 1024;
-	int rasterImageHeight = 768; 
-		
+	int rasterImageHeight = 768;
+
 	bool useTextUI = false;
 
 	int version;
@@ -275,53 +299,53 @@ int main(int argc,char **argv)
 			useOutputPPMFile = true;
 			printOutput = true;
 		}
-		
+
 		if(exists_argument(argc,argv,"-oppm2"))
 		{
 			outputPPMFileNameRaytraced=get_char_argument(argc,argv,"-oppm2");
 			useOutputPPMFileRaytraced = true;
 			printOutput = true;
 		}
-		
+
 		if(exists_argument(argc,argv,"-oall"))
 		{
 			outputAllFileName=get_char_argument(argc,argv,"-oall");
 			useOutputAllFile = true;
 			printOutput = true;
 		}
-				
+
 		if (exists_argument(argc,argv,"-notshow"))
 		{
 			displayInOpenGLAndOutputScreenshot = false;
 		}
-		
+
 		if (exists_argument(argc,argv,"-width"))
 		rasterImageWidth=get_float_argument(argc,argv,"-width");
 
 		if (exists_argument(argc,argv,"-height"))
 		rasterImageHeight=get_float_argument(argc,argv,"-height");
-				
+
 		if(exists_argument(argc,argv,"-train"))
 		{
 			int trainInt;
 			trainInt=get_float_argument(argc,argv,"-train");
 			trainIfUseInputDatasetFile = (bool)trainInt;
 		}
-	
-		char currentFolder[EXE_FOLDER_PATH_MAX_LENGTH];	
+
+		char currentFolder[EXE_FOLDER_PATH_MAX_LENGTH];
 		#ifdef LINUX
-		getcwd(currentFolder, EXE_FOLDER_PATH_MAX_LENGTH);					
+		getcwd(currentFolder, EXE_FOLDER_PATH_MAX_LENGTH);
 		#else
 		::GetCurrentDirectory(EXE_FOLDER_PATH_MAX_LENGTH, currentFolder);
 		#endif
-		
+
 		if (exists_argument(argc,argv,"-workingfolder"))
 		{
 			workingFolderCharStar=get_char_argument(argc,argv,"-workingfolder");
 		}
 		else
 		{
-			workingFolderCharStar = currentFolder;		
+			workingFolderCharStar = currentFolder;
 		}
 		if (exists_argument(argc,argv,"-exefolder"))
 		{
@@ -341,10 +365,10 @@ int main(int argc,char **argv)
 		}
 
 		#ifdef LINUX
-		chdir(workingFolderCharStar);						
+		chdir(workingFolderCharStar);
 		#else
 		::SetCurrentDirectory(workingFolderCharStar);
-		#endif					
+		#endif
 
 		if (exists_argument(argc,argv,"-ui"))
 		{
@@ -352,7 +376,7 @@ int main(int argc,char **argv)
 		}
 		if (exists_argument(argc,argv,"-version"))
 		{
-			cout << "rt.exe version: 1pXy" << endl;
+			cout << "OpenRT.exe version: 1pXy" << endl;
 			exit(1);
 		}
 	}
@@ -365,29 +389,29 @@ int main(int argc,char **argv)
 	if(printOutput)
 	{
 		if(!useOutputXMLFile)
-		{	
+		{
 			if(useOutputAllFile)
-			{	
-				useOutputXMLFile = true;		
+			{
+				useOutputXMLFile = true;
 				outputXMLFileName = outputAllFileName + ".xml";
 			}
-		}		
+		}
 		if(!useOutputLDRFileWithSprites)
-		{		
+		{
 			if(useOutputAllFile || displayInOpenGLAndOutputScreenshot)		//LDR output is always required when displaying neural network in OpenGL and outputing screenshot
 			{
 				//LDR output is always required when displaying neural network in OpenGL and outputing screenshot
-				useOutputLDRFileWithSprites = true;			
+				useOutputLDRFileWithSprites = true;
 				outputLDRFileNameWithSprites = outputAllFileName + "WithSprites.ldr";
 			}
 		}
 		if(!useOutputLDRFileWithoutSprites)		//LDR output is always required when printing neural network
-		{		
-			useOutputLDRFileWithoutSprites = true;			
+		{
+			useOutputLDRFileWithoutSprites = true;
 			outputLDRFileNameWithoutSprites = outputAllFileName + "WithoutSprites.ldr";
-		}		
+		}
 		if(!useOutputSVGFile)
-		{	
+		{
 			if(useOutputAllFile)
 			{
 				useOutputSVGFile = true;	//SVG output is not always required when printing/drawing neural network
@@ -398,24 +422,24 @@ int main(int argc,char **argv)
 		{
 			if(useOutputAllFile)
 			{
-				useOutputPPMFile = true;		
+				useOutputPPMFile = true;
 				outputPPMFileName = outputAllFileName + ".ppm";
 			}
-		}	
-		/* disable raytrace output by default	
+		}
+		/* disable raytrace output by default
 		if(!useOutputPPMFileRaytraced)
 		{
 			if(useOutputAllFile)
 			{
-				useOutputPPMFileRaytraced = true;		
+				useOutputPPMFileRaytraced = true;
 				outputPPMFileNameRaytraced = outputAllFileName + "Raytraced.ppm";
 			}
 		}
-		*/	
+		*/
 	}
-	
-	
-	
+
+
+
 	if(useInputXMLFile)
 	{//create a network and load input dataset file
 		//Neural Network initialisations
@@ -517,7 +541,7 @@ int main(int argc,char **argv)
 	}
 	fillInANNSpriteExternVariables();
 	#ifdef LINUX
-	chdir(tempFolderCharStar);						
+	chdir(tempFolderCharStar);
 	#else
 	::SetCurrentDirectory(tempFolderCharStar);
 	#endif
@@ -856,14 +880,14 @@ bool outputANetworkAsVectorGraphics()
 		cout << "vector graphics file name without sprites = " << NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITHOUT_SPRITES << endl;
 		cout << "vector graphics file name with sprites = " << NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES << endl;
 		cout << "vector graphics file svg = " << NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME << endl;
-		
+
 		ofstream writeFileObject(NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME);
 		writeSVGHeader(&writeFileObject);
-					
+
 		ANNcreateNeuralNetworkSceneFilesWithAndWithoutSprites(NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITHOUT_SPRITES, NEURAL_NETWORK_VISUALISATION_DAT_FILE_NAME_WITH_SPRITES, firstInputNeuronInNetwork, true, true, &writeFileObject);
-	
+
 		writeSVGFooter(&writeFileObject);
-		writeFileObject.close();	
+		writeFileObject.close();
 	}
 	else
 	{
