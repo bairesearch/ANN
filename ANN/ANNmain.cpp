@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2016 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 4a3w 02-May-2016
+ * Project Version: 4a4a 06-June-2016
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -369,9 +369,9 @@ int main(int argc,char* *argv)
 
 		setCurrentDirectory(workingFolder);
 
-		if (argumentExists(argc,argv,"-ui"))
+		if(argumentExists(argc,argv,"-ui"))
 		{
-			mainUI();
+			useTextUI = true;
 		}
 		if (argumentExists(argc,argv,"-version"))
 		{
@@ -385,6 +385,17 @@ int main(int argc,char* *argv)
 		exit(1);
 	}
 
+	if(!parseANNrulesXMLfile())
+	{
+		result = false;
+	}
+	fillInANNSpriteExternVariables();
+
+	if(useTextUI)
+	{
+		mainUI();
+	}		
+	
 	if(printOutput)
 	{
 		if(!useOutputXMLFile)
@@ -549,12 +560,6 @@ int main(int argc,char* *argv)
 		}
 	}
 
-
-	if(!parseANNrulesXMLfile())
-	{
-		result = false;
-	}
-	fillInANNSpriteExternVariables();
 	setCurrentDirectory(tempFolder);
 
 	if(printOutput)
@@ -914,12 +919,6 @@ bool outputNetworkAsVectorGraphics()
 bool mainUI()
 {
 	bool result = true;
-
-	if(!parseANNrulesXMLfile())
-	{
-		result = false;
-	}
-	fillInANNSpriteExternVariables();
 
 	bool UIstatus = true;
 	numberOfInputAndOutputNeuronsSelected = false;

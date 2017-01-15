@@ -31,11 +31,11 @@
 		<miscellaneousItem name="SPRITE_CHARACTER_EXTENSION" stringValue=".dat" fractionalValue="" />
 		
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO" stringValue="" fractionalValue="1" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO" stringValue="" fractionalValue="1" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO" stringValue="" fractionalValue="1" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO" stringValue="" fractionalValue="1" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO" stringValue="" fractionalValue="0" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO" stringValue="" fractionalValue="0" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_INFO" stringValue="" fractionalValue="0" />
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO" stringValue="" fractionalValue="1" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO" stringValue="" fractionalValue="1" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO" stringValue="" fractionalValue="0" />
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_CLASSTARGET_INFO" stringValue="" fractionalValue="0" />
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_INFO" stringValue="" fractionalValue="0" />
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_INFO" stringValue="" fractionalValue="1" />
