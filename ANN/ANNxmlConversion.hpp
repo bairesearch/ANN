@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNxmlConversion.h
+ * File Name: ANNxmlConversion.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments
  *
  *******************************************************************************/
@@ -36,10 +36,10 @@
 #define HEADER_ANN_XML_CONVERSION
 
 
-#include "XMLparserClass.h"
-#include "ANNneuronClass.h"
-#include "ANNneuronConnectionClass.h"
-#include "SHAREDvars.h"
+#include "XMLparserClass.hpp"
+#include "ANNneuronClass.hpp"
+#include "ANNneuronConnectionClass.hpp"
+#include "SHAREDvars.hpp"
 
 
 //#define ENFORCE_EXPLICIT_NET_XML_NEURON_ID_PARAMETERS

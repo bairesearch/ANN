@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNdraw.h
+ * File Name: ANNdraw.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -35,16 +35,16 @@
 #ifndef HEADER_ANN_DRAW
 #define HEADER_ANN_DRAW
 
-#include "LDreferenceClass.h"
-#include "ANNneuronClass.h"
-#include "ANNneuronConnectionClass.h"
-#include "XMLparserClass.h"
-#include "LDsprite.h"
+#include "LDreferenceClass.hpp"
+#include "ANNneuronClass.hpp"
+#include "ANNneuronConnectionClass.hpp"
+#include "XMLparserClass.hpp"
+#include "LDsprite.hpp"
 #include "math.h"
-#include "LDreferenceManipulation.h"
-#include "SHAREDvector.h"
-#include "XMLrulesClass.h"
-#include "LDsvg.h"
+#include "LDreferenceManipulation.hpp"
+#include "SHAREDvector.hpp"
+#include "XMLrulesClass.hpp"
+#include "LDsvg.hpp"
 
 #define NEURON_SPRITE_SCALE_FACTOR 0.005	//0.005
 

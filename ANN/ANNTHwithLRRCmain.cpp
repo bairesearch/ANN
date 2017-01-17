@@ -26,16 +26,16 @@
  * File Name: ANNTHwithLRRCmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
 
-#include "ANNglobalDefs.h"
+#include "ANNglobalDefs.hpp"
 
 #ifdef USE_LRRC
-#include "LRRCTHgame.h"
+#include "LRRCTHgame.hpp"
 #endif
 
 

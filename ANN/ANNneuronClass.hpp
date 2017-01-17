@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNneuronClass.h
+ * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -40,7 +40,7 @@
 #ifndef HEADER_ANN_NEURON_CLASS
 #define HEADER_ANN_NEURON_CLASS
 
-#include "ANNglobalDefs.h"
+#include "ANNglobalDefs.hpp"
 
 
 #define ANN_SUBNETS

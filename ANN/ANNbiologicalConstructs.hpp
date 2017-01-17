@@ -23,33 +23,23 @@
 
 /*******************************************************************************
  *
- * File Name: ANNparser.h
+ * File Name: ANNbiologicalConstructs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
- * Comments: TH = Test Harness
+ * Project Version: 3j2a 17-January-2017
+ * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
  *
  *******************************************************************************/
 
+#ifndef HEADER_ANN_BIOLOGICAL_CONSTRUCTS
+#define HEADER_ANN_BIOLOGICAL_CONSTRUCTS
 
+#define NUMBER_OF_HORIZONTAL_PIXELS_ANNTH (1000)
+#define NUMBER_OF_VERTICAL_PIXELS_ANNTH (1000)
 
-#include "ANNdata.h"
-#include "ANNexperienceClass.h"
-#include "SHAREDvars.h"
+#define NUMBER_OF_OBJECT_RECOGNITION_HORIZONTAL_PIXELS_ANNTH (200)
+#define NUMBER_OF_OBJECT_RECOGNITION_VERTICAL_PIXELS_ANNTH (200)
 
-#ifndef HEADER_ANN_PARSER
-#define HEADER_ANN_PARSER
-
-#define EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH 1000	//max num experiences in dataset
-#define EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH 101 	//max num input neurons +1
-
-#define	SOME_REALLY_SMALL_FLOAT 0.0F
-#define	SOME_REALLY_LARGE_FLOAT 500.0F
-
-class ANNparserClass
-{
-	private: SHAREDvarsClass SHAREDvars;
-	public: void ANNparseDataFile(string nameOfExperiencesDataSetFile);
-};
+void formNeuralNetworkBiologicalConstructs();
 
 #endif

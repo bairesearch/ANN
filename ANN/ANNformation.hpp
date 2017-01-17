@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNformation.h
+ * File Name: ANNformation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -35,9 +35,9 @@
 #ifndef HEADER_ANN_FORMATION
 #define HEADER_ANN_FORMATION
 
-#include "ANNneuronClass.h"
-#include "ANNneuronConnectionClass.h"
-#include "ANNglobalDefs.h"
+#include "ANNneuronClass.hpp"
+#include "ANNneuronConnectionClass.hpp"
+#include "ANNglobalDefs.hpp"
 
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	#define DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_SIDE_LAYER_NEURONS_ANNTH (1.0)		//100% probability that a neuron will be connected to a neuron on the same layer (memory trace connections only)

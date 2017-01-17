@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmMemoryNetworkTraining.h
+ * File Name: ANNalgorithmMemoryNetworkTraining.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -35,13 +35,13 @@
 #ifndef HEADER_ANN_ALGORITHM_CLASSIFICATION_NETWORK_TRAINING
 #define HEADER_ANN_ALGORITHM_CLASSIFICATION_NETWORK_TRAINING
 
-#include "ANNglobalDefs.h"
-#include "ANNneuronClass.h"
-#include "ANNneuronConnectionClass.h"
-#include "ANNexperienceClass.h"
-#include "ANNalgorithmClassificationNetworkUpdate.h"
-#include "ANNdata.h"
-#include "SHAREDvars.h"
+#include "ANNglobalDefs.hpp"
+#include "ANNneuronClass.hpp"
+#include "ANNneuronConnectionClass.hpp"
+#include "ANNexperienceClass.hpp"
+#include "ANNalgorithmClassificationNetworkUpdate.hpp"
+#include "ANNdata.hpp"
+#include "SHAREDvars.hpp"
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 

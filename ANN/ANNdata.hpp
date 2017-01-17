@@ -23,40 +23,29 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmMemoryNetworkUpdate.h
+ * File Name: ANNdata.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
- * Comments:
+ * Project Version: 3j2a 17-January-2017
+ * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_ALGORITHM_MEMORY_NETWORK_UPDATE
-#define HEADER_ANN_ALGORITHM_MEMORY_NETWORK_UPDATE
+#include "ANNexperienceClass.hpp"
 
-#include "ANNglobalDefs.h"
-#include "ANNneuronClass.h"
-#include "ANNneuronConnectionClass.h"
-#include "ANNalgorithmBackpropagationUpdate.h"	//required for backPropogationForwardPassStep
-
-#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-
-class ANNalgorithmMemoryNetworkUpdateClass
-{
-	private: ANNalgorithmBackpropagationUpdateClass ANNalgorithmBackpropagationUpdate;
-	public: double ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult);
-		private: void calculateBinaryOutputCode(const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult);
-		private: bool isNeuronOutputFire(const ANNneuron* currentNeuron);
-		private: void memoryTraceForwardPassStep(ANNneuron* neuronBeingAccessed, double* trainingMemoryResult);
-			private: void readAndUpdateMemoryTrace(ANNneuron* currentNeuronInLayer, double* trainingMemoryResult);
-				private: void updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(ANNneuronConnection* currentANNneuronConnectionSide);
-				private: void incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(double* trainingMemoryResult);
-};
+#ifndef HEADER_ANN_DATA
+#define HEADER_ANN_DATA
 
 
+
+
+
+//for specific Thyroid data {215lines, 6 columns - comma delimited}
+
+extern long numInputNeurons;
+extern long numOutputNeurons;
+extern long numExperiences;
+extern ANNexperience* firstExperienceInDataSet;
 
 #endif
-
-#endif
-

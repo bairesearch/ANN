@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNdisplay.h
+ * File Name: ANNdisplay.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -34,24 +34,24 @@
 #ifndef HEADER_ANN_DISPLAY
 #define HEADER_ANN_DISPLAY
 
-#include "ANNexperienceClass.h"
-#include "ANNneuronClass.h"
-#include "ANNglobalDefs.h"
-#include "ANNformation.h"
-#include "ANNalgorithmBackpropagationTraining.h"
-#include "ANNalgorithmMemoryNetworkTraining.h"
-#include "ANNalgorithmClassificationNetworkTraining.h"
-#include "ANNxmlConversion.h"
-#include "ANNdraw.h"
-#include "ANNalgorithmBackpropagationUpdate.h"
-#include "LDparser.h"
-#include "LDreferenceManipulation.h"
-#include "LDsvg.h"
-#include "LDopengl.h"
-#include "RTscene.h"
-#include "RTreferenceManipulation.h"
-#include "RTpixelMaps.h"
-#include "RTviewinfo.h"
+#include "ANNexperienceClass.hpp"
+#include "ANNneuronClass.hpp"
+#include "ANNglobalDefs.hpp"
+#include "ANNformation.hpp"
+#include "ANNalgorithmBackpropagationTraining.hpp"
+#include "ANNalgorithmMemoryNetworkTraining.hpp"
+#include "ANNalgorithmClassificationNetworkTraining.hpp"
+#include "ANNxmlConversion.hpp"
+#include "ANNdraw.hpp"
+#include "ANNalgorithmBackpropagationUpdate.hpp"
+#include "LDparser.hpp"
+#include "LDreferenceManipulation.hpp"
+#include "LDsvg.hpp"
+#include "LDopengl.hpp"
+#include "RTscene.hpp"
+#include "RTreferenceManipulation.hpp"
+#include "RTpixelMaps.hpp"
+#include "RTviewinfo.hpp"
 
 
 class ANNdisplayClass

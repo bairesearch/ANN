@@ -23,29 +23,33 @@
 
 /*******************************************************************************
  *
- * File Name: ANNdata.h
+ * File Name: ANNparser.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
 
-#include "ANNexperienceClass.h"
 
-#ifndef HEADER_ANN_DATA
-#define HEADER_ANN_DATA
+#include "ANNdata.hpp"
+#include "ANNexperienceClass.hpp"
+#include "SHAREDvars.hpp"
 
+#ifndef HEADER_ANN_PARSER
+#define HEADER_ANN_PARSER
 
+#define EXPERIENCE_DATASET_MAX_NUM_ROWS_ANNTH 1000	//max num experiences in dataset
+#define EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH 101 	//max num input neurons +1
 
+#define	SOME_REALLY_SMALL_FLOAT 0.0F
+#define	SOME_REALLY_LARGE_FLOAT 500.0F
 
-
-//for specific Thyroid data {215lines, 6 columns - comma delimited}
-
-extern long numInputNeurons;
-extern long numOutputNeurons;
-extern long numExperiences;
-extern ANNexperience* firstExperienceInDataSet;
+class ANNparserClass
+{
+	private: SHAREDvarsClass SHAREDvars;
+	public: void ANNparseDataFile(string nameOfExperiencesDataSetFile);
+};
 
 #endif

@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNexperienceClass.h
+ * File Name: ANNexperienceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -35,8 +35,8 @@
 #ifndef HEADER_ANN_EXPERIENCE_CLASS
 #define HEADER_ANN_EXPERIENCE_CLASS
 
-#include "ANNglobalDefs.h"
-#include "SHAREDvars.h"
+#include "ANNglobalDefs.hpp"
+#include "SHAREDvars.hpp"
 
 
 //Raytracing Defs;

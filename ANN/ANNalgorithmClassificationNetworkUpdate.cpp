@@ -26,14 +26,14 @@
  * File Name: ANNalgorithmClassificationNetworkUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments:
  *
  *******************************************************************************/
 
 
-#include "ANNalgorithmClassificationNetworkUpdate.h"
-#include "ANNneuronClass.h"
+#include "ANNalgorithmClassificationNetworkUpdate.hpp"
+#include "ANNneuronClass.hpp"
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 

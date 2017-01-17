@@ -23,23 +23,55 @@
 
 /*******************************************************************************
  *
- * File Name: ANNbiologicalConstructs.h
+ * File Name: ANNneuronConnectionClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
- * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
+ * Project Version: 3j2a 17-January-2017
+ * Comments:
  *
  *******************************************************************************/
 
-#ifndef HEADER_ANN_BIOLOGICAL_CONSTRUCTS
-#define HEADER_ANN_BIOLOGICAL_CONSTRUCTS
+ //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
+//NB when create NeuronList class change all referecnes to "...List->firstFrontANNneuronConnectionContainer.." to "...List->neuronReferences"
 
-#define NUMBER_OF_HORIZONTAL_PIXELS_ANNTH (1000)
-#define NUMBER_OF_VERTICAL_PIXELS_ANNTH (1000)
+/************************************************************ Neural Network Class Definitions* *****************************************************/
 
-#define NUMBER_OF_OBJECT_RECOGNITION_HORIZONTAL_PIXELS_ANNTH (200)
-#define NUMBER_OF_OBJECT_RECOGNITION_VERTICAL_PIXELS_ANNTH (200)
 
-void formNeuralNetworkBiologicalConstructs();
+#ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
+#define HEADER_ANN_NEURON_CONNECTION_CLASS
+
+#include "ANNglobalDefs.hpp"
+
+class ANNneuron;
+
+class ANNneuronConnection
+{
+public:
+
+	long frontNeuronID;		//temporary variable required for neural net creation from xml files
+
+	ANNneuronConnection(void);
+	~ANNneuronConnection(void);
+
+	double weight;
+	double storedWeight;
+	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+	bool memoryTraceConnection;
+	double memoryTrace;
+	double storedMemoryTrace;
+	#endif
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	double idealValue;
+	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
+	double tempIdealValue;
+	#endif
+	#endif
+
+	ANNneuron* frontNeuron;
+	ANNneuron* backNeuron;
+};
 
 #endif
+
+/************************************************************ End Neural Network Class Definitions* *************************************************/
+

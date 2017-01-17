@@ -23,10 +23,10 @@
 
 /*******************************************************************************
  *
- * File Name: ANNmain.h
+ * File Name: ANNmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -35,19 +35,19 @@
 #ifndef HEADER_ANN_MAIN
 #define HEADER_ANN_MAIN
 
-#include "ANNglobalDefs.h"
-#include "ANNformation.h"
-#include "ANNalgorithmBackpropagationTraining.h"
-#include "ANNalgorithmMemoryNetworkTraining.h"
-#include "ANNalgorithmClassificationNetworkTraining.h"
-#include "ANNparser.h"
-#include "ANNxmlConversion.h"
-#include "ANNdraw.h"
-#include "ANNdisplay.h"
-#include "ANNdata.h"
-#include "LDsvg.h"
-#include "LDsprite.h"
-#include "XMLrulesClass.h"
+#include "ANNglobalDefs.hpp"
+#include "ANNformation.hpp"
+#include "ANNalgorithmBackpropagationTraining.hpp"
+#include "ANNalgorithmMemoryNetworkTraining.hpp"
+#include "ANNalgorithmClassificationNetworkTraining.hpp"
+#include "ANNparser.hpp"
+#include "ANNxmlConversion.hpp"
+#include "ANNdraw.hpp"
+#include "ANNdisplay.hpp"
+#include "ANNdata.hpp"
+#include "LDsvg.hpp"
+#include "LDsprite.hpp"
+#include "XMLrulesClass.hpp"
 
 //#define LOAD_NETWORK_FROM_XML_FILE
 //#define SKIP_NETWORK_TRAINING_AND_ONLY_OUTPUT_VIS

@@ -26,13 +26,13 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j1c 14-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
 
 
-#include "ANNmain.h"
+#include "ANNmain.hpp"
 
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 #endif
@@ -42,7 +42,7 @@
 
 
 #ifdef USE_LRRC
-//#include "LRRCgame.h"
+//#include "LRRCgame.hpp"
 #endif
 
 #ifndef LINUX
@@ -394,7 +394,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3j1c 14-January-2017" << endl;
+			cout << "Project Version: 3j2a 17-January-2017" << endl;
 			exit(1);
 		}
 	}
