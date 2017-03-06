@@ -2,9 +2,8 @@
  *
  * This file is part of BAIPROJECT.
  *
- * BAIPROJECT is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License version 3
- * only, as published by the Free Software Foundation. The use of
+ * BAIPROJECT is licensed under the GNU Affero General Public License
+ * version 3, as published by the Free Software Foundation. The use of
  * intermediary programs or interfaces including file i/o is considered
  * remote network interaction. This does not imply such arrangements
  * do not constitute derivative works.
@@ -26,7 +25,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3j3e 17-January-2017
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
