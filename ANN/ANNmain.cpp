@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j3e 17-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -103,9 +103,9 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t-width [int]      : raster graphics width in pixels (def: 640)"
 "\n\t-height [int]     : raster graphics height in pixels (def: 480)"
 "\n"
-"\n\t-workingfolder [string] : working directory name for input files (def: same as exe)"
+"\n\t-inputfolder [string]   : input directory name for input files (def: same as exe)"
 "\n\t-exefolder [string]     : exe directory name for executables; ANN.exe (def: same as exe)"
-"\n\t-tempfolder [string]    : temp directory name for temporary and output files (def: same as exe)"
+"\n\t-outputfolder [string]  : output directory name for temporary and output files (def: same as exe)"
 "\n"
 "\n\t-ui               : loads text user interface upon execution (def: no)"
 "\n\t-version          : print version"
@@ -360,13 +360,13 @@ int main(const int argc,const char* *argv)
 
 		string currentFolder = SHAREDvarsClass().getCurrentDirectory();
 
-		if(SHAREDvarsClass().argumentExists(argc, argv, "-workingfolder"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-inputfolder"))
 		{
-			workingFolder = SHAREDvarsClass().getStringArgument(argc, argv, "-workingfolder");
+			inputFolder = SHAREDvarsClass().getStringArgument(argc, argv, "-inputfolder");
 		}
 		else
 		{
-			workingFolder = currentFolder;
+			inputFolder = currentFolder;
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-exefolder"))
 		{
@@ -376,16 +376,16 @@ int main(const int argc,const char* *argv)
 		{
 			exeFolder = currentFolder;
 		}
-		if(SHAREDvarsClass().argumentExists(argc, argv, "-tempfolder"))
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-outputfolder"))
 		{
-			tempFolder = SHAREDvarsClass().getStringArgument(argc, argv, "-tempfolder");
+			outputFolder = SHAREDvarsClass().getStringArgument(argc, argv, "-outputfolder");
 		}
 		else
 		{
-			tempFolder = currentFolder;
+			outputFolder = currentFolder;
 		}
 
-		SHAREDvarsClass().setCurrentDirectory(workingFolder);
+		SHAREDvarsClass().setCurrentDirectory(inputFolder);
 
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-ui"))
 		{
@@ -393,14 +393,14 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3j3e 17-January-2017" << endl;
-			exit(1);
+			cout << "Project Version: 3j2a 17-January-2017" << endl;
+			exit(EXIT_OK);
 		}
 	}
 	else
 	{
 		printf(errmessage);
-		exit(1);
+		exit(EXIT_ERROR);
 	}
 
 	if(!XMLrulesClassClass().parseANNrulesXMLfile())
@@ -576,7 +576,7 @@ int main(const int argc,const char* *argv)
 		}
 	}
 
-	SHAREDvarsClass().setCurrentDirectory(tempFolder);
+	SHAREDvarsClass().setCurrentDirectory(outputFolder);
 
 	if(drawOutput)
 	{
@@ -874,7 +874,7 @@ bool ANNmainClass::trainNetwork(const bool advancedTraining)
 
 bool ANNmainClass::outputNetworkToXML()
 {
-	SHAREDvars.setCurrentDirectory(tempFolder);
+	SHAREDvars.setCurrentDirectory(outputFolder);
 	bool result = true;
 
 	cout << "XML file name = " << NET_XML_FILE_NAME << endl;
@@ -897,7 +897,7 @@ bool ANNmainClass::outputNetworkToXML()
 
 bool ANNmainClass::outputNetworkAsVectorGraphics()
 {
-	SHAREDvars.setCurrentDirectory(tempFolder);
+	SHAREDvars.setCurrentDirectory(outputFolder);
 	bool result = true;
 
 	if(formedNetwork)

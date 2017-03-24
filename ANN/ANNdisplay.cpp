@@ -25,7 +25,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j3e 17-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -316,7 +316,7 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 
 					#else
 						cout << "Error: no ray tracer enabled" << endl;
-						exit(0);
+						exit(EXIT_ERROR);
 					#endif
 				#endif
 			}
@@ -337,7 +337,7 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 				if(!LDparser.parseFile(topLevelSceneFileNameCollapsed, initialReferenceInCollapsedSceneFile, topLevelReferenceInCollapsedSceneFile, true))
 				{//file does not exist
 					cout << "The file: " << topLevelSceneFileNameCollapsed << " does not exist in the directory" << endl;
-					exit(0);
+					exit(EXIT_ERROR);
 				}
 
 				LDopengl.drawPrimitivesReferenceListToOpenGLandCreateRGBmapBasic(initialReferenceInCollapsedSceneFile, width, height, rgbMap);

@@ -25,7 +25,7 @@
  * File Name: ANNmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j3e 17-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -91,9 +91,9 @@ class ANNmainClass
 
 	private: bool loadNetworkFromXML();
 	private: bool loadExperienceDataFile();
-#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	private: bool createNetwork();
-#endif
+	#endif
 	private: bool trainNetwork(const bool advancedTraining);
 	private: bool outputNetworkToXML();
 	private: bool outputNetworkAsVectorGraphics();

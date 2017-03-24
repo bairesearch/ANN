@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j3e 17-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments
  *
  *******************************************************************************/
@@ -100,9 +100,9 @@ class ANNxmlConversionClass
 	private: XMLparserClassClass XMLparserClass;
 	private: SHAREDvarsClass SHAREDvars;
 	private: bool testReadNetXMLFile();
-#ifdef NN_XML_DEBUG
+	#ifdef NN_XML_DEBUG
 	private: bool testReadNetXMLFile2(ANNneuron* firstInputNeuronInNetwork);
-#endif
+	#endif
 
 	public: bool writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork);
 		private: bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet);

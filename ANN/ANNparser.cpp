@@ -25,7 +25,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j3e 17-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -360,7 +360,7 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 	}
 
 	#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
-	exit(0);
+	exit(EXIT_ERROR);
 	#endif
 
 	//delete inputData;

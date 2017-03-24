@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationUpdate.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j3e 17-January-2017
+ * Project Version: 3j2a 17-January-2017
  * Comments:
  *
  *******************************************************************************/
@@ -46,26 +46,26 @@ extern bool debugPrintNNOutputs;
 class ANNalgorithmBackpropagationUpdateClass
 {
 	private: ANNneuronClassClass ANNneuronClass;
-#ifdef ANN_ALGORITHM_BACKPROPAGATION
+	#ifdef ANN_ALGORITHM_BACKPROPAGATION
 	public: double ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork);
 		private: double calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork);
 		private: void calculateErrorOfOutputNeurons(ANNneuron* firstOutputNeuronInNetwork);
-#endif
+	#endif
 		public: void backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed);
 			private: void backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed);
 				private: float calculateOValue(float netValue);
-#ifdef ANN_ALGORITHM_BACKPROPAGATION
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION
 		private: void backPropogationBackwardPassStep(ANNneuron* neuronBeingAccessed, const int isOutputLayer, const bool isSubnet);
 			private: void calculateOutputErrorOfOutputNeuron(ANNneuron* neuronBeingAccessed);
 			private: void calculateOutputErrorOfNonoutputNeuron(ANNneuron* neuronBeingAccessed);
 			private: void calculateNewBackConnectionWeightsOfNeuron(ANNneuron* neuronBeingAccessed);
 			private: void calculateNewBiasOfNeuron(ANNneuron* neuronBeingAccessed);
-#endif
+		#endif
 
-#ifdef ANN_SUBNETS
+	#ifdef ANN_SUBNETS
 	public: void copyNeuronContainerListToANNneuronConnectionContainerList(vector<ANNneuronConnection*>* ANNneuronConnectionListToUpdate, ANNneuron* firstNeuronInListToCopy, const bool frontOrBack);
 	public: void copyANNneuronConnectionContainerListToNeuronContainerList(ANNneuron* firstNeuronInListToUpdate, vector<ANNneuronConnection*>* ANNneuronConnectionListToCopy, const bool frontOrBack);
-#endif
+	#endif
 };
 
 
