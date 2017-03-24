@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments:
  *
  *******************************************************************************/
@@ -49,17 +49,17 @@ class ANNalgorithmClassificationNetworkTrainingClass
 	private: SHAREDvarsClass SHAREDvars;
 	public: void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
 		private: void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron);
-	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
+	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
 		private: void resetBackNeuronMatchTemp(ANNneuron* categoryNeuron);
 	#endif
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
 		private: void pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
 	#endif
 		private: void deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
-	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
+	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
 		private: void mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron);
 	#endif
-	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS
+	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS
 		private: bool cullRedundantNeurons(ANNneuron* categoryNeuron, ANNneuron* parentNeuron, ANNneuron** firstOutputNeuron);
 	#endif
 		private: void findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage);
@@ -79,12 +79,6 @@ class ANNalgorithmClassificationNetworkTrainingClass
 	private: void findInputs(ANNneuron* categoryNeuron, vector<bool>* inputFound, int level);
 #endif
 
-#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK3
-	private: void checkRobustnessOfIdealValues(ANNneuron* categoryNeuron);
-#endif
-#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK6
-	private: void checkMinNumberOfInputNeurons(ANNneuron* categoryNeuron);
-#endif
 };
 
 

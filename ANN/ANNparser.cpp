@@ -25,7 +25,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -79,9 +79,6 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 				inputData[currentRow*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + currentColumn] = SHAREDvars.convertStringToDouble(currentNumberString);
 				currentNumberString = "";
 
-					#ifdef ANN_DEBUG
-					//cout << "DEBUG: inputData[" << currentRow << "][" << currentColumn << "] = " << inputData[currentRow][currentColumn] << endl;
-					#endif
 
 				if(currentColumn > maxCols)
 				{
@@ -119,10 +116,6 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 	numInputNeurons = maxCols-1;
 	numExperiences = maxRows;
 
-	#ifdef ANN_DEBUG
-	//cout << "maxRows = " << maxRows << endl;
-	//cout << "maxCols = " << maxCols << endl;
-	#endif
 
 	long maxClassTarget = 0;
 	for(i=0;i<numExperiences;i++)
@@ -159,10 +152,6 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 	{
 		for(j=0;j<maxCols;j++)
 		{
-			#ifdef ANN_DEBUG
-			//cout << "DEBUG: inputData[" << i << "][" << j << "] = " << inputData[i][j] << endl;
-			cout << "DEBUG: maxMin[" << j << "][1] = " << maxMin[j][1] << endl;
-			#endif
 
 			if(inputData[i*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + j] > max[j])
 			{
@@ -174,25 +163,10 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 			{
 				min[j] = inputData[i*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + j];
 
-				#ifdef ANN_DEBUG
-				/*
-				if(inputData[i][j] < -100.0F)
-				{
-					cout << "DEBUG: error found inputData[" << i << "][" << j << "] = " << inputData[i][j] << endl;
-				}
-				*/
-				#endif
 			}
 		}
 	}
 
-	#ifdef ANN_DEBUG
-	for(j=0;j<maxCols;j++)
-	{
-		cout << "Max value of input type (column) = " << j << " = " << max[j] << endl;
-		cout << "Min value of input type (column) = " << j << " = " << min[j] << endl;
-	}
-	#endif
 
 
 	//2. insert normalised data entries
@@ -208,16 +182,6 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 			{
 				normalisedInputData[i*maxCols + j] = ((inputData[i*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + j] - min[j]) / (max[j] - min[j]));
 			}
-			#ifdef ANN_DEBUG
-			//Testing
-			/*
-			cout << "DEBUG:inputData[i][j] = " << inputData[i][j] << endl;
-			cout << "DEBUG:normalisedInputData[i][j] = " << normalisedInputData[i][j] << endl;
-			cout << "DEBUG:maxMin[j][0] = " << maxMin[j][0] << endl;
-			cout << "DEBUG: maxMin[j][1] = " << maxMin[j][1] << endl;
-			cout << "\n" << endl;
-			*/
-			#endif
 		}
 	}
 
@@ -236,20 +200,9 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 
 
 	#ifndef ANN_DEBUG_DO_NOT_RANDOMISE_INPUT_DATA
-	#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-	//cout << "RAND_MAX = " << RAND_MAX << endl;
-	int index = 0;
-	#endif
 	while(stillToFill)
 	{
-		#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-		int res = index;
-		index++;
-		if(index == maxRows)
-		{
-			index = 0;
-		}
-		#else
+		#ifndef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
 		int res = (int) (float(rand()* float(maxRows))/(float(RAND_MAX)+1.0));
 		#endif
 
@@ -289,30 +242,11 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 		for(int j=0;j<maxCols;j++)
 		{
 			normalisedInputData[i*maxCols + j] = normalisedInputDataTemp[i*maxCols + j];
-			#ifdef ANN_DEBUG
-			cout << "normalisedInputData[" << i << "*maxCols + " << j << "] = " << normalisedInputData[i*maxCols + j] << endl;
-			#endif
 		}
 	}
 	#endif
 
 
-	#ifdef ANN_DEBUG
-	/*
-	cout << "inputData[i][j] = " << inputData[0][1] << "\n" << endl;
-	cout << "inputData[i][j] = " << inputData[0][2] << "\n" << endl;
-	cout << "inputData[i][j] = " << inputData[0][3] << "\n" << endl;
-	cout << "inputData[i][j] = " << inputData[0][4] << "\n" << endl;
-	cout << "inputData[i][j] = " << inputData[0][5] << "\n" << endl;
-
-	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][1] << "\n" << endl;
-	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][2] << "\n" << endl;
-	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][3] << "\n" << endl;
-	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][4] << "\n" << endl;
-	cout << "normalisedInputData[i][j] = " << normalisedInputData[0][5] << "\n" << endl;
-	*/
-	//cout << "normalisedInputData[i*maxCols + j] = " << normalisedInputData[0*maxCols + 0] << "\n" << endl;
-	#endif
 
 
 	//new now copy normalisedInputData into experienceClass Linked Lists
@@ -326,42 +260,24 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 	{
 		currentExperienceInDataSet->classTargetValue = normalisedInputData[i*maxCols + 0] - 1;
 			//+1 added 4 Sept 10 (to ensure class targets start at 0, not 1
-		#ifdef ANN_DEBUG
-		//cout << "currentExperienceInDataSet->classTargetValue = " << currentExperienceInDataSet->classTargetValue << endl;
-		#endif
 
 		ANNexperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 
-		#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
-		cout << currentExperienceInDataSet->classTargetValue << " ";
-		#endif
 		for(int j=1;j<maxCols;j++)
 		{
 			currentExperienceInputInExperience->inputValue = normalisedInputData[i*maxCols + j];
 				//currentExperienceInputInExperience->inputValue = (normalisedInputData[i*maxCols + j]*2.0 - 1.0) - allows negative input values
-			#ifdef ANN_DEBUG
-			//cout << "currentExperienceInputInExperience->inputValue = " << currentExperienceInputInExperience->inputValue  << endl;
-			#endif
-			#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
-			cout << currentExperienceInputInExperience->inputValue << " ";
-			#endif
 
 			ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
 			currentExperienceInputInExperience->next = newExperienceInput;
 			currentExperienceInputInExperience = currentExperienceInputInExperience->next;
 		}
-		#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
-		cout << endl;
-		#endif
 
 		ANNexperience* newExperience = new ANNexperience();
 		currentExperienceInDataSet->next = newExperience;
 		currentExperienceInDataSet = currentExperienceInDataSet->next;
 	}
 
-	#ifdef ANN_DEBUG_GENERATE_NORMALISED_DATA_FILE
-	exit(EXIT_ERROR);
-	#endif
 
 	//delete inputData;
 	delete normalisedInputDataTemp;

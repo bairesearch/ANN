@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments:
  *
  *******************************************************************************/
@@ -79,9 +79,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemorySimple(ANNn
 		double testingMemoryResult = 0.0;
 		ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &testingClassificationResult, &testingMemoryResult);
 		testingMemoryResultSum = testingMemoryResultSum + testingMemoryResult;
-		#ifdef ANN_DEBUG
-		//cout << "current testingMemoryResult = " << testingMemoryResult << endl;
-		#endif
 		currentExperience = currentExperience->next;
 		numberOfExperiencesTest++;
 	}
@@ -147,8 +144,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron*
 			string trainingClassificationResult = "";	//NOT USED
 			double trainingMemoryResult = 0.0;	//NOT USED
 			ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
-			#ifdef ANN_DEBUG
-			#endif
 			currentExperienceInFold = currentExperienceInFold->next;
 			numberOfExperiencesTrain++;
 		}
@@ -160,8 +155,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron*
 			string trainingClassificationResult = "";	//NOT USED
 			double trainingMemoryResult = 0.0;	//NOT USED
 			ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &trainingClassificationResult, &trainingMemoryResult);
-			#ifdef ANN_DEBUG
-			#endif
 			currentExperienceInFold = currentExperienceInFold->next;
 			numberOfExperiencesTrain++;
 		}
@@ -180,9 +173,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron*
 			double testingMemoryResult = 0.0;
 			ANNalgorithmMemoryNetworkUpdate.ANNclassificationAndMemoryPass(firstInputNeuron, firstOutputNeuron, &testingClassificationResult, &testingMemoryResult);
 			testingMemoryResultSum = testingMemoryResultSum + testingMemoryResult;
-			#ifdef ANN_DEBUG
-			//cout << "current testingMemoryResult = " << testingMemoryResult << endl;
-			#endif
 			currentExperienceInFold = currentExperienceInFold->next;
 			numberOfExperiencesTest++;
 		}
@@ -207,21 +197,11 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron*
 
 void ANNalgorithmMemoryNetworkTrainingClass::storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
-	#ifdef ANN_DEBUG
-	cout << "storeNeuralNetworkMemoryTrace{}:" << endl;
-	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
 
 	while(currentNeuronReference->nextNeuron != NULL)
 	{
-		#ifdef ANN_DEBUG
-		cout << "\nA neuron has been selected for recording front neuron memory trace" << endl;
-		cout << "currentNeuronReference ID = " << currentNeuronReference->id << endl;
-		cout << "currentNeuronReference ID Order = " << currentNeuronReference->orderID << endl;
-		cout << "currentNeuronReference ID Layer = " << currentNeuronReference->layerID << endl;
-		cout << "currentNeuronReference ID Subnet = " << currentNeuronReference->subnetID << endl;
-		#endif
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, storeNeuralNetworkBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
@@ -231,9 +211,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::storeNeuralNetworkMemoryTrace(ANNne
 
 				currentANNneuronConnection->storedMemoryTrace = currentANNneuronConnection->memoryTrace;
 
-				#ifdef ANN_DEBUG
-				cout << "Front ANNneuron Connection Memory Trace = " << currentANNneuronConnection->memoryTrace << endl;
-				#endif
 			}
 
 			#ifdef ANN_SUBNETS
@@ -256,21 +233,11 @@ void ANNalgorithmMemoryNetworkTrainingClass::storeNeuralNetworkMemoryTrace(ANNne
 
 void ANNalgorithmMemoryNetworkTrainingClass::restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
-	#ifdef ANN_DEBUG
-	cout << "restoreNeuralNetworkWithStoredMemoryTrace{}:" << endl;
-	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
 
 	while(currentNeuronReference->nextNeuron != NULL)
 	{
-		#ifdef ANN_DEBUG
-		cout << "\nA neuron has been selected for Reseting with previously stored front neuron memory trace" << endl;
-		cout << "currentNeuronReference ID = " << currentNeuronReference->id << endl;
-		cout << "currentNeuronReference ID Order = " << currentNeuronReference->orderID << endl;
-		cout << "currentNeuronReference ID Layer = " << currentNeuronReference->layerID << endl;
-		cout << "currentNeuronReference ID Subnet = " << currentNeuronReference->subnetID << endl;
-		#endif
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, restoreNeuralNetworkWithStoredBiasAndWeights will take into account this, in the higher level subnet pass]
 		{
@@ -280,9 +247,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::restoreNeuralNetworkWithStoredMemor
 
 				currentANNneuronConnection->memoryTrace = currentANNneuronConnection->storedMemoryTrace;
 
-				#ifdef ANN_DEBUG
-				cout << "Front ANNneuron Connection Memory Trace = " << currentANNneuronConnection->memoryTrace << endl;
-				#endif
 			}
 
 			#ifdef ANN_SUBNETS
@@ -305,39 +269,21 @@ void ANNalgorithmMemoryNetworkTrainingClass::restoreNeuralNetworkWithStoredMemor
 
 void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
-	#ifdef ANN_DEBUG
-	cout << "resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace{}:" << endl;
-	#endif
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
 
 	while(currentNeuronReference->nextNeuron != NULL)
 	{
-		#ifdef ANN_DEBUG
-		cout << "\nA neuron has been selected for Reseting with Random Bias And front neuron connection Weights" << endl;
-		cout << "currentNeuronReference ID = " << currentNeuronReference->id << endl;
-		cout << "currentNeuronReference ID Order = " << currentNeuronReference->orderID << endl;
-		cout << "currentNeuronReference ID Layer = " << currentNeuronReference->layerID << endl;
-		cout << "currentNeuronReference ID Subnet = " << currentNeuronReference->subnetID << endl;
-		#endif
 
 		if(neuronBeingAccessed->hasBackLayer)	//input layer does not have biases [CHECK ANNTHIS; NB in ANN, an input layer to a subnet may have a bias, however regardless of this, resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace will take into account this, in the higher level subnet pass]
 		{
-			#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
-			currentNeuronReference->bias = (double(rand()* 1.0F)/(double(RAND_MAX)+0.0F));
-			#else
+			#ifndef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
 			#ifdef TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS
 			currentNeuronReference->bias = ((double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_BIAS_MULT;
 			#else
-			#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_BIASES
-			currentNeuronReference->bias = 0.5;
-			#else
-			#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-			currentNeuronReference->bias = (double(777* 2.0F)/(double(RAND_MAX)))-1.0F;
-			#else
-			#ifdef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
-			currentNeuronReference->bias = (double(rand()* 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
-			#else
+			#ifndef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_BIASES
+			#ifndef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
+			#ifndef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
 			currentNeuronReference->bias = (double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F;
 			#endif
 			#endif
@@ -345,9 +291,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAnd
 			#endif
 			#endif
 
-			#ifdef ANN_DEBUG
-			cout << "ANNneuron Bias = " << currentNeuronReference->bias << endl;
-			#endif
 		}
 
 		if(neuronBeingAccessed->hasFrontLayer)	//output layer does not have front neuron connection weights or subnets [CHECK ANNTHIS; NB in ANN, an output layer of a subnet may have weights, however regardless of this, resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace will take into account this, in the higher level subnet pass]
@@ -356,21 +299,13 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAnd
 			{
 				ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
-				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
-				currentANNneuronConnection->weight = (double(rand()* 1.0F)/(double(RAND_MAX)+0.0F));
-				#else
+				#ifndef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_USE_NEGATIVE_BIASES_AND_WEIGHTS
 				#ifdef TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS
 				currentANNneuronConnection->weight = ((double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F)*TH_OR_IMAGE_CATEGORISTION_NN_USE_HEAVY_RANDOMISATION_OF_BIASES_AND_WEIGHTS_WEIGHT_MULT;
 				#else
-				#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_WEIGHTS
-				currentANNneuronConnection->weight = -0.1;
-				#else
-				#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-				currentANNneuronConnection->weight = (double(888* 2.0F)/(double(RAND_MAX)))-1.0F;
-				#else
-				#ifdef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
-				currentANNneuronConnection->weight = (double(rand()* 2.0F)/(double(RAND_MAX)+1.0F))-1.0F;
-				#else
+				#ifndef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_DO_NOT_RANDOMISE_WEIGHTS
+				#ifndef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
+				#ifndef DEBUG_TH_ANN_USE_ORIGINAL_RANDOMISATION
 				currentANNneuronConnection->weight = (double(rand()* 2.0F)/(double(RAND_MAX)))-1.0F;
 				#endif
 				#endif
@@ -378,9 +313,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAnd
 				#endif
 				#endif
 
-				#ifdef ANN_DEBUG
-				cout << "Front ANNneuron Connection Weight = " << currentANNneuronConnection->weight << endl;
-				#endif
 
 				currentANNneuronConnection->memoryTrace = 0.0;
 			}
@@ -406,9 +338,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAnd
 
 void ANNalgorithmMemoryNetworkTrainingClass::resetInputs(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
 {
-	#ifdef ANN_DEBUG
-	cout << "resetInputs{}:" << endl;
-	#endif
 
 	//sets inputData into ANN
 	//(NB normalisedInputData[i][0] is target class
@@ -417,9 +346,6 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetInputs(ANNneuron* firstInputNe
 	ANNexperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
 	for(long i = 0; i < numberOfInputNeurons; i++)
 	{
-		#ifdef DEBUG_TH_OR_IMAGE_CATEGORISTION_NN_2
-		cout << "currentExperienceInputInExperience->inputValue = " << currentExperienceInputInExperience->inputValue << endl;
-		#endif
 		currentNeuronReference->output = currentExperienceInputInExperience->inputValue;	 //normalisedInputData[testSegment][(i+1)];
 		currentNeuronReference = currentNeuronReference->nextNeuron;
 		currentExperienceInputInExperience = currentExperienceInputInExperience->next;

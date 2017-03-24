@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -393,7 +393,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3j2a 17-January-2017" << endl;
+			cout << "Project Version: 3k2a 21-March-2017" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -628,11 +628,6 @@ bool ANNmainClass::createNetwork()
 	//Neural Network initialisations
 	firstInputNeuronInNetwork = new ANNneuron();
 
-	#ifdef ANN_DEBUG
-	cout << "************************************************************************************" << endl;
-	cout << "******** DEBUG preprocessor definition enabled... tracing execution path... * ******" << endl;
-	cout << "************************************************************************************" << endl;
-	#endif
 
 	int layerDivergenceType = 0;
 	double meanLayerDivergenceFactor = 0;
@@ -693,9 +688,6 @@ bool ANNmainClass::createNetwork()
 		answerAsDouble = SHAREDvars.convertStringToDouble(answerAsString);
 		meanLayerDivergenceFactor = answerAsDouble;
 
-		#ifdef ANN_DEBUG
-		//cout << "meanLayerDivergenceFactor:" << meanLayerDivergenceFactor << endl;
-		#endif
 
 		cout <<	"\nEnter the probability of neuron having a connection with a previous layer neuron [Default = " << DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH << "]:\n\n>> ";
 		cin >> answerAsString;

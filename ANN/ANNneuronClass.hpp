@@ -25,7 +25,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments:
  *
  *******************************************************************************/
@@ -45,9 +45,6 @@
 #define ANN_SUBNETS
 //#define ANN_DEBUG
 //#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS	//must also be defined in ANNparser.cpp
-#ifdef DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS
-	#define ANN_DEBUG
-#endif
 
 
 

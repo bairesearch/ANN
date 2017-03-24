@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmMemoryNetworkUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments:
  *
  *******************************************************************************/
@@ -37,9 +37,6 @@
 
 double ANNalgorithmMemoryNetworkUpdateClass::ANNclassificationAndMemoryPass(ANNneuron* firstInputNeuronInNetwork, const ANNneuron* firstOutputNeuronInNetwork, string* trainingClassificationResult, double* trainingMemoryResult)
 {
-	#ifdef ANN_DEBUG
-	cout << "\ndouble ANNbackPropogationPass{ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork}" << endl;
-	#endif
 
 	//classification routine
 	ANNalgorithmBackpropagationUpdate.backPropogationForwardPassStep(firstInputNeuronInNetwork);
@@ -72,7 +69,7 @@ void ANNalgorithmMemoryNetworkUpdateClass::calculateBinaryOutputCode(const ANNne
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 
-	#ifdef ANN_DEBUG_ALGORITHM_MEMORY_NETWORK
+	#ifdef ANN_VERBOSE_ALGORITHM_MEMORY_NETWORK
 	cout << "trainingClassificationResult = " << *trainingClassificationResult << endl;
 	#endif
 }
@@ -89,25 +86,11 @@ bool ANNalgorithmMemoryNetworkUpdateClass::isNeuronOutputFire(const ANNneuron* c
 
 void ANNalgorithmMemoryNetworkUpdateClass::memoryTraceForwardPassStep(ANNneuron* neuronBeingAccessed, double* trainingMemoryResult)
 {
-	#ifdef ANN_DEBUG
-	cout << "\nstatic void memoryTraceForwardPassStep{ANNneuron* neuronBeingAccessed}" << endl;
-	cout << "ANNneuron ID = " << neuronBeingAccessed->id << endl;
-	cout << "ANNneuron ID Order = " << neuronBeingAccessed->orderID << endl;
-	cout << "ANNneuron ID Layer = " << neuronBeingAccessed->layerID << endl;
-	cout << "ANNneuron ID Subnet = " << neuronBeingAccessed->subnetID << endl;
-	#endif
 
 	ANNneuron* currentNeuron = neuronBeingAccessed->firstNeuronInFrontLayer;
 
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		#ifdef ANN_DEBUG
-		cout << "\nA Hidden level ANNneuron has been selected for Learning" << endl;
-		cout << "ANNneuron ID = " << currentNeuron->id << endl;
-		cout << "ANNneuron ID Order = " << currentNeuron->orderID << endl;
-		cout << "ANNneuron ID Layer = " << currentNeuron->layerID << endl;
-		cout << "ANNneuron ID Subnet = " << currentNeuron->subnetID << endl;
-		#endif
 
 		if(!(currentNeuron->isSubnet))
 		{
@@ -125,15 +108,6 @@ void ANNalgorithmMemoryNetworkUpdateClass::memoryTraceForwardPassStep(ANNneuron*
 	{
 		if(currentNeuron->isSubnet)
 		{
-			#ifdef ANN_DEBUG
-			cout << "\nAbout to perform ANN recursion in classificationAndMemoryForwardPassStep ... " << endl;
-			cout << "currentNeuron ANNneuron ID = " << currentNeuron->id << endl;
-			cout << "currentNeuron ANNneuron ID Order = " << currentNeuron->orderID << endl;
-			cout << "currentNeuron ANNneuron ID Layer = " << currentNeuron->layerID << endl;
-			cout << "currentNeuron ANNneuron ID Subnet = " << currentNeuron->subnetID << endl;
-			//cout << "numberOfInputNeurons = " << currentNeuron->numNeuronsInBackLayerOfSubnet << endl;
-			//cout << "numberOfOutputNeurons = " <<  currentNeuron->numNeuronsInFrontLayerOfSubnet << endl;
-			#endif
 
 			if(!(currentNeuron->isInputSubnet))
 			{

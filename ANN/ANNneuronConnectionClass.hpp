@@ -25,7 +25,7 @@
  * File Name: ANNneuronConnectionClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments:
  *
  *******************************************************************************/
@@ -61,7 +61,7 @@ public:
 	#endif
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	double idealValue;
-	#ifdef ANN_DEBUG_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
+	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
 	double tempIdealValue;
 	#endif
 	#endif

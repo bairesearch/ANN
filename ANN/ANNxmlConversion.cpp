@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3j2a 17-January-2017
+ * Project Version: 3k2a 21-March-2017
  * Comments
  *
  *******************************************************************************/
@@ -35,50 +35,6 @@
 #include "ANNxmlConversion.hpp"
 
 //this function works and no longer needs to be tested
-#ifdef NN_XML_DEBUG
-bool ANNxmlConversionClass::testReadNetXMLFile()
-{
-	bool result = true;
-
-	ANNneuron* firstInputNeuronInNetwork = new ANNneuron();	//the firstInputNeuronInNetwork object must be initialised here (in ANNxmlConversion.cpp scope). if it is initialised in another .cpp it will be come corrupted,
-
-	if(!this->readNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
-	{
-		result = false;
-	}
-
-	#define TEMP_NET_XML_FILE_NAME1 "tempnet1.xml"
-	if(!this->writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, firstInputNeuronInNetwork))
-	{
-		result = false;
-	}
-	return result;
-}
-
-bool ANNxmlConversionClass::testReadNetXMLFile2(ANNneuron* firstInputNeuronInNetwork)
-{
-	bool result = true;
-
-	if(!this->writeNetXMLfile(NET_XML_FILE_NAME, firstInputNeuronInNetwork))
-	{
-		result = false;
-	}
-
-	ANNneuron* tempFirstInputNeuronInNetwork = new ANNneuron();
-	if(!this->readNetXMLfile(NET_XML_FILE_NAME, tempFirstInputNeuronInNetwork))
-	{
-		result = false;
-	}
-
-	#define TEMP_NET_XML_FILE_NAME1 "tempnet1.xml"
-	if(!this->writeNetXMLfile(TEMP_NET_XML_FILE_NAME1, tempFirstInputNeuronInNetwork))
-	{
-		result = false;
-	}
-	return result;
-}
-
-#endif
 
 ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons)
 {
@@ -126,9 +82,6 @@ ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsI
 		{
 			*numberOfOutputNeurons = numNeuronsInCurrentLayer;
 			firstOutputNeuronInNetwork = firstNeuronInLayer;
-			#ifdef ANN_DEBUG
-			//cout << "firstOutputNeuronInNetwork ID = " << firstOutputNeuronInNetwork->neuron->id << endl;
-			#endif
 			stillMoreLayers = false;
 		}
 	}
@@ -458,9 +411,6 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 	{
 		for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 		{
-			#ifdef ANN_DEBUG
-			//cout << "linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs:" << endl;
-			#endif
 			ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 			bool tempResult = false;
@@ -539,9 +489,6 @@ ANNneuron* ANNxmlConversionClass::findNeuron(ANNneuron* firstNeuronInLayer, long
 	{
 		if(currentNeuron->id == neuronIDtoFind)
 		{
-			#ifdef ANN_DEBUG
-			//cout << "currentNeuron->id  = " << currentNeuron->id << endl;
-			#endif
 			*result = true;
 			foundNeuron = currentNeuron;
 		}
@@ -758,9 +705,6 @@ bool ANNxmlConversionClass::parseNeuronContainerTag(XMLparserTag* firstTagInNeur
 	else
 	{
 		//NB there may not be a forwardANNneuronConnectionsList
-		#ifdef ANN_DEBUG
-		//cout << "parseNeuronContainerTag error: no forwardANNneuronConnectionsList tag detected";
-		#endif
 	}
 
 	#ifdef ANN_SUBNETS
