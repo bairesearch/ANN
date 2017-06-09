@@ -25,7 +25,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -315,7 +315,7 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 						system(povrayCommand.c_str());
 
 					#else
-						cout << "Error: no ray tracer enabled" << endl;
+						cerr << "Error: no ray tracer enabled" << endl;
 						exit(EXIT_ERROR);
 					#endif
 				#endif
@@ -336,7 +336,7 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 				LDreference* topLevelReferenceInCollapsedSceneFile = new LDreference(topLevelSceneFileNameCollapsed, 1, true);	//The information in this object is not required or meaningful, but needs to be passed into the parseFile/parseReferenceList recursive function
 				if(!LDparser.parseFile(topLevelSceneFileNameCollapsed, initialReferenceInCollapsedSceneFile, topLevelReferenceInCollapsedSceneFile, true))
 				{//file does not exist
-					cout << "The file: " << topLevelSceneFileNameCollapsed << " does not exist in the directory" << endl;
+					cerr << "The file: " << topLevelSceneFileNameCollapsed << " does not exist in the directory" << endl;
 					exit(EXIT_ERROR);
 				}
 

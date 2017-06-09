@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  * Comments:
  *
  *******************************************************************************/
@@ -127,7 +127,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 			}
 			else
 			{
-				cout << "trainNeuralNetworkClassificationSimple{} error: experienceClassificationneuronTypeTopLevelCategory->topLevelCategoryAlreadyExistsDeleteThisNewCopy && !foundCategoryNeuronsThatUseAllInputs" << endl;
+				cerr << "trainNeuralNetworkClassificationSimple{} error: experienceClassificationneuronTypeTopLevelCategory->topLevelCategoryAlreadyExistsDeleteThisNewCopy && !foundCategoryNeuronsThatUseAllInputs" << endl;
 				exit(EXIT_ERROR);
 			}
 		}
@@ -273,7 +273,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 		/*
 		if(experienceNum == 3)
 		{
-			cout << "ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK debug: exiting early" << endl;
+			cerr << "ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK debug: exiting early" << endl;
 			exit(EXIT_ERROR);
 		}
 		*/
@@ -443,7 +443,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::mergeSimilarNeurons(ANNneur
 			{
 				if(i2 < i1)
 				{
-					cout << "ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS{}: mergeSimilarNeurons error (i2 < i1)" << endl;
+					cerr << "ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS{}: mergeSimilarNeurons error (i2 < i1)" << endl;
 					exit(EXIT_ERROR);
 				}
 
@@ -736,12 +736,12 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 											}
 											else
 											{
-												cout << "findCategoriesForExperienceWrapper{}: error: categoryNeuronUsesAndMatchesAllInputs && (frontNeuron->frontANNneuronConnectionList.size() != 0)" << endl;
-												cout << "numberOfInputMatches = " << numberOfInputMatches << endl;
-												cout << "numberOfInputMatchesMaxAbove = " << numberOfInputMatchesMaxAbove << endl;
-												cout << "frontNeuron->neuronTypeTopLevelCategory = " << frontNeuron->neuronTypeTopLevelCategory << endl;
-												cout << "frontNeuron->neuronTypeIntermediary = " << frontNeuron->neuronTypeIntermediary << endl;
-												cout << "frontNeuron->frontANNneuronConnectionList.size() = " << frontNeuron->frontANNneuronConnectionList.size() << endl;
+												cerr << "findCategoriesForExperienceWrapper{}: error: categoryNeuronUsesAndMatchesAllInputs && (frontNeuron->frontANNneuronConnectionList.size() != 0)" << endl;
+												cerr << "numberOfInputMatches = " << numberOfInputMatches << endl;
+												cerr << "numberOfInputMatchesMaxAbove = " << numberOfInputMatchesMaxAbove << endl;
+												cerr << "frontNeuron->neuronTypeTopLevelCategory = " << frontNeuron->neuronTypeTopLevelCategory << endl;
+												cerr << "frontNeuron->neuronTypeIntermediary = " << frontNeuron->neuronTypeIntermediary << endl;
+												cerr << "frontNeuron->frontANNneuronConnectionList.size() = " << frontNeuron->frontANNneuronConnectionList.size() << endl;
 												exit(EXIT_ERROR);
 											}
 											#endif
@@ -780,10 +780,10 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 											}
 											else
 											{
-												cout << "findCategoriesForExperienceWrapper{} error: findCategoriesForExperience && !categoryNeuronUsesAndMatchesAllInputs && (createIntermediaryNeuronsStage == 2) && !(frontNeuron->neuronTypeIntermediary)" << endl;
-												cout << "frontNeuron->neuronTypeTopLevelCategory = " << frontNeuron->neuronTypeTopLevelCategory << endl;
-												cout << "frontNeuron->frontANNneuronConnectionList.size() = " << frontNeuron->frontANNneuronConnectionList.size() << endl;
-												cout << "numberOfInputMatches = " << numberOfInputMatches << endl;
+												cerr << "findCategoriesForExperienceWrapper{} error: findCategoriesForExperience && !categoryNeuronUsesAndMatchesAllInputs && (createIntermediaryNeuronsStage == 2) && !(frontNeuron->neuronTypeIntermediary)" << endl;
+												cerr << "frontNeuron->neuronTypeTopLevelCategory = " << frontNeuron->neuronTypeTopLevelCategory << endl;
+												cerr << "frontNeuron->frontANNneuronConnectionList.size() = " << frontNeuron->frontANNneuronConnectionList.size() << endl;
+												cerr << "numberOfInputMatches = " << numberOfInputMatches << endl;
 
 												exit(EXIT_ERROR);
 											}
@@ -869,21 +869,21 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 												numberInputsFoundTemp++;
 											}
 										}
-										cout << "numberOfInputMatches = " << numberOfInputMatches << endl;
-										cout << "numberInputsFoundTemp = " << numberInputsFoundTemp << endl;
+										cerr << "numberOfInputMatches = " << numberOfInputMatches << endl;
+										cerr << "numberInputsFoundTemp = " << numberInputsFoundTemp << endl;
 										//exit(EXIT_ERROR);
 										*/
 
 
 										if(!foundAtLeastOneBackMismatch)
 										{
-											cout << "error: = !foundAtLeastOneBackMismatch" << endl;
-											cout << "numberOfBackMatchesNew = " << numberOfBackMatchesNew << endl;
+											cerr << "error: = !foundAtLeastOneBackMismatch" << endl;
+											cerr << "numberOfBackMatchesNew = " << numberOfBackMatchesNew << endl;
 											exit(EXIT_ERROR);
 										}
 										if(numberOfBackMatchesNew < 2)
 										{
-											cout << "error: (numberOfBackMatchesNew < 2)" << endl;
+											cerr << "error: (numberOfBackMatchesNew < 2)" << endl;
 											exit(EXIT_ERROR);
 										}
 
@@ -919,7 +919,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 										}
 										if(foundAllInputs)
 										{
-											cout << "trainNeuralNetworkClassificationSimple{} error; intermediary neuron is connected to all inputs" << endl;
+											cerr << "trainNeuralNetworkClassificationSimple{} error; intermediary neuron is connected to all inputs" << endl;
 											exit(EXIT_ERROR);
 										}
 										#endif
@@ -1180,7 +1180,7 @@ ANNneuronConnection* ANNalgorithmClassificationNetworkTrainingClass::connectNeur
 
 	if(parentNeuron == childNeuron)
 	{
-		cout << "connectNeurons{} error: (parentNeuron == childNeuron)" << endl;
+		cerr << "connectNeurons{} error: (parentNeuron == childNeuron)" << endl;
 		exit(EXIT_ERROR);
 	}
 

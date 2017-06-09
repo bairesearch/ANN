@@ -25,7 +25,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l1b 02-June-2017
+ * Project Version: 3l1c 01-June-2017
  * Comments:
  *
  *******************************************************************************/
@@ -953,7 +953,7 @@ ANNneuron* ANNformationClass::fillNonDistinctHiddenLayer(ANNneuron* firstNeuronI
 	{//CHECK THIS - nb this needs to imply that numberOfOutputNeurons = number of neurons in current layer
 		if(numberOfOutputNeurons != numberOfNeuronsInNewFrontLayer)
 		{
-			cout << "Error: error with NN heuristic; (currentNumberOfLayers == (numberOfLayers-1)) && (numberOfNeuronsInNewFrontLayer != numberOfOutputNeurons)" << endl;
+			cerr << "Error: error with NN heuristic; (currentNumberOfLayers == (numberOfLayers-1)) && (numberOfNeuronsInNewFrontLayer != numberOfOutputNeurons)" << endl;
 			exit(EXIT_ERROR);
 		}
 
@@ -1097,7 +1097,7 @@ long ANNformationClass::calculateNumberOfNeuronsInNewFrontLayer(const long numbe
 		}
 		else
 		{
-			cout << "illegal layerDivergenceType detected" << endl;
+			cerr << "illegal layerDivergenceType detected" << endl;
 			exit(EXIT_ERROR);
 		}
 
@@ -1122,7 +1122,7 @@ long ANNformationClass::calculateNumberOfNeuronsInNewFrontLayer(const long numbe
 			}
 			else
 			{
-				cout << "illegal layerDivergenceType detected" << endl;
+				cerr << "illegal layerDivergenceType detected" << endl;
 				exit(EXIT_ERROR);
 			}
 		}
@@ -1152,7 +1152,7 @@ long ANNformationClass::calculateNumberOfNeuronsInNewFrontLayer(const long numbe
 	}
 	else
 	{
-		cout << "illegal layerDivergenceType detected" << endl;
+		cerr << "illegal layerDivergenceType detected" << endl;
 		exit(EXIT_ERROR);
 	}
 
