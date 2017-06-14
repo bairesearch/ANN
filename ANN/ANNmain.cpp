@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l1f 01-June-2017
+ * Project Version: 3l2a 12-June-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -91,7 +91,7 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t-ixml [string]    : neural network definition .xml input filename (def: neuralNet.xml)"
 "\n"
 "\n\t-oxml [string]    : neural network definition .xml output filename (def: neuralNet.xml)"
-"\n\t-oldr [string]    : neural network display .ldr output filename (def: neuralNetWithoutSprites.ldr)"
+"\n\t-oldr [string]    : neural network display .ldr output filename (def: neuralNet.ldr)"
 "\n\t-osvg [string]    : neural network display .svg output filename (def: neuralNet.svg)"
 "\n\t-oppm [string]    : neural network display .ppm opengl output filename (def: neuralNet.ppm)"
 "\n\t-oppm2 [string]   : neural network display .ppm raytraced output filename (def: neuralNetRaytraced.ppm)"
@@ -393,7 +393,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3l1f 01-June-2017" << endl;
+			cout << "Project Version: 3l2a 12-June-2017" << endl;
 			exit(EXIT_OK);
 		}
 	}
