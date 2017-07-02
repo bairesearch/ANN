@@ -22,7 +22,7 @@
 
 /*******************************************************************************
  *
- * File Name: ANNneuronConnectionClass.hpp
+ * File Name: ANNalgorithmBreakawayNetworkUpdate.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3m1a 01-July-2017
@@ -30,47 +30,19 @@
  *
  *******************************************************************************/
 
- //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
-//NB when create NeuronList class change all referecnes to "...List->firstFrontANNneuronConnectionContainer.." to "...List->neuronReferences"
 
-/************************************************************ Neural Network Class Definitions* *****************************************************/
-
-
-#ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
-#define HEADER_ANN_NEURON_CONNECTION_CLASS
+#ifndef HEADER_ANN_ALGORITHM_BREAKAWAY_NETWORK_UPDATE
+#define HEADER_ANN_ALGORITHM_BREAKAWAY_NETWORK_UPDATE
 
 #include "ANNglobalDefs.hpp"
+#include "ANNneuronClass.hpp"
+#include "ANNneuronConnectionClass.hpp"
 
-class ANNneuron;
+#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 
-class ANNneuronConnection
-{
-public:
 
-	long frontNeuronID;		//temporary variable required for neural net creation from xml files
-
-	ANNneuronConnection(void);
-	~ANNneuronConnection(void);
-
-	double weight;
-	double storedWeight;
-	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-	bool memoryTraceConnection;
-	double memoryTrace;
-	double storedMemoryTrace;
-	#endif
-	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-	double idealValue;
-	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
-	double tempIdealValue;
-	#endif
-	#endif
-
-	ANNneuron* frontNeuron;
-	ANNneuron* backNeuron;
-};
 
 #endif
 
-/************************************************************ End Neural Network Class Definitions* *************************************************/
+#endif
 

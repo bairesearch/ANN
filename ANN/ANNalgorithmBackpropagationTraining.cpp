@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m1a 01-July-2017
  * Comments:
  *
  *******************************************************************************/
@@ -88,18 +88,23 @@ void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithASetOfExperi
 
 void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
 {
+	this->resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
+
+	trainNeuralNetworkBackpropagationSimpleNoReset(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numberOfExperiences);
+}
+
+void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimpleNoReset(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
+{
+	//now train the network on all examples for numEpochs
+	
 	cout << "\n*****************************************************" << endl;
 	cout << "Number of Input Neurons = " << numberOfInputNeurons << endl;
 	cout << "Number of Output Neurons = " << numberOfOutputNeurons  <<endl;
 	cout << "number of training Epochs = " << numEpochs <<endl;
 
-	//now train the network on all examples for numEpochs
-	this->resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
-
 	float finalError;
 	for(int e=0;e < numEpochs;e++)
 	{
-
 		ANNexperience* currentExperience = firstExperienceInDataSet;
 
 		//from start of dataSet -> end of dataSet
@@ -116,7 +121,6 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 	this->storeNeuralNetworkBiasAndWeights(firstInputNeuron);	//store these for future use of the network (such that they are not lost during future back props)
 
 
-
 	//Added by RBB; now test the network across all examples and calculate the average error
 	ANNexperience* currentExperience = firstExperienceInDataSet;
 	float  sumingTestingError = 0.0F;
@@ -127,20 +131,18 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 		float testingError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 		sumingTestingError = sumingTestingError + testingError;
 
-
 		currentExperience = currentExperience->next;
-
 	}
 
 	this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
-
-
 
 
 	//cout << "Final training accuracy for e epochs = " << (1.0F-finalError)*100.0F << "%" <<endl;
 	cout << "Final averaged testing accuracy for e epochs = " << (1.0F-(sumingTestingError/(double)numberOfExperiences))*100.0F << "%" <<endl;
 	cout << "numberOfExperiences = " << numberOfExperiences << endl;
 }
+
+
 
 
 

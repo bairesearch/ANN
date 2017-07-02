@@ -25,7 +25,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m1a 01-July-2017
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -838,7 +838,7 @@ bool ANNdrawClass::ANNdetermineSpriteInfoForANNneuronConnectionAndAddSpriteToSpr
 }
 
 
-//added ANN4a4b
+//added ANN3i4b
 bool ANNdrawClass::ANNaddSpriteToSpriteReferenceList(vec* spriteSceneCoords, vec* eyeCoords, LDreference** currentListReference, string spriteReferenceFileName, int spriteDefaultColour, double spriteScaleFactor)
 {
 	//add sprite to spriteByteArray (replace sprite of sprite index, spriteIndex, if it already exists)
@@ -990,10 +990,11 @@ void ANNdrawClass::ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, s
 		*spriteTextString = *spriteTextString + '\n';
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		tempString = SHAREDvars.convertLongToString(neuron->memoryTrace);
+		*spriteTextString = *spriteTextString + "memoryTrace = " + tempString;
 		#else
 		tempString = SHAREDvars.convertDoubleToString(neuron->bias, "%0.2f");
+		*spriteTextString = *spriteTextString + "bias = " + tempString;
 		#endif
-		*spriteTextString = *spriteTextString + "memoryTrace = " + tempString;
 	}
 
 

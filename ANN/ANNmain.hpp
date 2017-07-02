@@ -25,7 +25,7 @@
  * File Name: ANNmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m1a 01-July-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -37,8 +37,15 @@
 #include "ANNglobalDefs.hpp"
 #include "ANNformation.hpp"
 #include "ANNalgorithmBackpropagationTraining.hpp"
+#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
+#include "ANNalgorithmBreakawayNetworkTraining.hpp"
+#endif
+#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 #include "ANNalgorithmMemoryNetworkTraining.hpp"
+#endif
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 #include "ANNalgorithmClassificationNetworkTraining.hpp"
+#endif
 #include "ANNparser.hpp"
 #include "ANNxmlConversion.hpp"
 #include "ANNdraw.hpp"
@@ -78,6 +85,9 @@ class ANNmainClass
 	private: ANNformationClass ANNformation;
 	#ifdef ANN_ALGORITHM_BACKPROPAGATION
 	private: ANNalgorithmBackpropagationTrainingClass ANNalgorithmBackpropagationTraining;
+	#endif
+	#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
+	private: ANNalgorithmBreakawayNetworkTrainingClass ANNalgorithmBreakawayNetworkTraining;
 	#endif
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	private: ANNalgorithmMemoryNetworkTrainingClass ANNalgorithmMemoryNetworkTraining;

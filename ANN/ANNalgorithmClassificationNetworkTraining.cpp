@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m1a 01-July-2017
  * Comments:
  *
  *******************************************************************************/
@@ -1147,7 +1147,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 				if(currentDiff < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)
 				{
 					backNeuron->backNeuronMatchTemp = true;
-					(*inputValuesCategoryFound)[backNeuron->orderID - 1] = true;	//added ANN4a9b (changed ANN4a8b implementation) - when creating an intermediary neuron, prevent direct connections being added between input neurons and the new experience neuron
+					(*inputValuesCategoryFound)[backNeuron->orderID - 1] = true;	//added ANN3i9b (changed ANN3i8b implementation) - when creating an intermediary neuron, prevent direct connections being added between input neurons and the new experience neuron
 				}
 				else
 				{

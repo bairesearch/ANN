@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3l2a 12-June-2017
+ * Project Version: 3m1a 01-July-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -70,6 +70,7 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t-ineurons [int]   : neural network number of input neurons (def: dataset dependant)"
 "\n\t-oneurons [int]   : neural network number of output neurons (def: dataset dependant)"
 "\n"
+#ifdef ANN_ALGORITHM_BACKPROPAGATION
 "\n\t-divtype [int]    : subnet divergence type (1: linear converging, "
 "\n\t\t\t 2: linear diverging then converging,3: nonlinear diverging then converging, "
 "\n\t\t\t 4: linear diverging, 5: diverging square 2D, 6: diverging square 2D radial bias) (def: 1)"
@@ -77,11 +78,14 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t-con [float]      : probability of a neuron having connection to a previous layer neuron (def: 1.0)"
 "\n\t-conall [float]   : probability of a neuron having direct link with all previous layers neurons (def: 0.0)"
 "\n"
+#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 "\n\t-usesubnets       : create subnets (def: no)"
 "\n\t-numsubnets[int]  : maximum number of subnet layers to create (def: 2)"
 "\n\t-probsubnet[float]: the probability of subnet creation (def: 0.6)"
 "\n\t-subnetdepl       : use subnet dependant number of layers (def: no)"
 "\n"
+#endif
+#endif
 "\n\t-epochs [float]   : preset number of training epochs (def: auto)"
 "\n\t-maxepochs [int   : maximum number of training epochs (def: 500)"
 "\n\t-maxFolds [int]   : number of training folds (def: 10)"
@@ -127,21 +131,25 @@ int main(const int argc,const char* *argv)
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	long numberOfInputNeurons = 0;	//need to be generated based upon dataset or xml input file
 	long numberOfOutputNeurons = 0;	//dynamically generated while creating classification net
-	double numberOfLayers = 0;	//NOTUSED
+	int numberOfLayers = 0;	//NOTUSED
 	#else
 	long numberOfInputNeurons = 5;	//need to be generated based upon dataset or xml input file
 	long numberOfOutputNeurons = 3;	//need to be generated based upon dataset or xml input file
-	double numberOfLayers = 3;
+	int numberOfLayers = 3;
 	#endif
 
+	#ifdef ANN_ALGORITHM_BACKPROPAGATION
 	int layerDivergenceType = LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING;
 	double meanLayerDivergenceFactor = DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR;
 	double probabilityANNneuronConnectionWithPreviousLayerNeuron = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_PREVIOUS_LAYER_NEURON_ANNTH;
 	double probabilityANNneuronConnectionWithAllPreviousLayersNeurons = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH;
+	#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 	bool useSubnets = false;
 	long maxNumRecursiveSubnets = DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH;
 	double probabilityOfSubnetCreation = DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH;
 	bool useSubnetDependentNumberOfLayers = true;
+	#endif
+	#endif
 
 	int maxFolds = MAX_NUM_FOLDS_ANNTH;
 	int maxNumEpochs = ANN_DEFAULT_MAX_NUMBER_OF_EPOCHS;
@@ -199,12 +207,10 @@ int main(const int argc,const char* *argv)
 		{
 			numberOfLayers = SHAREDvarsClass().getFloatArgument(argc, argv, "-layers");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-ineurons"))
 		{
 			numberOfInputNeurons = SHAREDvarsClass().getFloatArgument(argc, argv, "-ineurons");
 		}
-
 		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oneurons"))
 		{
@@ -212,71 +218,55 @@ int main(const int argc,const char* *argv)
 		}
 		#endif
 
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-divtype"))
 		{
 			layerDivergenceType = SHAREDvarsClass().getFloatArgument(argc, argv, "-divtype");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-divfactor"))
 		{
 			meanLayerDivergenceFactor = SHAREDvarsClass().getFloatArgument(argc, argv, "-divfactor");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-con"))
 		{
 			probabilityANNneuronConnectionWithPreviousLayerNeuron = SHAREDvarsClass().getFloatArgument(argc, argv, "-con");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-conall"))
 		{
 			probabilityANNneuronConnectionWithAllPreviousLayersNeurons = SHAREDvarsClass().getFloatArgument(argc, argv, "-conall");
 		}
-
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-usesubnets"))
 		{
 			useSubnets = true;
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-numsubnets"))
 		{
 			maxNumRecursiveSubnets = SHAREDvarsClass().getFloatArgument(argc, argv, "-numsubnets");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-probsubnet"))
 		{
 			probabilityOfSubnetCreation = SHAREDvarsClass().getFloatArgument(argc, argv, "-probsubnet");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-subnetdepl"))
 		{
 			useSubnetDependentNumberOfLayers = true;
 		}
+		#endif
+		#endif
 
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-epochs"))
 		{
 			numEpochs=SHAREDvarsClass().getFloatArgument(argc, argv, "-epochs");
 			usePresetNumberOfEpochs = true;
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-maxepochs"))
 		{
 			maxNumEpochs = SHAREDvarsClass().getFloatArgument(argc, argv, "-maxepochs");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-maxFolds"))
 		{
 			maxFolds = SHAREDvarsClass().getFloatArgument(argc, argv, "-maxFolds");
-		}
-
-
-		if(SHAREDvarsClass().argumentExists(argc, argv, "-numsubnets"))
-		{
-			maxNumRecursiveSubnets = SHAREDvarsClass().getFloatArgument(argc, argv, "-numsubnets");
-		}
-
-		if(SHAREDvarsClass().argumentExists(argc, argv, "-numsubnets"))
-		{
-			maxNumRecursiveSubnets = SHAREDvarsClass().getFloatArgument(argc, argv, "-numsubnets");
 		}
 
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-ixml"))
@@ -285,13 +275,11 @@ int main(const int argc,const char* *argv)
 			//train = true;
 			useInputXMLFile = true;
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oxml"))
 		{
 			outputXMLFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oxml");
 			useOutputXMLFile = true;
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oldr"))
 		{
 			outputLDRFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oldr");
@@ -304,14 +292,12 @@ int main(const int argc,const char* *argv)
 			useSprites = true;
 		}
 		#endif
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-osvg"))
 		{
 			outputSVGFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-osvg");
 			useOutputSVGFile = true;
 			drawOutput = true;
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oppm"))
 		{
 			outputPPMFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oppm");
@@ -320,7 +306,6 @@ int main(const int argc,const char* *argv)
 			useOutputLDRFile = true;	//required for OpenGL image generation
 			displayInOpenGL = true;		//required for OpenGL image generation
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oppm2"))
 		{
 			outputPPMFileNameRaytraced = SHAREDvarsClass().getStringArgument(argc, argv, "-oppm2");
@@ -328,7 +313,6 @@ int main(const int argc,const char* *argv)
 			drawOutput = true;
 			useOutputLDRFile = true;	//required for raytrace image generation
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oall"))
 		{
 			outputAllFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oall");
@@ -340,12 +324,10 @@ int main(const int argc,const char* *argv)
 		{
 			displayInOpenGL = false;
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-width"))
 		{
 			rasterImageWidth = SHAREDvarsClass().getFloatArgument(argc, argv, "-width");
 		}
-
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-height"))
 		{
 			rasterImageHeight = SHAREDvarsClass().getFloatArgument(argc, argv, "-height");
@@ -393,7 +375,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3l2a 12-June-2017" << endl;
+			cout << "Project Version: 3m1a 01-July-2017" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -519,7 +501,7 @@ int main(const int argc,const char* *argv)
 
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		ANNformationClass().formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons);
-		#else
+		#elif defined ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 		if(useSubnets)
 		{
 			firstOutputNeuronInNetwork = ANNformationClass().formAdvancedNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, useSubnetDependentNumberOfLayers, probabilityOfSubnetCreation, maxNumRecursiveSubnets, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
@@ -529,20 +511,24 @@ int main(const int argc,const char* *argv)
 		{
 			firstOutputNeuronInNetwork = ANNformationClass().formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 		}
+		#elif defined ANN_ALGORITHM_BREAKAWAY_NETWORK
+		firstOutputNeuronInNetwork = ANNformationClass().formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);		
+		#endif
 
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION
 		cout << "subnet Divergence Type = " << layerDivergenceType << endl;
 		cout << "mean Subnet Divergence Factor = " << meanLayerDivergenceFactor << endl;
 		cout << "probability Of ANNneuron Connection Exclusivity = " << probabilityANNneuronConnectionWithPreviousLayerNeuron <<endl;
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 		cout << "Probability Of Subnet Creation = " << probabilityOfSubnetCreation <<endl;
 		cout << "use Subnet Dependent Number Of Layers = " << useSubnetDependentNumberOfLayers << endl;
 		cout << "Max Number Recursive Subnets = " << maxNumRecursiveSubnets <<endl;
+		#endif
+		#endif
 		cout << "Number Of top level Layers = " << numberOfLayers << endl;
 		cout << "number Of Input Neurons = " << numberOfInputNeurons << endl;
 		cout << "number Of Output Neurons = " << numberOfOutputNeurons << endl;
-		#endif
-
 	}
-
 
 	if(useInputDatasetFile)
 	{//train the network
@@ -551,8 +537,12 @@ int main(const int argc,const char* *argv)
 		{
 			if(!usePresetNumberOfEpochs)
 			{
-				#ifdef ANN_ALGORITHM_BACKPROPAGATION
+				#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 				ANNalgorithmBackpropagationTrainingClass().trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
+				#endif
+				#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
+				int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
+				ANNalgorithmBreakawayNetworkTrainingClass().trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, false, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
@@ -563,8 +553,12 @@ int main(const int argc,const char* *argv)
 			}
 			else
 			{
-				#ifdef ANN_ALGORITHM_BACKPROPAGATION
+				#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 				ANNalgorithmBackpropagationTrainingClass().trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
+				#endif
+				#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
+				int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
+				ANNalgorithmBreakawayNetworkTrainingClass().trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, true, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
@@ -635,7 +629,7 @@ bool ANNmainClass::createNetwork()
 	double probabilityOfSubnetCreation = 0;
 	bool useSubnetDependentNumberOfLayers = 0;
 	long maxNumRecursiveSubnets = 0;
-	double numberOfLayers = 0;
+	int numberOfLayers = 0;
 	double probabilityANNneuronConnectionWithAllPreviousLayersNeurons = 0;
 
 
@@ -828,12 +822,20 @@ bool ANNmainClass::trainNetwork(const bool advancedTraining)
 
 	if(formedNetwork)
 	{
+		int numberOfLayers = ANNformation.countNumberOfLayersInSubnet(firstInputNeuronInNetwork);
+		cout << "numberOfLayers = " << numberOfLayers << endl;
+		int numEpochs = ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS;
+		int maxFolds = MAX_NUM_FOLDS_ANNTH;		//maximum number of folds are same regardless of TEST_LEVEL_X_ANNT
+		int maxNumEpochs = ANN_DEFAULT_MAX_NUMBER_OF_EPOCHS;
+
 		if(advancedTraining)
 		{
-			int maxFolds = MAX_NUM_FOLDS_ANNTH;		//maximum number of folds are same regardless of TEST_LEVEL_X_ANNT
-			#ifdef ANN_ALGORITHM_BACKPROPAGATION
-			int maxNumEpochs = ANN_DEFAULT_MAX_NUMBER_OF_EPOCHS;
+			#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 			ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
+			#endif
+			#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
+			int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
+			ANNalgorithmBreakawayNetworkTraining.trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, false, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);			
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 			ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
@@ -843,10 +845,13 @@ bool ANNmainClass::trainNetwork(const bool advancedTraining)
 			#endif
 		}
 		else
-		{
-			#ifdef ANN_ALGORITHM_BACKPROPAGATION
-			int numEpochs = ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS;
+		{			
+			#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 			ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
+			#endif
+			#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
+			int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
+			ANNalgorithmBreakawayNetworkTraining.trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, true, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);			
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 			ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
