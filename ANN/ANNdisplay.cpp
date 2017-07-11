@@ -25,7 +25,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -165,7 +165,7 @@ bool ANNdisplayClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstI
 	string raytracedImagePPMNNSceneFileName = charstarraytracedImagePPMNNSceneFileName;
 	string outputSVGFileName = "";
 	string outputPPMFileName = "";
-	this->outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, false, true, true, false, vectorGraphicsLDRNNSceneFileName, NULL, NULL, raytracedImagePPMNNSceneFileName, vectorGraphicsTALNNSceneFileName, NULL, NULL);
+	this->outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, false, true, false, true, vectorGraphicsLDRNNSceneFileName, NULL, NULL, raytracedImagePPMNNSceneFileName, vectorGraphicsTALNNSceneFileName, NULL, NULL);
 
 
 	this->writeExperienceListToFile(charstarexperienceNNSceneFileName, firstExperienceInList);
@@ -177,14 +177,9 @@ bool ANNdisplayClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstI
 
 
 
-void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool displayInOpenGL, bool useOutputLDRFile, bool useOutputPPMFile, bool useOutputSVGFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
+void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool displayInOpenGL, bool useOutputLDRFile, bool useOutputSVGFile, bool useOutputPPMFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
 {
 	bool result = true;
-
-	if(displayInOpenGL)
-	{
-		LDopengl.initiateOpenGL(width, height, 0, 0, false);
-	}
 
 	char* outputFileNameLDRcharstar = const_cast<char*>(outputLDRFileName.c_str());
 	char* outputFileNameSVGcharstar = const_cast<char*>(outputSVGFileName.c_str());
@@ -215,7 +210,9 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 
 		if(useOutputLDRFile)
 		{
+			#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 			cout << "LDR graphics file name = " << outputLDRFileName << endl;
+			#endif
 			if(!ANNdraw.ANNcreateNeuralNetworkSceneFilesFromReferenceLists(outputFileNameLDRcharstar, addSprites, initialReference, numSpritesAdded))
 			{
 				result = false;
@@ -224,7 +221,9 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 
 		if(useOutputSVGFile)
 		{
+			#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 			cout << "SVG graphics file name = " << outputSVGFileName << endl;
+			#endif
 			if(!LDsvg.writeSVGfile(outputFileNameSVGcharstar, firstTagInSVGFile))
 			{
 				result = false;
@@ -251,8 +250,6 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 
 			if(allowRaytrace)
 			{
-
-
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 
 					RTviewInfo vi;
@@ -347,7 +344,9 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 				#ifdef TH_USE_RT_FOR_NEURAL_NETWORK_VEC_GRAPHICS
 				if(useOutputPPMFile)
 				{
+					#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 					cout << "PPM graphics file name = " << outputPPMFileName << endl;
+					#endif
 					RTpixelMaps.generatePixmapFromRGBmap(displayFileNamePPMcharstar, width, height, rgbMap);
 				}
 				#endif

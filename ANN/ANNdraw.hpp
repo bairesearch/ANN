@@ -25,7 +25,7 @@
  * File Name: ANNdraw.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -67,10 +67,14 @@
 #define ANN_SPRITE_TRAILER_LENGTH 22
 
 
-#define NEURAL_NETWORK_VISUALISATION_XML_FILE_NAME "neuralNet.xml"
-#define NEURAL_NETWORK_VISUALISATION_LDR_FILE_NAME "neuralNet.ldr"
-#define NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME "neuralNet.svg"
-#define NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME "neuralNet.ppm"
+#define NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME "neuralNet"
+#define NEURAL_NETWORK_VISUALISATION_XML_FILE_EXTENSION ".xml"
+#define NEURAL_NETWORK_VISUALISATION_LDR_FILE_EXTENSION ".ldr"
+#define NEURAL_NETWORK_VISUALISATION_SVG_FILE_EXTENSION ".svg"
+#define NEURAL_NETWORK_VISUALISATION_PPM_FILE_EXTENSION ".ppm"
+#define NEURAL_NETWORK_VISUALISATION_PPM_RAYTRACED_FILE_EXTENSION "Raytraced.ppm"
+#define NEURAL_NETWORK_VISUALISATION_TAL_FILE_EXTENSION ".tal"
+
 
 #define LDRAW_UNITS_PER_CM 25.189
 	//create xml rules for above parameters

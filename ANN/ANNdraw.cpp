@@ -25,7 +25,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -592,6 +592,12 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 			currentNeuronDispayReference->relativePosition.y = (double)(neuron->layerID);
 			currentNeuronDispayReference->relativePosition.z = (double)(neuron->yPosRel);
 		}
+		else if(neuron->spatialCoordinatesSet3D)
+		{
+			currentNeuronDispayReference->relativePosition.x = (double)(neuron->xPosRel);
+			currentNeuronDispayReference->relativePosition.y = (double)(neuron->yPosRel);
+			currentNeuronDispayReference->relativePosition.z = (double)(neuron->zPosRel);		
+		}
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(neuron->spatialCoordinatesSetClassification)
 		{
@@ -1019,6 +1025,14 @@ void ANNdrawClass::ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, s
 		*spriteTextString = *spriteTextString + "error = " + tempString;
 	}
 
+	#ifdef ANN_STORE_CONCEPT_NAMES
+	if(neuron->isConceptEntity)
+	{
+		*spriteTextString = *spriteTextString + '\n';
+		tempString = neuron->entityName;
+		*spriteTextString = *spriteTextString + "concept = " + tempString;
+	}
+	#endif
 
 	/*End Start Sprite Text Creation*/
 }
@@ -1039,10 +1053,11 @@ void ANNdrawClass::ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneur
 
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	tempString = SHAREDvars.convertDoubleToString(ANNneuronConnection->idealValue, "%0.2f");
+	*spriteTextString = "\n\n" + *spriteTextString + "IV = " + tempString;
 	#else
 	tempString = SHAREDvars.convertDoubleToString(ANNneuronConnection->weight, "%0.2f");
+	*spriteTextString = "\n\n" + *spriteTextString + "weight = " + tempString;
 	#endif
-	*spriteTextString = "\n\n" + *spriteTextString + "IV = " + tempString;
 
 
 	/*End Start Sprite Text Creation*/

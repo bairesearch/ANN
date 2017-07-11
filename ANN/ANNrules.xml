@@ -1,21 +1,8 @@
 <rules>
 	<sprite>
-		<miscellaneousItem name="SPRITE_SUBMODEL_NEURON_FILE_NAME" stringValue="4-4SPHE.DAT" fractionalValue="" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ID_COLOUR" stringValue="" fractionalValue="15" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_COLOUR" stringValue="" fractionalValue="15" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_COLOUR" stringValue="" fractionalValue="15" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_COLOUR" stringValue="" fractionalValue="15" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_COLOUR" stringValue="" fractionalValue="15" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_COLOUR" stringValue="" fractionalValue="15" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR" stringValue="" fractionalValue="15" />
-		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR" stringValue="" fractionalValue="15" />
 		<miscellaneousItem name="SPRITE_SUBMODEL_RANGE_SCALE_FACTOR" stringValue="" fractionalValue="1" />
-		
-		<miscellaneousItem name="SPRITE_TEXT_DICE_SCALE_FACTOR" stringValue="" fractionalValue="1.0" />
-		<miscellaneousItem name="SPRITE_LINE_SPACING_RATIO_WITHOUT_DICE_PRESENT" stringValue="" fractionalValue="1.5" />
-		<miscellaneousItem name="SPRITE_DICE_WIDTH_IN_LDRAW_UNITS" stringValue="" fractionalValue="100" />
-		<miscellaneousItem name="SPRITE_TEXT_DICE_Y_OFFSET" stringValue="" fractionalValue="11.5" />
-		
+
+		<miscellaneousItem name="SPRITE_LINE_SPACING_RATIO_BASE" stringValue="" fractionalValue="1.5" />
 		<miscellaneousItem name="SPRITE_TEXT_SCALE_FACTOR" stringValue="" fractionalValue="1.0" />
 		<miscellaneousItem name="SPRITE_WIDTH_OF_CHARS_IN_LDRAW_UNITS" stringValue="" fractionalValue="10" />
 		<miscellaneousItem name="SPRITE_HEIGHT_OF_CHARS_IN_LDRAW_UNITS" stringValue="" fractionalValue="15" />
@@ -29,7 +16,17 @@
 		<miscellaneousItem name="SPRITE_EXTENSION" stringValue=".ldr" fractionalValue="" />
 		<miscellaneousItem name="SPRITE_CHARACTER_START" stringValue="spritetext" fractionalValue="" />
 		<miscellaneousItem name="SPRITE_CHARACTER_EXTENSION" stringValue=".dat" fractionalValue="" />
-		
+
+		<miscellaneousItem name="SPRITE_SUBMODEL_NEURON_FILE_NAME" stringValue="4-4SPHE.DAT" fractionalValue="" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ID_COLOUR" stringValue="" fractionalValue="15" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_COLOUR" stringValue="" fractionalValue="15" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_COLOUR" stringValue="" fractionalValue="15" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_SUBNETID_COLOUR" stringValue="" fractionalValue="15" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_COLOUR" stringValue="" fractionalValue="15" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_COLOUR" stringValue="" fractionalValue="15" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ERROR_COLOUR" stringValue="" fractionalValue="15" />
+		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURONCONNECTION_WEIGHT_COLOUR" stringValue="" fractionalValue="15" />
+				
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ID_INFO" stringValue="" fractionalValue="1" />
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_ORDERID_INFO" stringValue="" fractionalValue="0" />
 		<miscellaneousItem name="SPRITE_TEXTUAL_INCLUDE_NEURON_LAYERID_INFO" stringValue="" fractionalValue="0" />

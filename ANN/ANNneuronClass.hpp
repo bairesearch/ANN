@@ -25,7 +25,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Comments:
  *
  *******************************************************************************/
@@ -61,6 +61,7 @@ public:
 	ANNneuron(void);
 	ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
 	~ANNneuron(void);
+	void initialiseNeuron();
 
 	long id;
 	long orderID;
@@ -86,6 +87,7 @@ public:
 
 	//for visualising highly structured networks [Eg used to visualise a 2D visual processing unit/subnet]
 	bool spatialCoordinatesSet2D;
+	bool spatialCoordinatesSet3D;
 	long xPosRel;
 	long yPosRel;
 	long zPosRel;
@@ -120,6 +122,11 @@ public:
 	bool isInputSubnet;		//input subnets are a special case - they do not require linking of their input neurons with a back layer (firstBackANNneuronConnectionContainer)
 		//input subnets are used when a network is created with a selection of predefined subnets to cator for the preprocessing of different kinds of input information (Eg visual/audio etc)
 	bool isOutputSubnet;	//output subnets are a special case - they do not require linking of their output neurons with a front layer (firstFrontANNneuronConnectionContainer)
+	#endif
+	
+	#ifdef ANN_STORE_CONCEPT_NAMES
+	bool isConceptEntity;	//else synapse artificial instance neuron (ie synapse between dendrites; or perhaps interneuron). Dendrodendritic synapses are connections between the dendrites of two different neurons. This is in contrast to the more common axodendritic synapse 
+	string entityName;
 	#endif
 };
 

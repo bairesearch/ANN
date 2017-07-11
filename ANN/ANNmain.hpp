@@ -25,7 +25,7 @@
  * File Name: ANNmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -52,6 +52,7 @@
 #include "ANNdisplay.hpp"
 #include "ANNdata.hpp"
 #include "LDsvg.hpp"
+#include "LDopengl.hpp"
 #include "LDsprite.hpp"
 #include "XMLrulesClass.hpp"
 
@@ -61,7 +62,7 @@
 
 
 #define EXPERIENCE_DATASET_FILE_NAME_ANNTH "new-thyroid.data"
-#define NET_XML_FILE_NAME "net.xml"
+#define NET_XML_FILE_NAME "neuralNet.xml"
 #define NET_XML_FILE_NAME_TRAINED "trainedNetwork.xml"
 
 //#define TEST_LEVEL_0_ANNTH			//emulate original C Code - nn 1aFinal with optimum number of hidden neurons
@@ -75,7 +76,9 @@
 //#define TEST_LEVEL_7_ANNTH			//with subnets, ...
 
 
+#ifdef COMPILE_ANN
 int main(const int argc,const char* *argv);
+#endif
 
 class ANNmainClass
 {
@@ -96,6 +99,7 @@ class ANNmainClass
 	private: ANNalgorithmClassificationNetworkTrainingClass ANNalgorithmClassificationNetworkTraining;
 	#endif
 	private: ANNdisplayClass ANNdisplay;
+	private: LDopenglClass LDopengl;
 
 	public: bool mainUI();
 

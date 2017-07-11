@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -103,7 +103,7 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 #ifndef ANN_DISPLAY_DISABLE_SPRITES
 "\n\t-sprites [int]    : neural network display output sprites (1: yes, 0: no) (def: 1)"
 #endif
-"\n\t-notshow          : do not display output in opengl"
+"\n\t-show             : display output in opengl"
 "\n\t-width [int]      : raster graphics width in pixels (def: 640)"
 "\n\t-height [int]     : raster graphics height in pixels (def: 480)"
 "\n"
@@ -119,6 +119,7 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\tas .xml and .ldr "
 "\n";
 
+#ifdef COMPILE_ANN
 int main(const int argc,const char* *argv)
 {
 	srand( (unsigned)time(NULL) );	//seeds randomness
@@ -157,29 +158,24 @@ int main(const int argc,const char* *argv)
 	bool usePresetNumberOfEpochs = false;
 
 	bool useInputXMLFile = false;
-	string inputXMLFileName = NEURAL_NETWORK_VISUALISATION_XML_FILE_NAME;
-
+	string inputXMLFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_XML_FILE_EXTENSION;
 	bool useOutputXMLFile = false;
-	string outputXMLFileName = NEURAL_NETWORK_VISUALISATION_XML_FILE_NAME;
-
+	string outputXMLFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_XML_FILE_EXTENSION;
 	bool useOutputLDRFile = false;
-	string outputLDRFileName = NEURAL_NETWORK_VISUALISATION_LDR_FILE_NAME;
+	string outputLDRFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_LDR_FILE_EXTENSION;
+	bool useOutputSVGFile = false;
+	string outputSVGFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_SVG_FILE_EXTENSION;
+	bool useOutputPPMFile = false;
+	string outputPPMFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_PPM_FILE_EXTENSION;
+	bool useOutputPPMFileRaytraced = false;
+	string outputPPMFileNameRaytraced = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_PPM_RAYTRACED_FILE_EXTENSION;
+	string outputTALFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_TAL_FILE_EXTENSION;
+	bool useOutputAllFile = false;
+	string outputAllFileName = NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME;
+	
 	bool useSprites = true;	//default true
 
-	bool useOutputSVGFile = false;
-	string outputSVGFileName = NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME;
-
-	bool useOutputPPMFile = false;
-	string outputPPMFileName = NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME;
-
-	bool useOutputPPMFileRaytraced = false;
-	string outputPPMFileNameRaytraced = "neuralNetRaytraced.ppm";
-	string outputTALFileName = "neuralNet.tal";
-
-	bool useOutputAllFile = false;
-	string outputAllFileName = "neuralNet";
-
-	bool displayInOpenGL = true;
+	bool displayInOpenGL = false;
 	bool drawOutput = false;
 
 	int rasterImageWidth = 1024;
@@ -284,45 +280,40 @@ int main(const int argc,const char* *argv)
 		{
 			outputLDRFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oldr");
 			useOutputLDRFile = true;
-			drawOutput = true;
 		}
-		#ifndef ANN_DISPLAY_DISABLE_SPRITES
-		if(SHAREDvarsClass().argumentExists(argc, argv, "-sprites"))
-		{
-			useSprites = true;
-		}
-		#endif
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-osvg"))
 		{
 			outputSVGFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-osvg");
 			useOutputSVGFile = true;
-			drawOutput = true;
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oppm"))
 		{
 			outputPPMFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oppm");
 			useOutputPPMFile = true;
-			drawOutput = true;
 			useOutputLDRFile = true;	//required for OpenGL image generation
-			displayInOpenGL = true;		//required for OpenGL image generation
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oppm2"))
 		{
 			outputPPMFileNameRaytraced = SHAREDvarsClass().getStringArgument(argc, argv, "-oppm2");
 			useOutputPPMFileRaytraced = true;
-			drawOutput = true;
 			useOutputLDRFile = true;	//required for raytrace image generation
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-oall"))
 		{
 			outputAllFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-oall");
 			useOutputAllFile = true;
-			drawOutput = true;
 		}
-
-		if(SHAREDvarsClass().argumentExists(argc, argv, "-notshow"))
+		
+		#ifndef ANN_DISPLAY_DISABLE_SPRITES
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-sprites"))
 		{
-			displayInOpenGL = false;
+			useSprites = true;
+		}
+		#endif
+
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-show"))
+		{
+			displayInOpenGL = true;
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-width"))
 		{
@@ -375,7 +366,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3m1a 01-July-2017" << endl;
+			cout << "Project Version: 3m2a 10-July-2017" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -385,6 +376,31 @@ int main(const int argc,const char* *argv)
 		exit(EXIT_ERROR);
 	}
 
+	if(useOutputPPMFile)
+	{
+		displayInOpenGL = true;
+	}
+	if(useOutputLDRFile)
+	{
+		drawOutput = true;
+	}
+	if(useOutputSVGFile)
+	{
+		drawOutput = true;
+	}
+	if(useOutputPPMFile)
+	{
+		drawOutput = true;
+	}
+	if(useOutputPPMFileRaytraced)
+	{
+		drawOutput = true;
+	}
+	if(useOutputAllFile)
+	{
+		drawOutput = true;
+	}	
+	
 	if(!XMLrulesClassClass().parseANNrulesXMLfile())
 	{
 		result = false;
@@ -400,54 +416,44 @@ int main(const int argc,const char* *argv)
 	{
 		drawOutput = true;
 		useOutputLDRFile = true;	//required for OpenGL image generation
+		
+		LDopenglClass().initiateOpenGL(rasterImageWidth, rasterImageHeight, 0, 0, false);
 	}
 
 	if(drawOutput)
 	{
-		if(!useOutputLDRFile)
+		if(useOutputAllFile)
 		{
-			if(useOutputAllFile)
+			if(!useOutputLDRFile)
 			{
 				useOutputLDRFile = true;
-				outputLDRFileName = outputAllFileName + ".ldr";
+				outputLDRFileName = outputAllFileName + NEURAL_NETWORK_VISUALISATION_LDR_FILE_EXTENSION;
 			}
-		}
 
-		if(!useOutputXMLFile)
-		{
-			if(useOutputAllFile)
+			if(!useOutputXMLFile)
 			{
 				useOutputXMLFile = true;
-				outputXMLFileName = outputAllFileName + ".xml";
+				outputXMLFileName = outputAllFileName + NEURAL_NETWORK_VISUALISATION_XML_FILE_EXTENSION;
 			}
-		}
 
-		if(!useOutputSVGFile)
-		{
-			if(useOutputAllFile)
+			if(!useOutputSVGFile)
 			{
 				useOutputSVGFile = true;	//SVG output is not always required when printing/drawing neural network
-				outputSVGFileName = outputAllFileName + ".svg";
+				outputSVGFileName = outputAllFileName + NEURAL_NETWORK_VISUALISATION_SVG_FILE_EXTENSION;
 			}
-		}
-		if(!useOutputPPMFile)
-		{
-			if(useOutputAllFile)
+			if(!useOutputPPMFile)
 			{
 				useOutputPPMFile = true;
-				outputPPMFileName = outputAllFileName + ".ppm";
+				outputPPMFileName = outputAllFileName + NEURAL_NETWORK_VISUALISATION_PPM_FILE_EXTENSION;
 			}
-		}
-		/* disable raytrace output by default
-		if(!useOutputPPMFileRaytraced)
-		{
-			if(useOutputAllFile)
+			/* disable raytrace output by default
+			if(!useOutputPPMFileRaytraced)
 			{
 				useOutputPPMFileRaytraced = true;
-				outputPPMFileNameRaytraced = outputAllFileName + "Raytraced.ppm";
+				outputPPMFileNameRaytraced = outputAllFileName + NEURAL_NETWORK_VISUALISATION_PPM_RAYTRACED_FILE_EXTENSION;
 			}
+			*/
 		}
-		*/
 	}
 
 	if(useInputXMLFile)
@@ -461,7 +467,6 @@ int main(const int argc,const char* *argv)
 		string xmlFileName = inputXMLFileName;
 
 		firstOutputNeuronInNetwork = ANNxmlConversionClass().readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
-		//check  number of input and number of output neurons
 
 		numberOfInputNeurons = numberOfInputNeuronsLoaded;
 		numberOfOutputNeurons = numberOfOutputNeuronsLoaded;
@@ -574,7 +579,7 @@ int main(const int argc,const char* *argv)
 
 	if(drawOutput)
 	{
-		ANNdisplayClass().outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, useSprites, useOutputPPMFileRaytraced, displayInOpenGL, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
+		ANNdisplayClass().outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, useSprites, useOutputPPMFileRaytraced, displayInOpenGL, useOutputLDRFile, useOutputSVGFile, useOutputPPMFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 	}
 
 	if(useOutputXMLFile)
@@ -588,7 +593,7 @@ int main(const int argc,const char* *argv)
 	}
 
 }
-
+#endif
 
 
 bool ANNmainClass::loadNetworkFromXML()
@@ -604,7 +609,6 @@ bool ANNmainClass::loadNetworkFromXML()
 	string xmlFileName = NET_XML_FILE_NAME;
 
 	firstOutputNeuronInNetwork = ANNxmlConversion.readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
-	//check  number of input and number of output neurons
 
 	numberOfInputNeurons = numberOfInputNeuronsLoaded;
 	numberOfOutputNeurons = numberOfOutputNeuronsLoaded;
@@ -899,18 +903,32 @@ bool ANNmainClass::outputNetworkAsVectorGraphics()
 
 	if(formedNetwork)
 	{
-		cout << "vector graphics file name = " << NEURAL_NETWORK_VISUALISATION_LDR_FILE_NAME << endl;
-		cout << "vector graphics file svg = " << NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME << endl;
-		cout << "vector graphics file ppm = " << NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME << endl;
-
-		bool displayInOpenGL = false;
+		bool useOutputLDRFile = true;
+		string outputLDRFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_LDR_FILE_EXTENSION;
+		bool useOutputSVGFile = true;
+		string outputSVGFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_SVG_FILE_EXTENSION;
 		bool useOutputPPMFile = false;
+		string outputPPMFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_PPM_FILE_EXTENSION;
+		bool useOutputPPMFileRaytraced = false;
+		string outputPPMFileNameRaytraced = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_PPM_RAYTRACED_FILE_EXTENSION;
+		string outputTALFileName = string(NEURAL_NETWORK_VISUALISATION_BASE_FILE_NAME) + NEURAL_NETWORK_VISUALISATION_TAL_FILE_EXTENSION;
+
+		bool addSprites = true;
+		bool displayInOpenGL = false;
 		bool allowRaytrace = false;
-		string outputPPMFileNameRaytraced = "";
-		string outputTALFileName = "";
 		int rasterImageWidth = 0;
 		int rasterImageHeight = 0;
-		ANNdisplay.outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, true, allowRaytrace, displayInOpenGL, true, useOutputPPMFile, true, NEURAL_NETWORK_VISUALISATION_LDR_FILE_NAME, NEURAL_NETWORK_VISUALISATION_SVG_FILE_NAME, NEURAL_NETWORK_VISUALISATION_PPM_FILE_NAME, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
+		
+		cout << "vector graphics file name = " << outputLDRFileName << endl;
+		cout << "vector graphics file svg = " << outputSVGFileName << endl;
+		cout << "vector graphics file ppm = " << useOutputPPMFile << endl;
+		
+		if(displayInOpenGL)
+		{
+			LDopengl.initiateOpenGL(rasterImageWidth, rasterImageHeight, 0, 0, false);
+		}
+		
+		ANNdisplay.outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputSVGFile, useOutputPPMFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 	}
 	else
 	{

@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Comments:
  *
  *******************************************************************************/
@@ -268,7 +268,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 		string outputTALFileName = "";
 		int rasterImageWidth = 1024;
 		int rasterImageHeight = 768;
-		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputPPMFile, useOutputSVGFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
+		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputSVGFile, useOutputPPMFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 		*/
 		/*
 		if(experienceNum == 3)

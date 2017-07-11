@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m1a 01-July-2017
+ * Project Version: 3m2a 10-July-2017
  * Comments
  *
  *******************************************************************************/
@@ -272,10 +272,20 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRel;
 				currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->yPosRel));
 				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
+			}
+			else if(currentNeuron->spatialCoordinatesSet3D)
+			{
+				currentAttribute->name = NET_XML_ATTRIBUTE_xPosRel;
+				currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->xPosRel));
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
+
+				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRel;
+				currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->yPosRel));
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRel;
 				currentAttribute->value = SHAREDvars.convertIntToString((currentNeuron->zPosRel));
-				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);			
 			}
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
@@ -292,6 +302,15 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRelFrac;
 				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->zPosRelFrac), "%0.6f");
+				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
+			}
+			#endif
+			
+			#ifdef ANN_STORE_CONCEPT_NAMES
+			if(currentNeuron->isConceptEntity)
+			{
+				currentAttribute->name = NET_XML_ATTRIBUTE_conceptName;
+				currentAttribute->value = currentNeuron->entityName;
 				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			}
 			#endif
@@ -384,10 +403,12 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 
+	#ifdef ANN_XML_CONVERSION_DO_NOT_RECORD_EMPTY_LAYERS
 	if(!foundNonPrintedNeuronOnLayer)
 	{
 		this->clearTag(layerTag);
 	}
+	#endif
 
 	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(firstNeuronInLayer->hasFrontLayer)
@@ -462,7 +483,7 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 			ANNneuron* firstOutputNeuronInSubnet;
 			long temp;
 			firstOutputNeuronInSubnet = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp);
-			currentNeuron->firstNeuronInFrontLayerOfSubnet	= firstOutputNeuronInSubnet;
+			currentNeuron->firstNeuronInFrontLayerOfSubnet= firstOutputNeuronInSubnet;
 		}
 		#endif
 
@@ -923,7 +944,8 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_zPosRel)
 		{
-			currentNeuron->spatialCoordinatesSet2D = true;
+			currentNeuron->spatialCoordinatesSet2D = false;
+			currentNeuron->spatialCoordinatesSet3D = true;
 			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRel = attributeValue;
 		}
@@ -945,6 +967,14 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 			currentNeuron->spatialCoordinatesSetClassification = true;
 			double attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRelFrac = attributeValue;
+		}
+		#endif
+		#ifdef ANN_STORE_CONCEPT_NAMES
+		else if(currentAttribute->name == NET_XML_ATTRIBUTE_conceptName)
+		{
+			currentNeuron->isConceptEntity = true;
+			string attributeValue = currentAttribute->value;
+			currentNeuron->entityName = attributeValue;
 		}
 		#endif
 		else
