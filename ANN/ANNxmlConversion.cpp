@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m2a 10-July-2017
+ * Project Version: 3m3a 18-July-2017
  * Comments
  *
  *******************************************************************************/
@@ -306,11 +306,11 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 			}
 			#endif
 			
-			#ifdef ANN_STORE_CONCEPT_NAMES
-			if(currentNeuron->isConceptEntity)
+			#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
+			if(currentNeuron->GIAisConceptEntity)
 			{
 				currentAttribute->name = NET_XML_ATTRIBUTE_conceptName;
-				currentAttribute->value = currentNeuron->entityName;
+				currentAttribute->value = currentNeuron->GIAentityName;
 				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			}
 			#endif
@@ -969,12 +969,12 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 			currentNeuron->zPosRelFrac = attributeValue;
 		}
 		#endif
-		#ifdef ANN_STORE_CONCEPT_NAMES
+		#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_conceptName)
 		{
-			currentNeuron->isConceptEntity = true;
+			currentNeuron->GIAisConceptEntity = true;
 			string attributeValue = currentAttribute->value;
-			currentNeuron->entityName = attributeValue;
+			currentNeuron->GIAentityName = attributeValue;
 		}
 		#endif
 		else

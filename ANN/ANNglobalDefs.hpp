@@ -25,7 +25,7 @@
  * File Name: ANNglobalsDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m2a 10-July-2017
+ * Project Version: 3m3a 18-July-2017
  * Description: ANN specific global definitions
  *
  * Usage Examples:
@@ -59,7 +59,7 @@
 #define ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 
 #ifdef USE_GIA
-	#define ANN_STORE_CONCEPT_NAMES
+	#define ANN_ALGORITHM_GIA_NEURAL_NETWORK
 #else
 	#define ANN_XML_CONVERSION_DO_NOT_RECORD_EMPTY_LAYERS
 #endif

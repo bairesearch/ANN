@@ -25,7 +25,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m2a 10-July-2017
+ * Project Version: 3m3a 18-July-2017
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  *
  *******************************************************************************/
@@ -1025,11 +1025,11 @@ void ANNdrawClass::ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, s
 		*spriteTextString = *spriteTextString + "error = " + tempString;
 	}
 
-	#ifdef ANN_STORE_CONCEPT_NAMES
-	if(neuron->isConceptEntity)
+	#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
+	if(neuron->GIAisConceptEntity)
 	{
 		*spriteTextString = *spriteTextString + '\n';
-		tempString = neuron->entityName;
+		tempString = neuron->GIAentityName;
 		*spriteTextString = *spriteTextString + "concept = " + tempString;
 	}
 	#endif

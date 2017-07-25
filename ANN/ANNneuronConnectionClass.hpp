@@ -25,7 +25,7 @@
  * File Name: ANNneuronConnectionClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m2a 10-July-2017
+ * Project Version: 3m3a 18-July-2017
  * Comments:
  *
  *******************************************************************************/
@@ -40,6 +40,14 @@
 #define HEADER_ANN_NEURON_CONNECTION_CLASS
 
 #include "ANNglobalDefs.hpp"
+
+#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
+#define GIA_ANN_CONNECTION_TYPE_UNDEFINED (0)
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_DEFINITION (1)
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_PROPERTIES (2)
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_DEFINITION_ARTIFICIAL_INSTANCE (3)
+#define GIA_ANN_CONNECTION_TYPE_ARTIFICIAL_INSTANCE (4)
+#endif
 
 class ANNneuron;
 
@@ -64,6 +72,11 @@ public:
 	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
 	double tempIdealValue;
 	#endif
+	#endif
+	
+	#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
+	int GIAconnectionType;
+	bool GIAalreadyParsed;
 	#endif
 
 	ANNneuron* frontNeuron;

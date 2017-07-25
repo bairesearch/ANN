@@ -25,7 +25,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m2a 10-July-2017
+ * Project Version: 3m3a 18-July-2017
  * Comments:
  *
  *******************************************************************************/
@@ -124,9 +124,12 @@ public:
 	bool isOutputSubnet;	//output subnets are a special case - they do not require linking of their output neurons with a front layer (firstFrontANNneuronConnectionContainer)
 	#endif
 	
-	#ifdef ANN_STORE_CONCEPT_NAMES
-	bool isConceptEntity;	//else synapse artificial instance neuron (ie synapse between dendrites; or perhaps interneuron). Dendrodendritic synapses are connections between the dendrites of two different neurons. This is in contrast to the more common axodendritic synapse 
-	string entityName;
+	#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
+	bool GIAisConceptEntity;	//else synapse artificial instance neuron (ie synapse between dendrites; or perhaps interneuron). Dendrodendritic synapses are connections between the dendrites of two different neurons. This is in contrast to the more common axodendritic synapse 
+	string GIAentityName;
+	bool GIAactiveForSubnetIdentification;
+	bool GIAalreadyParsed;
+	long GIAactivationAge;
 	#endif
 };
 
