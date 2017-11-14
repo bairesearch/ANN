@@ -25,15 +25,12 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m3a 18-July-2017
+ * Project Version: 3m4a 12-November-2017
  * Comments:
  *
  *******************************************************************************/
 
- //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
-//NB when create NeuronList class change all referecnes to "...List->firstFrontANNneuronConnectionContainer.." to "...List->neuronReferences"
 
-/************************************************************ Neural Network Class Definitions* *****************************************************/
 
 
 #ifndef HEADER_ANN_NEURON_CLASS
@@ -125,11 +122,16 @@ public:
 	#endif
 	
 	#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
-	bool GIAisConceptEntity;	//else synapse artificial instance neuron (ie synapse between dendrites; or perhaps interneuron). Dendrodendritic synapses are connections between the dendrites of two different neurons. This is in contrast to the more common axodendritic synapse 
+	bool GIAisConceptEntity;	//#ifdefGIA_NEURAL_NETWORK_SYMBOLIC_CORE: else instance neuron. #ifdefGIA_NEURAL_NETWORK_NON_SEMANTIC: else synapse artificial instance neuron (ie synapse between dendrites; or perhaps interneuron). Dendrodendritic synapses are connections between the dendrites of two different neurons. This is in contrast to the more common axodendritic synapse 
 	string GIAentityName;
 	bool GIAactiveForSubnetIdentification;
 	bool GIAalreadyParsed;
 	long GIAactivationAge;
+	int GIAconceptIndexBitID;	//concept index bit neurons only
+	//#ifdef GIA_NEURAL_NETWORK_SYMBOLIC_CORE_CONCEPT_INDEX_BITS
+	int GIAconceptIndexType;	//concept neurons only
+	int GIAconceptIndex;		//concept neurons only
+	//#endif
 	#endif
 };
 
@@ -138,7 +140,6 @@ class ANNneuronClassClass
 {
 	public: void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
 
-
 	private: void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
 
 	public: void averageNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
@@ -146,5 +147,4 @@ class ANNneuronClassClass
 
 #endif
 
-/************************************************************ End Neural Network Class Definitions* *************************************************/
 

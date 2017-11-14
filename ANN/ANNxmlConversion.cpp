@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m3a 18-July-2017
+ * Project Version: 3m4a 12-November-2017
  * Comments
  *
  *******************************************************************************/
@@ -307,12 +307,16 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 			#endif
 			
 			#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
+			#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK_USE_ARTIFICIAL_INSTANCE_NEURON_SYNAPSES
 			if(currentNeuron->GIAisConceptEntity)
 			{
-				currentAttribute->name = NET_XML_ATTRIBUTE_conceptName;
+			#endif
+				currentAttribute->name = NET_XML_ATTRIBUTE_entityName;
 				currentAttribute->value = currentNeuron->GIAentityName;
 				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
+			#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK_USE_ARTIFICIAL_INSTANCE_NEURON_SYNAPSES
 			}
+			#endif
 			#endif
 
 			XMLparserTag* newTag = new XMLparserTag();
@@ -970,9 +974,8 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 		}
 		#endif
 		#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
-		else if(currentAttribute->name == NET_XML_ATTRIBUTE_conceptName)
+		else if(currentAttribute->name == NET_XML_ATTRIBUTE_entityName)
 		{
-			currentNeuron->GIAisConceptEntity = true;
 			string attributeValue = currentAttribute->value;
 			currentNeuron->GIAentityName = attributeValue;
 		}
@@ -981,6 +984,17 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 		{
 			cout << "parseNeuronTag error: illegal attribute name detected";
 		}
+		
+		#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
+		if(layerIDcounter < ANN_ALGORITHM_GIA_NEURAL_NETWORK_MAX_SPECIFIC_CONCEPT_DEPTH)
+		{
+			currentNeuron->GIAisConceptEntity = true;
+		}
+		else
+		{
+			currentNeuron->GIAisConceptEntity = false;
+		}
+		#endif
 
 		currentAttribute = currentAttribute->nextAttribute;
 	}

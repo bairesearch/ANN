@@ -25,15 +25,11 @@
  * File Name: ANNneuronConnectionClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m3a 18-July-2017
+ * Project Version: 3m4a 12-November-2017
  * Comments:
  *
  *******************************************************************************/
 
- //IMPORTANT CODING NOTE - on 10-dec-06/1b6b I have started to remove the neuronReference class as circular referencing does not appear to be allowed in C++
-//NB when create NeuronList class change all referecnes to "...List->firstFrontANNneuronConnectionContainer.." to "...List->neuronReferences"
-
-/************************************************************ Neural Network Class Definitions* *****************************************************/
 
 
 #ifndef HEADER_ANN_NEURON_CONNECTION_CLASS
@@ -43,10 +39,14 @@
 
 #ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
 #define GIA_ANN_CONNECTION_TYPE_UNDEFINED (0)
-#define GIA_ANN_CONNECTION_TYPE_CONCEPT_DEFINITION (1)
-#define GIA_ANN_CONNECTION_TYPE_CONCEPT_PROPERTIES (2)
-#define GIA_ANN_CONNECTION_TYPE_CONCEPT_DEFINITION_ARTIFICIAL_INSTANCE (3)
-#define GIA_ANN_CONNECTION_TYPE_ARTIFICIAL_INSTANCE (4)
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_TO_CONCEPT (1)			//primarily vertical	//concept definition
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_TO_CONCEPT_PROPERTIES (2)	//primarily vertical
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_TO_INSTANCE (3)			//primarily vertical
+#define GIA_ANN_CONNECTION_TYPE_INSTANCE_TO_INSTANCE (4)		//primarily horizontal 
+//#ifdef GIA_NEURAL_NETWORK_SYMBOLIC_CORE_CONCEPT_INDEX_BITS
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_TO_CONCEPT_INDEX_BIT (5)	//primarily vertical
+#define GIA_ANN_CONNECTION_TYPE_CONCEPT_INDEX_BIT_TO_INSTANCE (6)	//primarily vertical
+//#endif
 #endif
 
 class ANNneuron;
@@ -77,6 +77,7 @@ public:
 	#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
 	int GIAconnectionType;
 	bool GIAalreadyParsed;
+	bool GIAbidirectionalSynapse;
 	#endif
 
 	ANNneuron* frontNeuron;
@@ -85,5 +86,4 @@ public:
 
 #endif
 
-/************************************************************ End Neural Network Class Definitions* *************************************************/
 

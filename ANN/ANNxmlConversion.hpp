@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m3a 18-July-2017
+ * Project Version: 3m4a 12-November-2017
  * Comments
  *
  *******************************************************************************/
@@ -93,7 +93,7 @@
 #define NET_XML_ATTRIBUTE_idealValue ((string)"idealValue")
 #endif
 #ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
-#define NET_XML_ATTRIBUTE_conceptName ((string)"conceptName")
+#define NET_XML_ATTRIBUTE_entityName ((string)"entityName")
 #endif
 
 
