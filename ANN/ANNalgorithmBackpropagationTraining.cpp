@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m6a 10-December-2017
+ * Project Version: 3m7a 13-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -76,13 +76,18 @@ void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithASetOfExperi
 
 	while(currentExperience->next != NULL)
 	{
-		this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
-
-		double trainingErrorNotUsed;
-		trainingErrorNotUsed = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
+		feedNeuralNetworkWithASetOfExperiencesBackpropagation(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 		currentExperience = currentExperience->next;
 	}
+}
+
+void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithExperienceBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* currentExperience)
+{
+	this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
+
+	double trainingErrorNotUsed;
+	trainingErrorNotUsed = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 }
 
 
@@ -663,6 +668,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneu
 	}
 
 	currentNeuronReference = firstOutputNeuron;
+	
 	for(long i = 0; i < numberOfOutputNeurons; i++)
 	{
 		currentNeuronReference->classTarget = 0.0F;

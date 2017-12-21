@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m6a 10-December-2017
+ * Project Version: 3m7a 13-December-2017
  * Comments
  *
  *******************************************************************************/
@@ -57,8 +57,6 @@ ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsI
 	bool stillMoreLayers = true;
 	while(stillMoreLayers)
 	{
-		bool currentLayerHasFrontLayer = false;
-
 		ANNneuron* firstNeuronInLayer = currentNeuron;
 
 		bool numNeuronsInCurrentLayer = 0;
@@ -151,9 +149,13 @@ bool ANNxmlConversionClass::writeNetXMLfile(string xmlFileName, ANNneuron* first
 
 	delete firstTagInXMLFile;
 
+	if(!this->resetPrintedXMLbasedUponLayer(firstInputNeuronInNetwork))
+	{
+		result = false;
+	}
+	
 	return result;
 }
-
 
 bool ANNxmlConversionClass::generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet)
 {
@@ -172,8 +174,6 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponSubnet(XMLparserTag* firs
 bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInLayer)
 {
 	bool result = true;
-
-	bool currentLayerHasFrontLayer = false;
 
 	ANNneuron* currentNeuron = firstNeuronInLayer;
 	XMLparserTag* currentTagL0 = firstTagInSubnet;
@@ -240,19 +240,19 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 
 			#ifndef DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
 			currentAttribute->name = NET_XML_ATTRIBUTE_bias;
-			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->bias), "%0.6f");
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->bias), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_output;
-			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->output), "%0.6f");
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->output), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_classTarget;
-			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->classTarget), "%0.6f");
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->classTarget), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 			currentAttribute->name = NET_XML_ATTRIBUTE_error;
-			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->error), "%0.6f");
+			currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->error), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 			currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			#endif
 
@@ -293,15 +293,15 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 			{
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_xPosRelFrac;
-				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->xPosRelFrac), "%0.6f");
+				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->xPosRelFrac), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_yPosRelFrac;
-				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->yPosRelFrac), "%0.6f");
+				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->yPosRelFrac), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 
 				currentAttribute->name = NET_XML_ATTRIBUTE_zPosRelFrac;
-				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->zPosRelFrac), "%0.6f");
+				currentAttribute->value = SHAREDvars.convertDoubleToString((currentNeuron->zPosRelFrac), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 				currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 			}
 			#endif
@@ -346,13 +346,13 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 
 					#ifndef DO_NOT_STORE_NET_XML_NEURON_KEYPROPERTIES_PARAMETERS
 					currentAttribute->name = NET_XML_ATTRIBUTE_weight;
-					currentAttribute->value = SHAREDvars.convertDoubleToString((currentANNneuronConnection->weight), "%0.6f");
+					currentAttribute->value = SHAREDvars.convertDoubleToString((currentANNneuronConnection->weight), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 					currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 					#endif
 
 					#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 					currentAttribute->name = NET_XML_ATTRIBUTE_idealValue;
-					currentAttribute->value = SHAREDvars.convertDoubleToString((currentANNneuronConnection->idealValue), "%0.6f");
+					currentAttribute->value = SHAREDvars.convertDoubleToString((currentANNneuronConnection->idealValue), ANN_XML_CONVERSION_VALUE_RECORD_PRECISION);
 					currentAttribute = XMLparserClass.createNewAttribute(currentAttribute);
 					#endif
 
@@ -418,6 +418,56 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
 		if(!this->generateXMLtagListBasedUponLayer(firstTagInSubnet, firstNeuronInLayer->firstNeuronInFrontLayer))
+		{
+			result = false;
+		}
+	}
+	#endif
+
+	return result;
+}
+
+bool ANNxmlConversionClass::resetPrintedXMLbasedUponLayer(ANNneuron* firstNeuronInLayer)
+{
+	bool result = true;
+
+	ANNneuron* currentNeuron = firstNeuronInLayer;
+	while(currentNeuron->nextNeuron != NULL)
+	{
+		if(currentNeuron->printedXML)
+		{
+			currentNeuron->printedXML = false;
+
+			if(currentNeuron->isSubnet)
+			{
+				if(!resetPrintedXMLbasedUponLayer(currentNeuron->firstNeuronInBackLayerOfSubnet))
+				{
+					result = false;
+				}
+			}
+
+			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+			if(currentNeuron->hasFrontLayer)
+			{
+				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
+				{
+					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
+					if(!resetPrintedXMLbasedUponLayer(currentANNneuronConnection->frontNeuron))
+					{
+						result = false;
+					}
+				}
+			}
+			#endif
+		}
+
+		currentNeuron = currentNeuron->nextNeuron;
+	}
+
+	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	if(firstNeuronInLayer->hasFrontLayer)
+	{
+		if(!resetPrintedXMLbasedUponLayer(firstNeuronInLayer->firstNeuronInFrontLayer))
 		{
 			result = false;
 		}

@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m6a 10-December-2017
+ * Project Version: 3m7a 13-December-2017
  * Comments
  *
  *******************************************************************************/
@@ -52,6 +52,7 @@
 
 #define MAX_ATTRIBUTE_VALUE_SIZE 200
 
+#define ANN_XML_CONVERSION_VALUE_RECORD_PRECISION "%0.15f"	//DBL_DIG	//"%0.6f"
 
 
 
@@ -107,6 +108,7 @@ class ANNxmlConversionClass
 	public: bool writeNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork);
 		private: bool generateXMLtagListBasedUponSubnet(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet);
 			private: bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInLayer);
+			private: bool resetPrintedXMLbasedUponLayer(ANNneuron* firstNeuronInLayer);
 
 	public: ANNneuron* readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons);
 		private: bool readNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork);
