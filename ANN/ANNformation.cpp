@@ -25,7 +25,7 @@
  * File Name: ANNformation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -198,9 +198,9 @@ void ANNformationClass::formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneur
 	}
 
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-	this->addSideConnectionsForLayer(firstInputNeuron);
-	this->addSideConnectionsForLayer(firstHiddenNeuron);
-	this->addSideConnectionsForLayer(firstOutputNeuron);
+	addSideConnectionsForLayer(firstInputNeuron);
+	addSideConnectionsForLayer(firstHiddenNeuron);
+	addSideConnectionsForLayer(firstOutputNeuron);
 	#endif
 }
 
@@ -272,7 +272,7 @@ ANNneuron* ANNformationClass::formNeuralNetWithOptimisedProperties(ANNneuron* fi
 	maxNumRecursiveSubnets = DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH;
 	probabilityANNneuronConnectionWithAllPreviousLayersNeurons = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH;
 
-	firstOutputNeuronInNetwork = this->formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+	firstOutputNeuronInNetwork = formNeuralNet(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 
 	return firstOutputNeuronInNetwork;
 }
@@ -287,7 +287,7 @@ ANNneuron* ANNformationClass::formNeuralNet(ANNneuron* firstInputNeuron, const l
 	double subnetNumberOfLayersModifier = 0.0;
 	bool useSubnetDependentNumberOfLayers = false;
 
-	firstOutputNeuronInNetwork = this->formNonDistinctLayeredNeuralNetwork(firstInputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+	firstOutputNeuronInNetwork = formNonDistinctLayeredNeuralNetwork(firstInputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 
 	return firstOutputNeuronInNetwork;
 }
@@ -301,7 +301,7 @@ ANNneuron* ANNformationClass::formAdvancedNeuralNetwork(ANNneuron* firstInputNeu
 
 	ANNneuron* firstOutputNeuronInNetwork;
 
-	firstOutputNeuronInNetwork = this->formNonDistinctLayeredNeuralNetwork(firstInputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+	firstOutputNeuronInNetwork = formNonDistinctLayeredNeuralNetwork(firstInputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 
 	return firstOutputNeuronInNetwork;
 }
@@ -314,14 +314,14 @@ ANNneuron* ANNformationClass::formNonDistinctLayeredNeuralNetwork(ANNneuron* fir
 
 	if((layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING_SQUARE2D))
 	{
- 		this->createInputLayerInNeuralNetwork2D(firstInputNeuronInNetwork, numberOfInputNeurons);
+ 		createInputLayerInNeuralNetwork2D(firstInputNeuronInNetwork, numberOfInputNeurons);
 	}
 	else
 	{
- 		this->createInputLayerInNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons);
+ 		createInputLayerInNeuralNetwork(firstInputNeuronInNetwork, numberOfInputNeurons);
 	}
 
-	firstOutputNeuronInNetwork = this->fillNonDistinctHiddenLayer(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfInputNeurons, 1, numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, 1, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInNetwork, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, false);
+	firstOutputNeuronInNetwork = fillNonDistinctHiddenLayer(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfInputNeurons, 1, numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, 1, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInNetwork, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, false);
 
 	return firstOutputNeuronInNetwork;
 }
@@ -544,8 +544,8 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers(ANNneuron* firstNeur
 	}
 
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-	this->addSideConnectionsForLayer(firstNeuronInCurrentLayer);	//only required for input layer*
-	this->addSideConnectionsForLayer(firstNeuronInNewFrontLayer);
+	addSideConnectionsForLayer(firstNeuronInCurrentLayer);	//only required for input layer*
+	addSideConnectionsForLayer(firstNeuronInNewFrontLayer);
 	#endif
 }
 
@@ -622,9 +622,9 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNe
 				if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D)
 				{
 					#ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
-					double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
+					double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
 					#else
-					double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
+					double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
 					#endif
 
 					if(distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
@@ -638,9 +638,9 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNe
 
 				#ifdef IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_USE_NEARBY_POINTS_INSTEAD
 					#ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
-					long distanceBetweenNeuronL1AndL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
+					long distanceBetweenNeuronL1AndL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
 					#else
-					long distanceBetweenNeuronL1AndL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
+					long distanceBetweenNeuronL1AndL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
 					#endif
 
 					//if(abs(distanceBetweenNeuronL1AndL1CorrespondingToL2*IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS) < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
@@ -650,11 +650,11 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNe
 					}
 
 				#else
-					long distanceBetweenNeuronL1AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
+					long distanceBetweenNeuronL1AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
 					#ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
-					long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
+					long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
 					#else
-					long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
+					long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
 					#endif
 
 					if(abs((distanceBetweenNeuronL1AndCentreOfMap-distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap)*IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS) < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
@@ -753,9 +753,9 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNe
 					if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D)
 					{
 						#ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
-						double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
+						double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
 						#else
-						double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
+						double distanceBetweenPosRelL1AndPosRelL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
 						#endif
 
 
@@ -768,9 +768,9 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNe
 					{
 					#ifdef IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_USE_NEARBY_POINTS_INSTEAD
 						#ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
-						long distanceBetweenNeuronL1AndL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
+						long distanceBetweenNeuronL1AndL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
 						#else
-						long distanceBetweenNeuronL1AndL1CorrespondingToL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
+						long distanceBetweenNeuronL1AndL1CorrespondingToL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL1CorrespondingToL2, yPosRelL1, yPosRelL1CorrespondingToL2);
 						#endif
 
 						//if(abs(distanceBetweenNeuronL1AndL1CorrespondingToL2*IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS) < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
@@ -780,11 +780,11 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNe
 						}
 
 					#else
-						long distanceBetweenNeuronL1AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
+						long distanceBetweenNeuronL1AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
 						#ifdef LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
-						long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
+						long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
 						#else
-						long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
+						long distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0), yPosRelL1CorrespondingToL2, (sqrt(double(numberOfNeuronsInCurrentLayer))/2.0));
 						#endif
 
 						if(abs((distanceBetweenNeuronL1AndCentreOfMap-distanceBetweenNeuronL1CorrespondingToL2AndCentreOfMap)*IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS) < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
@@ -825,8 +825,8 @@ void ANNformationClass::linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNe
 	}
 
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-	this->addSideConnectionsForLayer2D(firstNeuronInCurrentLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);	//only required for input layer*
-	this->addSideConnectionsForLayer2D(firstNeuronInNewFrontLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);
+	addSideConnectionsForLayer2D(firstNeuronInCurrentLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);	//only required for input layer*
+	addSideConnectionsForLayer2D(firstNeuronInNewFrontLayer, layerDivergenceType, currentNumberOfLayers, numberOfLayers);
 	#endif
 }
 
@@ -858,19 +858,19 @@ ANNneuron* ANNformationClass::fillNonDistinctHiddenLayer(ANNneuron* firstNeuronI
 	//Create neurons for the new front layer
 
 	long numberOfNeuronsInNewFrontLayer;
-	numberOfNeuronsInNewFrontLayer = this->calculateNumberOfNeuronsInNewFrontLayer(numberOfInputNeurons, numberOfOutputNeurons, numberOfNeuronsInCurrentLayer, currentNumberOfLayers, numberOfLayers, meanLayerDivergenceFactor, layerDivergenceType);
+	numberOfNeuronsInNewFrontLayer = calculateNumberOfNeuronsInNewFrontLayer(numberOfInputNeurons, numberOfOutputNeurons, numberOfNeuronsInCurrentLayer, currentNumberOfLayers, numberOfLayers, meanLayerDivergenceFactor, layerDivergenceType);
 
 	ANNneuron* firstNeuronInNewFrontLayer = new ANNneuron();
 
-	this->createNewFrontLayer(firstNeuronInCurrentLayer, firstNeuronInNewFrontLayer, numberOfNeuronsInNewFrontLayer, currentNumberOfLayers, numberOfLayers);
+	createNewFrontLayer(firstNeuronInCurrentLayer, firstNeuronInNewFrontLayer, numberOfNeuronsInNewFrontLayer, currentNumberOfLayers, numberOfLayers);
 
 	if((layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS) || (layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING_SQUARE2D))
 	{
-		this->linkNewFrontLayerWithPreviousLayers2D(firstNeuronInCurrentLayer, firstNeuronInNewFrontLayer, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, numberOfInputNeurons, numberOfOutputNeurons, currentNumberOfLayers, numberOfLayers, numberOfNeuronsInCurrentLayer, numberOfNeuronsInNewFrontLayer, layerDivergenceType, onlyLinkWithPreviousAndFirstLayer);
+		linkNewFrontLayerWithPreviousLayers2D(firstNeuronInCurrentLayer, firstNeuronInNewFrontLayer, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, numberOfInputNeurons, numberOfOutputNeurons, currentNumberOfLayers, numberOfLayers, numberOfNeuronsInCurrentLayer, numberOfNeuronsInNewFrontLayer, layerDivergenceType, onlyLinkWithPreviousAndFirstLayer);
 	}
 	else
 	{
-		this->linkNewFrontLayerWithPreviousLayers(firstNeuronInCurrentLayer, firstNeuronInNewFrontLayer, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, numberOfInputNeurons, numberOfOutputNeurons, currentNumberOfLayers, onlyLinkWithPreviousAndFirstLayer);
+		linkNewFrontLayerWithPreviousLayers(firstNeuronInCurrentLayer, firstNeuronInNewFrontLayer, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, numberOfInputNeurons, numberOfOutputNeurons, currentNumberOfLayers, onlyLinkWithPreviousAndFirstLayer);
 	}
 
 
@@ -945,11 +945,11 @@ ANNneuron* ANNformationClass::fillNonDistinctHiddenLayer(ANNneuron* firstNeuronI
 						currentNeuronL1->firstNeuronInBackLayerOfSubnet = firstNeuronInBackLayerOfSubnet;
 
 						ANNneuron* firstNeuronInFrontLayerOfSubnet;
-						long numberOfHiddenLayersInSubnet = this->calcNumberOfLayersInSubnet(numNeuronsInBackLayerOfSubnet, numNeuronsInFrontLayerOfSubnet, currentNumberOfRecursiveSubnets, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier);
+						long numberOfHiddenLayersInSubnet = calcNumberOfLayersInSubnet(numNeuronsInBackLayerOfSubnet, numNeuronsInFrontLayerOfSubnet, currentNumberOfRecursiveSubnets, maxNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier);
 						#define NONLINEARDIVERGENCEFACTOR (1)
 
 
-						firstNeuronInFrontLayerOfSubnet = this->fillNonDistinctHiddenLayer(firstNeuronInBackLayerOfSubnet, numNeuronsInBackLayerOfSubnet, numNeuronsInFrontLayerOfSubnet, numNeuronsInBackLayerOfSubnet, 1, numberOfHiddenLayersInSubnet, probabilityOfSubnetCreation*NONLINEARDIVERGENCEFACTOR, maxNumberOfRecursiveSubnets, currentNumberOfRecursiveSubnets+1, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstNeuronInBackLayerOfSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, onlyLinkWithPreviousAndFirstLayer);
+						firstNeuronInFrontLayerOfSubnet = fillNonDistinctHiddenLayer(firstNeuronInBackLayerOfSubnet, numNeuronsInBackLayerOfSubnet, numNeuronsInFrontLayerOfSubnet, numNeuronsInBackLayerOfSubnet, 1, numberOfHiddenLayersInSubnet, probabilityOfSubnetCreation*NONLINEARDIVERGENCEFACTOR, maxNumberOfRecursiveSubnets, currentNumberOfRecursiveSubnets+1, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstNeuronInBackLayerOfSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, onlyLinkWithPreviousAndFirstLayer);
 
 						currentNeuronL1->firstNeuronInFrontLayerOfSubnet = firstNeuronInFrontLayerOfSubnet;
 							//now replace output layer of subnet with frontLayerOfSubnet [this is not necessary as 1-1 mapping will be assumed here during the neural network training / update algorithm]
@@ -982,7 +982,7 @@ ANNneuron* ANNformationClass::fillNonDistinctHiddenLayer(ANNneuron* firstNeuronI
 	else
 	{
 		//now recurse
-		firstOutputNeuronInNetwork = this->fillNonDistinctHiddenLayer(firstNeuronInNewFrontLayer, numberOfInputNeurons, numberOfOutputNeurons, numberOfNeuronsInNewFrontLayer, (currentNumberOfLayers+1), numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, currentNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, onlyLinkWithPreviousAndFirstLayer);
+		firstOutputNeuronInNetwork = fillNonDistinctHiddenLayer(firstNeuronInNewFrontLayer, numberOfInputNeurons, numberOfOutputNeurons, numberOfNeuronsInNewFrontLayer, (currentNumberOfLayers+1), numberOfLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, currentNumberOfRecursiveSubnets, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInSubnet, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, onlyLinkWithPreviousAndFirstLayer);
 	}
 
 	return firstOutputNeuronInNetwork;
@@ -1105,11 +1105,11 @@ long ANNformationClass::calculateNumberOfNeuronsInNewFrontLayer(const long numbe
 
 				if(currentNumberOfLayers < (numberOfLayers/2))
 				{
-					currentNumberDivergenceNeurons = numberOfInputNeurons* meanLayerDivergenceFactor* this->advancedDivergenceFactor(currentNumberOfLayers, numberOfLayers)* currentNumberOfLayers;
+					currentNumberDivergenceNeurons = numberOfInputNeurons* meanLayerDivergenceFactor* advancedDivergenceFactor(currentNumberOfLayers, numberOfLayers)* currentNumberOfLayers;
 				}
 				else
 				{
-					currentNumberDivergenceNeurons = numberOfInputNeurons* meanLayerDivergenceFactor* this->advancedDivergenceFactor((numberOfLayers - currentNumberOfLayers), numberOfLayers)* currentNumberOfLayers;
+					currentNumberDivergenceNeurons = numberOfInputNeurons* meanLayerDivergenceFactor* advancedDivergenceFactor((numberOfLayers - currentNumberOfLayers), numberOfLayers)* currentNumberOfLayers;
 				}
 			}
 
@@ -1287,7 +1287,7 @@ void ANNformationClass::addSideConnectionsForLayer(ANNneuron* firstNeuronInLayer
 		ANNneuron* currentNeuronL2 = firstNeuronInLayer;
 		while(currentNeuronL2->nextNeuron != NULL)
 		{
-			this->addSideConnectionIfNotAlreadyAdded(currentNeuronL1, currentNeuronL2);
+			addSideConnectionIfNotAlreadyAdded(currentNeuronL1, currentNeuronL2);
 			currentNeuronL2 = currentNeuronL2->nextNeuron;
 		}
 		currentNeuronL1 = currentNeuronL1->nextNeuron;
@@ -1324,7 +1324,7 @@ void ANNformationClass::addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLay
 
 				if(layerDivergenceType == LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D)
 				{
-					double distanceBetweenPosRelL1AndPosRelL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
+					double distanceBetweenPosRelL1AndPosRelL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
 
 
 					if(distanceBetweenPosRelL1AndPosRelL2 < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))			//(tempLayerIndex/currentNumberOfLayers)
@@ -1337,7 +1337,7 @@ void ANNformationClass::addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLay
 
 					#ifdef IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_USE_NEARBY_POINTS_INSTEAD
 
-					long distanceBetweenNeuronL1AndL2 = this->calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
+					long distanceBetweenNeuronL1AndL2 = calculateDistanceBetween2Points(xPosRelL1, xPosRelL2, yPosRelL1, yPosRelL2);
 
 					//if(abs(distanceBetweenNeuronL1AndL2*IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS) < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
 					if(distanceBetweenNeuronL1AndL2 < IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS)
@@ -1346,8 +1346,8 @@ void ANNformationClass::addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLay
 					}
 
 					#else
-					long distanceBetweenNeuronL1AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL1, (sqrt(double(numberOfNeuronsInL1))/2.0), yPosRelL1, (sqrt(double(numberOfNeuronsInL1))/2.0));
-					long distanceBetweenNeuronL2AndCentreOfMap = this->calculateDistanceBetween2Points(xPosRelL2, (sqrt(double(numberOfNeuronsInL1))/2.0), yPosRelL2, (sqrt(double(numberOfNeuronsInL1))/2.0));
+					long distanceBetweenNeuronL1AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL1, (sqrt(double(numberOfNeuronsInL1))/2.0), yPosRelL1, (sqrt(double(numberOfNeuronsInL1))/2.0));
+					long distanceBetweenNeuronL2AndCentreOfMap = calculateDistanceBetween2Points(xPosRelL2, (sqrt(double(numberOfNeuronsInL1))/2.0), yPosRelL2, (sqrt(double(numberOfNeuronsInL1))/2.0));
 
 					if(abs((distanceBetweenNeuronL1AndCentreOfMap-distanceBetweenNeuronL2AndCentreOfMap)*IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS) < (((double)currentNumberOfLayers/(double)numberOfLayers)*maxDistanceBetweenTwoPointsIn2DMapL1))
 					{
@@ -1368,7 +1368,7 @@ void ANNformationClass::addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLay
 
 				if(randomNumberBetween0And1 < probabilityANNneuronConnectionWithSideLayerNeurons)
 				{//add connections to side layer neuron
-					this->addSideConnectionIfNotAlreadyAdded(currentNeuronL1, currentNeuronL2);
+					addSideConnectionIfNotAlreadyAdded(currentNeuronL1, currentNeuronL2);
 				}
 			}
 			currentNeuronL2 = currentNeuronL2->nextNeuron;

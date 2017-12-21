@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -41,13 +41,13 @@ double ANNalgorithmBackpropagationTrainingClass::calculateExperienceErrorForHypo
 {
 	double experienceBackPropagationPassError;
 
-	this->resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
+	resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
 
 	//VERIFICATION METHOD 1;
 	/*
-	this->storeNeuralNetworkBiasAndWeights(firstInputNeuronInNetwork);
+	storeNeuralNetworkBiasAndWeights(firstInputNeuronInNetwork);
 	experienceBackPropagationPassError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuronInNetwork, firstOutputNeuronInNetwork);
-	this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuronInNetwork);
+	restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuronInNetwork);
 	*/
 	
 	//VERIFICATION METHOD 2;
@@ -68,7 +68,7 @@ bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputE
 {
 	bool result = false;
 	
-	this->resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
+	resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
 	ANNalgorithmBackpropagationUpdate.backPropogationForwardPassStep(firstInputNeuronInNetwork);
 
 	double maxOutput = 0.0;
@@ -122,7 +122,7 @@ void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithASetOfExperi
 
 void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithExperienceBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* currentExperience)
 {
-	this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
+	resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 	double trainingErrorNotUsed;
 	trainingErrorNotUsed = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
@@ -131,7 +131,7 @@ void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithExperienceBa
 
 void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
 {
-	this->resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
+	resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
 
 	trainNeuralNetworkBackpropagationSimpleNoReset(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numberOfExperiences);
 }
@@ -153,7 +153,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 		//from start of dataSet -> end of dataSet
 		for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 		{
-			this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
+			resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 			finalError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
@@ -161,7 +161,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 		}
 	}
 
-	this->storeNeuralNetworkBiasAndWeights(firstInputNeuron);	//store these for future use of the network (such that they are not lost during future back props)
+	storeNeuralNetworkBiasAndWeights(firstInputNeuron);	//store these for future use of the network (such that they are not lost during future back props)
 
 
 	//Added by RBB; now test the network across all examples and calculate the average error
@@ -169,15 +169,15 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 	float  sumingTestingError = 0.0F;
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
-		this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
-		this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
+		restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
+		resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 		float testingError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 		sumingTestingError = sumingTestingError + testingError;
 
 		currentExperience = currentExperience->next;
 	}
 
-	this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
+	restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
 
 	//cout << "Final training accuracy for e epochs = " << (1.0F-finalError)*100.0F << "%" <<endl;
@@ -237,7 +237,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 		//train using all sets of data except for test set (= testPermutation)
 
-		this->resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
+		resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
 
 		trainingError = 1.0F;
 
@@ -277,7 +277,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 				//sets inputData into ANN
 				//(NB normalisedInputData[experienceNum][0] is target class
 
-				this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
+				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
 
 				trainingError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
@@ -289,7 +289,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 			currentExperienceInFold = firstExperienceInFoldTrainPartB;
 			for(int experienceNum = indexOfFirstExperienceInFoldTrainPartB; experienceNum<indexOfLastExperienceInFoldTrainPartB; experienceNum++)
 			{
-				this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
+				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
 
 				trainingError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
@@ -305,7 +305,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 			//creates and stores copy of the trained neural network
 
-			this->storeNeuralNetworkBiasAndWeights(firstInputNeuron);
+			storeNeuralNetworkBiasAndWeights(firstInputNeuron);
 
 			//now determine the number of epochs ep that result in best performance on the respective test partition
 
@@ -315,9 +315,9 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 			currentExperienceInFold = firstExperienceInFoldTestPart;
 			for(int experienceNum = indexOfFirstExperienceInFoldTestPart; experienceNum < indexOfLastExperienceInFoldTestPart; experienceNum++)
 			{
-				this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
+				restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
-				this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
+				resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperienceInFold);
 
 				testingError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
@@ -329,7 +329,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 			//resets the trained neural network to the stored copy
 
-			this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
+			restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
 			currentAverageTestingError = sumingTestingError/(float(numberOfExperiences)/float(maxFolds));
 
@@ -396,9 +396,9 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 	float averageTotalTrainingEpochs = totalTrainingEpochs/float(maxFolds);
 
 	//calculate standard deviations;
-	float sdTrainingError = this->calculateStandardDeviation(trainingErrorArray, maxFolds, averageTrainingError);
-	float sdTestingError = this->calculateStandardDeviation(testingErrorArray, maxFolds, averageTestingError);
-	float sdTotalTrainingEpochs = this->calculateStandardDeviation(trainingEpochsNumberArray, maxFolds, averageTotalTrainingEpochs);
+	float sdTrainingError = calculateStandardDeviation(trainingErrorArray, maxFolds, averageTrainingError);
+	float sdTestingError = calculateStandardDeviation(testingErrorArray, maxFolds, averageTestingError);
+	float sdTotalTrainingEpochs = calculateStandardDeviation(trainingEpochsNumberArray, maxFolds, averageTotalTrainingEpochs);
 
 	//time feedback (used to calculate the optimum number of hidden neurons
 	/*
@@ -425,7 +425,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 
 	//now train the network on all examples for the mean number of epochs across all folds
-	this->resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
+	resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
 
 	float finalError;
 	for(int e=0;e < averageTotalTrainingEpochs;e++)
@@ -435,7 +435,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 		//from start of dataSet -> end of dataSet
 		for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 		{
-			this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
+			resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 			finalError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
@@ -444,7 +444,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 		}
 	}
 
-	this->storeNeuralNetworkBiasAndWeights(firstInputNeuron);	//store these for future use of the network (such that they are not lost during future back props)
+	storeNeuralNetworkBiasAndWeights(firstInputNeuron);	//store these for future use of the network (such that they are not lost during future back props)
 
 
 #ifdef TEMP_OUTPUT_HIGH_ERROR_EXPERIENCES
@@ -462,9 +462,9 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
 	{
-		this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
+		restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
-		this->resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
+		resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
 		float testingError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuron, firstOutputNeuron);
 
@@ -483,7 +483,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 		currentExperience = currentExperience->next;
 	}
 
-	this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
+	restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuron);
 
 	delete trainingEpochsNumberArray;
 	delete trainingErrorArray;
@@ -562,7 +562,7 @@ void ANNalgorithmBackpropagationTrainingClass::storeNeuralNetworkBiasAndWeights(
 			#ifdef ANN_SUBNETS
 			if(currentNeuronReference->isSubnet)
 			{
-				this->storeNeuralNetworkBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
+				storeNeuralNetworkBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 			#endif
 		}
@@ -573,7 +573,7 @@ void ANNalgorithmBackpropagationTrainingClass::storeNeuralNetworkBiasAndWeights(
 	//recursion [NB there will be unnecessay redundancy here, as the same neuron will be accessed more than once]
 	if(neuronBeingAccessed->hasFrontLayer)
 	{
-		this->storeNeuralNetworkBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
+		storeNeuralNetworkBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
 }
 
@@ -607,7 +607,7 @@ void ANNalgorithmBackpropagationTrainingClass::restoreNeuralNetworkWithStoredBia
 			#ifdef ANN_SUBNETS
 			if(currentNeuronReference->isSubnet)
 			{
-				this->restoreNeuralNetworkWithStoredBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
+				restoreNeuralNetworkWithStoredBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 			#endif
 		}
@@ -619,7 +619,7 @@ void ANNalgorithmBackpropagationTrainingClass::restoreNeuralNetworkWithStoredBia
 	//recursion [NB there will be unnecessay redundancy here, as the same neuron will be accessed more than once]
 	if(neuronBeingAccessed->hasFrontLayer)
 	{
-		this->restoreNeuralNetworkWithStoredBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
+		restoreNeuralNetworkWithStoredBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
 }
 
@@ -674,7 +674,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetNeuralNetworkWithRandomBiasA
 			#ifdef ANN_SUBNETS
 			if(currentNeuronReference->isSubnet)
 			{
-				this->resetNeuralNetworkWithRandomBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
+				resetNeuralNetworkWithRandomBiasAndWeights(currentNeuronReference->firstNeuronInBackLayerOfSubnet);
 			}
 			#endif
 		}
@@ -686,7 +686,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetNeuralNetworkWithRandomBiasA
 	//recursion [NB there will be unnecessay redundancy here, as the same neuron will be accessed more than once]
 	if(neuronBeingAccessed->hasFrontLayer)
 	{
-		this->resetNeuralNetworkWithRandomBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
+		resetNeuralNetworkWithRandomBiasAndWeights(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
 }
 

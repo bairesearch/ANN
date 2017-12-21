@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -99,7 +99,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 			if(!foundCategoryNeuronsThatUseAllInputs)
 			{
 				//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size());
-				this->findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
+				findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 
 				//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 				foundCategoryNeuronsThatUseAllInputs = true;
@@ -142,7 +142,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 				{
 
 					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size());
-					this->findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
+					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 					foundCategoryNeuronsThatUseAllInputs = true;
@@ -168,7 +168,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 				{
 
 					//vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound.size());
-					this->findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
+					findCategoriesForExperienceWrapper(currentNeuron, &inputValuesCategoryFound, &experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 
 					//prevent the needless rexecution of findCategoriesForExperienceWrapper:
 					foundCategoryNeuronsThatUseAllInputs = true;
@@ -186,7 +186,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 			currentNeuron = firstInputNeuron;
 			while(currentNeuron->nextNeuron != NULL)
 			{
-				this->resetIntermediaryNeuronCreatedThisRoundFlag(currentNeuron);
+				resetIntermediaryNeuronCreatedThisRoundFlag(currentNeuron);
 				currentNeuron = currentNeuron->nextNeuron;
 			}
 		}
@@ -201,7 +201,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 			{
 				if(inputValuesCategoryFound[i] == false)
 				{
-					ANNneuronConnection* connection = this->connectNeurons(currentNeuron, experienceClassificationneuronTypeTopLevelCategory);
+					ANNneuronConnection* connection = connectNeurons(currentNeuron, experienceClassificationneuronTypeTopLevelCategory);
 				}
 				i++;
 				currentNeuron = currentNeuron->nextNeuron;
@@ -283,7 +283,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 		currentNeuron = firstInputNeuron;
 		while(currentNeuron->nextNeuron != NULL)
 		{
-			this->resetBackNeuronMatchTemp(currentNeuron);
+			resetBackNeuronMatchTemp(currentNeuron);
 			currentNeuron = currentNeuron->nextNeuron;
 		}
 		#endif
@@ -306,7 +306,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 	ANNneuron* currentNeuron = firstInputNeuron;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		this->pruneNetorkBasedOnRarelyUsedNeurons(currentNeuron, firstOutputNeuron);
+		pruneNetorkBasedOnRarelyUsedNeurons(currentNeuron, firstOutputNeuron);
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 	#endif
@@ -314,7 +314,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 	currentNeuron = firstInputNeuron;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		this->mergeSimilarNeurons(currentNeuron, firstOutputNeuron);
+		mergeSimilarNeurons(currentNeuron, firstOutputNeuron);
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 	#endif
@@ -322,7 +322,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 	currentNeuron = firstInputNeuron;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		this->cullRedundantNeurons(currentNeuron, NULL, firstOutputNeuron);
+		cullRedundantNeurons(currentNeuron, NULL, firstOutputNeuron);
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 	#endif
@@ -341,7 +341,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::resetIntermediaryNeuronCrea
 			frontNeuron->intermediaryNeuronCreatedThisRound = false;
 		}
 
-		this->resetIntermediaryNeuronCreatedThisRoundFlag(frontNeuron);
+		resetIntermediaryNeuronCreatedThisRoundFlag(frontNeuron);
 	}
 }
 
@@ -356,7 +356,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::resetBackNeuronMatchTemp(AN
 		if(frontNeuron->backNeuronMatchTemp)
 		{
 			frontNeuron->backNeuronMatchTemp = false;
-			this->resetBackNeuronMatchTemp(frontNeuron);
+			resetBackNeuronMatchTemp(frontNeuron);
 		}
 	}
 }
@@ -379,12 +379,12 @@ void ANNalgorithmClassificationNetworkTrainingClass::pruneNetorkBasedOnRarelyUse
 		if(frontNeuron->memoryTrace < ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_MINIMUM_MEMORY_TRACE_TO_RETAIN_CATEGORY_NEURON)
 		{
 			cout << "pruneNetorkBasedOnRarelyUsedNeurons{}: pruning neuron" << endl;
-			this->deleteNeuron(frontNeuron, categoryNeuron, firstOutputNeuron);
+			deleteNeuron(frontNeuron, categoryNeuron, firstOutputNeuron);
 			connectionIter = categoryNeuron->frontANNneuronConnectionList.erase(connectionIter);
 		}
 		else
 		{
-			this->pruneNetorkBasedOnRarelyUsedNeurons(frontNeuron, firstOutputNeuron);
+			pruneNetorkBasedOnRarelyUsedNeurons(frontNeuron, firstOutputNeuron);
 			connectionIter++;
 		}
 	}
@@ -454,7 +454,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::mergeSimilarNeurons(ANNneur
 					currentANNneuronConnectionBack->idealValue = (currentANNneuronConnectionBack->idealValue + currentANNneuronConnectionBack->tempIdealValue)/2.0;
 				}
 
-				this->deleteNeuron(frontNeuron2, categoryNeuron, firstOutputNeuron);
+				deleteNeuron(frontNeuron2, categoryNeuron, firstOutputNeuron);
 				connectionIter2 = categoryNeuron->frontANNneuronConnectionList.erase(connectionIter2);
 			}
 			else
@@ -465,7 +465,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::mergeSimilarNeurons(ANNneur
 		}
 
 		i1++;
-		this->mergeSimilarNeurons(frontNeuron, firstOutputNeuron);
+		mergeSimilarNeurons(frontNeuron, firstOutputNeuron);
 	}
 }
 #endif
@@ -525,7 +525,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::cullRedundantNeurons(ANNneu
 	if(neuronIsRedundant)
 	{
 		cout << "ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS{}: cullRedundantNeurons - culling redundant neuron" << endl;
-		this->deleteNeuron(categoryNeuron, parentNeuron, firstOutputNeuron);
+		deleteNeuron(categoryNeuron, parentNeuron, firstOutputNeuron);
 		cout << "deleted neuron" << endl;
 	}
 	else
@@ -534,7 +534,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::cullRedundantNeurons(ANNneu
 		{
 			ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 			ANNneuron* frontNeuron = currentANNneuronConnection->frontNeuron;
-			if(this->cullRedundantNeurons(frontNeuron, categoryNeuron, firstOutputNeuron))
+			if(cullRedundantNeurons(frontNeuron, categoryNeuron, firstOutputNeuron))
 			{
 				connectionIter = categoryNeuron->frontANNneuronConnectionList.erase(connectionIter);
 			}
@@ -577,7 +577,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::deleteNeuron(ANNneuron* fro
 				}
 			}
 		}
-		this->updateConnectionIdealValuesParent(frontNeuronBackNeuron, false);
+		updateConnectionIdealValuesParent(frontNeuronBackNeuron, false);
 	}
 
 	for(vector<ANNneuronConnection*>::iterator connectionIter2 = frontNeuron->frontANNneuronConnectionList.begin(); connectionIter2 != frontNeuron->frontANNneuronConnectionList.end(); connectionIter2++)
@@ -641,7 +641,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 				if(!(frontNeuron->intermediaryNeuronCreatedThisRound))	//added 4a3h
 				{
 					double inputValue = categoryNeuron->output;
-					if(this->calculateDiff(currentANNneuronConnectionFront->idealValue, inputValue) < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)	//CHECKTHIS - use the same threshold?
+					if(calculateDiff(currentANNneuronConnectionFront->idealValue, inputValue) < ANN_ALGORITHM_CLASSIFICATION_NETWORK_CATEGORY_INDIVIDUAL_DIFF_THRESHOLD)	//CHECKTHIS - use the same threshold?
 					{
 
 						int createIntermediaryNeuronsStageAbove = 0;
@@ -657,7 +657,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 						ANNneuron experienceClassificationneuronTypeTopLevelCategoryTEMP;
 						ANNneuron* experienceClassificationneuronTypeTopLevelCategoryTEMPpointer = &experienceClassificationneuronTypeTopLevelCategoryTEMP;
 						vector<bool> inputValuesCategoryFoundAbove(inputValuesCategoryFound->size());	//ensure that values are initialised to false
-						this->findCategoriesForExperienceWrapper(frontNeuron, &inputValuesCategoryFoundAbove, &experienceClassificationneuronTypeTopLevelCategoryTEMPpointer, createIntermediaryNeuronsStageAbove);
+						findCategoriesForExperienceWrapper(frontNeuron, &inputValuesCategoryFoundAbove, &experienceClassificationneuronTypeTopLevelCategoryTEMPpointer, createIntermediaryNeuronsStageAbove);
 
 						int numberOfInputMatchesMaxAbove = 0;
 						for(vector<bool>::iterator inputValuesCategoryFoundAboveIter = inputValuesCategoryFoundAbove.begin(); inputValuesCategoryFoundAboveIter != inputValuesCategoryFoundAbove.end(); inputValuesCategoryFoundAboveIter++)
@@ -669,7 +669,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 						}
 
 						vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound->size());	//ensure that values are initialised to false
-						bool foundCategoriesForExperience = this->findCategoriesForExperience(frontNeuron, &inputValuesCategoryFoundTemp, 0);
+						bool foundCategoriesForExperience = findCategoriesForExperience(frontNeuron, &inputValuesCategoryFoundTemp, 0);
 
 
 						int numberOfInputMatches = 0;
@@ -772,7 +772,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 													cout << "\t\t (createIntermediaryNeuronsStage == 2)" << endl;
 													//#endif
 
-													ANNneuronConnection* connection = this->connectNeurons(frontNeuron, *experienceClassificationneuronTypeTopLevelCategory);
+													ANNneuronConnection* connection = connectNeurons(frontNeuron, *experienceClassificationneuronTypeTopLevelCategory);
 													//NOTREQUIRED: set output of experienceClassificationneuronTypeTopLevelCategory
 													//(*experienceClassificationneuronTypeTopLevelCategory)->output = (*experienceClassificationneuronTypeTopLevelCategory)->output + connection->idealValue;
 
@@ -796,7 +796,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 									}
 
 									//recurse
-									//this->findCategoriesForExperienceWrapper(frontNeuron, inputValuesCategoryFound, experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
+									//findCategoriesForExperienceWrapper(frontNeuron, inputValuesCategoryFound, experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 								}
 								else
 								{
@@ -839,7 +839,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 												backConnectionIter = frontNeuron->backANNneuronConnectionList.erase(backConnectionIter);
 												currentANNneuronConnection->frontNeuron = intermediaryCategoryNeuron;
 												intermediaryCategoryNeuron->backANNneuronConnectionList.push_back(currentANNneuronConnection);
-												this->updateConnectionIdealValue(currentANNneuronConnection);
+												updateConnectionIdealValue(currentANNneuronConnection);
 
 												intermediaryCategoryNeuronTotalOutput = intermediaryCategoryNeuronTotalOutput + frontNeuronBackNeuron->output;
 
@@ -855,8 +855,8 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 												frontNeuronNumInputConnectionsNew++;
 											}
 										}
-										intermediaryCategoryNeuron->output = this->calculateOutput(intermediaryCategoryNeuronTotalOutput, intermediaryCategoryNeuronNumInputConnections);
-										frontNeuron->output = this->calculateOutput(frontNeuronTotalOutputNew, frontNeuronNumInputConnectionsNew);
+										intermediaryCategoryNeuron->output = calculateOutput(intermediaryCategoryNeuronTotalOutput, intermediaryCategoryNeuronNumInputConnections);
+										frontNeuron->output = calculateOutput(frontNeuronTotalOutputNew, frontNeuronNumInputConnectionsNew);
 										//NOTREQUIRED: set output of experienceClassificationneuronTypeTopLevelCategory
 
 										/*
@@ -890,7 +890,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 										frontNeuronBackNeuronXposAvg = frontNeuronBackNeuronXposAvg/numberOfBackMatchesNew;
 										frontNeuronBackNeuronYposAvg = frontNeuronBackNeuronYposAvg/numberOfBackMatchesNew;
 
-										ANNneuronConnection* connection1 = this->connectNeurons(intermediaryCategoryNeuron, frontNeuron);
+										ANNneuronConnection* connection1 = connectNeurons(intermediaryCategoryNeuron, frontNeuron);
 
 										//updateConnectionIdealValuesParent(frontNeuron);	//added 4a3t, removed 4a11b
 
@@ -898,17 +898,17 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 										intermediaryCategoryNeuron->xPosRelFrac = (frontNeuronBackNeuronXposAvg + frontNeuron->xPosRelFrac)/2.0;
 										intermediaryCategoryNeuron->yPosRelFrac = (frontNeuronBackNeuronYposAvg + frontNeuron->yPosRelFrac)/2.0;
 
-										ANNneuronConnection* connection2 = this->connectNeurons(intermediaryCategoryNeuron, *experienceClassificationneuronTypeTopLevelCategory);
+										ANNneuronConnection* connection2 = connectNeurons(intermediaryCategoryNeuron, *experienceClassificationneuronTypeTopLevelCategory);
 
 										intermediaryCategoryNeuron->backNeuronMatchTemp = true;
-										this->updateConnectionIdealValuesChildren(intermediaryCategoryNeuron, true);	//added 4a11b
+										updateConnectionIdealValuesChildren(intermediaryCategoryNeuron, true);	//added 4a11b
 
 
 
 
 										#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK_ALLOW_FOR_CASE_WHERE_INTERMEDIARY_NEURON_IS_CONNECTED_TO_ALL_INPUTS
 										vector<bool> inputFound(inputValuesCategoryFound->size());
-										this->findInputs(intermediaryCategoryNeuron, &inputFound, 0);
+										findInputs(intermediaryCategoryNeuron, &inputFound, 0);
 										bool foundAllInputs = true;
 										for(int i=0; i<inputValuesCategoryFound->size(); i++)
 										{
@@ -1000,7 +1000,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 							if(foundCategoriesForExperience || (createIntermediaryNeuronsStage == ANN_ALGORITHM_CLASSIFICATION_NETWORK_STAGE_3above))	//NB if this criterion fails, then the above level can be accessed via another route (ie via another back/input neuron)
 							{
 								//recurse
-								this->findCategoriesForExperienceWrapper(frontNeuron, inputValuesCategoryFound, experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
+								findCategoriesForExperienceWrapper(frontNeuron, inputValuesCategoryFound, experienceClassificationneuronTypeTopLevelCategory, createIntermediaryNeuronsStage);
 							}
 						}
 					}
@@ -1029,7 +1029,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findInputs(ANNneuron* categ
 		ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 		ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
 
-		this->findInputs(backNeuron, inputFound, (level+1));
+		findInputs(backNeuron, inputFound, (level+1));
 
 		if(backNeuron->neuronTypeInput)
 		{
@@ -1055,7 +1055,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 		ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
 
 		vector<bool> inputValuesCategoryFoundTemp(inputValuesCategoryFound->size());
-		if(this->findCategoriesForExperience(backNeuron, &inputValuesCategoryFoundTemp, (level+1)))
+		if(findCategoriesForExperience(backNeuron, &inputValuesCategoryFoundTemp, (level+1)))
 		{
 			backNeuron->backNeuronMatchTemp = true;
 
@@ -1078,9 +1078,9 @@ bool ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 			allInputNeuronsForCategoryHaveMatchingValues = false;
 		}
 
-		double currentDiff = this->calculateDiff(currentANNneuronConnection->idealValue, backNeuron->output);
+		double currentDiff = calculateDiff(currentANNneuronConnection->idealValue, backNeuron->output);
 		totalDiff = totalDiff + currentDiff;
-		totalOutput = totalOutput + this->calculateSum(backNeuron->output);
+		totalOutput = totalOutput + calculateSum(backNeuron->output);
 
 
 
@@ -1089,7 +1089,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 
 	if(!(categoryNeuron->neuronTypeInput))
 	{
-		categoryNeuron->output = this->calculateOutput(totalOutput, numberOfBackConnections);
+		categoryNeuron->output = calculateOutput(totalOutput, numberOfBackConnections);
 
 	}
 
@@ -1140,7 +1140,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 			ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 			ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
 
-			double currentDiff = this->calculateDiff(currentANNneuronConnection->idealValue, backNeuron->output);
+			double currentDiff = calculateDiff(currentANNneuronConnection->idealValue, backNeuron->output);
 
 			if(backNeuron->neuronTypeInput)
 			{
@@ -1184,7 +1184,7 @@ ANNneuronConnection* ANNalgorithmClassificationNetworkTrainingClass::connectNeur
 		exit(EXIT_ERROR);
 	}
 
-	this->updateConnectionIdealValue(newANNneuronConnection);
+	updateConnectionIdealValue(newANNneuronConnection);
 
 	return newANNneuronConnection;
 }
@@ -1199,16 +1199,16 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValues
 		if(frontNeuron->backNeuronMatchTemp && updateIdealValues)
 		{
 			frontNeuron->backNeuronMatchTemp = false;
-			this->updateConnectionIdealValue(currentANNneuronConnection);
+			updateConnectionIdealValue(currentANNneuronConnection);
 		}
 		else
 		{
 		#endif
-			this->updateConnectionIdealValueNoUpdating(currentANNneuronConnection);
+			updateConnectionIdealValueNoUpdating(currentANNneuronConnection);
 		#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
 		}
 		#endif
-		this->updateConnectionIdealValuesParent(frontNeuron, updateIdealValues);
+		updateConnectionIdealValuesParent(frontNeuron, updateIdealValues);
 	}
 }
 
@@ -1221,10 +1221,10 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValues
 			ANNneuronConnection* currentANNneuronConnection = *backConnectionIter;
 			ANNneuron* backNeuron = currentANNneuronConnection->backNeuron;
 
-			this->updateConnectionIdealValuesChildren(backNeuron, updateIdealValues);
+			updateConnectionIdealValuesChildren(backNeuron, updateIdealValues);
 		}
 
-		this->updateConnectionIdealValuesParent(categoryNeuron, updateIdealValues);
+		updateConnectionIdealValuesParent(categoryNeuron, updateIdealValues);
 	}
 }
 
@@ -1234,7 +1234,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValue(
 	//test without network updates;
 	//if(connection->idealValue == 0)
 	//{
-		this->updateConnectionIdealValueNoUpdating(connection);
+		updateConnectionIdealValueNoUpdating(connection);
 	//}
 	#else
 	if(connection->backNeuron->neuronTypeInput)
@@ -1243,7 +1243,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValue(
 	}
 	else
 	{
-		connection->idealValue = connection->idealValue + (this->calculateIdealOutputValue(connection->backNeuron) - connection->idealValue)/(connection->frontNeuron->memoryTrace); //nb this will evaluate to output if ideal value is 0 and memory trace is 1
+		connection->idealValue = connection->idealValue + (calculateIdealOutputValue(connection->backNeuron) - connection->idealValue)/(connection->frontNeuron->memoryTrace); //nb this will evaluate to output if ideal value is 0 and memory trace is 1
 	}
 	#endif
 }
@@ -1259,7 +1259,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValueN
 	}
 	else
 	{
-		connection->idealValue = this->calculateIdealOutputValue(connection->backNeuron);
+		connection->idealValue = calculateIdealOutputValue(connection->backNeuron);
 	}
 }
 
@@ -1273,7 +1273,7 @@ double ANNalgorithmClassificationNetworkTrainingClass::calculateIdealOutputValue
 		totalIdealOutputValue = totalIdealOutputValue + currentANNneuronConnection->idealValue;
 		i++;
 	}
-	double idealOutputValue = this->calculateOutput(totalIdealOutputValue, i);
+	double idealOutputValue = calculateOutput(totalIdealOutputValue, i);
 	return idealOutputValue;
 }
 

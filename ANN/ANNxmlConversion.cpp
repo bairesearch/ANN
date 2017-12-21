@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments
  *
  *******************************************************************************/
@@ -40,9 +40,9 @@ ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(stri
 {
 	ANNneuron* firstOutputNeuronInNetwork;
 
-	this->readNetXMLfile(xmlFileName, firstInputNeuronInNetwork);
+	readNetXMLfile(xmlFileName, firstInputNeuronInNetwork);
 
-	firstOutputNeuronInNetwork = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers);
+	firstOutputNeuronInNetwork = recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers);
 	return firstOutputNeuronInNetwork;
 }
 
@@ -99,12 +99,12 @@ bool ANNxmlConversionClass::readNetXMLfile(string xmlFileName, ANNneuron* firstI
 		result = false;
 	}
 
-	if(!this->parseNetTag(firstTagInXMLFile, firstInputNeuronInNetwork))
+	if(!parseNetTag(firstTagInXMLFile, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
 
-	if(!this->linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstInputNeuronInNetwork, firstInputNeuronInNetwork, false, NULL))
+	if(!linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstInputNeuronInNetwork, firstInputNeuronInNetwork, false, NULL))
 	{
 		result = false;
 	}
@@ -137,7 +137,7 @@ bool ANNxmlConversionClass::writeNetXMLfile(string xmlFileName, ANNneuron* first
 	currentTagL2->nextTag = newTag2;
 	*/
 
-	if(!this->generateXMLtagListBasedUponSubnet(currentTagL1->firstLowerLevelTag, firstInputNeuronInNetwork))
+	if(!generateXMLtagListBasedUponSubnet(currentTagL1->firstLowerLevelTag, firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
@@ -149,7 +149,7 @@ bool ANNxmlConversionClass::writeNetXMLfile(string xmlFileName, ANNneuron* first
 
 	delete firstTagInXMLFile;
 
-	if(!this->resetPrintedXMLbasedUponLayer(firstInputNeuronInNetwork))
+	if(!resetPrintedXMLbasedUponLayer(firstInputNeuronInNetwork))
 	{
 		result = false;
 	}
@@ -162,7 +162,7 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponSubnet(XMLparserTag* firs
 	bool result = true;
 
 	XMLparserTag* currentTagL0 = firstTagInSubnet;
-	if(!this->generateXMLtagListBasedUponLayer(currentTagL0, firstNeuronInSubnet))
+	if(!generateXMLtagListBasedUponLayer(currentTagL0, firstNeuronInSubnet))
 	{
 		result = false;
 	}
@@ -374,7 +374,7 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 
 				XMLparserTag* newTag1 = new XMLparserTag();
 				currentTagL2->firstLowerLevelTag = newTag1;
-				if(!this->generateXMLtagListBasedUponSubnet(currentTagL2->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet))
+				if(!generateXMLtagListBasedUponSubnet(currentTagL2->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet))
 				{
 					result = false;
 				}
@@ -391,7 +391,7 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
 				{
 					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
-					if(!this->generateXMLtagListBasedUponLayer(firstTagInSubnet, currentANNneuronConnection->frontNeuron))
+					if(!generateXMLtagListBasedUponLayer(firstTagInSubnet, currentANNneuronConnection->frontNeuron))
 					{
 						result = false;
 					}
@@ -410,14 +410,14 @@ bool ANNxmlConversionClass::generateXMLtagListBasedUponLayer(XMLparserTag* first
 	#ifdef ANN_XML_CONVERSION_DO_NOT_RECORD_EMPTY_LAYERS
 	if(!foundNonPrintedNeuronOnLayer)
 	{
-		this->clearTag(layerTag);
+		clearTag(layerTag);
 	}
 	#endif
 
 	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
-		if(!this->generateXMLtagListBasedUponLayer(firstTagInSubnet, firstNeuronInLayer->firstNeuronInFrontLayer))
+		if(!generateXMLtagListBasedUponLayer(firstTagInSubnet, firstNeuronInLayer->firstNeuronInFrontLayer))
 		{
 			result = false;
 		}
@@ -490,7 +490,7 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 
 			bool tempResult = false;
 
-			ANNneuron* neuronToConnect = this->findNeuron(firstInputNeuronInNetwork, currentANNneuronConnection->frontNeuronID, &tempResult);
+			ANNneuron* neuronToConnect = findNeuron(firstInputNeuronInNetwork, currentANNneuronConnection->frontNeuronID, &tempResult);
 			if(tempResult)
 			{
 				//link neurons
@@ -529,14 +529,14 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 				currentNeuron->isOutputSubnet = true;
 			}
 
-			if(!this->linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(currentNeuron->firstNeuronInBackLayerOfSubnet, firstInputNeuronInNetwork, false, NULL))
+			if(!linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(currentNeuron->firstNeuronInBackLayerOfSubnet, firstInputNeuronInNetwork, false, NULL))
 			{
 				result = false;
 			}
 
 			ANNneuron* firstOutputNeuronInSubnet;
 			long temp;
-			firstOutputNeuronInSubnet = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp, &temp);
+			firstOutputNeuronInSubnet = recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp, &temp);
 			currentNeuron->firstNeuronInFrontLayerOfSubnet= firstOutputNeuronInSubnet;
 		}
 		#endif
@@ -545,7 +545,7 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 	}
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
-		if(!this->linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstNeuronInLayer->firstNeuronInFrontLayer, firstInputNeuronInNetwork, true, firstNeuronInLayer))
+		if(!linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(firstNeuronInLayer->firstNeuronInFrontLayer, firstInputNeuronInNetwork, true, firstNeuronInLayer))
 		{
 			result = false;
 		}
@@ -572,7 +572,7 @@ ANNneuron* ANNxmlConversionClass::findNeuron(ANNneuron* firstNeuronInLayer, long
 		{
 			bool tempResult = false;
 			ANNneuron* tempFoundNeuron;
-			tempFoundNeuron = this->findNeuron(currentNeuron->firstNeuronInBackLayerOfSubnet, neuronIDtoFind, &tempResult);
+			tempFoundNeuron = findNeuron(currentNeuron->firstNeuronInBackLayerOfSubnet, neuronIDtoFind, &tempResult);
 			if(tempResult)
 			{
 				*result = true;
@@ -587,7 +587,7 @@ ANNneuron* ANNxmlConversionClass::findNeuron(ANNneuron* firstNeuronInLayer, long
 	{
 		bool tempResult = false;
 		ANNneuron* tempFoundNeuron;
-		tempFoundNeuron = this->findNeuron(firstNeuronInLayer->firstNeuronInFrontLayer, neuronIDtoFind, &tempResult);
+		tempFoundNeuron = findNeuron(firstNeuronInLayer->firstNeuronInFrontLayer, neuronIDtoFind, &tempResult);
 		if(tempResult)
 		{
 			*result = true;
@@ -668,7 +668,7 @@ bool ANNxmlConversionClass::parseNetTag(XMLparserTag* firstTagInNetwork, ANNneur
 		if(currentTagUpdatedL1->name == NET_XML_TAG_subnet)
 		{
 			long wrongAndNotUsedIDcounter = 1;
-			if(!this->parseSubnetTag(currentTagUpdatedL1->firstLowerLevelTag, currentNeuron, 1, &wrongAndNotUsedIDcounter, 1))
+			if(!parseSubnetTag(currentTagUpdatedL1->firstLowerLevelTag, currentNeuron, 1, &wrongAndNotUsedIDcounter, 1))
 			{
 				result = false;
 			}
@@ -696,7 +696,7 @@ bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNne
 	{
 		if(currentTag->name == NET_XML_TAG_layer)
 		{
-			if(!this->parseLayerTag(currentTag->firstLowerLevelTag, firstNeuronInLayer, layerIDcounter++, 1, wrongAndNotUsedIDcounter, subnetIDcounter))
+			if(!parseLayerTag(currentTag->firstLowerLevelTag, firstNeuronInLayer, layerIDcounter++, 1, wrongAndNotUsedIDcounter, subnetIDcounter))
 			{
 				result = false;
 			}
@@ -732,7 +732,7 @@ bool ANNxmlConversionClass::parseLayerTag(XMLparserTag* firstTagInLayer, ANNneur
 	{
 		if(currentTag->name == NET_XML_TAG_neuronContainer)
 		{
-			if(!this->parseNeuronContainerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter, orderIDcounter++, wrongAndNotUsedIDcounter, subnetIDcounter))
+			if(!parseNeuronContainerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter, orderIDcounter++, wrongAndNotUsedIDcounter, subnetIDcounter))
 			{
 				result = false;
 			}
@@ -760,7 +760,7 @@ bool ANNxmlConversionClass::parseNeuronContainerTag(XMLparserTag* firstTagInNeur
 
 	if(currentTag->name == NET_XML_TAG_neuron)
 	{
-		if(!this->parseNeuronTag(currentTag, currentNeuron, layerIDcounter, orderIDcounter, wrongAndNotUsedIDcounter, subnetIDcounter))
+		if(!parseNeuronTag(currentTag, currentNeuron, layerIDcounter, orderIDcounter, wrongAndNotUsedIDcounter, subnetIDcounter))
 		{
 			result = false;
 		}
@@ -773,7 +773,7 @@ bool ANNxmlConversionClass::parseNeuronContainerTag(XMLparserTag* firstTagInNeur
 
 	if(currentTag->name == NET_XML_TAG_forwardANNneuronConnectionsList)
 	{
-		if(!this->parseForwardANNneuronConnectionsListTag(currentTag->firstLowerLevelTag, currentNeuron))
+		if(!parseForwardANNneuronConnectionsListTag(currentTag->firstLowerLevelTag, currentNeuron))
 		{
 			result = false;
 		}
@@ -789,7 +789,7 @@ bool ANNxmlConversionClass::parseNeuronContainerTag(XMLparserTag* firstTagInNeur
 	{
 		ANNneuron* newNeuron = new ANNneuron();
 		currentNeuron->firstNeuronInBackLayerOfSubnet = newNeuron;
-		if(!this->parseSubnetTag(currentTag->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet, 1, wrongAndNotUsedIDcounter, (subnetIDcounter+1)))
+		if(!parseSubnetTag(currentTag->firstLowerLevelTag, currentNeuron->firstNeuronInBackLayerOfSubnet, 1, wrongAndNotUsedIDcounter, (subnetIDcounter+1)))
 		{
 			result = false;
 		}
@@ -818,7 +818,7 @@ bool ANNxmlConversionClass::parseForwardANNneuronConnectionsListTag(XMLparserTag
 		//create a new neuron connection
 		ANNneuronConnection* newANNneuronConnection = new ANNneuronConnection();
 
-		if(!this->parseForwardANNneuronConnectionTag(currentTag, newANNneuronConnection))
+		if(!parseForwardANNneuronConnectionTag(currentTag, newANNneuronConnection))
 		{
 			result = false;
 		}

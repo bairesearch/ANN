@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmMemoryNetworkUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -41,10 +41,10 @@ double ANNalgorithmMemoryNetworkUpdateClass::ANNclassificationAndMemoryPass(ANNn
 	//classification routine
 	ANNalgorithmBackpropagationUpdate.backPropogationForwardPassStep(firstInputNeuronInNetwork);
 
-	this->calculateBinaryOutputCode(firstOutputNeuronInNetwork, trainingClassificationResult);
+	calculateBinaryOutputCode(firstOutputNeuronInNetwork, trainingClassificationResult);
 
 	//memory trace update (write) and detect (read) routine
-	this->memoryTraceForwardPassStep(firstInputNeuronInNetwork, trainingMemoryResult);
+	memoryTraceForwardPassStep(firstInputNeuronInNetwork, trainingMemoryResult);
 
 }
 
@@ -56,7 +56,7 @@ void ANNalgorithmMemoryNetworkUpdateClass::calculateBinaryOutputCode(const ANNne
 	int outputNeuronIndex = 0;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		if(this->isNeuronOutputFire(currentNeuron))
+		if(isNeuronOutputFire(currentNeuron))
 		{
 			*trainingClassificationResult = *trainingClassificationResult + '1';
 		}
@@ -94,7 +94,7 @@ void ANNalgorithmMemoryNetworkUpdateClass::memoryTraceForwardPassStep(ANNneuron*
 
 		if(!(currentNeuron->isSubnet))
 		{
-			this->readAndUpdateMemoryTrace(currentNeuron, trainingMemoryResult);
+			readAndUpdateMemoryTrace(currentNeuron, trainingMemoryResult);
 		}
 
 		currentNeuron = currentNeuron->nextNeuron;
@@ -115,7 +115,7 @@ void ANNalgorithmMemoryNetworkUpdateClass::memoryTraceForwardPassStep(ANNneuron*
 			}
 
 			ANNalgorithmBackpropagationUpdate.copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
-			this->memoryTraceForwardPassStep(currentNeuron->firstNeuronInBackLayerOfSubnet, trainingMemoryResult);	//?ISSUE HERE
+			memoryTraceForwardPassStep(currentNeuron->firstNeuronInBackLayerOfSubnet, trainingMemoryResult);	//?ISSUE HERE
 
 			if(!(currentNeuron->isInputSubnet))
 			{
@@ -131,7 +131,7 @@ void ANNalgorithmMemoryNetworkUpdateClass::memoryTraceForwardPassStep(ANNneuron*
 	//recursion
 	if(neuronBeingAccessed->firstNeuronInFrontLayer->hasFrontLayer)
 	{
-		this->memoryTraceForwardPassStep(neuronBeingAccessed->firstNeuronInFrontLayer, trainingMemoryResult);
+		memoryTraceForwardPassStep(neuronBeingAccessed->firstNeuronInFrontLayer, trainingMemoryResult);
 	}
 }
 
@@ -140,14 +140,14 @@ void ANNalgorithmMemoryNetworkUpdateClass::readAndUpdateMemoryTrace(ANNneuron* c
 	for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuronInLayer->sideANNneuronConnectionList.begin(); connectionIter != currentNeuronInLayer->sideANNneuronConnectionList.end(); connectionIter++)
 	{
 		ANNneuronConnection* currentANNneuronConnectionSide = *connectionIter;
-		bool leftNeuronFire = this->isNeuronOutputFire(currentANNneuronConnectionSide->backNeuron);
-		bool rightNeuronFire = this->isNeuronOutputFire(currentANNneuronConnectionSide->frontNeuron);
+		bool leftNeuronFire = isNeuronOutputFire(currentANNneuronConnectionSide->backNeuron);
+		bool rightNeuronFire = isNeuronOutputFire(currentANNneuronConnectionSide->frontNeuron);
 		bool updateMemoryTrace = false;
 		if(leftNeuronFire && rightNeuronFire)
 		{
 			updateMemoryTrace = true;
-			this->updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(currentANNneuronConnectionSide);
-			this->incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(trainingMemoryResult);
+			updateMemoryTraceBasedOnSimultaneouslyFiredNeuronsIeAssocation(currentANNneuronConnectionSide);
+			incrementMemoryTraceTallyBasedOnSimultaneouslyFiredNeuronsIeAssocation(trainingMemoryResult);
 		}
 	}
 }

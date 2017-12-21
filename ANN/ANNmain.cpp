@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -366,7 +366,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3m9a 16-December-2017" << endl;
+			cout << "Project Version: 3m10a 16-December-2017" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -820,7 +820,7 @@ bool ANNmainClass::trainNetwork(const bool advancedTraining)
 
 	if(!loadedExperienceDataset)
 	{
-		if(!this->loadExperienceDataFile())
+		if(!loadExperienceDataFile())
 		{
 			result = false;
 		}
@@ -986,33 +986,33 @@ bool ANNmainClass::mainUI()
 		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
 		if(answerAsInt == 1)
 		{
-			this->loadNetworkFromXML();
+			loadNetworkFromXML();
 		}
 		#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		else if(answerAsInt == 2)
 		{
-			this->createNetwork();
+			createNetwork();
 		}
 		#endif
 		else if(answerAsInt == 3)
 		{
-			this->loadExperienceDataFile();
+			loadExperienceDataFile();
 		}
 		else if(answerAsInt == 4)
 		{
-			this->trainNetwork(true);
+			trainNetwork(true);
 		}
 		else if(answerAsInt == 8)
 		{
-			this->trainNetwork(false);
+			trainNetwork(false);
 		}
 		else if(answerAsInt == 5)
 		{
-			this->outputNetworkToXML();
+			outputNetworkToXML();
 		}
 		else if(answerAsInt == 6)
 		{
-			this->outputNetworkAsVectorGraphics();
+			outputNetworkAsVectorGraphics();
 		}
 		#ifdef USE_LRRC
 		else if(answerAsInt == 7)

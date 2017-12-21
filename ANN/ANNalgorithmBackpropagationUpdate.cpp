@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -47,11 +47,11 @@ int dataSetNum;
 #ifdef ANN_ALGORITHM_BACKPROPAGATION
 double ANNalgorithmBackpropagationUpdateClass::ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork)
 {
-	this->backPropogationForwardPassStep(firstInputNeuronInNetwork);
+	backPropogationForwardPassStep(firstInputNeuronInNetwork);
 
-	this->backPropogationBackwardPassStep(firstOutputNeuronInNetwork, true, false);
+	backPropogationBackwardPassStep(firstOutputNeuronInNetwork, true, false);
 
-	return this->calculateErrorOfBackPropPass(firstOutputNeuronInNetwork);
+	return calculateErrorOfBackPropPass(firstOutputNeuronInNetwork);
 }
 
 double ANNalgorithmBackpropagationUpdateClass::calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork)
@@ -85,7 +85,7 @@ void ANNalgorithmBackpropagationUpdateClass::calculateErrorOfOutputNeurons(ANNne
 	ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		this->calculateOutputErrorOfOutputNeuron(currentNeuron);
+		calculateOutputErrorOfOutputNeuron(currentNeuron);
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 }
@@ -108,7 +108,7 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationForwardPassStep(ANNn
 	{
 		if(!(currentNeuron->isSubnet))
 		{
-			this->backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(currentNeuron);
+			backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(currentNeuron);
 		}
 		currentNeuron = currentNeuron->nextNeuron;
 	}
@@ -123,18 +123,18 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationForwardPassStep(ANNn
 		{
 			if(!(currentNeuron->isInputSubnet))
 			{
-				this->copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backANNneuronConnectionList), false);
+				copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backANNneuronConnectionList), false);
 			}
 
-			this->copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
-			this->backPropogationForwardPassStep(currentNeuron->firstNeuronInBackLayerOfSubnet);	//?ISSUE HERE
+			copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
+			backPropogationForwardPassStep(currentNeuron->firstNeuronInBackLayerOfSubnet);	//?ISSUE HERE
 
 			if(!(currentNeuron->isInputSubnet))
 			{
-				this->copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->backANNneuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
+				copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->backANNneuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
 			}
 
-			this->copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->frontANNneuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
+			copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->frontANNneuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
 		}
 		currentNeuron = currentNeuron->nextNeuron;
 	}
@@ -143,7 +143,7 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationForwardPassStep(ANNn
 	//recursion
 	if(neuronBeingAccessed->firstNeuronInFrontLayer->hasFrontLayer)
 	{
-		this->backPropogationForwardPassStep(neuronBeingAccessed->firstNeuronInFrontLayer);
+		backPropogationForwardPassStep(neuronBeingAccessed->firstNeuronInFrontLayer);
 	}
 }
 
@@ -162,7 +162,7 @@ void ANNalgorithmBackpropagationUpdateClass::backpropagationAdjustOutputValueOfA
 
 	netI = netI + neuronBeingAccessed->bias;
 
-	neuronBeingAccessed->output = this->calculateOValue(netI);	//set ("hidden") ANNneuron output value
+	neuronBeingAccessed->output = calculateOValue(netI);	//set ("hidden") ANNneuron output value
 }
 
 float ANNalgorithmBackpropagationUpdateClass::calculateOValue(float netValue)
@@ -208,7 +208,7 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationBackwardPassStep(ANN
 		ANNneuron* currentNeuron = neuronBeingAccessed;
 		while(currentNeuron->nextNeuron != NULL)
 		{
-			this->calculateOutputErrorOfOutputNeuron(currentNeuron);
+			calculateOutputErrorOfOutputNeuron(currentNeuron);
 			currentNeuron = currentNeuron->nextNeuron;
 		}
 	}
@@ -219,7 +219,7 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationBackwardPassStep(ANN
 		{
 			if(!(currentNeuron->isSubnet))
 			{
-				this->calculateOutputErrorOfNonoutputNeuron(currentNeuron);
+				calculateOutputErrorOfNonoutputNeuron(currentNeuron);
 			}
 			currentNeuron = currentNeuron->nextNeuron;
 		}
@@ -231,7 +231,7 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationBackwardPassStep(ANN
 	{
 		if(!(currentNeuron->isSubnet))
 		{
-			this->calculateNewBackConnectionWeightsOfNeuron(currentNeuron);
+			calculateNewBackConnectionWeightsOfNeuron(currentNeuron);
 		}
 		currentNeuron = currentNeuron->nextNeuron;
 	}
@@ -242,7 +242,7 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationBackwardPassStep(ANN
 	{
 		if(!(currentNeuron->isSubnet))
 		{
-			this->calculateNewBiasOfNeuron(currentNeuron);
+			calculateNewBiasOfNeuron(currentNeuron);
 		}
 		currentNeuron = currentNeuron->nextNeuron;
 	}
@@ -256,19 +256,19 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationBackwardPassStep(ANN
 		if(currentNeuron->isSubnet)
 		{
 
-			this->copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backANNneuronConnectionList), false);
+			copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backANNneuronConnectionList), false);
 			if(!(currentNeuron->isOutputSubnet))
 			{
-				this->copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
+				copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
 			}
 
-			this->backPropogationBackwardPassStep(currentNeuron->firstNeuronInFrontLayerOfSubnet, true, true);
+			backPropogationBackwardPassStep(currentNeuron->firstNeuronInFrontLayerOfSubnet, true, true);
 				//NB CHECK ANNTHIS new requirement; each subnet must have at least 3 layers
 
-			this->copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->backANNneuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
+			copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->backANNneuronConnectionList), currentNeuron->firstNeuronInBackLayerOfSubnet, false);
 			if(!(currentNeuron->isOutputSubnet))
 			{
-				this->copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->frontANNneuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
+				copyNeuronContainerListToANNneuronConnectionContainerList(&(currentNeuron->frontANNneuronConnectionList), currentNeuron->firstNeuronInFrontLayerOfSubnet, true);
 			}
 		}
 		currentNeuron = currentNeuron->nextNeuron;
@@ -280,14 +280,14 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationBackwardPassStep(ANN
 	{
 		if(neuronBeingAccessed->hasBackLayer)
 		{
-			this->backPropogationBackwardPassStep(neuronBeingAccessed->firstNeuronInBackLayer, false, isSubnet);
+			backPropogationBackwardPassStep(neuronBeingAccessed->firstNeuronInBackLayer, false, isSubnet);
 		}
 	}
 	else
 	{
 		if(neuronBeingAccessed->firstNeuronInBackLayer->hasBackLayer)
 		{
-			this->backPropogationBackwardPassStep(neuronBeingAccessed->firstNeuronInBackLayer, false, isSubnet);
+			backPropogationBackwardPassStep(neuronBeingAccessed->firstNeuronInBackLayer, false, isSubnet);
 		}
 	}
 }

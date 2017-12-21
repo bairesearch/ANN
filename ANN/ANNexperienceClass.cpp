@@ -25,7 +25,7 @@
  * File Name: ANNexperienceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m9a 16-December-2017
+ * Project Version: 3m10a 16-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -123,7 +123,7 @@ long ANNexperienceClassClass::countNumberOfExperiences(const ANNexperience* firs
 	const ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		this->countNumberOfExperienceInputs(currentExperience);
+		countNumberOfExperienceInputs(currentExperience);
 
 		numberOfExperiences++;
 		currentExperience = currentExperience->next;
@@ -152,7 +152,7 @@ void ANNexperienceClassClass::printExperiences(const ANNexperience* firstExperie
 		cout << "ANNexperience:" << endl;
 		cout << "class Target = " << currentExperience->classTargetValue << endl;
 
-		this->printExperienceInputs(currentExperience);
+		printExperienceInputs(currentExperience);
 
 		currentExperience = currentExperience->next;
 	}
@@ -163,7 +163,7 @@ void ANNexperienceClassClass::addExperiencesToOFStream(ofstream* experienceDataS
 	const ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)
 	{
-		this->addExperienceToOFStream(experienceDataSetOfStreamObject, currentExperience);
+		addExperienceToOFStream(experienceDataSetOfStreamObject, currentExperience);
 		currentExperience = currentExperience->next;
 	}
 }
