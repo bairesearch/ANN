@@ -25,7 +25,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m7a 13-December-2017
+ * Project Version: 3m8a 14-December-2017
  * Comments
  *
  *******************************************************************************/
@@ -36,17 +36,17 @@
 
 //this function works and no longer needs to be tested
 
-ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons)
+ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons, long* numberOfLayers)
 {
 	ANNneuron* firstOutputNeuronInNetwork;
 
 	this->readNetXMLfile(xmlFileName, firstInputNeuronInNetwork);
 
-	firstOutputNeuronInNetwork = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons);
+	firstOutputNeuronInNetwork = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(firstInputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfLayers);
 	return firstOutputNeuronInNetwork;
 }
 
-ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons)
+ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons, long* numberOfLayers)
 {
 	ANNneuron* firstOutputNeuronInNetwork;
 
@@ -59,7 +59,7 @@ ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsI
 	{
 		ANNneuron* firstNeuronInLayer = currentNeuron;
 
-		bool numNeuronsInCurrentLayer = 0;
+		long numNeuronsInCurrentLayer = 0;
 		while(currentNeuron->nextNeuron != NULL)
 		{
 			numNeuronsInCurrentLayer++;
@@ -536,7 +536,7 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 
 			ANNneuron* firstOutputNeuronInSubnet;
 			long temp;
-			firstOutputNeuronInSubnet = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp);
+			firstOutputNeuronInSubnet = this->recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp, &temp);
 			currentNeuron->firstNeuronInFrontLayerOfSubnet= firstOutputNeuronInSubnet;
 		}
 		#endif
@@ -686,7 +686,7 @@ bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNne
 {
 	bool result = true;
 
-	ANNneuron* currentNeuron = firstNeuronInSubnet;
+	ANNneuron* firstNeuronInLayer = firstNeuronInSubnet;
 
 	XMLparserTag* currentTag = firstTagInSubnet;
 
@@ -696,16 +696,16 @@ bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNne
 	{
 		if(currentTag->name == NET_XML_TAG_layer)
 		{
-			if(!this->parseLayerTag(currentTag->firstLowerLevelTag, currentNeuron, layerIDcounter++, 1, wrongAndNotUsedIDcounter, subnetIDcounter))
+			if(!this->parseLayerTag(currentTag->firstLowerLevelTag, firstNeuronInLayer, layerIDcounter++, 1, wrongAndNotUsedIDcounter, subnetIDcounter))
 			{
 				result = false;
 			}
 			else
 			{
-				recordOfFirstNeuronInPreviousLayer = currentNeuron;	//to stop an additional layer being added
+				recordOfFirstNeuronInPreviousLayer = firstNeuronInLayer;	//to stop an additional layer being added
 				ANNneuron* newNeuron = new ANNneuron();
-				currentNeuron->firstNeuronInFrontLayer = newNeuron;
-				currentNeuron = currentNeuron->firstNeuronInFrontLayer;
+				firstNeuronInLayer->firstNeuronInFrontLayer = newNeuron;
+				firstNeuronInLayer = firstNeuronInLayer->firstNeuronInFrontLayer;
 			}
 		}
 		else
@@ -714,7 +714,9 @@ bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNne
 		}
 		currentTag=currentTag->nextTag;
 	}
-	recordOfFirstNeuronInPreviousLayer ->firstNeuronInFrontLayer=NULL;	//to stop an additional layer being added
+	
+	delete recordOfFirstNeuronInPreviousLayer->firstNeuronInFrontLayer;
+	recordOfFirstNeuronInPreviousLayer->firstNeuronInFrontLayer=NULL;	//to stop an additional layer being added
 
 	return result;
 }

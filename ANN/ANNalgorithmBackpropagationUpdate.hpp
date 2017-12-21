@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationUpdate.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m7a 13-December-2017
+ * Project Version: 3m8a 14-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -45,7 +45,7 @@ class ANNalgorithmBackpropagationUpdateClass
 	private: ANNneuronClassClass ANNneuronClass;
 	#ifdef ANN_ALGORITHM_BACKPROPAGATION
 	public: double ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork);
-		private: double calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork);
+		public: double calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork);
 		private: void calculateErrorOfOutputNeurons(ANNneuron* firstOutputNeuronInNetwork);
 	#endif
 		public: void backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed);

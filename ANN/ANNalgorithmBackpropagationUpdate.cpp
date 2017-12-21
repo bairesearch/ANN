@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m7a 13-December-2017
+ * Project Version: 3m8a 14-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -47,7 +47,6 @@ int dataSetNum;
 #ifdef ANN_ALGORITHM_BACKPROPAGATION
 double ANNalgorithmBackpropagationUpdateClass::ANNbackPropogationPass(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork)
 {
-
 	this->backPropogationForwardPassStep(firstInputNeuronInNetwork);
 
 	this->backPropogationBackwardPassStep(firstOutputNeuronInNetwork, true, false);
@@ -58,13 +57,11 @@ double ANNalgorithmBackpropagationUpdateClass::ANNbackPropogationPass(ANNneuron*
 double ANNalgorithmBackpropagationUpdateClass::calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork)
 {
 	/*
-
 	Error for signle training example over all output neurons:
 
 	E = 1/2 SUM(0->i) e(i)^2 = 1/2 SUM (d(i) - o(i))^2
 
 	therefore...
-
 	*/
 
 	double total2xError = 0.0;
@@ -72,18 +69,12 @@ double ANNalgorithmBackpropagationUpdateClass::calculateErrorOfBackPropPass(cons
 	const ANNneuron* currentNeuron = firstOutputNeuronInNetwork;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-
 		total2xError = total2xError + pow((currentNeuron->classTarget - currentNeuron->output), 2.0);
-
 		/*total2xError = total2xError + pow((classTarget[i] - outputs2[i]),2);*/
-
-
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 
 	float totalError = 0.5F* total2xError;
-
-
 
 	return total2xError;
 }
@@ -111,17 +102,14 @@ void ANNalgorithmBackpropagationUpdateClass::calculateErrorOfOutputNeurons(ANNne
 
 void ANNalgorithmBackpropagationUpdateClass::backPropogationForwardPassStep(ANNneuron* neuronBeingAccessed)
 {
-
 	ANNneuron* currentNeuron = neuronBeingAccessed->firstNeuronInFrontLayer;
 
 	while(currentNeuron->nextNeuron != NULL)
 	{
-
 		if(!(currentNeuron->isSubnet))
 		{
 			this->backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(currentNeuron);
 		}
-
 		currentNeuron = currentNeuron->nextNeuron;
 	}
 
@@ -133,7 +121,6 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationForwardPassStep(ANNn
 	{
 		if(currentNeuron->isSubnet)
 		{
-
 			if(!(currentNeuron->isInputSubnet))
 			{
 				this->copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInBackLayerOfSubnet, &(currentNeuron->backANNneuronConnectionList), false);
@@ -164,23 +151,18 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationForwardPassStep(ANNn
 //Only [top level]/[foward level]/[final] Output Neurons have "Class Target" values
 void ANNalgorithmBackpropagationUpdateClass::backpropagationAdjustOutputValueOfANeuronBasedOnBackNeurons(ANNneuron* neuronBeingAccessed)
 {
-
 	//for every ANNneuron being accessed
 
 	float netI = 0.0;
 	for(vector<ANNneuronConnection*>::iterator connectionIter = neuronBeingAccessed->backANNneuronConnectionList.begin(); connectionIter != neuronBeingAccessed->backANNneuronConnectionList.end(); connectionIter++)
 	{
 		ANNneuronConnection* currentANNneuronConnection = *connectionIter;
-
 		netI = netI + (currentANNneuronConnection->backNeuron->output* currentANNneuronConnection->weight);
-
-
 	}
 
 	netI = netI + neuronBeingAccessed->bias;
 
 	neuronBeingAccessed->output = this->calculateOValue(netI);	//set ("hidden") ANNneuron output value
-
 }
 
 float ANNalgorithmBackpropagationUpdateClass::calculateOValue(float netValue)

@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m7a 13-December-2017
+ * Project Version: 3m8a 14-December-2017
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -366,7 +366,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3m7a 13-December-2017" << endl;
+			cout << "Project Version: 3m8a 14-December-2017" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -463,10 +463,11 @@ int main(const int argc,const char* *argv)
 
 		long numberOfInputNeuronsLoaded;
 		long numberOfOutputNeuronsLoaded;
-
+		long numberOfLayersLoaded;
+			
 		string xmlFileName = inputXMLFileName;
 
-		firstOutputNeuronInNetwork = ANNxmlConversionClass().readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
+		firstOutputNeuronInNetwork = ANNxmlConversionClass().readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded, &numberOfLayersLoaded);
 
 		numberOfInputNeurons = numberOfInputNeuronsLoaded;
 		numberOfOutputNeurons = numberOfOutputNeuronsLoaded;
@@ -605,10 +606,11 @@ bool ANNmainClass::loadNetworkFromXML()
 
 	long numberOfInputNeuronsLoaded;
 	long numberOfOutputNeuronsLoaded;
+	long numberOfLayersLoaded;
 
 	string xmlFileName = NET_XML_FILE_NAME;
 
-	firstOutputNeuronInNetwork = ANNxmlConversion.readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded);
+	firstOutputNeuronInNetwork = ANNxmlConversion.readNetXMLfileAndRecordFormationVariables(xmlFileName, firstInputNeuronInNetwork, &numberOfInputNeuronsLoaded, &numberOfOutputNeuronsLoaded, &numberOfLayersLoaded);
 
 	numberOfInputNeurons = numberOfInputNeuronsLoaded;
 	numberOfOutputNeurons = numberOfOutputNeuronsLoaded;

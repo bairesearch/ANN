@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m7a 13-December-2017
+ * Project Version: 3m8a 14-December-2017
  * Comments:
  *
  *******************************************************************************/
@@ -41,30 +41,68 @@ double ANNalgorithmBackpropagationTrainingClass::calculateExperienceErrorForHypo
 {
 	double experienceBackPropagationPassError;
 
-	this->storeNeuralNetworkBiasAndWeights(firstInputNeuronInNetwork);
-
 	this->resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
 
 	//VERIFICATION METHOD 1;
+	/*
+	this->storeNeuralNetworkBiasAndWeights(firstInputNeuronInNetwork);
 	experienceBackPropagationPassError = ANNalgorithmBackpropagationUpdate.ANNbackPropogationPass(firstInputNeuronInNetwork, firstOutputNeuronInNetwork);
-
-	/*//VERIFICATION METHOD 2;
-	forwardPassStep(firstInputNeuronInNetwork);
-
-	//NB calculate error of output neurons
-	calculateErrorOfOutputNeurons(firstOutputNeuronInNetwork);
-
-	experienceBackPropagationPassError = calculateErrorOfBackPropPass(firstOutputNeuronInNetwork);
+	this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuronInNetwork);
 	*/
+	
+	//VERIFICATION METHOD 2;
+	ANNalgorithmBackpropagationUpdate.backPropogationForwardPassStep(firstInputNeuronInNetwork);
+	experienceBackPropagationPassError = ANNalgorithmBackpropagationUpdate.calculateErrorOfBackPropPass(firstOutputNeuronInNetwork);
 
+	/*
 	if(experienceBackPropagationPassError > MAX_ANN_BACK_PROPAGATION_ERROR)
 	{
 		experienceBackPropagationPassError = (MAX_ANN_BACK_PROPAGATION_ERROR-1.0);
 	}
-
-	this->restoreNeuralNetworkWithStoredBiasAndWeights(firstInputNeuronInNetwork);
+	*/
 
 	return experienceBackPropagationPassError;
+}
+
+bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputExperience(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* experience, int* idealClassTarget, double* experienceBackPropagationPassError)
+{
+	bool result = false;
+	
+	this->resetInputsAndClassTargets(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, experience);
+	ANNalgorithmBackpropagationUpdate.backPropogationForwardPassStep(firstInputNeuronInNetwork);
+
+	double maxOutput = 0.0;
+	int outputNeuronIndexWithMaxOutput = INT_DEFAULT_VALUE;
+	ANNneuron* currentNeuronReference = firstOutputNeuronInNetwork;
+	for(long i = 0; i < numberOfOutputNeurons; i++)
+	{
+		cout << "currentNeuronReference->output = " << currentNeuronReference->output << ", i = " << i << endl;
+		if(currentNeuronReference->output > maxOutput)
+		{
+			outputNeuronIndexWithMaxOutput = i;
+			maxOutput = currentNeuronReference->output;
+		}
+		currentNeuronReference = currentNeuronReference->nextNeuron;
+	}
+	
+	currentNeuronReference = firstOutputNeuronInNetwork;
+	for(long i = 0; i < numberOfOutputNeurons; i++)
+	{		
+		currentNeuronReference->classTarget = 0.0F;
+		if(i == outputNeuronIndexWithMaxOutput)
+		{
+			currentNeuronReference->classTarget = 1.0F;
+		}
+		currentNeuronReference = currentNeuronReference->nextNeuron;
+	}
+
+	*experienceBackPropagationPassError = ANNalgorithmBackpropagationUpdate.calculateErrorOfBackPropPass(firstOutputNeuronInNetwork);
+	
+	if(*experienceBackPropagationPassError < MAX_ANN_BACK_PROPAGATION_ERROR)
+	{
+		*idealClassTarget = outputNeuronIndexWithMaxOutput;
+		result = true;
+	}
 }
 
 
@@ -668,16 +706,13 @@ void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneu
 	}
 
 	currentNeuronReference = firstOutputNeuron;
-	
 	for(long i = 0; i < numberOfOutputNeurons; i++)
 	{
 		currentNeuronReference->classTarget = 0.0F;
-
 		if(i == currentExperienceInDataSet->classTargetValue)
 		{
 			currentNeuronReference->classTarget = 1.0F;
 		}
-
 		currentNeuronReference = currentNeuronReference->nextNeuron;
 	}
 

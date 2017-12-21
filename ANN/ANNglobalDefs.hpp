@@ -25,7 +25,7 @@
  * File Name: ANNglobalsDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2017 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m7a 13-December-2017
+ * Project Version: 3m8a 14-December-2017
  * Description: ANN specific global definitions
  *
  * Usage Examples:
@@ -171,6 +171,10 @@
 	#define IF_LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS_BIAS (1.0)
 #endif
 #define LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_USE_CENTRED
+
+	//ANN, LRRC, + OR;
+//Test variables (need optimisation)
+#define MAX_ANN_BACK_PROPAGATION_ERROR (1000.0)
 
 
 
