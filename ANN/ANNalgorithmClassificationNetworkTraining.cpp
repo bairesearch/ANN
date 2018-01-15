@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m11a 10-January-2018
+ * Project Version: 3m11b 10-January-2018
  * Comments:
  *
  *******************************************************************************/
@@ -33,7 +33,7 @@
 
 #include "ANNalgorithmClassificationNetworkTraining.hpp"
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
-//#include "ANNdisplay.hpp"
+#include "ANNdisplay.hpp"
 #endif
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
@@ -252,14 +252,13 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 
 
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
-		/*
 		bool addSprites = true;
 		bool allowRaytrace = false;
 		bool displayInOpenGL = false;
 		bool useOutputLDRFile = false;
 		bool useOutputPPMFile = false;
 		bool useOutputSVGFile = true;
-		string indexString = convertIntToString(experienceNum);
+		string indexString = SHAREDvars.convertIntToString(experienceNum);
 		string frameFileNameBase = "neuralNetFrame" + indexString;
 		string outputLDRFileName = frameFileNameBase + ".ldr";
 		string outputSVGFileName = frameFileNameBase + ".svg";
@@ -268,15 +267,12 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 		string outputTALFileName = "";
 		int rasterImageWidth = 1024;
 		int rasterImageHeight = 768;
-		outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputSVGFile, useOutputPPMFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
-		*/
-		/*
+		ANNdisplay.outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuron, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputSVGFile, useOutputPPMFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, rasterImageWidth, rasterImageHeight);
 		if(experienceNum == 3)
 		{
 			cerr << "ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK debug: exiting early" << endl;
 			exit(EXIT_ERROR);
 		}
-		*/
 		#endif
 
 		#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS

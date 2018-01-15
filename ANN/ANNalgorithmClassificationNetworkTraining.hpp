@@ -25,7 +25,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m11a 10-January-2018
+ * Project Version: 3m11b 10-January-2018
  * Comments:
  *
  *******************************************************************************/
@@ -40,6 +40,9 @@
 #include "ANNexperienceClass.hpp"
 #include "ANNalgorithmClassificationNetworkUpdate.hpp"
 #include "ANNdata.hpp"
+#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
+#include "ANNdisplay.hpp"
+#endif
 #include "SHAREDvars.hpp"
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
@@ -47,6 +50,9 @@
 class ANNalgorithmClassificationNetworkTrainingClass
 {
 	private: SHAREDvarsClass SHAREDvars;
+	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
+	private: ANNdisplayClass ANNdisplay;
+	#endif
 	public: void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
 		private: void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron);
 	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS

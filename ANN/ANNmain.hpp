@@ -25,7 +25,7 @@
  * File Name: ANNmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m11a 10-January-2018
+ * Project Version: 3m11b 10-January-2018
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -51,6 +51,7 @@
 #include "ANNdraw.hpp"
 #include "ANNdisplay.hpp"
 #include "ANNdata.hpp"
+#include "ANNexperienceClass.hpp"
 #include "LDsvg.hpp"
 #include "LDopengl.hpp"
 #include "LDsprite.hpp"
@@ -99,6 +100,7 @@ class ANNmainClass
 	private: ANNalgorithmClassificationNetworkTrainingClass ANNalgorithmClassificationNetworkTraining;
 	#endif
 	private: ANNdisplayClass ANNdisplay;
+	private: ANNexperienceClassClass ANNexperienceClass;
 	private: LDopenglClass LDopengl;
 
 	public: bool mainUI();
@@ -111,6 +113,8 @@ class ANNmainClass
 	private: bool trainNetwork(const bool advancedTraining);
 	private: bool outputNetworkToXML();
 	private: bool outputNetworkAsVectorGraphics();
+	
+	public: bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs);
 };
 
 

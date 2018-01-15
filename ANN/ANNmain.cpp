@@ -25,7 +25,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m11a 10-January-2018
+ * Project Version: 3m11b 10-January-2018
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -366,7 +366,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3m11a 10-January-2018" << endl;
+			cout << "Project Version: 3m11b 10-January-2018" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -1033,6 +1033,66 @@ bool ANNmainClass::mainUI()
 	return result;
 }
 
+
+
+bool ANNmainClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs)
+{
+	bool result = true;
+
+	cout << "num experiences in list = " << ANNexperienceClass.countNumberOfExperiences(firstExperienceInList) << endl;
+
+	long numberOfExperiences = ANNexperienceClass.countNumberOfExperiences(firstExperienceInList);
+
+	if(useFoldsDuringTraining)
+	{
+		int maxFolds = MAX_NUM_FOLDS_ANNTH;
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION
+		int maxNumEpochs = maxOrSetNumEpochs;
+		ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences, maxNumEpochs);
+		#endif
+		#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+		ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences);
+		#endif
+		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
+		#endif
+		//this is done dynamically if do not have heaps of RAM
+	}
+	else
+	{
+		#ifdef ANN_ALGORITHM_BACKPROPAGATION
+		int setNumEpochs = maxOrSetNumEpochs; //ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS;
+		ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, setNumEpochs, firstExperienceInList, numberOfExperiences);
+		#endif
+		#ifdef ANN_ALGORITHM_MEMORY_NETWORK
+		ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
+		#endif
+		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
+		#endif
+	}
+
+
+#ifndef USE_OR
+	if(!ANNxmlConversion.writeNetXMLfile(*XMLNNSceneFileName, firstInputNeuronInNetwork))
+	{
+		result = false;
+	}
+
+	string vectorGraphicsLDRNNSceneFileName = charstarvectorGraphicsLDRNNSceneFileName;
+	string vectorGraphicsTALNNSceneFileName = charstarvectorGraphicsTALNNSceneFileName;
+	string raytracedImagePPMNNSceneFileName = charstarraytracedImagePPMNNSceneFileName;
+	string outputSVGFileName = "";
+	string outputPPMFileName = "";
+	ANNdisplay.outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, false, true, false, true, vectorGraphicsLDRNNSceneFileName, NULL, NULL, raytracedImagePPMNNSceneFileName, vectorGraphicsTALNNSceneFileName, NULL, NULL);
+
+
+	ANNdisplay.writeExperienceListToFile(charstarexperienceNNSceneFileName, firstExperienceInList);
+
+#endif
+
+	return result;
+}
 
 
 

@@ -25,7 +25,7 @@
  * File Name: ANNexperienceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m11a 10-January-2018
+ * Project Version: 3m11b 10-January-2018
  * Comments:
  *
  *******************************************************************************/
@@ -36,6 +36,9 @@
 ANNexperience::ANNexperience(void)
 {
 	classTargetValue = 0;
+	#ifdef ANN_EXPERIENCE_CLASS_PREDICTION_ERROR
+	predictionError = 0.0;
+	#endif
 	firstExperienceInput = new ANNexperienceInput();
 	next = NULL;
 }

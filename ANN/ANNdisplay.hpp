@@ -25,7 +25,7 @@
  * File Name: ANNdisplay.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m11a 10-January-2018
+ * Project Version: 3m11b 10-January-2018
  * Comments: TH = Test Harness
  *
  *******************************************************************************/
@@ -37,12 +37,9 @@
 #include "ANNneuronClass.hpp"
 #include "ANNglobalDefs.hpp"
 #include "ANNformation.hpp"
-#include "ANNalgorithmBackpropagationTraining.hpp"
-#include "ANNalgorithmMemoryNetworkTraining.hpp"
-#include "ANNalgorithmClassificationNetworkTraining.hpp"
 #include "ANNxmlConversion.hpp"
 #include "ANNdraw.hpp"
-#include "ANNalgorithmBackpropagationUpdate.hpp"
+//#include "ANNalgorithmBackpropagationUpdate.hpp"
 #include "LDparser.hpp"
 #include "LDreferenceManipulation.hpp"
 #include "LDsvg.hpp"
@@ -57,15 +54,6 @@ class ANNdisplayClass
 {
 	private: ANNexperienceClassClass ANNexperienceClass;
 	private: RTpixelMapsClass RTpixelMaps;
-	#ifdef ANN_ALGORITHM_BACKPROPAGATION
-	private: ANNalgorithmBackpropagationTrainingClass ANNalgorithmBackpropagationTraining;
-	#endif
-	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-	private: ANNalgorithmMemoryNetworkTrainingClass ANNalgorithmMemoryNetworkTraining;
-	#endif
-	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-	private: ANNalgorithmClassificationNetworkTrainingClass ANNalgorithmClassificationNetworkTraining;
-	#endif
 	private: ANNxmlConversionClass ANNxmlConversion;
 	private: ANNdrawClass ANNdraw;
 	private: LDreferenceManipulationClass LDreferenceManipulation;
@@ -80,10 +68,9 @@ class ANNdisplayClass
 	private: void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, long objectDecision);
 	#endif
 
-	private: bool trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs);	//OLD wrapper function: this does not support full set of ANN features (SVG, opengl output etc)
-		public: void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool displayInOpenGL, bool useOutputLDRFile, bool useOutputSVGFile, bool useOutputPPMFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height);
+	public: void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool displayInOpenGL, bool useOutputLDRFile, bool useOutputSVGFile, bool useOutputPPMFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height);
 
-	private: void writeExperienceListToFile(char* fileName, ANNexperience* firstExperienceInList);
+	public: void writeExperienceListToFile(char* fileName, ANNexperience* firstExperienceInList);
 };
 
 #endif
