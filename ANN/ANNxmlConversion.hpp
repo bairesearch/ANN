@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments
  * /
  *******************************************************************************/
@@ -111,18 +111,18 @@ class ANNxmlConversionClass
 			private: bool generateXMLtagListBasedUponLayer(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInLayer);
 			private: bool resetPrintedXMLbasedUponLayer(ANNneuron* firstNeuronInLayer);
 
-	public: ANNneuron* readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons, long* numberOfLayers);
+	public: ANNneuron* readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, int64_t* numberOfInputNeurons, int64_t* numberOfOutputNeurons, int64_t* numberOfLayers);
 		private: bool readNetXMLfile(string xmlFileName, ANNneuron* firstInputNeuronInNetwork);
 			private: bool parseNetTag(XMLparserTag* firstTagInNetwork, ANNneuron* currentNeuron);
-				private: bool parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet, long layerIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter);
-					private: bool parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter);
-						private: bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter);
-							private: bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter);
+				private: bool parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet, int64_t layerIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter);
+					private: bool parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer, int64_t layerIDcounter, int64_t orderIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter);
+						private: bool parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron* currentNeuron, int64_t layerIDcounter, int64_t orderIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter);
+							private: bool parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, int64_t layerIDcounter, int64_t orderIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter);
 							private: bool parseForwardANNneuronConnectionsListTag(XMLparserTag* firstTagInForwardANNneuronConnectionsList, ANNneuron* currentNeuron);
 									private: bool parseForwardANNneuronConnectionTag(XMLparserTag* currentTag, ANNneuronConnection* currentANNneuronConnection);
 			private: bool linkLayerXNeuronsBasedUponFrontANNneuronConnectionListNeuronIDs(ANNneuron* firstNeuronInLayer, ANNneuron* firstInputNeuronInNetwork, bool hasBackLayer, ANNneuron* firstNeuronInBackLayer);
-				private: ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* result);
-		private: ANNneuron* recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons, long* numberOfLayers);
+				private: ANNneuron* findNeuron(ANNneuron* firstNeuronInLayer, int64_t neuronIDtoFind, bool* result);
+		private: ANNneuron* recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, int64_t* numberOfInputNeurons, int64_t* numberOfOutputNeurons, int64_t* numberOfLayers);
 
 	private: void clearTag(XMLparserTag* tag);
 };

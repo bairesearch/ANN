@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmMemoryNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -37,7 +37,7 @@
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
 
-void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
+void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	/*
 	network structure
@@ -93,7 +93,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemorySimple(ANNn
 
 
 
-void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
+void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	/*
 	network structure
@@ -114,16 +114,16 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron*
 		int numberOfExperiencesTrain = 0;
 		int numberOfExperiencesTest = 0;
 
-		long indexOfFirstExperienceInFoldTrainPartA = 0;
-		long indexOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
+		int64_t indexOfFirstExperienceInFoldTrainPartA = 0;
+		int64_t indexOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
 		ANNexperience* firstExperienceInFoldTrainPartA = firstExperienceInDataSet;
 
-		long indexOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
-		long indexOfLastExperienceInFoldTrainPartB = numberOfExperiences;
+		int64_t indexOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
+		int64_t indexOfLastExperienceInFoldTrainPartB = numberOfExperiences;
 		ANNexperience* firstExperienceInFoldTrainPartB = ANNexperienceClass.findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTrainPartB);
 
-		long indexOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
-		long indexOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
+		int64_t indexOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
+		int64_t indexOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
 		ANNexperience* firstExperienceInFoldTestPart = ANNexperienceClass.findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTestPart);
 
 		/*
@@ -337,7 +337,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAnd
 	}
 }
 
-void ANNalgorithmMemoryNetworkTrainingClass::resetInputs(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
+void ANNalgorithmMemoryNetworkTrainingClass::resetInputs(ANNneuron* firstInputNeuron, const int64_t numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
 {
 
 	//sets inputData into ANN
@@ -345,7 +345,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetInputs(ANNneuron* firstInputNe
 
 	ANNneuron* currentNeuronReference = firstInputNeuron;
 	ANNexperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
-	for(long i = 0; i < numberOfInputNeurons; i++)
+	for(int64_t i = 0; i < numberOfInputNeurons; i++)
 	{
 		currentNeuronReference->output = currentExperienceInputInExperience->inputValue;	 //normalisedInputData[testSegment][(i+1)];
 		currentNeuronReference = currentNeuronReference->nextNeuron;

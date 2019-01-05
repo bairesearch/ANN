@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBreakawayNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -36,7 +36,7 @@
 
 #ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 
-bool ANNalgorithmBreakawayNetworkTrainingClass::trainNeuralNetworkBreakaway(ANNneuron* firstInputNeuronInNetwork, ANNneuron** firstOutputNeuronInNetwork, const int numberOfInputNeurons, const int numberOfOutputNeurons, const bool simple, const int numEpochs, const int maxFolds, const int maxEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences, const int sizeOfSupernet, int numberOfLayersOriginal)
+bool ANNalgorithmBreakawayNetworkTrainingClass::trainNeuralNetworkBreakaway(ANNneuron* firstInputNeuronInNetwork, ANNneuron** firstOutputNeuronInNetwork, const int numberOfInputNeurons, const int numberOfOutputNeurons, const bool simple, const int numEpochs, const int maxFolds, const int maxEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int sizeOfSupernet, int numberOfLayersOriginal)
 {
 	bool result = true;
 	
@@ -53,7 +53,7 @@ bool ANNalgorithmBreakawayNetworkTrainingClass::trainNeuralNetworkBreakaway(ANNn
 	#endif
 	//#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 	double probabilityOfSubnetCreation = 0.0;	/*no divergence = no ANN*/
-	long maxNumberOfRecursiveSubnets = 0;		/*no recursive subnets = no ANN*/
+	int64_t maxNumberOfRecursiveSubnets = 0;		/*no recursive subnets = no ANN*/
 	double subnetNumberOfLayersModifier = 0.0;
 	bool useSubnetDependentNumberOfLayers = false;
 	//#endif

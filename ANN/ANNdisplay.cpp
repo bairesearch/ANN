@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -45,7 +45,7 @@
 
 #ifdef USE_RT
 
-void ANNdisplayClass::generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, long objectDecision)
+void ANNdisplayClass::generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
 	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
@@ -69,7 +69,7 @@ void ANNdisplayClass::generateExperienceWith2DrgbMap(unsigned char* rgbMap, int 
 }
 
 
-void ANNdisplayClass::generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, ANNexperience* currentExperience, long objectDecision)
+void ANNdisplayClass::generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, ANNexperience* currentExperience, int64_t objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
 	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
@@ -90,7 +90,7 @@ void ANNdisplayClass::generateExperienceWith2Dmap(double* lumOrContrastOrDepthMa
 	}
 }
 
-void ANNdisplayClass::generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, long objectDecision)
+void ANNdisplayClass::generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
 	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;

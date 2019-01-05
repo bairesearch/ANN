@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -38,7 +38,7 @@
 
 #ifdef ANN_ALGORITHM_BACKPROPAGATION
 
-double ANNalgorithmBackpropagationTrainingClass::calculateExperienceErrorForHypotheticalDecisionBackpropagation(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* experience)
+double ANNalgorithmBackpropagationTrainingClass::calculateExperienceErrorForHypotheticalDecisionBackpropagation(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience)
 {
 	double experienceBackPropagationPassError;
 
@@ -65,7 +65,7 @@ double ANNalgorithmBackpropagationTrainingClass::calculateExperienceErrorForHypo
 	return experienceBackPropagationPassError;
 }
 
-bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputExperience(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* experience, int* idealClassTarget, double* experienceBackPropagationPassError)
+bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputExperience(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience, int* idealClassTarget, double* experienceBackPropagationPassError)
 {
 	bool result = false;
 	
@@ -75,7 +75,7 @@ bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputE
 	double maxOutput = 0.0;
 	int outputNeuronIndexWithMaxOutput = INT_DEFAULT_VALUE;
 	ANNneuron* currentNeuronReference = firstOutputNeuronInNetwork;
-	for(long i = 0; i < numberOfOutputNeurons; i++)
+	for(int64_t i = 0; i < numberOfOutputNeurons; i++)
 	{
 		cout << "currentNeuronReference->output = " << currentNeuronReference->output << ", i = " << i << endl;
 		if(currentNeuronReference->output > maxOutput)
@@ -87,7 +87,7 @@ bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputE
 	}
 	
 	currentNeuronReference = firstOutputNeuronInNetwork;
-	for(long i = 0; i < numberOfOutputNeurons; i++)
+	for(int64_t i = 0; i < numberOfOutputNeurons; i++)
 	{		
 		currentNeuronReference->classTarget = 0.0F;
 		if(i == outputNeuronIndexWithMaxOutput)
@@ -130,14 +130,14 @@ void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithExperienceBa
 }
 
 
-void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
+void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
 
 	trainNeuralNetworkBackpropagationSimpleNoReset(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numberOfExperiences);
 }
 
-void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimpleNoReset(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences)
+void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimpleNoReset(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	//now train the network on all examples for numEpochs
 	
@@ -190,7 +190,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 
 
-void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences, const int maxEpochs)
+void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int maxEpochs)
 {
 	/*
 	network structure
@@ -255,16 +255,16 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 		bool overFittingData = false;
 
-		long indexOfFirstExperienceInFoldTrainPartA = 0;
-		long indexOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
+		int64_t indexOfFirstExperienceInFoldTrainPartA = 0;
+		int64_t indexOfLastExperienceInFoldTrainPartA = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds));
 		ANNexperience* firstExperienceInFoldTrainPartA = firstExperienceInDataSet;
 
-		long indexOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
-		long indexOfLastExperienceInFoldTrainPartB = numberOfExperiences;
+		int64_t indexOfFirstExperienceInFoldTrainPartB = int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds));
+		int64_t indexOfLastExperienceInFoldTrainPartB = numberOfExperiences;
 		ANNexperience* firstExperienceInFoldTrainPartB = ANNexperienceClass.findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTrainPartB);
 
-		long indexOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
-		long indexOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
+		int64_t indexOfFirstExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds)));
+		int64_t indexOfLastExperienceInFoldTestPart = (int(float(numberOfExperiences)* float(foldNum)/float(maxFolds))+int(float(numberOfExperiences)/float(maxFolds)));
 		ANNexperience* firstExperienceInFoldTestPart = ANNexperienceClass.findExperience(firstExperienceInDataSet, indexOfFirstExperienceInFoldTestPart);
 
 		//training
@@ -453,12 +453,12 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 	ANNexperience* currentExperienceInHighErrorExperienceList = firstExperienceInHighErrorExperienceList;
 #endif
 
-	long experiencesIncorrectlyDiagnosed = 0;
+	int64_t experiencesIncorrectlyDiagnosed = 0;
 
 	//Added by RBB; now test the network across all examples and calculate the average error
 	ANNexperience* currentExperience = firstExperienceInDataSet;
 	float  sumingTestingError = 0.0F;
-	long numberOfExperiencesContributingTowardsFinalTestingError = 0;
+	int64_t numberOfExperiencesContributingTowardsFinalTestingError = 0;
 
 
 	for(int experienceNum = 0; experienceNum < numberOfExperiences; experienceNum++)
@@ -691,7 +691,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetNeuralNetworkWithRandomBiasA
 	}
 }
 
-void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet)
+void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet)
 {
 
 	//sets inputData into ANN
@@ -699,7 +699,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneu
 
 	ANNneuron* currentNeuronReference = firstInputNeuron;
 	ANNexperienceInput* currentExperienceInputInExperience = currentExperienceInDataSet->firstExperienceInput;
-	for(long i = 0; i < numberOfInputNeurons; i++)
+	for(int64_t i = 0; i < numberOfInputNeurons; i++)
 	{
 		currentNeuronReference->output = currentExperienceInputInExperience->inputValue;	 //normalisedInputData[testSegment][(i+1)];
 		currentNeuronReference = currentNeuronReference->nextNeuron;
@@ -707,7 +707,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneu
 	}
 
 	currentNeuronReference = firstOutputNeuron;
-	for(long i = 0; i < numberOfOutputNeurons; i++)
+	for(int64_t i = 0; i < numberOfOutputNeurons; i++)
 	{
 		currentNeuronReference->classTarget = 0.0F;
 		if(i == currentExperienceInDataSet->classTargetValue)

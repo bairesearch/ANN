@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationTraining.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -66,20 +66,20 @@ class ANNalgorithmBackpropagationTrainingClass
 {
 	private: ANNalgorithmBackpropagationUpdateClass ANNalgorithmBackpropagationUpdate;
 	private: ANNexperienceClassClass ANNexperienceClass;
-	public: double calculateExperienceErrorForHypotheticalDecisionBackpropagation(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* experience);
-	public: bool calculateIdealClassTargetOfInputExperience(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* experience, int* idealClassTarget, double* experienceBackPropagationPassError);
+	public: double calculateExperienceErrorForHypotheticalDecisionBackpropagation(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience);
+	public: bool calculateIdealClassTargetOfInputExperience(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience, int* idealClassTarget, double* experienceBackPropagationPassError);
 
 	public: void feedNeuralNetworkWithASetOfExperiencesBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* firstExperienceInList);
 		public: void feedNeuralNetworkWithExperienceBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* currentExperience);
 
-	public: void trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences);
-		public: void trainNeuralNetworkBackpropagationSimpleNoReset(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences);
-	public: void trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const long numberOfExperiences, const int maxEpochs);
+	public: void trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences);
+		public: void trainNeuralNetworkBackpropagationSimpleNoReset(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences);
+	public: void trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int maxEpochs);
 
 		private: void storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed);
 		private: void restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed);
 		public: void resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed);
-		private: void resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet);
+		private: void resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet);
 		private: float calculateStandardDeviation(const float* array, const int length, const float average);
 };
 

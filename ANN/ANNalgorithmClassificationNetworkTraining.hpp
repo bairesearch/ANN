@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -54,7 +54,7 @@ class ANNalgorithmClassificationNetworkTrainingClass
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
 	private: ANNdisplayClass ANNdisplay;
 	#endif
-	public: void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences);
+	public: void trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, int64_t numberOfInputNeurons, int64_t* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, int64_t numberOfExperiences);
 		private: void resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron);
 	#ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
 		private: void resetBackNeuronMatchTemp(ANNneuron* categoryNeuron);

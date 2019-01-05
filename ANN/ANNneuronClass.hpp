@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -55,14 +55,14 @@ class ANNneuron
 public:
 
 	ANNneuron(void);
-	ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
+	ANNneuron(int64_t IDinit, int64_t orderIDinit, int64_t layerIDinit, int64_t subnetIDinit);
 	~ANNneuron(void);
 	void initialiseNeuron();
 
-	long id;
-	long orderID;
-	long layerID;
-	long subnetID;
+	int64_t id;
+	int64_t orderID;
+	int64_t layerID;
+	int64_t subnetID;
 
 	double bias;
 		double storedBias;					// (storedBias used for reset)
@@ -71,7 +71,7 @@ public:
 	double error;
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	bool backNeuronMatchTemp;
-	long memoryTrace;	//popularity
+	int64_t memoryTrace;	//popularity
 	bool intermediaryNeuronCreatedThisRound;
 	bool neuronTypeInput;
 	bool neuronTypeTopLevelCategory;
@@ -84,9 +84,9 @@ public:
 	//for visualising highly structured networks [Eg used to visualise a 2D visual processing unit/subnet]
 	bool spatialCoordinatesSet2D;
 	bool spatialCoordinatesSet3D;
-	long xPosRel;
-	long yPosRel;
-	long zPosRel;
+	int64_t xPosRel;
+	int64_t yPosRel;
+	int64_t zPosRel;
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	bool spatialCoordinatesSetClassification;
 	double xPosRelFrac;
@@ -125,7 +125,7 @@ public:
 	string GIAentityName;
 	bool GIAactiveForSubnetIdentification;
 	bool GIAalreadyParsed;
-	long GIAactivationAge;
+	int64_t GIAactivationAge;
 	int GIAconceptIndexBitID;	//concept index bit neurons only
 	//#ifdef GIA_NEURAL_NETWORK_SYMBOLIC_CORE_CONCEPT_INDEX_BITS
 	int GIAconceptIndexType;	//concept neurons only
@@ -137,7 +137,7 @@ public:
 
 class ANNneuronClassClass
 {
-	public: void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit);
+	public: void fillInNeuronIDProperties(ANNneuron* neuronToUpdate, int64_t IDinit, int64_t orderIDinit, int64_t layerIDinit, int64_t subnetIDinit);
 
 	private: void copyNeuronKeyProperties(ANNneuron* neuronToUpdate, ANNneuron* neuronToCopy);
 

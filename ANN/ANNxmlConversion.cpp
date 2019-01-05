@@ -26,7 +26,7 @@
  * File Name: ANNxmlConversion.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments
  * /
  *******************************************************************************/
@@ -36,7 +36,7 @@
 
 //this function works and no longer needs to be tested
 
-ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons, long* numberOfLayers)
+ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(string xmlFileName, ANNneuron* firstInputNeuronInNetwork, int64_t* numberOfInputNeurons, int64_t* numberOfOutputNeurons, int64_t* numberOfLayers)
 {
 	ANNneuron* firstOutputNeuronInNetwork;
 
@@ -46,11 +46,11 @@ ANNneuron* ANNxmlConversionClass::readNetXMLfileAndRecordFormationVariables(stri
 	return firstOutputNeuronInNetwork;
 }
 
-ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, long* numberOfInputNeurons, long* numberOfOutputNeurons, long* numberOfLayers)
+ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(ANNneuron* firstInputNeuronInNetwork, int64_t* numberOfInputNeurons, int64_t* numberOfOutputNeurons, int64_t* numberOfLayers)
 {
 	ANNneuron* firstOutputNeuronInNetwork;
 
-	long networkLayer = 1;
+	int64_t networkLayer = 1;
 
 	ANNneuron* currentNeuron = firstInputNeuronInNetwork;
 
@@ -59,7 +59,7 @@ ANNneuron* ANNxmlConversionClass::recordOutputNeuronAndNumInputAndOutputNeuronsI
 	{
 		ANNneuron* firstNeuronInLayer = currentNeuron;
 
-		long numNeuronsInCurrentLayer = 0;
+		int64_t numNeuronsInCurrentLayer = 0;
 		while(currentNeuron->nextNeuron != NULL)
 		{
 			numNeuronsInCurrentLayer++;
@@ -535,7 +535,7 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 			}
 
 			ANNneuron* firstOutputNeuronInSubnet;
-			long temp;
+			int64_t temp;
 			firstOutputNeuronInSubnet = recordOutputNeuronAndNumInputAndOutputNeuronsInNetwork(currentNeuron->firstNeuronInBackLayerOfSubnet, &temp, &temp, &temp);
 			currentNeuron->firstNeuronInFrontLayerOfSubnet= firstOutputNeuronInSubnet;
 		}
@@ -555,7 +555,7 @@ bool ANNxmlConversionClass::linkLayerXNeuronsBasedUponFrontANNneuronConnectionLi
 }
 
 
-ANNneuron* ANNxmlConversionClass::findNeuron(ANNneuron* firstNeuronInLayer, long neuronIDtoFind, bool* result)
+ANNneuron* ANNxmlConversionClass::findNeuron(ANNneuron* firstNeuronInLayer, int64_t neuronIDtoFind, bool* result)
 {
 	ANNneuron* foundNeuron = NULL;
 
@@ -667,7 +667,7 @@ bool ANNxmlConversionClass::parseNetTag(XMLparserTag* firstTagInNetwork, ANNneur
 		}
 		if(currentTagUpdatedL1->name == NET_XML_TAG_subnet)
 		{
-			long wrongAndNotUsedIDcounter = 1;
+			int64_t wrongAndNotUsedIDcounter = 1;
 			if(!parseSubnetTag(currentTagUpdatedL1->firstLowerLevelTag, currentNeuron, 1, &wrongAndNotUsedIDcounter, 1))
 			{
 				result = false;
@@ -682,7 +682,7 @@ bool ANNxmlConversionClass::parseNetTag(XMLparserTag* firstTagInNetwork, ANNneur
 	return result;
 }
 
-bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet, long layerIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNneuron* firstNeuronInSubnet, int64_t layerIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter)
 {
 	bool result = true;
 
@@ -721,7 +721,7 @@ bool ANNxmlConversionClass::parseSubnetTag(XMLparserTag* firstTagInSubnet, ANNne
 	return result;
 }
 
-bool ANNxmlConversionClass::parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseLayerTag(XMLparserTag* firstTagInLayer, ANNneuron* firstNeuronInLayer, int64_t layerIDcounter, int64_t orderIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter)
 {
 	bool result = true;
 
@@ -752,7 +752,7 @@ bool ANNxmlConversionClass::parseLayerTag(XMLparserTag* firstTagInLayer, ANNneur
 }
 
 
-bool ANNxmlConversionClass::parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseNeuronContainerTag(XMLparserTag* firstTagInNeuronContainer, ANNneuron* currentNeuron, int64_t layerIDcounter, int64_t orderIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter)
 {
 	bool result = true;
 
@@ -888,7 +888,7 @@ bool ANNxmlConversionClass::parseForwardANNneuronConnectionTag(XMLparserTag* cur
 
 
 
-bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, long layerIDcounter, long orderIDcounter, long* wrongAndNotUsedIDcounter, long subnetIDcounter)
+bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* currentNeuron, int64_t layerIDcounter, int64_t orderIDcounter, int64_t* wrongAndNotUsedIDcounter, int64_t subnetIDcounter)
 {
 	bool result = true;
 
@@ -913,7 +913,7 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 	{
 		if(currentAttribute->name == NET_XML_ATTRIBUTE_id)
 		{
-			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
+			int64_t attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			//always use XML file's neuron id as this has been generated in a different order than wrongAndNotUsedIDcounter
 			//#ifndef DO_NOT_REGENERATE_NEURON_IDS_WHEN_PARSING_NET_XML
 
@@ -923,7 +923,7 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_orderID)
 		{
-			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
+			int64_t attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			if(attributeValue != orderIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != orderIDcounter, attributeValue = " << attributeValue << ", orderIDcounter = " << subnetIDcounter << endl;
@@ -934,7 +934,7 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_layerID)
 		{
-			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
+			int64_t attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			if(attributeValue != layerIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != layerIDcounter, attributeValue = " << attributeValue << ", layerIDcounter = " << subnetIDcounter << endl;
@@ -945,7 +945,7 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_subnetID)
 		{
-			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
+			int64_t attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			if(attributeValue != subnetIDcounter)
 			{
 				cout << "parseNeuronTag error: attributeValue != subnetIDcounter, attributeValue = " << attributeValue << ", subnetIDcounter = " << subnetIDcounter << endl;
@@ -989,20 +989,20 @@ bool ANNxmlConversionClass::parseNeuronTag(XMLparserTag* currentTag, ANNneuron* 
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_xPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet2D = true;
-			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
+			int64_t attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->xPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_yPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet2D = true;
-			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
+			int64_t attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->yPosRel = attributeValue;
 		}
 		else if(currentAttribute->name == NET_XML_ATTRIBUTE_zPosRel)
 		{
 			currentNeuron->spatialCoordinatesSet2D = false;
 			currentNeuron->spatialCoordinatesSet3D = true;
-			long attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
+			int64_t attributeValue = SHAREDvars.convertStringToDouble(currentAttribute->value);
 			currentNeuron->zPosRel = attributeValue;
 		}
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK

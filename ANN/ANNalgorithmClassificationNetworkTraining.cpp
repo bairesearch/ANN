@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmClassificationNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -43,9 +43,9 @@
 multimap<int, ANNneuron*> neuronUsageList;
 #endif
 
-long IDCounter;
+int64_t IDCounter;
 
-void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, long numberOfInputNeurons, long* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, long numberOfExperiences)
+void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, int64_t numberOfInputNeurons, int64_t* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, int64_t numberOfExperiences)
 {
 	int numberOfExperiencesTrain = 0;
 	int numberOfExperiencesTest = 0;

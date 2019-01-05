@@ -26,7 +26,7 @@
  * File Name: ANNformation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -79,31 +79,31 @@ class ANNformationClass
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	public: void formNeuralNetworkInputLayer(ANNneuron* firstInputNeuronInNetwork, const int numberOfInputNeurons);
 	#else
-	private: void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const long numberOfInputNeurons, const long numberOfHiddenNeurons, const long numberOfOutputNeurons);
-	public: ANNneuron* formNeuralNetWithOptimisedProperties(ANNneuron* firstInputNeuronInNetwork, const long numberOfInputNeurons, long numberOfOutputNeurons, const long numberOfLayers);
-		public: ANNneuron* formNeuralNet(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, long numberOfOutputNeurons, const long numberOfLayers, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+	private: void formSimpleNeuralNet(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfHiddenNeurons, const int64_t numberOfOutputNeurons);
+	public: ANNneuron* formNeuralNetWithOptimisedProperties(ANNneuron* firstInputNeuronInNetwork, const int64_t numberOfInputNeurons, int64_t numberOfOutputNeurons, const int64_t numberOfLayers);
+		public: ANNneuron* formNeuralNet(ANNneuron* firstInputNeuron, const int64_t numberOfInputNeurons, int64_t numberOfOutputNeurons, const int64_t numberOfLayers, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 		#ifdef ANN_SUBNETS
-		public: ANNneuron* formAdvancedNeuralNetwork(ANNneuron* firstInputNeuron, const long numberOfInputNeurons, long numberOfOutputNeurons, const bool useSubnetDependentNumberOfLayers, const double probabilityOfSubnetCreation, const long maxNumberOfRecursiveSubnets, const long numberOfLayers, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+		public: ANNneuron* formAdvancedNeuralNetwork(ANNneuron* firstInputNeuron, const int64_t numberOfInputNeurons, int64_t numberOfOutputNeurons, const bool useSubnetDependentNumberOfLayers, const double probabilityOfSubnetCreation, const int64_t maxNumberOfRecursiveSubnets, const int64_t numberOfLayers, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
 		#endif
-			private: ANNneuron* formNonDistinctLayeredNeuralNetwork(ANNneuron* firstInputNeuronInNetwork, const long numberOfInputNeurons, long numberOfOutputNeurons, const long numberOfLayers, const double probabilityOfSubnetCreation, const long maxNumberOfRecursiveSubnets, const bool useSubnetDependentNumberOfLayers, const double subnetNumberOfLayersModifier, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
-				private: void createInputLayerInNeuralNetwork(ANNneuron* firstInputNeuronInNetwork, const long numberOfInputNeurons);
-				private: void createInputLayerInNeuralNetwork2D(ANNneuron* firstInputNeuronInNetwork, const long numberOfInputNeurons);
-				public: ANNneuron* fillNonDistinctHiddenLayer(ANNneuron* firstNeuronInCurrentLayer, const long numberOfInputNeurons, long numberOfOutputNeurons, const long numberOfNeuronsInCurrentLayer, const long currentNumberOfLayers, const long numberOfLayers, const double probabilityOfSubnetCreation, const long maxNumberOfRecursiveSubnets, const long currentNumberOfRecursiveSubnets, const bool useSubnetDependentNumberOfLayers, const double subnetNumberOfLayersModifier, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, ANNneuron* firstInputNeuronInSubnet, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons, const bool onlyLinkWithPreviousAndFirstLayer);
-					private: void createNewFrontLayer(ANNneuron* firstNeuronInCurrentLayer, ANNneuron* firstNeuronInNewFrontLayer, const long numberOfNeuronsInNewFrontLayer, const long currentNumberOfLayers, const long numberOfLayers);
-					private: void linkNewFrontLayerWithPreviousLayers(ANNneuron* firstNeuronInCurrentLayer, ANNneuron* firstNeuronInNewFrontLayer, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, ANNneuron* firstInputNeuronInSubnet, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons, const long numberOfInputNeurons, const long numberOfOutputNeurons, const long currentNumberOfLayers, const bool onlyLinkWithPreviousAndFirstLayer);
-					private: void linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNeuronInCurrentLayer, ANNneuron* firstNeuronInNewFrontLayer, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, ANNneuron* firstInputNeuronInSubnet, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons, const long numberOfInputNeurons, const long numberOfOutputNeurons, const long currentNumberOfLayers, const long numberOfLayers, const long numberOfNeuronsInCurrentLayer, const long numberOfNeuronsInNewFrontLayer, const int layerDivergenceType, const bool onlyLinkWithPreviousAndFirstLayer);
-					private: long calcNumberOfLayersInSubnet(const long numberOfInputNeurons, const long numberOfOutputNeurons, const long currentNumberOfRecursiveSubnets, const long maxNumberOfRecursiveSubnets, const bool useSubnetDependentNumberOfLayers, const double subnetNumberOfLayersModifier);
-					private: double advancedDivergenceFactor(const long currentNumberOfLayersFromNearestEndPoint, const long numberOfLayers);
+			private: ANNneuron* formNonDistinctLayeredNeuralNetwork(ANNneuron* firstInputNeuronInNetwork, const int64_t numberOfInputNeurons, int64_t numberOfOutputNeurons, const int64_t numberOfLayers, const double probabilityOfSubnetCreation, const int64_t maxNumberOfRecursiveSubnets, const bool useSubnetDependentNumberOfLayers, const double subnetNumberOfLayersModifier, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons);
+				private: void createInputLayerInNeuralNetwork(ANNneuron* firstInputNeuronInNetwork, const int64_t numberOfInputNeurons);
+				private: void createInputLayerInNeuralNetwork2D(ANNneuron* firstInputNeuronInNetwork, const int64_t numberOfInputNeurons);
+				public: ANNneuron* fillNonDistinctHiddenLayer(ANNneuron* firstNeuronInCurrentLayer, const int64_t numberOfInputNeurons, int64_t numberOfOutputNeurons, const int64_t numberOfNeuronsInCurrentLayer, const int64_t currentNumberOfLayers, const int64_t numberOfLayers, const double probabilityOfSubnetCreation, const int64_t maxNumberOfRecursiveSubnets, const int64_t currentNumberOfRecursiveSubnets, const bool useSubnetDependentNumberOfLayers, const double subnetNumberOfLayersModifier, const int layerDivergenceType, const double meanLayerDivergenceFactor, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, ANNneuron* firstInputNeuronInSubnet, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons, const bool onlyLinkWithPreviousAndFirstLayer);
+					private: void createNewFrontLayer(ANNneuron* firstNeuronInCurrentLayer, ANNneuron* firstNeuronInNewFrontLayer, const int64_t numberOfNeuronsInNewFrontLayer, const int64_t currentNumberOfLayers, const int64_t numberOfLayers);
+					private: void linkNewFrontLayerWithPreviousLayers(ANNneuron* firstNeuronInCurrentLayer, ANNneuron* firstNeuronInNewFrontLayer, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, ANNneuron* firstInputNeuronInSubnet, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, const int64_t currentNumberOfLayers, const bool onlyLinkWithPreviousAndFirstLayer);
+					private: void linkNewFrontLayerWithPreviousLayers2D(ANNneuron* firstNeuronInCurrentLayer, ANNneuron* firstNeuronInNewFrontLayer, const double probabilityANNneuronConnectionWithPreviousLayerNeuron, ANNneuron* firstInputNeuronInSubnet, const double probabilityANNneuronConnectionWithAllPreviousLayersNeurons, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, const int64_t currentNumberOfLayers, const int64_t numberOfLayers, const int64_t numberOfNeuronsInCurrentLayer, const int64_t numberOfNeuronsInNewFrontLayer, const int layerDivergenceType, const bool onlyLinkWithPreviousAndFirstLayer);
+					private: int64_t calcNumberOfLayersInSubnet(const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, const int64_t currentNumberOfRecursiveSubnets, const int64_t maxNumberOfRecursiveSubnets, const bool useSubnetDependentNumberOfLayers, const double subnetNumberOfLayersModifier);
+					private: double advancedDivergenceFactor(const int64_t currentNumberOfLayersFromNearestEndPoint, const int64_t numberOfLayers);
 
 
-	private: long calculateNumberOfNeuronsInNewFrontLayer(const long numberOfInputNeurons, long numberOfOutputNeurons, const long numberOfNeuronsInCurrentLayer, const long currentNumberOfLayers, const long numberOfLayers, const double meanLayerDivergenceFactor, const int layerDivergenceType);
+	private: int64_t calculateNumberOfNeuronsInNewFrontLayer(const int64_t numberOfInputNeurons, int64_t numberOfOutputNeurons, const int64_t numberOfNeuronsInCurrentLayer, const int64_t currentNumberOfLayers, const int64_t numberOfLayers, const double meanLayerDivergenceFactor, const int layerDivergenceType);
 
 
 	private: double calculateDistanceBetween2Points(const double xPositionOfUnit1, const double xPositionOfUnit2, const double yPositionOfUnit1, const double yPositionOfUnit2);
 
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 	private: void addSideConnectionsForLayer(ANNneuron* firstNeuronInLayer);
-	private: void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, const int layerDivergenceType, const long currentNumberOfLayers, const long numberOfLayers);
+	private: void addSideConnectionsForLayer2D(ANNneuron* firstNeuronInLayer, const int layerDivergenceType, const int64_t currentNumberOfLayers, const int64_t numberOfLayers);
 	private: void addSideConnectionIfNotAlreadyAdded(ANNneuron* currentNeuronL1, ANNneuron* currentNeuronL2);
 	#endif
 	#endif

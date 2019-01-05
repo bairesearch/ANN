@@ -26,7 +26,7 @@
  * File Name: ANNbiologicalConstructs.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments: CONTAINS EXAMPLE CODE AND IS NOT COMPLETE
  *			how to record movement information? (Eg recurrent network required) how to get synthetic network to modify its focus; left, right, in, out towards the objects of most interest?
  * /
@@ -83,14 +83,14 @@ void formSyntheticBrainSubnet(ANNneuron* firstNeuronInSyntheticBrainSubnet, ANNn
 	//NOW.. to formfirstNeuronInSyntheticBrainSubnet, add the firstNeuronInVisualCortexSubnet and firstNeuronInAudialCentreSubnet in parallel (on a single layer) and have their outputs mixed on the next layer
 }
 
-void form2dVisualFieldSubnet(ANNneuron* firstNeuronInVisualFieldSubnet, long visualArrayWidth, long visualArrayHeight)
+void form2dVisualFieldSubnet(ANNneuron* firstNeuronInVisualFieldSubnet, int64_t visualArrayWidth, int64_t visualArrayHeight)
 {
 	//NOW.. to form2dVisualFieldSubnet, form a network such that each input neuron (cone/rod/pixel) is first connected to neighboring input neurons in the 2D field, enabling contrast recognition and object outline angles to be determined.
 
 	numOutputNeurons >> numInputNeurons
 }
 
-void formObjectRecognitionSubnet(ANNneuron* firstNeuronInEyeVisualFieldSubnet, long objectRecognitionVisualArrayWidth, long objectRecognitionVisualArrayHeight)
+void formObjectRecognitionSubnet(ANNneuron* firstNeuronInEyeVisualFieldSubnet, int64_t objectRecognitionVisualArrayWidth, int64_t objectRecognitionVisualArrayHeight)
 {
 	//NOW.. to formObjectRecognitionSubnet, take the central section of the visual field, and form a dense complex network
 }

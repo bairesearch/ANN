@@ -26,7 +26,7 @@
  * File Name: ANNexperienceClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -94,11 +94,11 @@ void ANNexperienceClassClass::copyExperiences(ANNexperience* newExperience, ANNe
 	}
 }
 
-ANNexperience* ANNexperienceClassClass::findExperience(ANNexperience* firstExperienceInDataSet, const long experienceNumToFind)
+ANNexperience* ANNexperienceClassClass::findExperience(ANNexperience* firstExperienceInDataSet, const int64_t experienceNumToFind)
 {
 	ANNexperience* foundExperience;
 	ANNexperience* currentExperience = firstExperienceInDataSet;
-	for(long i = 0; i < experienceNumToFind; i++)
+	for(int64_t i = 0; i < experienceNumToFind; i++)
 	{
 		currentExperience = currentExperience->next;
 	}
@@ -106,9 +106,9 @@ ANNexperience* ANNexperienceClassClass::findExperience(ANNexperience* firstExper
 	return foundExperience;
 }
 
-long ANNexperienceClassClass::countNumberOfExperienceInputs(const ANNexperience* experience)
+int64_t ANNexperienceClassClass::countNumberOfExperienceInputs(const ANNexperience* experience)
 {
-	long numberOfExperienceInputs = 0;
+	int64_t numberOfExperienceInputs = 0;
 
 	const ANNexperienceInput* currentExperienceInput = experience->firstExperienceInput;
 	while(currentExperienceInput->next != NULL)
@@ -120,9 +120,9 @@ long ANNexperienceClassClass::countNumberOfExperienceInputs(const ANNexperience*
 	return numberOfExperienceInputs;
 }
 
-long ANNexperienceClassClass::countNumberOfExperiences(const ANNexperience* firstExperienceInList)
+int64_t ANNexperienceClassClass::countNumberOfExperiences(const ANNexperience* firstExperienceInList)
 {
-	long numberOfExperiences = 0;
+	int64_t numberOfExperiences = 0;
 
 	const ANNexperience* currentExperience = firstExperienceInList;
 	while(currentExperience->next != NULL)

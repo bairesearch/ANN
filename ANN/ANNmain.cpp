@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -53,8 +53,8 @@
 ANNneuron* firstInputNeuronInNetwork;
 ANNneuron* firstOutputNeuronInNetwork;
 
-long numberOfInputNeurons;
-long numberOfOutputNeurons;
+int64_t numberOfInputNeurons;
+int64_t numberOfOutputNeurons;
 
 bool numberOfInputAndOutputNeuronsSelected;
 bool loadedExperienceDataset;
@@ -131,12 +131,12 @@ int main(const int argc,const char* *argv)
 	string inputDatasetFileName = "dataset.data";
 
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-	long numberOfInputNeurons = 0;	//need to be generated based upon dataset or xml input file
-	long numberOfOutputNeurons = 0;	//dynamically generated while creating classification net
+	int64_t numberOfInputNeurons = 0;	//need to be generated based upon dataset or xml input file
+	int64_t numberOfOutputNeurons = 0;	//dynamically generated while creating classification net
 	int numberOfLayers = 0;	//NOTUSED
 	#else
-	long numberOfInputNeurons = 5;	//need to be generated based upon dataset or xml input file
-	long numberOfOutputNeurons = 3;	//need to be generated based upon dataset or xml input file
+	int64_t numberOfInputNeurons = 5;	//need to be generated based upon dataset or xml input file
+	int64_t numberOfOutputNeurons = 3;	//need to be generated based upon dataset or xml input file
 	int numberOfLayers = 3;
 	#endif
 
@@ -147,7 +147,7 @@ int main(const int argc,const char* *argv)
 	double probabilityANNneuronConnectionWithAllPreviousLayersNeurons = DEFAULT_PROBABILITY_NEURON_CONNECTION_WITH_ALL_PREVIOUS_LAYERS_NEURONS_ANNTH;
 	#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 	bool useSubnets = false;
-	long maxNumRecursiveSubnets = DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH;
+	int64_t maxNumRecursiveSubnets = DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH;
 	double probabilityOfSubnetCreation = DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH;
 	bool useSubnetDependentNumberOfLayers = true;
 	#endif
@@ -367,7 +367,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3m13e 22-February-2018" << endl;
+			cout << "Project Version: 3m14a 20-April-2018" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -462,9 +462,9 @@ int main(const int argc,const char* *argv)
 		//Neural Network initialisations
 		firstInputNeuronInNetwork = new ANNneuron();
 
-		long numberOfInputNeuronsLoaded;
-		long numberOfOutputNeuronsLoaded;
-		long numberOfLayersLoaded;
+		int64_t numberOfInputNeuronsLoaded;
+		int64_t numberOfOutputNeuronsLoaded;
+		int64_t numberOfLayersLoaded;
 			
 		string xmlFileName = inputXMLFileName;
 
@@ -605,9 +605,9 @@ bool ANNmainClass::loadNetworkFromXML()
 	//Neural Network initialisations
 	firstInputNeuronInNetwork = new ANNneuron();
 
-	long numberOfInputNeuronsLoaded;
-	long numberOfOutputNeuronsLoaded;
-	long numberOfLayersLoaded;
+	int64_t numberOfInputNeuronsLoaded;
+	int64_t numberOfOutputNeuronsLoaded;
+	int64_t numberOfLayersLoaded;
 
 	string xmlFileName = NET_XML_FILE_NAME;
 
@@ -635,13 +635,13 @@ bool ANNmainClass::createNetwork()
 	double probabilityANNneuronConnectionWithPreviousLayerNeuron = 0;
 	double probabilityOfSubnetCreation = 0;
 	bool useSubnetDependentNumberOfLayers = 0;
-	long maxNumRecursiveSubnets = 0;
+	int64_t maxNumRecursiveSubnets = 0;
 	int numberOfLayers = 0;
 	double probabilityANNneuronConnectionWithAllPreviousLayersNeurons = 0;
 
 
 	double answerAsDouble;
-	long answerAsInt;
+	int64_t answerAsInt;
 	char answerAsChar;
 	string answerAsString;
 
@@ -650,12 +650,12 @@ bool ANNmainClass::createNetwork()
 	{
 		cout <<	"\nEnter the number of input neurons (2, 3, 4, 5 [Default], ... etc):\n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
+		answerAsInt = int64_t(SHAREDvars.convertStringToDouble(answerAsString));
 		numberOfInputNeurons = answerAsInt;
 
 		cout <<	"\nEnter the number of output neurons (2, 3 [Default], 4, 5, ... etc):\n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
+		answerAsInt = int64_t(SHAREDvars.convertStringToDouble(answerAsString));
 		numberOfOutputNeurons = answerAsInt;
 
 		numberOfInputAndOutputNeuronsSelected = true;
@@ -664,7 +664,7 @@ bool ANNmainClass::createNetwork()
 
 	cout <<	"\nEnter the number of top level Layers (2, 3 [Default], ... etc):\n\n>> ";
 	cin >> answerAsString;
-	answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
+	answerAsInt = int64_t(SHAREDvars.convertStringToDouble(answerAsString));
 	numberOfLayers = answerAsInt;
 	if(numberOfLayers < 2)
 	{
@@ -681,7 +681,7 @@ bool ANNmainClass::createNetwork()
 		//non subnet/ANN specific parameters....
 		cout <<	"\nEnter layer divergence type [Default = " << LAYER_DIVERGENCE_TYPE_LINEAR_CONVERGING << "]:\n\t1 (LINEAR_CONVERGING), \n\t2 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_THEN_CONVERGING),\n\t3 (LAYER_DIVERGENCE_TYPE_NONLINEAR_DIVERGING_THEN_CONVERGING),\n\t4 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING),\n\t5 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D),\n\t6 (LAYER_DIVERGENCE_TYPE_LINEAR_DIVERGING_SQUARE2D_RADIALBIAS). \n\n>> ";
 		cin >> answerAsString;
-		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
+		answerAsInt = int64_t(SHAREDvars.convertStringToDouble(answerAsString));
 		layerDivergenceType = answerAsInt;
 
 		cout <<	"\nEnter the mean layer divergence factor [Default = " << DEFAULT_MEAN_LAYER_DIVERGENCE_FACTOR << "]:\n\n>> ";
@@ -711,7 +711,7 @@ bool ANNmainClass::createNetwork()
 		{
 			cout <<	"\nEnter the maximum number of subnet layers you wish to create (1,2,3,4,5,... etc) [Default = " << DEFAULT_ANN_MAX_NUM_RECURSIVE_SUBNETS_ANNTH << "]:\n\n>> ";
 			cin >> answerAsString;
-			answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
+			answerAsInt = int64_t(SHAREDvars.convertStringToDouble(answerAsString));
 			maxNumRecursiveSubnets = answerAsInt;
 
 			cout <<	"\nEnter the probability of subnet creation [Default = " << DEFAULT_PROB_OF_SUBNET_CREATION_ANNTH << "]:\n\n>> ";
@@ -984,7 +984,7 @@ bool ANNmainClass::mainUI()
 		cout <<	"Enter Answer (0,1,2,3... etc):\n\n>> ";
 
 		cin >> answerAsString;
-		answerAsInt = long(SHAREDvars.convertStringToDouble(answerAsString));
+		answerAsInt = int64_t(SHAREDvars.convertStringToDouble(answerAsString));
 		if(answerAsInt == 1)
 		{
 			loadNetworkFromXML();
@@ -1036,13 +1036,13 @@ bool ANNmainClass::mainUI()
 
 
 
-bool ANNmainClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, long numberOfInputNeurons, long numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs)
+bool ANNmainClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, int64_t numberOfInputNeurons, int64_t numberOfOutputNeurons, ANNexperience* firstExperienceInList, bool addSprites, bool allowRaytrace, string* XMLNNSceneFileName, char* charstarvectorGraphicsLDRNNSceneFileName, char* charstarvectorGraphicsTALNNSceneFileName, char* charstarraytracedImagePPMNNSceneFileName, char* charstarexperienceNNSceneFileName, bool useFoldsDuringTraining, int maxOrSetNumEpochs)
 {
 	bool result = true;
 
 	cout << "num experiences in list = " << ANNexperienceClass.countNumberOfExperiences(firstExperienceInList) << endl;
 
-	long numberOfExperiences = ANNexperienceClass.countNumberOfExperiences(firstExperienceInList);
+	int64_t numberOfExperiences = ANNexperienceClass.countNumberOfExperiences(firstExperienceInList);
 
 	if(useFoldsDuringTraining)
 	{

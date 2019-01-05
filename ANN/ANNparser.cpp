@@ -26,7 +26,7 @@
  * File Name: ANNparser.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -118,7 +118,7 @@ void ANNparserClass::ANNparseDataFile(string nameOfExperiencesDataSetFile)
 	numExperiences = maxRows;
 
 
-	long maxClassTarget = 0;
+	int64_t maxClassTarget = 0;
 	for(i=0;i<numExperiences;i++)
 	{
 		if(inputData[i*EXPERIENCE_DATASET_MAX_NUM_COLS_ANNTH + 0] > maxClassTarget)

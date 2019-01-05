@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m13e 22-February-2018
+ * Project Version: 3m14a 20-April-2018
  * Comments:
  * /
  *******************************************************************************/
@@ -47,7 +47,7 @@ ANNneuron::ANNneuron(void)
 	initialiseNeuron();
 }
 
-ANNneuron::ANNneuron(long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
+ANNneuron::ANNneuron(int64_t IDinit, int64_t orderIDinit, int64_t layerIDinit, int64_t subnetIDinit)
 {
 	id = IDinit;
 	orderID = orderIDinit;
@@ -175,7 +175,7 @@ void ANNneuron::initialiseNeuron()
 
 
 
-void ANNneuronClassClass::fillInNeuronIDProperties(ANNneuron* neuronToUpdate, long IDinit, long orderIDinit, long layerIDinit, long subnetIDinit)
+void ANNneuronClassClass::fillInNeuronIDProperties(ANNneuron* neuronToUpdate, int64_t IDinit, int64_t orderIDinit, int64_t layerIDinit, int64_t subnetIDinit)
 {
 	neuronToUpdate->id = IDinit;
 	neuronToUpdate->orderID = orderIDinit;
