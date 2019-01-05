@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m14a 20-April-2018
+ * Project Version: 3m15a 24-April-2018
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -240,7 +240,7 @@ bool ANNdrawClass::ANNcreateNeuralNetworkReferenceLists(string sceneFileName, LD
 
 	ANNsearchNeuralNetworkAndCreateReferences(firstNeuronInNetwork, initialReference, &eyeCoords, numSpritesAdded, sceneFileName, false, NULL, addSprites, writeSVG, currentTagSVG, writeLDR);
 
-	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	#ifdef ANN_DRAW_DYNAMIC
 	ANNsearchNeuralNetworkAndCreateReferencesReset(firstNeuronInNetwork);
 	#endif
 
@@ -266,7 +266,7 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 	ANNneuron* currentNeuron = firstNeuronInLayer;
 	while(currentNeuron->nextNeuron != NULL)
 	{
-		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		#ifdef ANN_DRAW_DYNAMIC
 		if(!(currentNeuron->printed))
 		{
 			currentNeuron->printed = true;
@@ -392,7 +392,7 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 			}
 			#endif
 
-			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+			#ifdef ANN_DRAW_DYNAMIC
 			if(currentNeuron->hasFrontLayer)
 			{
 				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
@@ -403,13 +403,13 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 			}
 			#endif
 
-		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		#ifdef ANN_DRAW_DYNAMIC
 		}
 		#endif
 
 		currentNeuron = currentNeuron->nextNeuron;
 	}
-	#ifndef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+	#ifndef ANN_DRAW_DYNAMIC
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
 		currentListReference = ANNsearchNeuralNetworkAndCreateReferences(firstNeuronInLayer->firstNeuronInFrontLayer, currentListReference, eyeCoords, numSpritesAdded, sceneFileName, isSubnet, positionOfSubnetNeuron, addSprites, writeSVG, currentTagSVG, writeLDR);
@@ -421,7 +421,7 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 }
 
 
-#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+#ifdef ANN_DRAW_DYNAMIC
 void ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferencesReset(ANNneuron* firstNeuronInLayer)
 {
 	ANNneuron* currentNeuron = firstNeuronInLayer;
