@@ -68,6 +68,7 @@
 		//#define ANN_DRAW_DYNAMIC	//do not rely on predefined layers
 		#define ANN_DRAW_PREVENT_REPRINT
 		#define ANN_DRAW_DONT_DISPLAY_BIAS
+		//#define ANN_DISPLAY_DISABLE_SPRITES	//optional (to increase 3D viewing speed)
 	#endif
 	
 	#define ANN_ALGORITHM_GIA_NEURAL_NETWORK	//optional?
