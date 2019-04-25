@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m16a 24-April-2019
+ * Project Version: 3m16b 24-April-2019
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -271,12 +271,15 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 	while(currentNeuron->nextNeuron != NULL)
 	{	
 		//cout << "currentNeuron->id = " << currentNeuron->id << ", currentNeuron->GIAentityName " << currentNeuron->GIAentityName << endl;
-			
+		
 		#ifdef ANN_DRAW_PREVENT_REPRINT
 		if(!(currentNeuron->printed))
 		{
 			currentNeuron->printed = true;
 		#endif
+		
+			//cout << "currentNeuron->id = " << currentNeuron->id << endl;
+			//cout << "currentNeuron->GIAentityName = " << currentNeuron->GIAentityName << endl;
 
 			ANNfillNeuronDisplayReference(currentListReference, currentNeuron, isSubnet, positionOfSubnetNeuron, writeSVG, currentTagSVG);
 			LDreference* currentNeuronReferenceOnLayer = currentListReference;
@@ -305,10 +308,10 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 					ANNneuronConnection* currentANNneuronConnection = *connectionIter;
 
 					//regenerate reference properties for a neuron display reference in the previous layer (which is connected to the current neuron)
-
+					
 					LDreference currentNeuronReferenceOnPreviousLayer;
 					ANNfillNeuronDisplayReference(&currentNeuronReferenceOnPreviousLayer, currentANNneuronConnection->backNeuron, isSubnet, positionOfSubnetNeuron, false, currentTagSVG);	//do not writeSVG for back layer neurons (as this will duplicate them)
-
+					
 					if(!ANNfillANNneuronConnectionDisplayReference(currentListReference, &currentNeuronReferenceOnPreviousLayer, currentNeuronReferenceOnLayer, currentANNneuronConnection, writeSVG, currentTagSVG))
 					{
 						result = false;
@@ -439,6 +442,7 @@ void ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferencesReset(ANNneuron* fir
 		if(currentNeuron->printed)
 		{
 			currentNeuron->printed = false;
+			#ifdef ANN_DRAW_DYNAMIC
 			if(currentNeuron->hasFrontLayer)
 			{
 				for(vector<ANNneuronConnection*>::iterator connectionIter = currentNeuron->frontANNneuronConnectionList.begin(); connectionIter != currentNeuron->frontANNneuronConnectionList.end(); connectionIter++)
@@ -447,10 +451,18 @@ void ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferencesReset(ANNneuron* fir
 					ANNsearchNeuralNetworkAndCreateReferencesReset(currentANNneuronConnection->frontNeuron);
 				}
 			}
+			#endif
 		}
 
 		currentNeuron = currentNeuron->nextNeuron;
 	}
+	
+	#ifndef ANN_DRAW_DYNAMIC
+	if(firstNeuronInLayer->hasFrontLayer)
+	{
+		ANNsearchNeuralNetworkAndCreateReferencesReset(firstNeuronInLayer->firstNeuronInFrontLayer);
+	}
+	#endif
 
 }
 #endif
@@ -1072,8 +1084,12 @@ void ANNdrawClass::ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneur
 	tempString = SHAREDvars.convertDoubleToString(ANNneuronConnection->idealValue, "%0.2f");
 	*spriteTextString = "\n\n" + *spriteTextString + "IV = " + tempString;
 	#else
+	#ifdef ANN_ALGORITHM_GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK
+	*spriteTextString = "";
+	#else
 	tempString = SHAREDvars.convertDoubleToString(ANNneuronConnection->weight, "%0.2f");
 	*spriteTextString = "\n\n" + *spriteTextString + "weight = " + tempString;
+	#endif
 	#endif
 
 
