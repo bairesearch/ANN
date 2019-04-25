@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNglobalsDefs.hpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m15a 24-April-2018
+ * Project Version: 3m16a 24-April-2019
  * Description: ANN specific global definitions
  *
  * Usage Examples:
@@ -65,10 +65,12 @@
 
 	#define ANN_ALGORITHM_GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK	//no specific properties currently required
 	#ifdef ANN_ALGORITHM_GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK
-		#define ANN_DRAW_DYNAMIC	//doesn't rely on predefined layers
+		//#define ANN_DRAW_DYNAMIC	//doesn't rely on predefined layers
+		#define ANN_DRAW_PREVENT_REPRINT
+		#define ANN_DRAW_DONT_DISPLAY_BIAS
 	#endif
 	
-	//#define ANN_ALGORITHM_GIA_NEURAL_NETWORK
+	#define ANN_ALGORITHM_GIA_NEURAL_NETWORK	//optional?
 	#ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
 		//#define ANN_ALGORITHM_GIA_NEURAL_NETWORK_USE_ARTIFICIAL_INSTANCE_NEURON_SYNAPSES	//must be synced with GIA_NEURAL_NETWORK_USE_ARTIFICIAL_INSTANCE_NEURON_SYNAPSES
 		#define ANN_ALGORITHM_GIA_NEURAL_NETWORK_MAX_SPECIFIC_CONCEPT_DEPTH (5)		//must be synced with GIA_NEURAL_NETWORK_MAX_SPECIFIC_CONCEPT_DEPTH

@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronClass.hpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m15a 24-April-2018
+ * Project Version: 3m16a 24-April-2019
  * Comments:
  * /
  *******************************************************************************/
@@ -78,7 +78,7 @@ public:
 	bool neuronTypeIntermediary;
 	bool topLevelCategoryAlreadyExistsDeleteThisNewCopy;
 	#endif
-	#ifdef ANN_DRAW_DYNAMIC
+	#ifdef ANN_DRAW_PREVENT_REPRINT
 	bool printed;
 	#endif
 	bool printedXML;

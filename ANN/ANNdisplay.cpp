@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNdisplay.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m15a 24-April-2018
+ * Project Version: 3m16a 24-April-2019
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -145,11 +145,15 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 
 		int numSpritesAdded = 0;
 
+		//cout << "outputNeuralNetworkToVectorGraphicsAndRaytrace1" << endl;
+		
 		if(!ANNdraw.ANNcreateNeuralNetworkReferenceLists(outputFileNameLDRcharstar, initialReference, firstInputNeuronInNetwork, addSprites, &numSpritesAdded, useOutputSVGFile, &currentTagInSVGFile, useOutputLDRFile))
 		{
 			result = false;
 		}
 
+		//cout << "outputNeuralNetworkToVectorGraphicsAndRaytrace2" << endl;
+		
 		if(useOutputLDRFile)
 		{
 			#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
@@ -161,6 +165,8 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 			}
 		}
 
+		//cout << "outputNeuralNetworkToVectorGraphicsAndRaytrace3" << endl;
+		
 		if(useOutputSVGFile)
 		{
 			#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
@@ -173,6 +179,8 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 			delete firstTagInSVGFile;
 		}
 
+		//cout << "outputNeuralNetworkToVectorGraphicsAndRaytrace4" << endl;
+		
 		char* charstarsceneFileNameForRayTracing;
 		charstarsceneFileNameForRayTracing = outputFileNameLDRcharstar;
 

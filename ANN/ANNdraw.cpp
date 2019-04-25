@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNdraw.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2018 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3m15a 24-April-2018
+ * Project Version: 3m16a 24-April-2019
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -205,7 +205,7 @@ void ANNdrawClass::fillInANNSpriteExternVariables()
 bool ANNdrawClass::ANNcreateNeuralNetworkSceneFiles(string sceneFileName, ANNneuron* firstNeuronInNetwork, bool addSprites, bool writeSVG, XMLparserTag** currentTagSVG)
 {
 	bool result = true;
-
+	
 	LDreference* initialReference = new LDreference();
 
 	int numSpritesAdded = 0;
@@ -221,7 +221,7 @@ bool ANNdrawClass::ANNcreateNeuralNetworkSceneFiles(string sceneFileName, ANNneu
 			result = false;
 		}
 	}
-
+		
 	delete initialReference;
 
 	return result;
@@ -238,9 +238,11 @@ bool ANNdrawClass::ANNcreateNeuralNetworkReferenceLists(string sceneFileName, LD
 	eyeCoords.y = 0.0;
 	eyeCoords.z = 0.0;
 
+	//cout << "ANNsearchNeuralNetworkAndCreateReferences" << endl;
+
 	ANNsearchNeuralNetworkAndCreateReferences(firstNeuronInNetwork, initialReference, &eyeCoords, numSpritesAdded, sceneFileName, false, NULL, addSprites, writeSVG, currentTagSVG, writeLDR);
 
-	#ifdef ANN_DRAW_DYNAMIC
+	#ifdef ANN_DRAW_PREVENT_REPRINT
 	ANNsearchNeuralNetworkAndCreateReferencesReset(firstNeuronInNetwork);
 	#endif
 
@@ -263,10 +265,14 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 {
 	bool result = true;
 
+	//cout << "ANNsearchNeuralNetworkAndCreateReferences" << endl;
+	
 	ANNneuron* currentNeuron = firstNeuronInLayer;
 	while(currentNeuron->nextNeuron != NULL)
-	{
-		#ifdef ANN_DRAW_DYNAMIC
+	{	
+		//cout << "currentNeuron->id = " << currentNeuron->id << ", currentNeuron->GIAentityName " << currentNeuron->GIAentityName << endl;
+			
+		#ifdef ANN_DRAW_PREVENT_REPRINT
 		if(!(currentNeuron->printed))
 		{
 			currentNeuron->printed = true;
@@ -403,25 +409,28 @@ LDreference* ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferences(ANNneuron* 
 			}
 			#endif
 
-		#ifdef ANN_DRAW_DYNAMIC
+		#ifdef ANN_DRAW_PREVENT_REPRINT
 		}
 		#endif
 
 		currentNeuron = currentNeuron->nextNeuron;
 	}
+	
 	#ifndef ANN_DRAW_DYNAMIC
 	if(firstNeuronInLayer->hasFrontLayer)
 	{
 		currentListReference = ANNsearchNeuralNetworkAndCreateReferences(firstNeuronInLayer->firstNeuronInFrontLayer, currentListReference, eyeCoords, numSpritesAdded, sceneFileName, isSubnet, positionOfSubnetNeuron, addSprites, writeSVG, currentTagSVG, writeLDR);
 	}
 	#endif
+	
+	//cout << "ANNsearchNeuralNetworkAndCreateReferences end" << endl;
 
 	return currentListReference;
 
 }
 
 
-#ifdef ANN_DRAW_DYNAMIC
+#ifdef ANN_DRAW_PREVENT_REPRINT
 void ANNdrawClass::ANNsearchNeuralNetworkAndCreateReferencesReset(ANNneuron* firstNeuronInLayer)
 {
 	ANNneuron* currentNeuron = firstNeuronInLayer;
@@ -991,7 +1000,7 @@ void ANNdrawClass::ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, s
 		*spriteTextString = *spriteTextString + "subnetID = " + tempString;
 	}
 
-
+	#ifndef ANN_DRAW_DONT_DISPLAY_BIAS
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_BIAS_INFO)
 	{
 		*spriteTextString = *spriteTextString + '\n';
@@ -1003,6 +1012,7 @@ void ANNdrawClass::ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, s
 		*spriteTextString = *spriteTextString + "bias = " + tempString;
 		#endif
 	}
+	#endif
 
 
 	if(SPRITE_TEXTUAL_INCLUDE_NEURON_OUTPUT_INFO)
