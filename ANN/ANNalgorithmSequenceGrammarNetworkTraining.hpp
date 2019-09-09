@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmSequenceGrammarNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n1b 10-August-2019
+ * Project Version: 3n1c 10-August-2019
  * Comments:
  * /
  *******************************************************************************/
@@ -76,9 +76,9 @@ class ANNalgorithmSequenceGrammarNetworkTrainingClass
 		private: bool writeExperiencesToFile(ANNexperience* firstExperienceInList, const string dataFileName);
 		#endif
 		private: bool initialiseGIA(GIAtranslatorVariablesClass* translatorVariables);		
-		private: bool extractSentencesAndGenerateNetwork(GIAtranslatorVariablesClass* translatorVariables, string* lineText, ANNexperience* firstExperienceInList);
-			private: bool generateNetwork(GIAtranslatorVariablesClass* translatorVariables, GIApreprocessorSentence* firstGIApreprepreprocessorSentenceInList, ANNexperience* firstExperienceInList);
-				private: bool generateNetworkSentence(GIAtranslatorVariablesClass* translatorVariables, vector<GIApreprocessorPlainTextWord*>* sentence, vector<uint64_t>* POSambiguityInfoPermutationTemp, ANNexperience* currentExperienceInList);
+		private: bool extractSentencesAndGenerateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, string* lineText, ANNexperience* firstExperienceInList);
+			private: bool generateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, GIApreprocessorSentence* firstGIApreprepreprocessorSentenceInList, ANNexperience* firstExperienceInList);
+				private: bool generateNetworkSentence(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, vector<GIApreprocessorPlainTextWord*>* sentence, vector<uint64_t>* POSambiguityInfoPermutationTemp, ANNexperience* currentExperienceInList);
 
 };
 

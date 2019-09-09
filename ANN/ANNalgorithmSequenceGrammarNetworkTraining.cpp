@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmSequenceGrammarNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n1b 10-August-2019
+ * Project Version: 3n1c 10-August-2019
  * Comments:
  * /
  *******************************************************************************/
@@ -66,7 +66,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::trainNeuralNetworkSequence
 	#endif
 	#endif
 	
-	extractSentencesAndGenerateNetwork(translatorVariables, &text, firstExperienceInList);
+	extractSentencesAndGenerateNetwork(translatorVariables, GIAtxtRelTranslatorRulesGroupTypes, &text, firstExperienceInList);
 	
 	#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN
 	if(!writeExperiencesToFile(firstExperienceInList, GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_ANN_DATAFILE_NAME))
@@ -119,7 +119,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::initialiseGIA(GIAtranslato
 	return result;
 }
 
-bool ANNalgorithmSequenceGrammarNetworkTrainingClass::extractSentencesAndGenerateNetwork(GIAtranslatorVariablesClass* translatorVariables, string* text, ANNexperience* firstExperienceInList)
+bool ANNalgorithmSequenceGrammarNetworkTrainingClass::extractSentencesAndGenerateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, string* text, ANNexperience* firstExperienceInList)
 {
 	bool result = true;
 	
@@ -148,7 +148,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::extractSentencesAndGenerat
 	}
 	#endif
 	
-	if(!generateNetwork(translatorVariables, translatorVariables->firstGIApreprocessorSentenceInList, firstExperienceInList))
+	if(!generateNetwork(translatorVariables, GIAtxtRelTranslatorRulesGroupTypes, translatorVariables->firstGIApreprocessorSentenceInList, firstExperienceInList))
 	{
 		result = false;
 	}
@@ -157,7 +157,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::extractSentencesAndGenerat
 }
 
 //code extracted from GIAtxtRelTranslatorPermutations
-bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetwork(GIAtranslatorVariablesClass* translatorVariables, GIApreprocessorSentence* firstGIApreprepreprocessorSentenceInList, ANNexperience* firstExperienceInList)
+bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, GIApreprocessorSentence* firstGIApreprepreprocessorSentenceInList, ANNexperience* firstExperienceInList)
 {
 	bool result = true;
 	
@@ -224,7 +224,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetwork(GIAtransla
 	return result;
 }
 
-bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetworkSentence(GIAtranslatorVariablesClass* translatorVariables, vector<GIApreprocessorPlainTextWord*>* sentence, vector<uint64_t>* POSambiguityInfoPermutationTemp, ANNexperience* currentExperienceInList)
+bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetworkSentence(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, vector<GIApreprocessorPlainTextWord*>* sentence, vector<uint64_t>* POSambiguityInfoPermutationTemp, ANNexperience* currentExperienceInList)
 {
 	bool result = true;
 
@@ -235,14 +235,12 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetworkSentence(GI
 	GIApreprocessorPOStagger.generateANNexperienceFromPOSambiguityInfoPermutationStandalone(POSambiguityInfoPermutationTemp, centreWordUnambiguousPOSindexTemp, currentExperienceInList);
 	#else
 	bool createNewConnections = true; 
-	//int maxNumLayers = GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_MAX_NUMBER_LAYERS;
-	vector<GIAtxtRelTranslatorRulesGroupNeuralNetwork*> firstLayer;
-	vector<GIAtxtRelTranslatorRulesGroupType*> GIAtxtRelTranslatorRulesGroupTypes;	//empty
-	if(GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerate.executeTxtRelTranslatorNeuralNetwork(translatorVariables, &GIAtxtRelTranslatorRulesGroupTypes, sentenceContents, createNewConnections, &firstLayer)
+	if(GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerate.executeTxtRelTranslatorNeuralNetwork(translatorVariables, &GIAtxtRelTranslatorRulesGroupTypes, sentenceContents, createNewConnections)
 	{
 		result = true;
 	}
 
+	/*
 	currentExperience->classTargetValue = GIA_PREPROCESSOR_POS_TAGGER_DATABASE_NEURAL_NETWORK_INTERNAL_CLASSIFICATION_NET_TRAIN_EXPERIENCE_OUTPUT_VALUE_NOT_USED;
 	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
 	for(int firstLayerNeuronIndex=0; firstLayerNeuronIndex<firstLayer.size(); firstLayerNeuronIndex++)
@@ -253,7 +251,8 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetworkSentence(GI
 		currentExperienceInput->inputValue = firstLayerNeuronGroup->wordDataTemp.wordPOStype;
 		currentExperienceInput->next = new ANNexperienceInput();
 		currentExperienceInput = currentExperienceInput->next;
-	}		
+	}
+	*/		
 	#endif
 	currentExperienceInList->next = new ANNexperience();			
 	#else
