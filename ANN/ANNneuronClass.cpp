@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m16c 24-April-2019
+ * Project Version: 3n1a 10-August-2019
  * Comments:
  * /
  *******************************************************************************/
@@ -122,10 +122,9 @@ void ANNneuron::initialiseNeuron()
 	neuronTypeInput = false;
 	neuronTypeTopLevelCategory = false;
 	neuronTypeIntermediary = false;
-	printed = false;
 	topLevelCategoryAlreadyExistsDeleteThisNewCopy = false;
 	#endif
-	#ifdef ANN_DRAW_DYNAMIC
+	#ifdef ANN_DRAW_PREVENT_REPRINT
 	printed = false;
 	#endif
 	printedXML = false;

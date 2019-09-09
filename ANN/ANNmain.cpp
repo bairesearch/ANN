@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3m16c 24-April-2019
+ * Project Version: 3n1a 10-August-2019
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -65,6 +65,9 @@ bool formedNetwork;
 static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t,where options are any of the following"
 "\n"
+#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+"\n\t-itxt [string]    : input text file"
+#else
 "\n\t-idata [string]   : neural network experience data set file"
 "\n"
 "\n\t-layers [int]     : neural network formation number of top level layers (def: 3)"
@@ -92,6 +95,7 @@ static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t-maxFolds [int]   : number of training folds (def: 10)"
 "\n"
 "\n\t-train [int]      : train neural network (1: yes, 0: no) (def: 1)"
+#endif
 "\n"
 "\n\t-ixml [string]    : neural network definition .xml input filename (def: neuralNet.xml)"
 "\n"
@@ -127,6 +131,9 @@ int main(const int argc,const char* *argv)
 
 	bool result = true;
 
+#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+	string inputFileName = "inputText.txt";
+#endif
 	bool useInputDatasetFile = false;
 	string inputDatasetFileName = "dataset.data";
 
@@ -193,6 +200,12 @@ int main(const int argc,const char* *argv)
 
 	if((SHAREDvarsClass().argumentExists(argc, argv, "-idata")) || (SHAREDvarsClass().argumentExists(argc, argv, "-ixml")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oxml")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oldr")) || (SHAREDvarsClass().argumentExists(argc, argv, "-osvg")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oppm")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oppm2")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oall")) || (SHAREDvarsClass().argumentExists(argc, argv, "-ui")))
 	{
+	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+		if(SHAREDvarsClass().argumentExists(argc, argv, "-itxt"))
+		{
+			inputFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-itxt");
+		}		
+	#else
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-idata"))
 		{
 			inputDatasetFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-idata");
@@ -265,7 +278,8 @@ int main(const int argc,const char* *argv)
 		{
 			maxFolds = SHAREDvarsClass().getFloatArgument(argc, argv, "-maxFolds");
 		}
-
+	#endif
+		
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-ixml"))
 		{
 			inputXMLFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-ixml");
@@ -367,7 +381,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3m16c 24-April-2019" << endl;
+			cout << "Project Version: 3n1a 10-August-2019" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -506,7 +520,9 @@ int main(const int argc,const char* *argv)
 		//Neural Network initialisations
 		firstInputNeuronInNetwork = new ANNneuron();
 
-		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+		//
+		#elif defined ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		ANNformationClass().formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons);
 		#elif defined ANN_ALGORITHM_BACKPROPAGATION_NETWORK
 		if(useSubnets)
@@ -542,6 +558,11 @@ int main(const int argc,const char* *argv)
 
 		if(trainIfUseInputDatasetFile)
 		{
+			#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+			ANNalgorithmSequenceGrammarNetworkTrainingClass().trainNeuralNetworkSequenceGrammar(inputFileName);
+			#elif defined ANN_ALGORITHM_CLASSIFICATION_NETWORK				
+			ANNalgorithmClassificationNetworkTrainingClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			#else
 			if(!usePresetNumberOfEpochs)
 			{
 				#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
@@ -554,9 +575,7 @@ int main(const int argc,const char* *argv)
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
 				#endif
-				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-				ANNalgorithmClassificationNetworkTrainingClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
-				#endif
+
 			}
 			else
 			{
@@ -570,10 +589,8 @@ int main(const int argc,const char* *argv)
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
 				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
-				#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-				ANNalgorithmClassificationNetworkTrainingClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
-				#endif
 			}
+			#endif
 		}
 	}
 
