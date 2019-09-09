@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n1a 10-August-2019
+ * Project Version: 3n1b 10-August-2019
  * Comments:
  * /
  *******************************************************************************/
@@ -168,6 +168,9 @@ void ANNneuron::initialiseNeuron()
 	//#ifdef GIA_NEURAL_NETWORK_SYMBOLIC_CORE_CONCEPT_INDEX_BITS
 	GIAconceptIndexType = INT_DEFAULT_VALUE;	//GIA_NEURAL_NETWORK_SYMBOLIC_CORE_CONCEPT_INDEX_BITS_TYPE_UNKNOWN;
 	GIAconceptIndex = INT_DEFAULT_VALUE;
+	//#endif
+	//#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
+	GIAneuronStrength = 0.0;
 	//#endif
 	#endif
 

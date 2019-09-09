@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n1a 10-August-2019
+ * Project Version: 3n1b 10-August-2019
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -650,12 +650,19 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		positionSVG.x = currentNeuronDispayReference->relativePosition.x*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;		//scaleFactor	//ANN_DRAW_BASICENTITY_NODE_WIDTH/2
 		positionSVG.y = currentNeuronDispayReference->relativePosition.y*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;
 		positionSVG.z = ANN_OUTPUT_Z_POSITION_NODES;
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS
+		colour colrgb = convertDoubleToRainbow(neuron->GIAneuronStrength, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_NEURON_MAX_WEIGHT);
+		bool transparent = false;
+		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, colrgb, 0.0, true, transparent, 0);
+		#else
 		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, currentNeuronDispayReference->colour, 0.0, true);
-
+		#endif
 	}
 
 	return result;
 }
+
+
 
 //currently this function just adds a plain line between neuron1 and neuron2, in the future it could be more complex
 bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* currentNeuronDispayReference, LDreference* backNeuronReference, LDreference* forwardNeuronReference, ANNneuronConnection* ANNneuronConnection, bool writeSVG, XMLparserTag** currentTagSVG)
@@ -753,7 +760,12 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		position2SVG.y = currentNeuronDispayReference->vertex2relativePosition.y* ANN_SVG_SCALE_FACTOR;
 		position2SVG.z = ANN_OUTPUT_Z_POSITION_CONNECTIONS;
 
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS
+		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->GIAconnectionStrength, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_CONNECTION_MAX_WEIGHT);
+		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
+		#else
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, currentNeuronDispayReference->colour);
+		#endif
 	}
 
 	return result;
@@ -1095,6 +1107,48 @@ void ANNdrawClass::ANNgenerateTextualANNneuronConnectionSpriteInfoString(ANNneur
 
 	/*End Start Sprite Text Creation*/
 }
+
+
+/*
+c++ convert number to rainbow
+https://www.particleincell.com/2014/colormap/
+*/
+colour ANNdrawClass::convertDoubleToRainbow(const double colourDouble, const double doubleMaxValue)
+{
+	double f = colourDouble/doubleMaxValue;
+	return convertDoubleToRainbow(f);
+}
+colour ANNdrawClass::convertDoubleToRainbow(const double f)
+{
+	colour colrgb;
+
+	//double a=(1-f)/0.2;	//with magenta
+	double a=(1-f)/0.25;
+	int X=floor(a);
+	int Y=floor(255*(a-X));
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	switch(X)
+	{
+		case 0: r=255;g=Y;b=0;break;
+		case 1: r=255-Y;g=255;b=0;break;
+		case 2: r=0;g=255;b=Y;break;
+		case 3: r=0;g=255-Y;b=255;break;
+		case 4: r=0;g=0;b=255;break;
+		/*
+		//with magenta
+		case 4: r=Y;g=0;b=255;break;
+		case 5: r=255;g=0;b=255;break;
+		*/
+	}
+	colrgb.r = r;
+	colrgb.g = g;
+	colrgb.b = b;
+	
+	return colrgb;
+}
+
 
 
 

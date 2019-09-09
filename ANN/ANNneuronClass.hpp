@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2019 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n1a 10-August-2019
+ * Project Version: 3n1b 10-August-2019
  * Comments:
  * /
  *******************************************************************************/
@@ -132,6 +132,9 @@ public:
 	//#ifdef GIA_NEURAL_NETWORK_SYMBOLIC_CORE_CONCEPT_INDEX_BITS
 	int GIAconceptIndexType;	//concept neurons only
 	int GIAconceptIndex;		//concept neurons only
+	//#endif
+	//#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
+	double GIAneuronStrength;
 	//#endif
 	#endif
 };
