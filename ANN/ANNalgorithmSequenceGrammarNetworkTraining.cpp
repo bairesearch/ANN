@@ -53,13 +53,12 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::trainNeuralNetworkSequence
 	#ifndef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN_EMULATE_EXACT_POS_TAGGER_DATABASE_OUTPUT
 	//FUTURE GIA - upgrade GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR to read/write GIAtxtRelTranslatorRulesGenerated.xml
 
-	vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes;
-	vector<XMLparserTag*>* GIAtxtRelTranslatorRulesTokenLayers;
+	vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes = new vector<GIAtxtRelTranslatorRulesGroupType*>;
+	vector<XMLparserTag*>* GIAtxtRelTranslatorRulesTokenLayers = new vector<XMLparserTag*>;
 	if(!GIAtxtRelTranslatorRules.extractGIAtxtRelTranslatorRules(GIAtxtRelTranslatorRulesGroupTypes, GIAtxtRelTranslatorRulesTokenLayers))
 	{
 		result = false;
 	}
-	
 	if(!GIAtxtRelTranslatorNeuralNetworkFormation.createGIAtxtRelTranslatorNeuralNetwork(GIAtxtRelTranslatorRulesTokenLayers, GIAtxtRelTranslatorRulesGroupTypes))
 	{
 		result = false;
@@ -108,7 +107,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::initialiseGIA(GIAtranslato
 {
 	bool result = true;
 	
-	translatorVariables = new GIAtranslatorVariablesClass();
+	translatorVariables = new GIAtranslatorVariablesClass();	//NOTUSED
 	translatorVariables->firstGIApreprocessorSentenceInList = new GIApreprocessorSentence();
 	
 	string lrpFolder = string(GIA_LRP_FOLDER_DEFAULT) + CHAR_FOLDER_DELIMITER;
@@ -131,6 +130,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::extractSentencesAndGenerat
 		result = false;
 	}
 	
+	//code replicated from GIAtxtRelTranslatorClass::parseTxtfileAndCreateSemanticNetworkBasedUponSemanticDependencyParsedSentences
 	#ifdef GIA_TXT_REL_TRANSLATOR_RULES_DEFINE_WORD_TRANSLATOR_SENTENCE_ENTITY_INDEX_AT_START
 	GIApreprocessorSentence* currentGIApreprocessorSentenceInList = translatorVariables->firstGIApreprocessorSentenceInList;
 	while(currentGIApreprocessorSentenceInList->next != NULL)
@@ -191,7 +191,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetwork(GIAtransla
 		for(int i=0; i<POSambiguityInfoUnambiguousPermutationArray.size(); i++)
 		{
 			vector<uint64_t>* POSambiguityInfoPermutationTemp = (POSambiguityInfoUnambiguousPermutationArray)[i];
-			GIAtxtRelTranslatorPermutations.setSentenceContentsWordsUnambiguousPOSindex(sentenceContents, POSambiguityInfoPermutationTemp);
+			GIApreprocessorPOStagger.setSentenceContentsWordsUnambiguousPOSindex(sentenceContents, POSambiguityInfoPermutationTemp);
 	
 			#ifdef GIA_DEBUG_TXT_REL_TRANSLATOR_NEURAL_NETWORK_PROPAGATE
 			cout << "POSambiguityInfoUnambiguousPermutationArray index = " << i << endl;
@@ -238,7 +238,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetworkSentence(GI
 	//int maxNumLayers = GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_MAX_NUMBER_LAYERS;
 	vector<GIAtxtRelTranslatorRulesGroupNeuralNetwork*> firstLayer;
 	vector<GIAtxtRelTranslatorRulesGroupType*> GIAtxtRelTranslatorRulesGroupTypes;	//empty
-	if(GIAtxtRelTranslatorNeuralNetworkPropagateCompact.executeTxtRelTranslatorNeuralNetwork(translatorVariables, &GIAtxtRelTranslatorRulesGroupTypes, sentenceContents, createNewConnections, &firstLayer)
+	if(GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerate.executeTxtRelTranslatorNeuralNetwork(translatorVariables, &GIAtxtRelTranslatorRulesGroupTypes, sentenceContents, createNewConnections, &firstLayer)
 	{
 		result = true;
 	}

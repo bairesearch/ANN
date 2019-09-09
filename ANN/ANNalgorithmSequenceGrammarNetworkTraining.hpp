@@ -44,7 +44,7 @@
 #include "GIApreprocessor.hpp"
 #include "GIAtranslatorOperations.hpp"
 #include "GIApreprocessorSentenceClass.hpp"
-#include "GIAtxtRelTranslatorNeuralNetworkPropagateCompact.hpp"
+#include "GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerate.hpp"
 #include "GIAtxtRelTranslatorNeuralNetworkFormation.hpp"
 #include "GIAtxtRelTranslatorNeuralNetworkOperations.hpp"
 #include "GIAtxtRelTranslatorPermutations.hpp"
@@ -62,7 +62,7 @@ class ANNalgorithmSequenceGrammarNetworkTrainingClass
 	private: GIApreprocessorWordClassClass GIApreprocessorWordClassObject;
 	private: GIAtranslatorOperationsClass GIAtranslatorOperations;	
 	private: GIApreprocessorSentenceClass GIApreprocessorSentenceClassObject;
-	private: GIAtxtRelTranslatorNeuralNetworkPropagateCompactClass GIAtxtRelTranslatorNeuralNetworkPropagateCompact;
+	private: GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerateClass GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerate;
 	private: GIAtxtRelTranslatorNeuralNetworkFormationClass GIAtxtRelTranslatorNeuralNetworkFormation;
 	private: GIAtxtRelTranslatorNeuralNetworkOperationsClass GIAtxtRelTranslatorNeuralNetworkOperations;
 	private: GIAtxtRelTranslatorPermutationsClass GIAtxtRelTranslatorPermutations;
