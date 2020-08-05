@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmSequenceGrammarNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n5a 23-July-2020
+ * Project Version: 3n6a 01-August-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -36,7 +36,8 @@
 
 #ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
 
-
+//depreciated @ANN3n6a
+/*
 bool ANNalgorithmSequenceGrammarNetworkTrainingClass::trainNeuralNetworkSequenceGrammar(const string inputFileName)
 {
 	bool result = true;
@@ -240,19 +241,19 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetworkSentence(GI
 		result = true;
 	}
 
-	/*
-	currentExperience->classTargetValue = GIA_PREPROCESSOR_POS_TAGGER_DATABASE_NEURAL_NETWORK_INTERNAL_CLASSIFICATION_NET_TRAIN_EXPERIENCE_OUTPUT_VALUE_NOT_USED;
-	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
-	for(int firstLayerNeuronIndex=0; firstLayerNeuronIndex<firstLayer.size(); firstLayerNeuronIndex++)
-	{
-		GIAposRelTranslatorRulesGroupNeuralNetwork* firstLayerNeuronGroup = firstLayer[firstLayerNeuronIndex]; 
-
-		//code extracted from GIApreprocessorPOStaggerClass::addPOStaggerDatabaseEntry/generateANNexperienceFromPOSambiguityInfoPermutation
-		currentExperienceInput->inputValue = firstLayerNeuronGroup->wordDataTemp.wordPOStype;
-		currentExperienceInput->next = new ANNexperienceInput();
-		currentExperienceInput = currentExperienceInput->next;
-	}
-	*/		
+	
+	//currentExperience->classTargetValue = GIA_PREPROCESSOR_POS_TAGGER_DATABASE_NEURAL_NETWORK_INTERNAL_CLASSIFICATION_NET_TRAIN_EXPERIENCE_OUTPUT_VALUE_NOT_USED;
+	//ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
+	//for(int firstLayerNeuronIndex=0; firstLayerNeuronIndex<firstLayer.size(); firstLayerNeuronIndex++)
+	//{
+	//	GIAposRelTranslatorRulesGroupNeuralNetwork* firstLayerNeuronGroup = firstLayer[firstLayerNeuronIndex]; 
+	//
+	//	//code extracted from GIApreprocessorPOStaggerClass::addPOStaggerDatabaseEntry/generateANNexperienceFromPOSambiguityInfoPermutation
+	//	currentExperienceInput->inputValue = firstLayerNeuronGroup->wordDataTemp.wordPOStype;
+	//	currentExperienceInput->next = new ANNexperienceInput();
+	//	currentExperienceInput = currentExperienceInput->next;
+	//}
+			
 	#endif
 	currentExperienceInList->next = new ANNexperience();			
 	#else
@@ -264,6 +265,7 @@ bool ANNalgorithmSequenceGrammarNetworkTrainingClass::generateNetworkSentence(GI
 	
 	return result;
 }
+*/
 
 #endif
 

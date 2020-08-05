@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmSequenceGrammarNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n5a 23-July-2020
+ * Project Version: 3n6a 01-August-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -39,6 +39,8 @@
 
 #ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
 
+//depreciated @ANN3n6a
+/*
 #include "GIAtranslatorOperations.hpp"
 #include "GIApreprocessorWordIdentification.hpp"
 #include "GIApreprocessor.hpp"
@@ -81,6 +83,7 @@ class ANNalgorithmSequenceGrammarNetworkTrainingClass
 				private: bool generateNetworkSentence(GIAtranslatorVariablesClass* translatorVariables, vector<GIAposRelTranslatorRulesGroupType*>* GIAposRelTranslatorRulesGroupTypes, vector<GIApreprocessorPlainTextWord*>* sentence, vector<uint64_t>* POSambiguityInfoPermutationTemp, ANNexperience* currentExperienceInList);
 
 };
+*/
 
 #endif
 
