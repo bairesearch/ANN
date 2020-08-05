@@ -26,7 +26,7 @@
  * File Name: ANNglobalsDefs.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n4a 02-June-2020
+ * Project Version: 3n5a 23-July-2020
  * Description: ANN specific global definitions
  *
  * Usage Examples:
@@ -89,7 +89,7 @@
 				#define ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_CONNECTION_MAX_WEIGHT (100)
 			#endif
 			//#ifdef GIA_POS_REL_TRANSLATOR_SANI_ANN_COLOUR_CONNECTIONS_BASED_ON_COMPONENT_INDEX
-				//#define ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
+				#define ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
 				#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
 					//#ifdef GIA_POS_REL_TRANSLATOR_SANI_ANN_COLOUR_CONNECTIONS_BASED_ON_COMPONENT_INDEX_EXACT
 						#define ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT	//prints component connection colour depending on component index

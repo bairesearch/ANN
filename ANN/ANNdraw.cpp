@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n4a 02-June-2020
+ * Project Version: 3n5a 23-July-2020
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -786,7 +786,7 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 			//for white background;
 			//col = DAT_FILE_COLOUR_MAGENTA;	//DAT_FILE_COLOUR_PURPLE;	
 			
-			//for black background;
+			//for black background (magenta [bright purple/violet]);
 			colourrgb.r = 255;
 			colourrgb.g = 0;
 			colourrgb.b = 255;
@@ -796,7 +796,7 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 			//for white background;
 			//col = DAT_FILE_COLOUR_DARKBLUE;
 			
-			//for black background;
+			//for black background (dark purple/indigo);
 			colourrgb.r = 112;
 			colourrgb.g = 0;
 			colourrgb.b = 187;
