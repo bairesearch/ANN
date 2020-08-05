@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n2a 10-March-2020
+ * Project Version: 3n3a 28-May-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -70,7 +70,8 @@ class ANNdisplayClass
 	private: void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
 	#endif
 
-	public: void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool displayInOpenGL, bool useOutputLDRFile, bool useOutputSVGFile, bool useOutputPPMFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height);
+	public: void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, const bool addSprites, const bool allowRaytrace, const bool displayInOpenGL, const bool useOutputLDRFile, const bool useOutputSVGFile, const bool useOutputPPMFile, const string outputLDRFileName, const string outputSVGFileName, const string outputPPMFileName, const string outputPPMFileNameRaytraced, const string outputTALFileName, const int width, const int height);
+		public: void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, const bool addSprites, const bool allowRaytrace, const bool displayInOpenGL, const bool useOutputLDRFile, const bool useOutputSVGFile, const bool useOutputPPMFile, const string outputLDRFileName, const string outputSVGFileName, const string outputPPMFileName, const string outputPPMFileNameRaytraced, const string outputTALFileName, const int width, const int height, const int widthSVG, const int heightSVG);
 
 	public: void writeExperienceListToFile(char* fileName, ANNexperience* firstExperienceInList);
 };

@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n2a 10-March-2020
+ * Project Version: 3n3a 28-May-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -118,8 +118,13 @@ void ANNdisplayClass::generateExperienceWith2DbooleanMap(bool* booleanMap, int i
 
 
 
-
-void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, bool addSprites, bool allowRaytrace, bool displayInOpenGL, bool useOutputLDRFile, bool useOutputSVGFile, bool useOutputPPMFile, string outputLDRFileName, string outputSVGFileName, string outputPPMFileName, string outputPPMFileNameRaytraced, string outputTALFileName, int width, int height)
+void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, const bool addSprites, const bool allowRaytrace, const bool displayInOpenGL, const bool useOutputLDRFile, const bool useOutputSVGFile, const bool useOutputPPMFile, const string outputLDRFileName, const string outputSVGFileName, const string outputPPMFileName, const string outputPPMFileNameRaytraced, const string outputTALFileName, const int width, const int height)
+{
+	int widthSVG = ANN_DISPLAY_DEFAULT_SVG_WIDTH;
+	int heightSVG = ANN_DISPLAY_DEFAULT_SVG_HEIGHT;
+	outputNeuralNetworkToVectorGraphicsAndRaytrace(firstInputNeuronInNetwork, addSprites, allowRaytrace, displayInOpenGL, useOutputLDRFile, useOutputSVGFile, useOutputPPMFile, outputLDRFileName, outputSVGFileName, outputPPMFileName, outputPPMFileNameRaytraced, outputTALFileName, width, height, widthSVG, heightSVG);
+}
+void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, const bool addSprites, const bool allowRaytrace, const bool displayInOpenGL, const bool useOutputLDRFile, const bool useOutputSVGFile, const bool useOutputPPMFile, const string outputLDRFileName, const string outputSVGFileName, const string outputPPMFileName, const string outputPPMFileNameRaytraced, const string outputTALFileName, const int width, const int height, const int widthSVG, const int heightSVG)
 {
 	bool result = true;
 
@@ -172,7 +177,12 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 			#ifndef ANN_DRAW_DISABLE_FILE_OUTPUT_NOTIFICATIONS
 			cout << "SVG graphics file name = " << outputSVGFileName << endl;
 			#endif
-			if(!LDsvg.writeSVGfile(outputFileNameSVGcharstar, firstTagInSVGFile))
+			int viewBoxMinX = -ANN_DISPLAY_DEFAULT_SVG_WIDTH_VIEWBOX_OFFSET;
+			int viewBoxMaxX = widthSVG-ANN_DISPLAY_DEFAULT_SVG_WIDTH_VIEWBOX_OFFSET;
+			int viewBoxMinY = -ANN_DISPLAY_DEFAULT_SVG_WIDTH_VIEWBOX_OFFSET;
+			int viewBoxMaxY = heightSVG-ANN_DISPLAY_DEFAULT_SVG_WIDTH_VIEWBOX_OFFSET;
+			
+			if(!LDsvg.writeSVGfile(outputFileNameSVGcharstar, firstTagInSVGFile, viewBoxMinX, viewBoxMaxX, viewBoxMinY, viewBoxMaxY))
 			{
 				result = false;
 			}

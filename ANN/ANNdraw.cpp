@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n2a 10-March-2020
+ * Project Version: 3n3a 28-May-2020
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -760,9 +760,30 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		position2SVG.y = currentNeuronDispayReference->vertex2relativePosition.y* ANN_SVG_SCALE_FACTOR;
 		position2SVG.z = ANN_OUTPUT_Z_POSITION_CONNECTIONS;
 
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS	
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_COMPONENT_ORDER_PRINT_COLOURS
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_COMPONENT_ORDER_PRINT_COLOURS_EXACT
+		int col;
+		if(ANNneuronConnection->GIAcomponentIndexFirst)
+		{
+			col = DAT_FILE_COLOUR_MAGENTA;
+			//col = DAT_FILE_COLOUR_PURPLE;
+		}
+		else
+		{
+			col = DAT_FILE_COLOUR_DARKBLUE;
+		}
+		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, col);
+		#else
+		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->GIAcomponentIndex, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_COMPONENT_ORDER_PRINT_COLOURS_MAX_NUM_COMPONENTS);
+		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
+		#endif
+		#else
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS		
 		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->GIAconnectionStrength, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_CONNECTION_MAX_WEIGHT);
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
+		#endif
+		#endif
 		#else
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, currentNeuronDispayReference->colour);
 		#endif
