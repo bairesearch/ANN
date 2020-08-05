@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n3a 28-May-2020
+ * Project Version: 3n3b 28-May-2020
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -650,12 +650,29 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		positionSVG.x = currentNeuronDispayReference->relativePosition.x*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;		//scaleFactor	//ANN_DRAW_BASICENTITY_NODE_WIDTH/2
 		positionSVG.y = currentNeuronDispayReference->relativePosition.y*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;
 		positionSVG.z = ANN_OUTPUT_Z_POSITION_NODES;
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
+		int col = DAT_FILE_COLOUR_BLUE;
+		if(neuron->activationLevel == ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE)
+		{
+			col = DAT_FILE_COLOUR_BLUE;
+		}
+		else if(neuron->activationLevel == ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_PARTIAL)
+		{
+			col = DAT_FILE_COLOUR_ORANGE;
+		}
+		else if(neuron->activationLevel == ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_FULL)
+		{
+			col = DAT_FILE_COLOUR_YELLOW;
+		}
+		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, col, 0.0, true);
+		#else
 		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS
 		colour colrgb = convertDoubleToRainbow(neuron->GIAneuronStrength, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_NEURON_MAX_WEIGHT);
 		bool transparent = false;
 		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, colrgb, 0.0, true, transparent, 0);
 		#else
 		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, currentNeuronDispayReference->colour, 0.0, true);
+		#endif
 		#endif
 	}
 
@@ -761,21 +778,32 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		position2SVG.z = ANN_OUTPUT_Z_POSITION_CONNECTIONS;
 
 		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS	
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_COMPONENT_ORDER_PRINT_COLOURS
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_COMPONENT_ORDER_PRINT_COLOURS_EXACT
-		int col;
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
+		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT
+		colour colourrgb;
 		if(ANNneuronConnection->GIAcomponentIndexFirst)
 		{
-			col = DAT_FILE_COLOUR_MAGENTA;
-			//col = DAT_FILE_COLOUR_PURPLE;
+			//for white background;
+			//col = DAT_FILE_COLOUR_MAGENTA;	//DAT_FILE_COLOUR_PURPLE;	
+			
+			//for black background;
+			colourrgb.r = 255;
+			colourrgb.g = 0;
+			colourrgb.b = 255;
 		}
 		else
 		{
-			col = DAT_FILE_COLOUR_DARKBLUE;
+			//for white background;
+			//col = DAT_FILE_COLOUR_DARKBLUE;
+			
+			//for black background;
+			colourrgb.r = 112;
+			colourrgb.g = 0;
+			colourrgb.b = 187;
 		}
-		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, col);
+		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
 		#else
-		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->GIAcomponentIndex, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_COMPONENT_ORDER_PRINT_COLOURS_MAX_NUM_COMPONENTS);
+		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->GIAcomponentIndex, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_MAX_NUM_COMPONENTS);
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
 		#endif
 		#else

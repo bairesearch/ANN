@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n3a 28-May-2020
+ * Project Version: 3n3b 28-May-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -172,6 +172,9 @@ void ANNneuron::initialiseNeuron()
 	//#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
 	GIAneuronStrength = 0.0;
 	//#endif
+	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
+	activationLevel = ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE;
+	#endif
 	#endif
 
 }
