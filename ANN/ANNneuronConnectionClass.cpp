@@ -26,7 +26,7 @@
  * File Name: ANNANNneuronConnectionClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n3c 28-May-2020
+ * Project Version: 3n4a 02-June-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -56,7 +56,7 @@ ANNneuronConnection::ANNneuronConnection(void)
 	GIAconnectionType = GIA_ANN_CONNECTION_TYPE_UNDEFINED;
 	GIAalreadyParsed = false;
 	GIAbidirectionalSynapse = false;
-	//#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
+	//#ifdef GIA_POS_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
 	GIAconnectionStrength = 0.0;
 	//#endif
 	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER

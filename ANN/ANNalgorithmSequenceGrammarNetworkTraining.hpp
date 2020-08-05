@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmSequenceGrammarNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n3c 28-May-2020
+ * Project Version: 3n4a 02-June-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -44,12 +44,12 @@
 #include "GIApreprocessor.hpp"
 #include "GIAtranslatorOperations.hpp"
 #include "GIApreprocessorSentenceClass.hpp"
-#include "GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerate.hpp"
-#include "GIAtxtRelTranslatorNeuralNetworkFormation.hpp"
-#include "GIAtxtRelTranslatorNeuralNetworkOperations.hpp"
-#include "GIAtxtRelTranslatorPermutations.hpp"
+#include "GIAposRelTranslatorSANIPropagateCompactGenerate.hpp"
+#include "GIAposRelTranslatorSANIFormation.hpp"
+#include "GIAposRelTranslatorSANIOperations.hpp"
+#include "GIAposRelTranslatorPermutations.hpp"
 #include "GIApreprocessorPOStagger.hpp"
-#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN
+#ifdef GIA_POS_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN
 #include "GIApreprocessorPOStaggerDatabase.hpp"
 #endif
 
@@ -62,23 +62,23 @@ class ANNalgorithmSequenceGrammarNetworkTrainingClass
 	private: GIApreprocessorWordClassClass GIApreprocessorWordClassObject;
 	private: GIAtranslatorOperationsClass GIAtranslatorOperations;	
 	private: GIApreprocessorSentenceClass GIApreprocessorSentenceClassObject;
-	private: GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerateClass GIAtxtRelTranslatorNeuralNetworkPropagateCompactGenerate;
-	private: GIAtxtRelTranslatorNeuralNetworkFormationClass GIAtxtRelTranslatorNeuralNetworkFormation;
-	private: GIAtxtRelTranslatorNeuralNetworkOperationsClass GIAtxtRelTranslatorNeuralNetworkOperations;
-	private: GIAtxtRelTranslatorPermutationsClass GIAtxtRelTranslatorPermutations;
+	private: GIAposRelTranslatorSANIPropagateCompactGenerateClass GIAposRelTranslatorSANIPropagateCompactGenerate;
+	private: GIAposRelTranslatorSANIFormationClass GIAposRelTranslatorSANIFormation;
+	private: GIAposRelTranslatorSANIOperationsClass GIAposRelTranslatorSANIOperations;
+	private: GIAposRelTranslatorPermutationsClass GIAposRelTranslatorPermutations;
 	private: GIApreprocessorPOStaggerClass GIApreprocessorPOStagger;
-	#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN
+	#ifdef GIA_POS_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN
 	private: GIApreprocessorPOStaggerDatabaseClass GIApreprocessorPOStaggerDatabase;
 	#endif
 	
 	public: bool trainNeuralNetworkSequenceGrammar(const string inputFileName);
-		#ifdef GIA_TXT_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN
+		#ifdef GIA_POS_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_PRELIMTEST_GENERATE_CLASSIFICATION_NET_INPUT_DATASET_VIA_ANN
 		private: bool writeExperiencesToFile(ANNexperience* firstExperienceInList, const string dataFileName);
 		#endif
 		private: bool initialiseGIA(GIAtranslatorVariablesClass* translatorVariables);		
-		private: bool extractSentencesAndGenerateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, string* lineText, ANNexperience* firstExperienceInList);
-			private: bool generateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, GIApreprocessorSentence* firstGIApreprepreprocessorSentenceInList, ANNexperience* firstExperienceInList);
-				private: bool generateNetworkSentence(GIAtranslatorVariablesClass* translatorVariables, vector<GIAtxtRelTranslatorRulesGroupType*>* GIAtxtRelTranslatorRulesGroupTypes, vector<GIApreprocessorPlainTextWord*>* sentence, vector<uint64_t>* POSambiguityInfoPermutationTemp, ANNexperience* currentExperienceInList);
+		private: bool extractSentencesAndGenerateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAposRelTranslatorRulesGroupType*>* GIAposRelTranslatorRulesGroupTypes, string* lineText, ANNexperience* firstExperienceInList);
+			private: bool generateNetwork(GIAtranslatorVariablesClass* translatorVariables, vector<GIAposRelTranslatorRulesGroupType*>* GIAposRelTranslatorRulesGroupTypes, GIApreprocessorSentence* firstGIApreprepreprocessorSentenceInList, ANNexperience* firstExperienceInList);
+				private: bool generateNetworkSentence(GIAtranslatorVariablesClass* translatorVariables, vector<GIAposRelTranslatorRulesGroupType*>* GIAposRelTranslatorRulesGroupTypes, vector<GIApreprocessorPlainTextWord*>* sentence, vector<uint64_t>* POSambiguityInfoPermutationTemp, ANNexperience* currentExperienceInList);
 
 };
 
