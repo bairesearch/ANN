@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n7a 17-August-2020
+ * Project Version: 3n7b 17-August-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -65,9 +65,9 @@ class ANNdisplayClass
 	private: RTsceneClass RTscene;
 	private: RTreferenceManipulationClass RTreferenceManipulation;
 	#ifdef USE_RT
-	private: void generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
-	private: void generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, ANNexperience* currentExperience, int64_t objectDecision);
-	private: void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
+	public: void generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
+	public: void generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, ANNexperience* currentExperience, int64_t objectDecision);
+	public: void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
 	#endif
 
 	public: void outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* firstInputNeuronInNetwork, const bool addSprites, const bool allowRaytrace, const bool displayInOpenGL, const bool useOutputLDRFile, const bool useOutputSVGFile, const bool useOutputPPMFile, const string outputLDRFileName, const string outputSVGFileName, const string outputPPMFileName, const string outputPPMFileNameRaytraced, const string outputTALFileName, const int width, const int height);
