@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n6a 01-August-2020
+ * Project Version: 3n7a 17-August-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -381,7 +381,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3n6a 01-August-2020" << endl;
+			cout << "Project Version: 3n7a 17-August-2020" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -1032,12 +1032,6 @@ bool ANNmainClass::mainUI()
 		{
 			outputNetworkAsVectorGraphics();
 		}
-		#ifdef USE_LRRC
-		else if(answerAsInt == 7)
-		{
-			executeLRRCfunctionsWithAI();
-		}
-		#endif
 		else if(answerAsInt == 0)
 		{
 			UIstatus = false;

@@ -26,7 +26,7 @@
  * File Name: ANNexperienceClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n6a 01-August-2020
+ * Project Version: 3n7a 17-August-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -158,7 +158,7 @@ class ANNexperienceClassClass
 	private: SHAREDvarsClass SHAREDvars;
 	public: void copyExperiences(ANNexperience* newExperience, ANNexperience* experienceToCopy);
 	public: ANNexperience* findExperience(ANNexperience* firstExperienceInDataSet, const int64_t experienceNumToFind);
-	private: int64_t countNumberOfExperienceInputs(const ANNexperience* experience);
+	public: int64_t countNumberOfExperienceInputs(const ANNexperience* experience);
 	public: int64_t countNumberOfExperiences(const ANNexperience* firstExperienceInList);
 
 
