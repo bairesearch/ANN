@@ -26,7 +26,7 @@
  * File Name: ANNTHwithLRRCmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n7c 17-August-2020
+ * Project Version: 3n7d 17-August-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -47,7 +47,7 @@ int main()
 	//srand(static_cast<unsigned>(time(0)));
 	srand( (unsigned)time(NULL) );	//seeds randomness
 
-	result = LRRCTHgame().THtestANNusingCombatExperiences();
+	result = LRRCTHgameClass().THtestANNusingCombatExperiences();
 
 	return result;
 }
