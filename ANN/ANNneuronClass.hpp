@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -43,10 +43,11 @@
 //#define DEBUG_TRAIN_NETWORK_WITH_NON_RANDOM_VARS	//must also be defined in ANNparser.cpp
 
 
-
-
 #define DEFAULT_FIRST_INPUT_NEURON_ID 1
 #define DEFAULT_FIRST_OUTPUT_NEURON_ID 2
+
+
+
 
 class ANNneuronConnection;
 
@@ -133,13 +134,31 @@ public:
 	int GIAconceptIndexType;	//concept neurons only
 	int GIAconceptIndex;		//concept neurons only
 	//#endif
+	#endif
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR
+	string SANIneuronName;
 	//#ifdef GIA_POS_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
-	double GIAneuronStrength;
+	double SANIneuronStrength;
 	//#endif
-	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
-	int activationLevel;	//0: inactive, 1: partially active, 2: fully active 
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
+	int SANIactivationLevel;	//0: inactive, 1: partially active, 2: fully active 
 	#endif
 	#endif
+};
+
+class ANNtranslatorVariablesClass
+{
+public:
+
+	ANNtranslatorVariablesClass(void);
+	~ANNtranslatorVariablesClass(void);
+	
+	//#ifdef GIA_NEURAL_NETWORK
+	ANNneuron* firstInputNeuronInNetwork;
+	//#ifdef SANI_ANN
+	ANNneuron* firstOutputNeuronInNetwork;
+	//#endif
+	//#endif
 };
 
 

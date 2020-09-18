@@ -26,18 +26,18 @@
  * File Name: ANNalgorithmSequenceGrammarNetworkTraining.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_TRAINING
-#define HEADER_ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_TRAINING
+#ifndef HEADER_ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_TRAINING
+#define HEADER_ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_TRAINING
 
 #include "ANNglobalDefs.hpp"
 
-#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK
 
 //depreciated @ANN3n6a
 /*

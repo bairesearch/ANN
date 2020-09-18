@@ -26,7 +26,7 @@
  * File Name: ANNneuronConnectionClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -78,14 +78,16 @@ public:
 	int GIAconnectionType;
 	bool GIAalreadyParsed;
 	bool GIAbidirectionalSynapse;
+	#endif
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR
 	//#ifdef GIA_POS_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
-	double GIAconnectionStrength;
+	double SANIconnectionStrength;
 	//#endif
-	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
-	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT
-	bool GIAcomponentIndexFirst;
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT
+	bool SANIcomponentIndexFirst;
 	#else
-	int GIAcomponentIndex;
+	int SANIcomponentIndex;
 	#endif
 	#endif
 	#endif

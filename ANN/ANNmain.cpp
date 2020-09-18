@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -61,7 +61,7 @@ bool formedNetwork;
 static char errmessage[] = "Usage:  ANN.exe [options]"
 "\n\t,where options are any of the following"
 "\n"
-#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK
 "\n\t-itxt [string]    : input text file"
 #else
 "\n\t-idata [string]   : neural network experience data set file"
@@ -127,7 +127,7 @@ int main(const int argc,const char* *argv)
 
 	bool result = true;
 
-#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK
 	string inputFileName = "inputText.txt";
 #endif
 	bool useInputDatasetFile = false;
@@ -196,7 +196,7 @@ int main(const int argc,const char* *argv)
 
 	if((SHAREDvarsClass().argumentExists(argc, argv, "-idata")) || (SHAREDvarsClass().argumentExists(argc, argv, "-ixml")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oxml")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oldr")) || (SHAREDvarsClass().argumentExists(argc, argv, "-osvg")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oppm")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oppm2")) || (SHAREDvarsClass().argumentExists(argc, argv, "-oall")) || (SHAREDvarsClass().argumentExists(argc, argv, "-ui")))
 	{
-	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-itxt"))
 		{
 			inputFileName = SHAREDvarsClass().getStringArgument(argc, argv, "-itxt");
@@ -377,7 +377,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3n8a 09-September-2020" << endl;
+			cout << "Project Version: 3n9a 11-September-2020" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -516,7 +516,7 @@ int main(const int argc,const char* *argv)
 		//Neural Network initialisations
 		firstInputNeuronInNetwork = new ANNneuron();
 
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK
 		//
 		#elif defined ANN_ALGORITHM_CLASSIFICATION_NETWORK
 		ANNformationClass().formNeuralNetworkInputLayer(firstInputNeuronInNetwork, numberOfInputNeurons);
@@ -554,7 +554,7 @@ int main(const int argc,const char* *argv)
 
 		if(trainIfUseInputDatasetFile)
 		{
-			#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK
+			#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK
 			ANNalgorithmSequenceGrammarNetworkTrainingClass().trainNeuralNetworkSequenceGrammar(inputFileName);
 			#elif defined ANN_ALGORITHM_CLASSIFICATION_NETWORK				
 			ANNalgorithmClassificationNetworkTrainingClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
@@ -1077,7 +1077,7 @@ bool ANNmainClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInpu
 	}
 
 
-#ifndef USE_OR
+#ifndef USE_ATOR
 	if(!ANNxmlConversion.writeNetXMLfile(*XMLNNSceneFileName, firstInputNeuronInNetwork))
 	{
 		result = false;

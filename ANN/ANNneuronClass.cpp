@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -35,6 +35,8 @@
 #include "ANNneuronClass.hpp"
 
 /************************************************************ Neural Network Class Definitions* *****************************************************/
+
+
 
 
 ANNneuron::ANNneuron(void)
@@ -169,17 +171,31 @@ void ANNneuron::initialiseNeuron()
 	GIAconceptIndexType = INT_DEFAULT_VALUE;	//GIA_NEURAL_NETWORK_SYMBOLIC_CORE_CONCEPT_INDEX_BITS_TYPE_UNKNOWN;
 	GIAconceptIndex = INT_DEFAULT_VALUE;
 	//#endif
+	#endif
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR
+	SANIneuronName = "";
 	//#ifdef GIA_POS_REL_TRANSLATOR_NEURAL_NETWORK_SEQUENCE_GRAMMAR_WEIGHTS
-	GIAneuronStrength = 0.0;
+	SANIneuronStrength = 0.0;
 	//#endif
-	#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
-	activationLevel = ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE;
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
+	SANIactivationLevel = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE;
 	#endif
 	#endif
 
 }
 
-
+ANNtranslatorVariablesClass::ANNtranslatorVariablesClass(void)
+{
+	//#ifdef GIA_NEURAL_NETWORK
+	firstInputNeuronInNetwork = NULL;
+	//#ifdef SANI_ANN
+	firstOutputNeuronInNetwork = NULL;	//intermediary variable for neural network connection purposes
+	//#endif
+	//#endif
+}
+ANNtranslatorVariablesClass::~ANNtranslatorVariablesClass(void)
+{
+}
 
 
 
@@ -210,6 +226,11 @@ void ANNneuronClassClass::averageNeuronKeyProperties(ANNneuron* neuronToUpdate, 
 	neuronToUpdate->classTarget = (neuronToUpdate->classTarget + neuronToCopy->classTarget)/2.0;
 	neuronToUpdate->error = (neuronToUpdate->error + neuronToCopy->error)/2.0;
 }
+
+
+
+
+
 
 
 /************************************************************ End Neural Network Class Definitions* *************************************************/

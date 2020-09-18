@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n8a 09-September-2020
+ * Project Version: 3n9a 11-September-2020
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -650,24 +650,24 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		positionSVG.x = currentNeuronDispayReference->relativePosition.x*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;		//scaleFactor	//ANN_DRAW_BASICENTITY_NODE_WIDTH/2
 		positionSVG.y = currentNeuronDispayReference->relativePosition.y*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;
 		positionSVG.z = ANN_OUTPUT_Z_POSITION_NODES;
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
 		int col = DAT_FILE_COLOUR_BLUE;
-		if(neuron->activationLevel == ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE)
+		if(neuron->activationLevel == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE)
 		{
 			col = DAT_FILE_COLOUR_BLUE;
 		}
-		else if(neuron->activationLevel == ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_PARTIAL)
+		else if(neuron->activationLevel == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_PARTIAL)
 		{
 			col = DAT_FILE_COLOUR_ORANGE;
 		}
-		else if(neuron->activationLevel == ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_FULL)
+		else if(neuron->activationLevel == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_FULL)
 		{
 			col = DAT_FILE_COLOUR_YELLOW;
 		}
 		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, col, 0.0, true);
 		#else
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS
-		colour colrgb = convertDoubleToRainbow(neuron->GIAneuronStrength, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_NEURON_MAX_WEIGHT);
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS
+		colour colrgb = convertDoubleToRainbow(neuron->SANIneuronStrength, ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_NEURON_MAX_WEIGHT);
 		bool transparent = false;
 		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, colrgb, 0.0, true, transparent, 0);
 		#else
@@ -777,11 +777,11 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		position2SVG.y = currentNeuronDispayReference->vertex2relativePosition.y* ANN_SVG_SCALE_FACTOR;
 		position2SVG.z = ANN_OUTPUT_Z_POSITION_CONNECTIONS;
 
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS	
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS	
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT
 		colour colourrgb;
-		if(ANNneuronConnection->GIAcomponentIndexFirst)
+		if(ANNneuronConnection->SANIcomponentIndexFirst)
 		{
 			//for white background;
 			//col = DAT_FILE_COLOUR_MAGENTA;	//DAT_FILE_COLOUR_PURPLE;	
@@ -803,12 +803,12 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		}
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
 		#else
-		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->GIAcomponentIndex, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_MAX_NUM_COMPONENTS);
+		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->SANIcomponentIndex, ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_MAX_NUM_COMPONENTS);
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
 		#endif
 		#else
-		#ifdef ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS		
-		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->GIAconnectionStrength, ANN_ALGORITHM_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_CONNECTION_MAX_WEIGHT);
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS		
+		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->SANIconnectionStrength, ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_CONNECTION_MAX_WEIGHT);
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
 		#endif
 		#endif
@@ -1122,6 +1122,10 @@ void ANNdrawClass::ANNgenerateTextualNeuronSpriteInfoString(ANNneuron* neuron, s
 	*spriteTextString = *spriteTextString + '\n';
 	tempString = neuron->GIAentityName;
 	*spriteTextString = *spriteTextString + entityTypeString + " = " + tempString;
+	#endif
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR
+	tempString = neuron->SANIneuronName;
+	*spriteTextString = *spriteTextString + tempString;	
 	#endif
 
 	/*End Start Sprite Text Creation*/
