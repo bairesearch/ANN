@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n9a 11-September-2020
+ * Project Version: 3n10a 31-October-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -179,6 +179,9 @@ void ANNneuron::initialiseNeuron()
 	//#endif
 	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
 	SANIactivationLevel = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE;
+	#endif
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_LAST_GENERATED_SENTENCE
+	SANIgeneratedForLastSentence = false;
 	#endif
 	#endif
 

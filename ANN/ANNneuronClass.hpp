@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n9a 11-September-2020
+ * Project Version: 3n10a 31-October-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -142,6 +142,9 @@ public:
 	//#endif
 	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
 	int SANIactivationLevel;	//0: inactive, 1: partially active, 2: fully active 
+	#endif
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_LAST_GENERATED_SENTENCE
+	bool SANIgeneratedForLastSentence;
 	#endif
 	#endif
 };

@@ -26,7 +26,7 @@
  * File Name: ANNdraw.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n9a 11-September-2020
+ * Project Version: 3n10a 31-October-2020
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -131,6 +131,7 @@ class ANNdrawClass
 {
 	private: LDspriteClass LDsprite;
 	private: LDreferenceManipulationClass LDreferenceManipulation;
+	private: LDreferenceClassClass LDreferenceClassObject;
 	private: SHAREDvectorClass SHAREDvector;
 	private: LDsvgClass LDsvg;
 	private: SHAREDvarsClass SHAREDvars;

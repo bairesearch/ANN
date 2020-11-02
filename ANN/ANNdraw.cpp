@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3n9a 11-September-2020
+ * Project Version: 3n10a 31-October-2020
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -650,30 +650,47 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		positionSVG.x = currentNeuronDispayReference->relativePosition.x*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;		//scaleFactor	//ANN_DRAW_BASICENTITY_NODE_WIDTH/2
 		positionSVG.y = currentNeuronDispayReference->relativePosition.y*ANN_SVG_SCALE_FACTOR + ANN_SVG_NEURON_SIZE/2;
 		positionSVG.z = ANN_OUTPUT_Z_POSITION_NODES;
+		
+		colour colourrgb;
+		
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_LAST_GENERATED_SENTENCE
+		if(neuron->SANIgeneratedForLastSentence)
+		{
+			LDreferenceClassObject.convertLdrawColourToDatFileRGB(ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_LAST_GENERATED_SENTENCE_COLOR, &colourrgb);
+		}
+		else
+		{
+			LDreferenceClassObject.convertLdrawColourToDatFileRGB(ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE_COLOR, &colourrgb);
+		}
+		#else
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
 		int col = DAT_FILE_COLOUR_BLUE;
 		if(neuron->activationLevel == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE)
 		{
-			col = DAT_FILE_COLOUR_BLUE;
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE_COLOR;
 		}
 		else if(neuron->activationLevel == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_PARTIAL)
 		{
-			col = DAT_FILE_COLOUR_ORANGE;
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_PARTIAL_COLOR;
 		}
 		else if(neuron->activationLevel == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_FULL)
 		{
-			col = DAT_FILE_COLOUR_YELLOW;
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_FULL_COLOR;
 		}
-		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, col, 0.0, true);
+ 		LDreferenceClassObject.convertLdrawColourToDatFileRGB(col, &colourrgb);
 		#else
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS
-		colour colrgb = convertDoubleToRainbow(neuron->SANIneuronStrength, ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_NEURON_MAX_WEIGHT);
-		bool transparent = false;
-		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, colrgb, 0.0, true, transparent, 0);
+		colourrgb = convertDoubleToRainbow(neuron->SANIneuronStrength, ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_NEURON_MAX_WEIGHT);
 		#else
-		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, currentNeuronDispayReference->colour, 0.0, true);
+		LDreferenceClassObject.convertLdrawColourToDatFileRGB(currentNeuronDispayReference->colour, &colourrgb);
 		#endif
 		#endif
+		#endif
+
+		
+		bool transparent = false;
+		double fillOpacityNOTUSED;
+		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, colourrgb, 0.0, true, transparent, fillOpacityNOTUSED);
 	}
 
 	return result;
@@ -784,22 +801,22 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		if(ANNneuronConnection->SANIcomponentIndexFirst)
 		{
 			//for white background;
-			//col = DAT_FILE_COLOUR_MAGENTA;	//DAT_FILE_COLOUR_PURPLE;	
+			//col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_FIRST_COLOR;
 			
 			//for black background (magenta [bright purple/violet]);
-			colourrgb.r = 255;
-			colourrgb.g = 0;
-			colourrgb.b = 255;
+			colourrgb.r = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_FIRST_COLOR_R;
+			colourrgb.g = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_FIRST_COLOR_G;
+			colourrgb.b = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_FIRST_COLOR_B;
 		}
 		else
 		{
 			//for white background;
-			//col = DAT_FILE_COLOUR_DARKBLUE;
+			//col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_LAST_COLOR;
 			
 			//for black background (dark purple/indigo);
-			colourrgb.r = 112;
-			colourrgb.g = 0;
-			colourrgb.b = 187;
+			colourrgb.r = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_LAST_COLOR_R;
+			colourrgb.g = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_LAST_COLOR_G;
+			colourrgb.b = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT_LAST_COLOR_B;
 		}
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
 		#else
