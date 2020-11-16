@@ -23,21 +23,21 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmMemoryNetworkTraining.cpp
+ * File Name: ANNalgorithmMemoryNetwork.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#include "ANNalgorithmMemoryNetworkTraining.hpp"
+#include "ANNalgorithmMemoryNetwork.hpp"
 
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
 
 
-void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
+void ANNalgorithmMemoryNetworkClass::trainNeuralNetworkMemorySimple(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	/*
 	network structure
@@ -93,7 +93,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemorySimple(ANNn
 
 
 
-void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
+void ANNalgorithmMemoryNetworkClass::trainNeuralNetworkMemory(ANNneuron* firstInputNeuron, const ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	/*
 	network structure
@@ -196,7 +196,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::trainNeuralNetworkMemory(ANNneuron*
 
 
 
-void ANNalgorithmMemoryNetworkTrainingClass::storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmMemoryNetworkClass::storeNeuralNetworkMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -232,7 +232,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::storeNeuralNetworkMemoryTrace(ANNne
 	}
 }
 
-void ANNalgorithmMemoryNetworkTrainingClass::restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmMemoryNetworkClass::restoreNeuralNetworkWithStoredMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -268,7 +268,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::restoreNeuralNetworkWithStoredMemor
 	}
 }
 
-void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmMemoryNetworkClass::resetNeuralNetworkWithRandomBiasAndWeightsAndEraseMemoryTrace(ANNneuron* neuronBeingAccessed)
 {
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -337,7 +337,7 @@ void ANNalgorithmMemoryNetworkTrainingClass::resetNeuralNetworkWithRandomBiasAnd
 	}
 }
 
-void ANNalgorithmMemoryNetworkTrainingClass::resetInputs(ANNneuron* firstInputNeuron, const int64_t numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
+void ANNalgorithmMemoryNetworkClass::resetInputs(ANNneuron* firstInputNeuron, const int64_t numberOfInputNeurons, ANNexperience* currentExperienceInDataSet)
 {
 
 	//sets inputData into ANN

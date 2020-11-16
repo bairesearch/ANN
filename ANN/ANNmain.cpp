@@ -26,7 +26,7 @@
  * File Name: ANNmain.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -377,7 +377,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3n10a 31-October-2020" << endl;
+			cout << "Project Version: 3o1a 05-November-2020" << endl;
 			exit(EXIT_OK);
 		}
 	}
@@ -557,33 +557,33 @@ int main(const int argc,const char* *argv)
 			#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK
 			ANNalgorithmSequenceGrammarNetworkTrainingClass().trainNeuralNetworkSequenceGrammar(inputFileName);
 			#elif defined ANN_ALGORITHM_CLASSIFICATION_NETWORK				
-			ANNalgorithmClassificationNetworkTrainingClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmClassificationNetworkClass().trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#else
 			if(!usePresetNumberOfEpochs)
 			{
 				#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
-				ANNalgorithmBackpropagationTrainingClass().trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
+				ANNalgorithmBackpropagationClass().trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 				#endif
 				#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 				int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
-				ANNalgorithmBreakawayNetworkTrainingClass().trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, false, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);
+				ANNalgorithmBreakawayNetworkClass().trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, false, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmMemoryNetworkClass().trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
 				#endif
 
 			}
 			else
 			{
 				#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
-				ANNalgorithmBackpropagationTrainingClass().trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmBackpropagationClass().trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 				#endif
 				#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 				int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
-				ANNalgorithmBreakawayNetworkTrainingClass().trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, true, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);
+				ANNalgorithmBreakawayNetworkClass().trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, true, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);
 				#endif
 				#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-				ANNalgorithmMemoryNetworkTrainingClass().trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+				ANNalgorithmMemoryNetworkClass().trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 				#endif
 			}
 			#endif
@@ -851,33 +851,33 @@ bool ANNmainClass::trainNetwork(const bool advancedTraining)
 		if(advancedTraining)
 		{
 			#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
-			ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
+			ANNalgorithmBackpropagation.trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxNumEpochs);
 			#endif
 			#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 			int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
-			ANNalgorithmBreakawayNetworkTraining.trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, false, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);			
+			ANNalgorithmBreakawayNetwork.trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, false, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);			
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-			ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmMemoryNetwork.trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmClassificationNetwork.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 		}
 		else
 		{			
 			#ifdef ANN_ALGORITHM_BACKPROPAGATION_NETWORK
-			ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmBackpropagation.trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 			int sizeOfSupernet = ANN_ALGORITHM_BREAKAWAY_NETWORK_ADD_SIZE_SUPERNET;
-			ANNalgorithmBreakawayNetworkTraining.trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, true, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);			
+			ANNalgorithmBreakawayNetwork.trainNeuralNetworkBreakaway(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, true, numEpochs, maxFolds, maxNumEpochs, firstExperienceInDataSet, numExperiences, sizeOfSupernet, numberOfLayers);			
 			#endif
 			#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-			ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmMemoryNetwork.trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 			#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-			ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmClassificationNetwork.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInDataSet, numExperiences);
 			#endif
 		}
 	}
@@ -1052,13 +1052,13 @@ bool ANNmainClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInpu
 		int maxFolds = MAX_NUM_FOLDS_ANNTH;
 		#ifdef ANN_ALGORITHM_BACKPROPAGATION
 		int maxNumEpochs = maxOrSetNumEpochs;
-		ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences, maxNumEpochs);
+		ANNalgorithmBackpropagation.trainNeuralNetworkBackpropagation(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences, maxNumEpochs);
 		#endif
 		#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-		ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences);
+		ANNalgorithmMemoryNetwork.trainNeuralNetworkMemory(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInList, numberOfExperiences);
 		#endif
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-		ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
+		ANNalgorithmClassificationNetwork.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
 		#endif
 		//this is done dynamically if do not have heaps of RAM
 	}
@@ -1066,13 +1066,13 @@ bool ANNmainClass::trainAndOutputNeuralNetworkWithFileNames(ANNneuron* firstInpu
 	{
 		#ifdef ANN_ALGORITHM_BACKPROPAGATION
 		int setNumEpochs = maxOrSetNumEpochs; //ANN_DEFAULT_SIMPLE_TRAIN_DEFAULT_NUM_OF_TRAINING_EPOCHS;
-		ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, setNumEpochs, firstExperienceInList, numberOfExperiences);
+		ANNalgorithmBackpropagation.trainNeuralNetworkBackpropagationSimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, setNumEpochs, firstExperienceInList, numberOfExperiences);
 		#endif
 		#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-		ANNalgorithmMemoryNetworkTraining.trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
+		ANNalgorithmMemoryNetwork.trainNeuralNetworkMemorySimple(firstInputNeuronInNetwork, firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
 		#endif
 		#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-		ANNalgorithmClassificationNetworkTraining.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
+		ANNalgorithmClassificationNetwork.trainNeuralNetworkClassificationSimple(firstInputNeuronInNetwork, &firstOutputNeuronInNetwork, numberOfInputNeurons, &numberOfOutputNeurons, firstExperienceInList, numberOfExperiences);
 		#endif
 	}
 

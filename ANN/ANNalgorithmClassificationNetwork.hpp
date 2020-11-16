@@ -23,23 +23,22 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmClassificationNetworkTraining.hpp
+ * File Name: ANNalgorithmClassificationNetwork.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_ALGORITHM_CLASSIFICATION_NETWORK_TRAINING
-#define HEADER_ANN_ALGORITHM_CLASSIFICATION_NETWORK_TRAINING
+#ifndef HEADER_ANN_ALGORITHM_CLASSIFICATION_NETWORK
+#define HEADER_ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
 #include "ANNglobalDefs.hpp"
 #include "ANNneuronClass.hpp"
 #include "ANNneuronConnectionClass.hpp"
 #include "ANNexperienceClass.hpp"
-#include "ANNalgorithmClassificationNetworkUpdate.hpp"
 #include "ANNdata.hpp"
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
 #include "ANNdisplay.hpp"
@@ -48,7 +47,7 @@
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 
-class ANNalgorithmClassificationNetworkTrainingClass
+class ANNalgorithmClassificationNetworkClass
 {
 	private: SHAREDvarsClass SHAREDvars;
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK

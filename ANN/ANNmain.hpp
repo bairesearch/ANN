@@ -26,7 +26,7 @@
  * File Name: ANNmain.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -37,15 +37,15 @@
 
 #include "ANNglobalDefs.hpp"
 #include "ANNformation.hpp"
-#include "ANNalgorithmBackpropagationTraining.hpp"
+#include "ANNalgorithmBackpropagation.hpp"
 #ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
-#include "ANNalgorithmBreakawayNetworkTraining.hpp"
+#include "ANNalgorithmBreakawayNetwork.hpp"
 #endif
 #ifdef ANN_ALGORITHM_MEMORY_NETWORK
-#include "ANNalgorithmMemoryNetworkTraining.hpp"
+#include "ANNalgorithmMemoryNetwork.hpp"
 #endif
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-#include "ANNalgorithmClassificationNetworkTraining.hpp"
+#include "ANNalgorithmClassificationNetwork.hpp"
 #endif
 #include "ANNparser.hpp"
 #include "ANNxmlConversion.hpp"
@@ -89,16 +89,16 @@ class ANNmainClass
 	private: ANNparserClass ANNparser;
 	private: ANNformationClass ANNformation;
 	#ifdef ANN_ALGORITHM_BACKPROPAGATION
-	private: ANNalgorithmBackpropagationTrainingClass ANNalgorithmBackpropagationTraining;
+	private: ANNalgorithmBackpropagationClass ANNalgorithmBackpropagation;
 	#endif
 	#ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
-	private: ANNalgorithmBreakawayNetworkTrainingClass ANNalgorithmBreakawayNetworkTraining;
+	private: ANNalgorithmBreakawayNetworkClass ANNalgorithmBreakawayNetwork;
 	#endif
 	#ifdef ANN_ALGORITHM_MEMORY_NETWORK
-	private: ANNalgorithmMemoryNetworkTrainingClass ANNalgorithmMemoryNetworkTraining;
+	private: ANNalgorithmMemoryNetworkClass ANNalgorithmMemoryNetwork;
 	#endif
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
-	private: ANNalgorithmClassificationNetworkTrainingClass ANNalgorithmClassificationNetworkTraining;
+	private: ANNalgorithmClassificationNetworkClass ANNalgorithmClassificationNetwork;
 	#endif
 	private: ANNdisplayClass ANNdisplay;
 	private: ANNexperienceClassClass ANNexperienceClass;

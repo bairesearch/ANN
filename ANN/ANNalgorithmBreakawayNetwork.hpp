@@ -23,35 +23,34 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmBreakawayNetworkTraining.hpp
+ * File Name: ANNalgorithmBreakawayNetwork.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_ALGORITHM_BREAKAWAY_NETWORK_TRAINING
-#define HEADER_ANN_ALGORITHM_BREAKAWAY_NETWORK_TRAINING
+#ifndef HEADER_ANN_ALGORITHM_BREAKAWAY_NETWORK
+#define HEADER_ANN_ALGORITHM_BREAKAWAY_NETWORK
 
 #include "ANNglobalDefs.hpp"
 #include "ANNneuronClass.hpp"
 #include "ANNneuronConnectionClass.hpp"
 #include "ANNexperienceClass.hpp"
 #include "ANNformation.hpp"
-#include "ANNalgorithmBreakawayNetworkUpdate.hpp"
-#include "ANNalgorithmBackpropagationTraining.hpp"
+#include "ANNalgorithmBackpropagation.hpp"
 #include "ANNdata.hpp"
 #include "SHAREDvars.hpp"
 
 #ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 
-class ANNalgorithmBreakawayNetworkTrainingClass
+class ANNalgorithmBreakawayNetworkClass
 {
 	private: SHAREDvarsClass SHAREDvars;
 	private: ANNformationClass ANNformation;
-	private: ANNalgorithmBackpropagationTrainingClass ANNalgorithmBackpropagationTraining;
+	private: ANNalgorithmBackpropagationClass ANNalgorithmBackpropagation;
 	public: bool trainNeuralNetworkBreakaway(ANNneuron* firstInputNeuronInNetwork, ANNneuron** firstOutputNeuronInNetwork, const int numberOfInputNeurons, const int numberOfOutputNeurons, const bool simple, const int numEpochs, const int maxFolds, const int maxEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int sizeOfSupernet, int numberOfLayersOriginal);
 };
 

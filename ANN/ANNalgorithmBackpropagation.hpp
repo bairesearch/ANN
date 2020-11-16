@@ -23,17 +23,17 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmBackpropagationTraining.hpp
+ * File Name: ANNalgorithmBackpropagation.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#ifndef HEADER_ANN_ALGORITHM_BACKPROPAGATION_TRAINING
-#define HEADER_ANN_ALGORITHM_BACKPROPAGATION_TRAINING
+#ifndef HEADER_ANN_ALGORITHM_BACKPROPAGATION
+#define HEADER_ANN_ALGORITHM_BACKPROPAGATION
 
 #include "ANNglobalDefs.hpp"
 #include "ANNneuronClass.hpp"
@@ -62,7 +62,7 @@
 
 #ifdef ANN_ALGORITHM_BACKPROPAGATION
 
-class ANNalgorithmBackpropagationTrainingClass
+class ANNalgorithmBackpropagationClass
 {
 	private: ANNalgorithmBackpropagationUpdateClass ANNalgorithmBackpropagationUpdate;
 	private: ANNexperienceClassClass ANNexperienceClass;

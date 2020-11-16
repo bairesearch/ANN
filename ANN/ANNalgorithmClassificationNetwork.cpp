@@ -23,16 +23,16 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmClassificationNetworkTraining.cpp
+ * File Name: ANNalgorithmClassificationNetwork.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#include "ANNalgorithmClassificationNetworkTraining.hpp"
+#include "ANNalgorithmClassificationNetwork.hpp"
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_DISPLAY_EVOLUTION_OF_NETWORK
 #include "ANNdisplay.hpp"
 #endif
@@ -45,7 +45,7 @@ multimap<int, ANNneuron*> neuronUsageList;
 
 int64_t IDCounter;
 
-void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, int64_t numberOfInputNeurons, int64_t* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, int64_t numberOfExperiences)
+void ANNalgorithmClassificationNetworkClass::trainNeuralNetworkClassificationSimple(ANNneuron* firstInputNeuron, ANNneuron** firstOutputNeuron, int64_t numberOfInputNeurons, int64_t* numberOfOutputNeurons, ANNexperience* firstExperienceInDataSet, int64_t numberOfExperiences)
 {
 	int numberOfExperiencesTrain = 0;
 	int numberOfExperiencesTest = 0;
@@ -325,7 +325,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::trainNeuralNetworkClassific
 	#endif
 }
 
-void ANNalgorithmClassificationNetworkTrainingClass::resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron)
+void ANNalgorithmClassificationNetworkClass::resetIntermediaryNeuronCreatedThisRoundFlag(ANNneuron* categoryNeuron)
 {
 
 	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
@@ -343,7 +343,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::resetIntermediaryNeuronCrea
 }
 
 #ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING_FOR_PARENTS
-void ANNalgorithmClassificationNetworkTrainingClass::resetBackNeuronMatchTemp(ANNneuron* categoryNeuron)
+void ANNalgorithmClassificationNetworkClass::resetBackNeuronMatchTemp(ANNneuron* categoryNeuron)
 {
 	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
 	{
@@ -366,7 +366,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::resetBackNeuronMatchTemp(AN
 
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING
-void ANNalgorithmClassificationNetworkTrainingClass::pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
+void ANNalgorithmClassificationNetworkClass::pruneNetorkBasedOnRarelyUsedNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
 {
 	for(vector<ANNneuronConnection*>::iterator connectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); connectionIter != categoryNeuron->frontANNneuronConnectionList.end(); )
 	{
@@ -389,7 +389,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::pruneNetorkBasedOnRarelyUse
 #endif
 
 #ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_MERGE_SIMILAR_NEURONS
-void ANNalgorithmClassificationNetworkTrainingClass::mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
+void ANNalgorithmClassificationNetworkClass::mergeSimilarNeurons(ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
 {
 	int i1 = 0;
 	for(vector<ANNneuronConnection*>::iterator connectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); connectionIter != categoryNeuron->frontANNneuronConnectionList.end(); connectionIter++)
@@ -470,7 +470,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::mergeSimilarNeurons(ANNneur
 #ifdef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_CULL_REDUNDANT_NEURONS
 //remove neurons which are being connected to an intermediary neuron and its child only
 //LIMITATION: only checks grand children (not great grand children) - verify whether this is a practical limitation (it may not be)
-bool ANNalgorithmClassificationNetworkTrainingClass::cullRedundantNeurons(ANNneuron* categoryNeuron, ANNneuron* parentNeuron, ANNneuron** firstOutputNeuron)
+bool ANNalgorithmClassificationNetworkClass::cullRedundantNeurons(ANNneuron* categoryNeuron, ANNneuron* parentNeuron, ANNneuron** firstOutputNeuron)
 {
 	bool neuronIsRedundant = false;
 
@@ -546,7 +546,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::cullRedundantNeurons(ANNneu
 }
 #endif
 
-void ANNalgorithmClassificationNetworkTrainingClass::deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
+void ANNalgorithmClassificationNetworkClass::deleteNeuron(ANNneuron* frontNeuron, ANNneuron* categoryNeuron, ANNneuron** firstOutputNeuron)
 {
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_PRUNING_OPTIMISE
 	multimap<int, ANNneuron*>::iterator it = neuronUsageList.find(experienceClassificationneuronTypeTopLevelCategory);
@@ -623,7 +623,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::deleteNeuron(ANNneuron* fro
 	delete frontNeuron;
 }
 
-void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage)
+void ANNalgorithmClassificationNetworkClass::findCategoriesForExperienceWrapper(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, ANNneuron** experienceClassificationneuronTypeTopLevelCategory, int createIntermediaryNeuronsStage)
 {
 
 	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
@@ -1007,7 +1007,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 	}
 }
 
-string ANNalgorithmClassificationNetworkTrainingClass::printTabsDEBUG(int level)
+string ANNalgorithmClassificationNetworkClass::printTabsDEBUG(int level)
 {
 	string tabs = "";
 	for(int i=0; i<level; i++)
@@ -1018,7 +1018,7 @@ string ANNalgorithmClassificationNetworkTrainingClass::printTabsDEBUG(int level)
 }
 
 #ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_ALLOW_FOR_CASE_WHERE_INTERMEDIARY_NEURON_IS_CONNECTED_TO_ALL_INPUTS
-void ANNalgorithmClassificationNetworkTrainingClass::findInputs(ANNneuron* categoryNeuron, vector<bool>* inputFound, int level)
+void ANNalgorithmClassificationNetworkClass::findInputs(ANNneuron* categoryNeuron, vector<bool>* inputFound, int level)
 {
 
 	for(vector<ANNneuronConnection*>::iterator backConnectionIter = categoryNeuron->backANNneuronConnectionList.begin(); backConnectionIter != categoryNeuron->backANNneuronConnectionList.end(); backConnectionIter++)
@@ -1038,7 +1038,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::findInputs(ANNneuron* categ
 }
 #endif
 
-bool ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level)
+bool ANNalgorithmClassificationNetworkClass::findCategoriesForExperience(ANNneuron* categoryNeuron, vector<bool>* inputValuesCategoryFound, int level)
 {
 
 	bool allInputNeuronsForCategoryHaveMatchingValues = true;
@@ -1164,7 +1164,7 @@ bool ANNalgorithmClassificationNetworkTrainingClass::findCategoriesForExperience
 }
 
 
-ANNneuronConnection* ANNalgorithmClassificationNetworkTrainingClass::connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron)
+ANNneuronConnection* ANNalgorithmClassificationNetworkClass::connectNeurons(ANNneuron* childNeuron, ANNneuron* parentNeuron)
 {
 	childNeuron->hasFrontLayer = true;
 	parentNeuron->hasBackLayer = true;	//redundant
@@ -1186,7 +1186,7 @@ ANNneuronConnection* ANNalgorithmClassificationNetworkTrainingClass::connectNeur
 	return newANNneuronConnection;
 }
 
-void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValuesParent(ANNneuron* categoryNeuron, bool updateIdealValues)
+void ANNalgorithmClassificationNetworkClass::updateConnectionIdealValuesParent(ANNneuron* categoryNeuron, bool updateIdealValues)
 {
 	for(vector<ANNneuronConnection*>::iterator frontConnectionIter = categoryNeuron->frontANNneuronConnectionList.begin(); frontConnectionIter != categoryNeuron->frontANNneuronConnectionList.end(); frontConnectionIter++)
 	{
@@ -1209,7 +1209,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValues
 	}
 }
 
-void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron, bool updateIdealValues)
+void ANNalgorithmClassificationNetworkClass::updateConnectionIdealValuesChildren(ANNneuron* categoryNeuron, bool updateIdealValues)
 {
 	if(!updateIdealValues || categoryNeuron->backNeuronMatchTemp)
 	{
@@ -1225,7 +1225,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValues
 	}
 }
 
-void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValue(ANNneuronConnection* connection)
+void ANNalgorithmClassificationNetworkClass::updateConnectionIdealValue(ANNneuronConnection* connection)
 {
 	#ifndef ANN_VERBOSE_ALGORITHM_CLASSIFICATION_NETWORK_ENABLE_IDEAL_VALUE_UPDATING
 	//test without network updates;
@@ -1245,7 +1245,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValue(
 	#endif
 }
 
-void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValueNoUpdating(ANNneuronConnection* connection)
+void ANNalgorithmClassificationNetworkClass::updateConnectionIdealValueNoUpdating(ANNneuronConnection* connection)
 {
 	if(connection->backNeuron->neuronTypeInput)
 	{
@@ -1260,7 +1260,7 @@ void ANNalgorithmClassificationNetworkTrainingClass::updateConnectionIdealValueN
 	}
 }
 
-double ANNalgorithmClassificationNetworkTrainingClass::calculateIdealOutputValue(ANNneuron* categoryNeuron)
+double ANNalgorithmClassificationNetworkClass::calculateIdealOutputValue(ANNneuron* categoryNeuron)
 {
 	double totalIdealOutputValue = 0.0;
 	int i = 0;
@@ -1274,7 +1274,7 @@ double ANNalgorithmClassificationNetworkTrainingClass::calculateIdealOutputValue
 	return idealOutputValue;
 }
 
-double ANNalgorithmClassificationNetworkTrainingClass::calculateOutput(double totalOutput, double numberOfCategoryInputValues)
+double ANNalgorithmClassificationNetworkClass::calculateOutput(double totalOutput, double numberOfCategoryInputValues)
 {
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK_CALCULATE_OUTPUT_AS_TOTAL_RATHER_THAN_AVERAGE
 	double output = totalOutput;	//NO: using totalOutput provides greater information resolution than averageOutput
@@ -1288,13 +1288,13 @@ double ANNalgorithmClassificationNetworkTrainingClass::calculateOutput(double to
 
 
 
-double ANNalgorithmClassificationNetworkTrainingClass::calculateDiff(double idealValue, double value)
+double ANNalgorithmClassificationNetworkClass::calculateDiff(double idealValue, double value)
 {
 	double diff = abs(value - idealValue);
 	return diff;
 }
 
-double ANNalgorithmClassificationNetworkTrainingClass::calculateSum(double value)
+double ANNalgorithmClassificationNetworkClass::calculateSum(double value)
 {
 	double sum = abs(value); //verify this
 	return sum;

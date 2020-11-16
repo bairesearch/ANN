@@ -26,7 +26,7 @@
  * File Name: ANNalgorithmBackpropagationUpdate.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
@@ -58,7 +58,7 @@ double ANNalgorithmBackpropagationUpdateClass::ANNbackPropogationPass(ANNneuron*
 double ANNalgorithmBackpropagationUpdateClass::calculateErrorOfBackPropPass(const ANNneuron* firstOutputNeuronInNetwork)
 {
 	/*
-	Error for signle training example over all output neurons:
+	Error for single training example over all output neurons:
 
 	E = 1/2 SUM(0->i) e(i)^2 = 1/2 SUM (d(i) - o(i))^2
 
@@ -128,7 +128,7 @@ void ANNalgorithmBackpropagationUpdateClass::backPropogationForwardPassStep(ANNn
 			}
 
 			copyANNneuronConnectionContainerListToNeuronContainerList(currentNeuron->firstNeuronInFrontLayerOfSubnet, &(currentNeuron->frontANNneuronConnectionList), true);
-			backPropogationForwardPassStep(currentNeuron->firstNeuronInBackLayerOfSubnet);	//?ISSUE HERE
+			backPropogationForwardPassStep(currentNeuron->firstNeuronInBackLayerOfSubnet);
 
 			if(!(currentNeuron->isInputSubnet))
 			{

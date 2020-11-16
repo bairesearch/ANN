@@ -23,22 +23,22 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmBackpropagationTraining.cpp
+ * File Name: ANNalgorithmBackpropagation.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#include "ANNalgorithmBackpropagationTraining.hpp"
+#include "ANNalgorithmBackpropagation.hpp"
 //#include "ANNformation.hpp"
 //#include "ANNparser.hpp"
 
 #ifdef ANN_ALGORITHM_BACKPROPAGATION
 
-double ANNalgorithmBackpropagationTrainingClass::calculateExperienceErrorForHypotheticalDecisionBackpropagation(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience)
+double ANNalgorithmBackpropagationClass::calculateExperienceErrorForHypotheticalDecisionBackpropagation(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience)
 {
 	double experienceBackPropagationPassError;
 
@@ -65,7 +65,7 @@ double ANNalgorithmBackpropagationTrainingClass::calculateExperienceErrorForHypo
 	return experienceBackPropagationPassError;
 }
 
-bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputExperience(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience, int* idealClassTarget, double* experienceBackPropagationPassError)
+bool ANNalgorithmBackpropagationClass::calculateIdealClassTargetOfInputExperience(ANNneuron* firstInputNeuronInNetwork, ANNneuron* firstOutputNeuronInNetwork, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* experience, int* idealClassTarget, double* experienceBackPropagationPassError)
 {
 	bool result = false;
 	
@@ -109,7 +109,7 @@ bool ANNalgorithmBackpropagationTrainingClass::calculateIdealClassTargetOfInputE
 
 
 //DO NOT USE THIS; must use trainNeuralNetworkBackpropagation/trainNeuralNetworkBackpropagationSimple instead!
-void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithASetOfExperiencesBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* firstExperienceInList)
+void ANNalgorithmBackpropagationClass::feedNeuralNetworkWithASetOfExperiencesBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* firstExperienceInList)
 {
 	ANNexperience* currentExperience = firstExperienceInList;
 
@@ -121,7 +121,7 @@ void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithASetOfExperi
 	}
 }
 
-void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithExperienceBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* currentExperience)
+void ANNalgorithmBackpropagationClass::feedNeuralNetworkWithExperienceBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, ANNexperience* currentExperience)
 {
 	resetInputsAndClassTargets(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, currentExperience);
 
@@ -130,14 +130,14 @@ void ANNalgorithmBackpropagationTrainingClass::feedNeuralNetworkWithExperienceBa
 }
 
 
-void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
+void ANNalgorithmBackpropagationClass::trainNeuralNetworkBackpropagationSimple(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuron);
 
 	trainNeuralNetworkBackpropagationSimpleNoReset(firstInputNeuron, firstOutputNeuron, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numberOfExperiences);
 }
 
-void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagationSimpleNoReset(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
+void ANNalgorithmBackpropagationClass::trainNeuralNetworkBackpropagationSimpleNoReset(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int numEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences)
 {
 	//now train the network on all examples for numEpochs
 	
@@ -190,7 +190,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 
 
-void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int maxEpochs)
+void ANNalgorithmBackpropagationClass::trainNeuralNetworkBackpropagation(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int numberOfInputNeurons, const int numberOfOutputNeurons, const int maxFolds, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int maxEpochs)
 {
 	/*
 	network structure
@@ -536,7 +536,7 @@ void ANNalgorithmBackpropagationTrainingClass::trainNeuralNetworkBackpropagation
 
 
 
-void ANNalgorithmBackpropagationTrainingClass::storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmBackpropagationClass::storeNeuralNetworkBiasAndWeights(ANNneuron* neuronBeingAccessed)
 {
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -579,7 +579,7 @@ void ANNalgorithmBackpropagationTrainingClass::storeNeuralNetworkBiasAndWeights(
 }
 
 
-void ANNalgorithmBackpropagationTrainingClass::restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmBackpropagationClass::restoreNeuralNetworkWithStoredBiasAndWeights(ANNneuron* neuronBeingAccessed)
 {
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -624,7 +624,7 @@ void ANNalgorithmBackpropagationTrainingClass::restoreNeuralNetworkWithStoredBia
 	}
 }
 
-void ANNalgorithmBackpropagationTrainingClass::resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)
+void ANNalgorithmBackpropagationClass::resetNeuralNetworkWithRandomBiasAndWeights(ANNneuron* neuronBeingAccessed)
 {
 
 	ANNneuron* currentNeuronReference = neuronBeingAccessed;
@@ -691,7 +691,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetNeuralNetworkWithRandomBiasA
 	}
 }
 
-void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet)
+void ANNalgorithmBackpropagationClass::resetInputsAndClassTargets(ANNneuron* firstInputNeuron, ANNneuron* firstOutputNeuron, const int64_t numberOfInputNeurons, const int64_t numberOfOutputNeurons, ANNexperience* currentExperienceInDataSet)
 {
 
 	//sets inputData into ANN
@@ -726,7 +726,7 @@ void ANNalgorithmBackpropagationTrainingClass::resetInputsAndClassTargets(ANNneu
 
 
 
-float ANNalgorithmBackpropagationTrainingClass::calculateStandardDeviation(const float* array, const int length, const float average)
+float ANNalgorithmBackpropagationClass::calculateStandardDeviation(const float* array, const int length, const float average)
 {
 	float sum = 0;
 

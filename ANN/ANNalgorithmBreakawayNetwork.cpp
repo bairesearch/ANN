@@ -23,20 +23,20 @@
 
 /*******************************************************************************
  *
- * File Name: ANNalgorithmBreakawayNetworkTraining.cpp
+ * File Name: ANNalgorithmBreakawayNetwork.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3n10a 31-October-2020
+ * Project Version: 3o1a 05-November-2020
  * Comments:
  * /
  *******************************************************************************/
 
 
-#include "ANNalgorithmBreakawayNetworkTraining.hpp"
+#include "ANNalgorithmBreakawayNetwork.hpp"
 
 #ifdef ANN_ALGORITHM_BREAKAWAY_NETWORK
 
-bool ANNalgorithmBreakawayNetworkTrainingClass::trainNeuralNetworkBreakaway(ANNneuron* firstInputNeuronInNetwork, ANNneuron** firstOutputNeuronInNetwork, const int numberOfInputNeurons, const int numberOfOutputNeurons, const bool simple, const int numEpochs, const int maxFolds, const int maxEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int sizeOfSupernet, int numberOfLayersOriginal)
+bool ANNalgorithmBreakawayNetworkClass::trainNeuralNetworkBreakaway(ANNneuron* firstInputNeuronInNetwork, ANNneuron** firstOutputNeuronInNetwork, const int numberOfInputNeurons, const int numberOfOutputNeurons, const bool simple, const int numEpochs, const int maxFolds, const int maxEpochs, ANNexperience* firstExperienceInDataSet, const int64_t numberOfExperiences, const int sizeOfSupernet, int numberOfLayersOriginal)
 {
 	bool result = true;
 	
@@ -79,22 +79,22 @@ bool ANNalgorithmBreakawayNetworkTrainingClass::trainNeuralNetworkBreakaway(ANNn
 			*firstOutputNeuronInNetwork = ANNformation.fillNonDistinctHiddenLayer(*firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numberOfInputNeurons, currentNumberOfLayers, currentNumberOfLayers+numberOfNewLayers, probabilityOfSubnetCreation, maxNumberOfRecursiveSubnets, 1, useSubnetDependentNumberOfLayers, subnetNumberOfLayersModifier, layerDivergenceType, meanLayerDivergenceFactor, probabilityANNneuronConnectionWithPreviousLayerNeuron, firstInputNeuronInNetwork, probabilityANNneuronConnectionWithAllPreviousLayersNeurons, onlyLinkWithPreviousAndFirstLayer);
 			currentNumberOfLayers = currentNumberOfLayers+numberOfNewLayers;		
 		
-			ANNalgorithmBackpropagationTraining.resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuronInNewLayerOrNetworkPreviousLayer);	//only reset biases/weights for the new layer (verify that biases can be reset for the neurons on the previous output layer; as this will be done)		
+			ANNalgorithmBackpropagation.resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuronInNewLayerOrNetworkPreviousLayer);	//only reset biases/weights for the new layer (verify that biases can be reset for the neurons on the previous output layer; as this will be done)		
 		}
 		else
 		{
-			ANNalgorithmBackpropagationTraining.resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuronInNetwork);
+			ANNalgorithmBackpropagation.resetNeuralNetworkWithRandomBiasAndWeights(firstInputNeuronInNetwork);
 		}
 					
 		if(simple)
 		{
-			ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagationSimpleNoReset(firstInputNeuronInNetwork, *firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
+			ANNalgorithmBackpropagation.trainNeuralNetworkBackpropagationSimpleNoReset(firstInputNeuronInNetwork, *firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, numEpochs, firstExperienceInDataSet, numExperiences);
 		}
 		else
 		{	
 			cout << "trainNeuralNetworkBreakaway{} error: !simple training (ie with folds;) has not yet been coded; user must train with preset number of folds" << endl;
 			exit(EXIT_ERROR);
-			//ANNalgorithmBackpropagationTraining.trainNeuralNetworkBackpropagationNoReset(firstInputNeuronInNetwork, *firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxEpochs);
+			//ANNalgorithmBackpropagation.trainNeuralNetworkBackpropagationNoReset(firstInputNeuronInNetwork, *firstOutputNeuronInNetwork, numberOfInputNeurons, numberOfOutputNeurons, maxFolds, firstExperienceInDataSet, numExperiences, maxEpochs);
 		}
 	}
 	
