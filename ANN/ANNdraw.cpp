@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -690,7 +690,7 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		
 		bool transparent = false;
 		double fillOpacityNOTUSED;
-		LDsvg.writeSVGbox(currentTagSVG, &positionSVG, width, height, colourrgb, 0.0, true, transparent, fillOpacityNOTUSED);
+		LDsvg.writeSVGbox3(currentTagSVG, &positionSVG, width, height, colourrgb, 0.0, true, transparent, fillOpacityNOTUSED);
 	}
 
 	return result;
@@ -1196,9 +1196,9 @@ colour ANNdrawClass::convertDoubleToRainbow(const double f)
 	double a=(1-f)/0.25;
 	int X=floor(a);
 	int Y=floor(255*(a-X));
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+	uchar r;
+	uchar g;
+	uchar b;
 	switch(X)
 	{
 		case 0: r=255;g=Y;b=0;break;

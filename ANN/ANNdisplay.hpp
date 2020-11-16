@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -65,7 +65,7 @@ class ANNdisplayClass
 	private: RTsceneClass RTscene;
 	private: RTreferenceManipulationClass RTreferenceManipulation;
 	#ifdef USE_RT
-	public: void generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
+	public: void generateExperienceWith2DrgbMap(uchar* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
 	public: void generateExperienceWith2Dmap(double* lumOrContrastOrDepthMap, int imageWidth, int imageHeight, double mapMaxValue, ANNexperience* currentExperience, int64_t objectDecision);
 	public: void generateExperienceWith2DbooleanMap(bool* booleanMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision);
 	#endif

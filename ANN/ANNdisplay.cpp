@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3o1a 05-November-2020
+ * Project Version: 3o2a 08-November-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -45,7 +45,7 @@
 
 #ifdef USE_RT
 
-void ANNdisplayClass::generateExperienceWith2DrgbMap(unsigned char* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision)
+void ANNdisplayClass::generateExperienceWith2DrgbMap(uchar* rgbMap, int imageWidth, int imageHeight, ANNexperience* currentExperience, int64_t objectDecision)
 {
 	currentExperience->classTargetValue = objectDecision;
 	ANNexperienceInput* currentExperienceInput = currentExperience->firstExperienceInput;
@@ -57,7 +57,7 @@ void ANNdisplayClass::generateExperienceWith2DrgbMap(unsigned char* rgbMap, int 
 		{
 			for(int rgb=0; rgb<RGB_NUM; rgb++)
 			{
-				unsigned char col = RTpixelMaps.getRGBMapValue(x, y, imageWidth, rgb, rgbMap);
+				uchar col = RTpixelMaps.getRGBMapValue(x, y, imageWidth, rgb, rgbMap);
 				double normalisedMapValue =  ANNexperienceClass.normaliseExperienceInput((double)col, MAX_RGB_VAL);
 				currentExperienceInput->inputValue = normalisedMapValue;
 				ANNexperienceInput* newExperienceInput = new ANNexperienceInput();
@@ -283,7 +283,7 @@ void ANNdisplayClass::outputNeuralNetworkToVectorGraphicsAndRaytrace(ANNneuron* 
 				char* topLevelSceneFileNameCollapsed = "sceneCollapsedForOpenGLDisplay.ldr";
 				LDreferenceManipulation.write2DreferenceListCollapsedTo1DtoFile(topLevelSceneFileNameCollapsed, initialReferenceInSceneFileForRayTracing);
 
-				unsigned char* rgbMap = new unsigned char[width*height*RGB_NUM];
+				uchar* rgbMap = new uchar[width*height*RGB_NUM];
 
 				//setViewPort2Dortho(-100.0, 2000.0, -100.0, 2000.0);
 				LDopengl.setViewPort3Dortho(0.0, 5.0, 5.0, 0.0, 2.0, -2.0);
