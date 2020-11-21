@@ -26,7 +26,7 @@
  * File Name: ANNdisplay.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3o4d 17-November-2020
+ * Project Version: 3o5a 21-November-2020
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
