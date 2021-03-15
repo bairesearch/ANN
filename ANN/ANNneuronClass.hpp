@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNneuronClass.hpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3o5a 21-November-2020
+ * Project Version: 3p1a 15-March-2021
  * Comments:
  * /
  *******************************************************************************/
@@ -145,6 +145,9 @@ public:
 	#endif
 	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_LAST_GENERATED_SENTENCE
 	bool SANIgeneratedForLastSentence;
+	#endif
+	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS
+	int SANIposType;	//see LRPpreprocessorWordClass.hpp for definition [LRP_SHARED_POS_TYPE_*], -1: identified referenceSet
 	#endif
 	#endif
 };

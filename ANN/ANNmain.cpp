@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNmain.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3o5a 21-November-2020
+ * Project Version: 3p1a 15-March-2021
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/
@@ -377,7 +377,7 @@ int main(const int argc,const char* *argv)
 		}
 		if(SHAREDvarsClass().argumentExists(argc, argv, "-version"))
 		{
-			cout << "Project Version: 3o5a 21-November-2020" << endl;
+			cout << "Project Version: 3p1a 15-March-2021" << endl;
 			exit(EXIT_OK);
 		}
 	}

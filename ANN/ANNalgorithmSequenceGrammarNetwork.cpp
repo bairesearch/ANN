@@ -24,7 +24,7 @@
 /*******************************************************************************
  *
  * File Name: ANNalgorithmSequenceGrammarNetwork.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
  * Project Version: 3n8a 09-September-2020
  * Comments:

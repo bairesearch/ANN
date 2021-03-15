@@ -24,9 +24,9 @@
 /*******************************************************************************
  *
  * File Name: ANNdraw.cpp
- * Author: Richard Bruce Baxter - Copyright (c) 2005-2020 Baxter AI (baxterai.com)
+ * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3o5a 21-November-2020
+ * Project Version: 3p1a 15-March-2021
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -653,6 +653,30 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		
 		colour colourrgb;
 		
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS
+		int col = DAT_FILE_COLOUR_BLUE;
+		if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_UNKNOWN)
+		{
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_UNKNOWN_COLOR;
+		}
+		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONCEPT)
+		{
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONCEPT_COLOR;
+		}
+		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_SUBSTANCE)
+		{
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_SUBSTANCE_COLOR;
+		}
+		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_ACTION)
+		{
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_ACTION_COLOR;
+		}
+		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONDITION)
+		{
+			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONDITION_COLOR;
+		}
+ 		LDreferenceClassObject.convertLdrawColourToDatFileRGB(col, &colourrgb);
+		#else
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_LAST_GENERATED_SENTENCE
 		if(neuron->SANIgeneratedForLastSentence)
 		{
@@ -683,6 +707,7 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		colourrgb = convertDoubleToRainbow(neuron->SANIneuronStrength, ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_NEURON_MAX_WEIGHT);
 		#else
 		LDreferenceClassObject.convertLdrawColourToDatFileRGB(currentNeuronDispayReference->colour, &colourrgb);
+		#endif
 		#endif
 		#endif
 		#endif
@@ -795,6 +820,26 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		position2SVG.z = ANN_OUTPUT_Z_POSITION_CONNECTIONS;
 
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS	
+		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS
+		int colorIndex;
+		if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_IDENTITY_REFSET)
+		{
+			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_IDENTITY_REFSET_COLOR;
+		}
+		if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_NORMAL)
+		{
+			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_NORMAL_COLOR;
+		}
+		if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_DELIMITER)
+		{
+			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_DELIMITER_COLOR;
+		}
+		else if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_UNKNOWN)
+		{
+			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_UNKNOWN_COLOR;
+		}		
+		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colorIndex);		
+		#else
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_COMPONENT_ORDER_EXACT
 		colour colourrgb;
@@ -827,6 +872,7 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS		
 		colour colourrgb = convertDoubleToRainbow(ANNneuronConnection->SANIconnectionStrength, ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_WEIGHTS_PRINT_COLOURS_CONNECTION_MAX_WEIGHT);
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colourrgb);
+		#endif
 		#endif
 		#endif
 		#else
