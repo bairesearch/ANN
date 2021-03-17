@@ -26,7 +26,7 @@
  * File Name: ANNANNneuronConnectionClass.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3p1a 15-March-2021
+ * Project Version: 3p2a 17-March-2021
  * Comments:
  * /
  *******************************************************************************/
@@ -69,7 +69,7 @@ ANNneuronConnection::ANNneuronConnection(void)
 	#endif
 	#endif
 	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS
-	SANIrefSetConnectionType = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_UNKNOWN_COLOR;
+	SANIrefSetConnectionType = LRP_SHARED_ENTITY_CONNECTION_TYPE_UNDEFINED;
 	#endif
 	#endif
 	

@@ -26,7 +26,7 @@
  * File Name: ANNdraw.cpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Generic Construct Functions
- * Project Version: 3p1a 15-March-2021
+ * Project Version: 3p2a 17-March-2021
  * Description: This code allows the addition of a sprite into a given scene file where a sprite is a paragraph of text. [The text is to be rendered in 3D, and point towards the user POV]
  * /
  *******************************************************************************/
@@ -35,8 +35,6 @@
 
 
 #include "ANNdraw.hpp"
-
-
 
 
 
@@ -531,72 +529,72 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(neuron->memoryTrace > 1000)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_RED;
 	}
 	else if(neuron->memoryTrace > 100)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_ORANGE;
 	}
 	else if(neuron->memoryTrace > 25)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_YELLOW;
 	}
 	else if(neuron->memoryTrace > 10)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_GREEN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_GREEN;
 	}
 	else if(neuron->memoryTrace > 4)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_CYAN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_CYAN;
 	}
 	else if(neuron->memoryTrace > 2)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_BLUE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_BLUE;
 	}
 	else if(neuron->memoryTrace > 1)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_PURPLE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_PURPLE;
 	}
 	else
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_MAGENTA;
 	}
 	#else
 	if(neuron->bias < (-3.0))
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_MAGENTA;
 	}
 	else if(neuron->bias < (-0.8))
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_RED;
 	}
 	else if(neuron->bias < -0.4)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_ORANGE;
 	}
 	else if(neuron->bias < -0.01)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_YELLOW;
 	}
 	else if(neuron->bias < 0.01)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_DARKGREY;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_DARKGREY;
 	}
 	else if(neuron->bias < 0.4)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_GREEN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_GREEN;
 	}
 	else if(neuron->bias < 0.8)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_CYAN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_CYAN;
 	}
 	else if(neuron->bias < 3.0)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_BLUE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_BLUE;
 	}
 	else
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_PURPLE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_PURPLE;
 	}
 	#endif
 
@@ -654,26 +652,42 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		colour colourrgb;
 		
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS
-		int col = DAT_FILE_COLOUR_BLUE;
-		if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_UNKNOWN)
+		int col = SHARED_COLOUR_BLUE;
+		if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_UNDEFINED)
 		{
-			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_UNKNOWN_COLOR;
+			col = LRP_SHARED_ENTITY_TYPE_UNDEFINED_COLOUR;
 		}
-		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONCEPT)
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_NETWORK_INDEX)
 		{
-			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONCEPT_COLOR;
+			col = LRP_SHARED_ENTITY_TYPE_NETWORK_INDEX_COLOUR;
 		}
-		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_SUBSTANCE)
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_SUBSTANCE)
 		{
-			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_SUBSTANCE_COLOR;
+			col = LRP_SHARED_ENTITY_TYPE_SUBSTANCE_COLOUR;
 		}
-		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_ACTION)
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_CONCEPT)
 		{
-			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_ACTION_COLOR;
+			col = LRP_SHARED_ENTITY_TYPE_CONCEPT_COLOUR;
 		}
-		else if(neuron->SANIposType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONDITION)
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_ACTION)
 		{
-			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONDITION_COLOR;
+			col = LRP_SHARED_ENTITY_TYPE_ACTION_COLOUR;
+		}
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_CONDITION)
+		{
+			col = LRP_SHARED_ENTITY_TYPE_CONDITION_COLOUR;
+		}
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_PROPERTY)
+		{
+			col = LRP_SHARED_ENTITY_TYPE_PROPERTY_COLOUR;
+		}
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_DEFINITION)
+		{
+			col = LRP_SHARED_ENTITY_TYPE_DEFINITION_COLOUR;
+		}
+		else if(neuron->SANIentityType == LRP_SHARED_ENTITY_TYPE_QUALITY)
+		{
+			col = LRP_SHARED_ENTITY_TYPE_QUALITY_COLOUR;
 		}
  		LDreferenceClassObject.convertLdrawColourToDatFileRGB(col, &colourrgb);
 		#else
@@ -688,7 +702,7 @@ bool ANNdrawClass::ANNfillNeuronDisplayReference(LDreference* currentNeuronDispa
 		}
 		#else
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE
-		int col = DAT_FILE_COLOUR_BLUE;
+		int col = SHARED_COLOUR_BLUE;
 		if(neuron->activationLevel == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE)
 		{
 			col = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_ACTIVE_LEVEL_INACTIVE_COLOR;
@@ -734,72 +748,72 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 	#ifdef ANN_ALGORITHM_CLASSIFICATION_NETWORK
 	if(ANNneuronConnection->idealValue > 1.0)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_RED;
 	}
 	if(ANNneuronConnection->idealValue > 0.8)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_ORANGE;
 	}
 	else if(ANNneuronConnection->idealValue > 0.6)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_YELLOW;
 	}
 	else if(ANNneuronConnection->idealValue > 0.4)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_GREEN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_GREEN;
 	}
 	else if(ANNneuronConnection->idealValue > 0.3)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_CYAN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_CYAN;
 	}
 	else if(ANNneuronConnection->idealValue > 0.2)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_BLUE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_BLUE;
 	}
 	else if(ANNneuronConnection->idealValue > 0.1)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_PURPLE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_PURPLE;
 	}
 	else
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_MAGENTA;
 	}
 	#else
 	if(ANNneuronConnection->weight < (-3.0))
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_MAGENTA;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_MAGENTA;
 	}
 	else if(ANNneuronConnection->weight < (-0.8))
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_RED;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_RED;
 	}
 	else if(ANNneuronConnection->weight < -0.4)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_ORANGE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_ORANGE;
 	}
 	else if(ANNneuronConnection->weight < -0.01)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_YELLOW;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_YELLOW;
 	}
 	else if(ANNneuronConnection->weight < 0.01)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_DARKGREY;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_DARKGREY;
 	}
 	else if(ANNneuronConnection->weight < 0.4)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_GREEN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_GREEN;
 	}
 	else if(ANNneuronConnection->weight < 0.8)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_CYAN;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_CYAN;
 	}
 	else if(ANNneuronConnection->weight < 3.0)
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_BLUE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_BLUE;
 	}
 	else
 	{
-		currentNeuronDispayReference->colour = DAT_FILE_COLOUR_PURPLE;
+		currentNeuronDispayReference->colour = SHARED_COLOUR_PURPLE;
 	}
 	#endif
 	//currentNeuronDispayReference->colour = DAT_FILE_DEFAULT_COLOUR_EDGELINE;
@@ -822,21 +836,21 @@ bool ANNdrawClass::ANNfillANNneuronConnectionDisplayReference(LDreference* curre
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS	
 		#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS
 		int colorIndex;
-		if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_IDENTITY_REFSET)
+		if(ANNneuronConnection->SANIrefSetConnectionType == LRP_SHARED_ENTITY_CONNECTION_TYPE_REFERENCE)	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_IDENTITY_REFSET
 		{
-			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_IDENTITY_REFSET_COLOR;
+			colorIndex = LRP_SHARED_ENTITY_CONNECTION_TYPE_REFERENCE_COLOUR;	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_IDENTITY_REFSET_COLOR;
 		}
-		if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_NORMAL)
+		if(ANNneuronConnection->SANIrefSetConnectionType == LRP_SHARED_ENTITY_CONNECTION_TYPE_SAMEREFERENCESET)	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_NORMAL
 		{
-			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_NORMAL_COLOR;
+			colorIndex = LRP_SHARED_ENTITY_CONNECTION_TYPE_SAMEREFERENCESET_COLOUR;	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_NORMAL_COLOR;
 		}
-		if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_DELIMITER)
+		if(ANNneuronConnection->SANIrefSetConnectionType == LRP_SHARED_ENTITY_CONNECTION_TYPE_DIFFREFERENCESET)	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_DELIMITER
 		{
-			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_DELIMITER_COLOR;
+			colorIndex = LRP_SHARED_ENTITY_CONNECTION_TYPE_DIFFREFERENCESET_COLOUR;	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_REFSET_DELIMITER_COLOR;
 		}
-		else if(ANNneuronConnection->SANIrefSetConnectionType == ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_UNKNOWN)
+		else if(ANNneuronConnection->SANIrefSetConnectionType == LRP_SHARED_ENTITY_CONNECTION_TYPE_UNDEFINED)	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_UNKNOWN
 		{
-			colorIndex = ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_UNKNOWN_COLOR;
+			colorIndex = LRP_SHARED_ENTITY_CONNECTION_TYPE_UNDEFINED_COLOUR;	//ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS_CONNECTION_UNKNOWN_COLOR;
 		}		
 		LDsvg.writeSVGline(currentTagSVG, &position1SVG, &position2SVG, colorIndex);		
 		#else
@@ -1057,7 +1071,7 @@ void ANNdrawClass::writeSpriteTextToSVG(string* spriteTextString, bool writeSVG,
 				positionSVG.x = referencePosition->x*ANN_SVG_SCALE_FACTOR - ANN_SVG_NEURON_SIZE/2;
 				positionSVG.y = referencePosition->y*ANN_SVG_SCALE_FACTOR - (numberOfLines)*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE + lineIndex*ANN_SVG_SPRITE_TEXT_OFFSET_PER_LINE;
 				positionSVG.z = ANN_OUTPUT_Z_POSITION_TEXT;
-				LDsvg.writeSVGtext(currentTagSVG, stringCurrentLine, &positionSVG, ANN_SVG_TEXT_SCALE_FACTOR, DAT_FILE_COLOUR_BLACK);
+				LDsvg.writeSVGtext(currentTagSVG, stringCurrentLine, &positionSVG, ANN_SVG_TEXT_SCALE_FACTOR, SHARED_COLOUR_BLACK);
 
 				stringCurrentLine = "";
 				stringCurrentLineIndex = 0;

@@ -26,7 +26,7 @@
  * File Name: ANNparser.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3p1a 15-March-2021
+ * Project Version: 3p2a 17-March-2021
  * Comments: TH = Test Harness
  * /
  *******************************************************************************/

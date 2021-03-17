@@ -26,7 +26,7 @@
  * File Name: ANNneuronClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3p1a 15-March-2021
+ * Project Version: 3p2a 17-March-2021
  * Comments:
  * /
  *******************************************************************************/
@@ -36,7 +36,9 @@
 #define HEADER_ANN_NEURON_CLASS
 
 #include "ANNglobalDefs.hpp"
-
+#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR
+#include "LRPglobalDefs.hpp"
+#endif
 
 #define ANN_SUBNETS
 //#define ANN_DEBUG
@@ -46,6 +48,17 @@
 #define DEFAULT_FIRST_INPUT_NEURON_ID 1
 #define DEFAULT_FIRST_OUTPUT_NEURON_ID 2
 
+
+//sync with GIAentityNodeClass.hpp;
+#define SANI_ENTITY_TYPE_UNDEFINED (-1)	//GIA_ENTITY_TYPE_UNDEFINED
+#define SANI_ENTITY_TYPE_NETWORK_INDEX (0)	//GIA_ENTITY_TYPE_NETWORK_INDEX
+#define SANI_ENTITY_TYPE_SUBSTANCE (1)	//GIA_ENTITY_TYPE_SUBSTANCE
+#define SANI_ENTITY_TYPE_CONCEPT (2)	//GIA_ENTITY_TYPE_CONCEPT
+#define SANI_ENTITY_TYPE_ACTION (3)	//GIA_ENTITY_TYPE_ACTION
+#define SANI_ENTITY_TYPE_CONDITION (4)	//GIA_ENTITY_TYPE_CONDITION
+#define SANI_ENTITY_TYPE_PROPERTY (5)	//GIA_ENTITY_TYPE_PROPERTY
+#define SANI_ENTITY_TYPE_DEFINITION (6)	//GIA_ENTITY_TYPE_DEFINITION
+#define SANI_ENTITY_TYPE_QUALITY (7)	//GIA_ENTITY_TYPE_QUALITY
 
 
 
@@ -147,7 +160,7 @@ public:
 	bool SANIgeneratedForLastSentence;
 	#endif
 	#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR_NETWORK_PRINT_COLOURS_POS
-	int SANIposType;	//see LRPpreprocessorWordClass.hpp for definition [LRP_SHARED_POS_TYPE_*], -1: identified referenceSet
+	int SANIentityType;	//see LRPpreprocessorWordClass.hpp for definition [LRP_SHARED_POS_TYPE_*], -1: identified referenceSet
 	#endif
 	#endif
 };

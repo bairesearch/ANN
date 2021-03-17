@@ -26,7 +26,7 @@
  * File Name: ANNneuronConnectionClass.hpp
  * Author: Richard Bruce Baxter - Copyright (c) 2005-2021 Baxter AI (baxterai.com)
  * Project: Artificial Neural Network (ANN)
- * Project Version: 3p1a 15-March-2021
+ * Project Version: 3p2a 17-March-2021
  * Comments:
  * /
  *******************************************************************************/
@@ -36,6 +36,9 @@
 #define HEADER_ANN_NEURON_CONNECTION_CLASS
 
 #include "ANNglobalDefs.hpp"
+#ifdef ANN_ALGORITHM_SANI_SEQUENCE_GRAMMAR
+#include "LRPglobalDefs.hpp"
+#endif
 
 #ifdef ANN_ALGORITHM_GIA_NEURAL_NETWORK
 #define GIA_ANN_CONNECTION_TYPE_UNDEFINED (0)
